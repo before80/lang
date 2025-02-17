@@ -8,3 +8,5 @@ draft = false
 [menu.main]
     weight = 70
 +++
+
+你好！
