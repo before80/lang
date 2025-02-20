@@ -751,7 +751,198 @@ rustup show
 
 ## C/C++
 
+---
 
+### **一、Windows 11**
+#### **1. 安装最新工具链**
+*方法1：MSVC（Visual Studio）*
+1. 下载 [Visual Studio](https://visualstudio.microsoft.com/) 选择"C++桌面开发"
+2. 勾选最新MSVC工具链（如MSVC v143）和Windows SDK
+
+*方法2：MinGW-w64*
+```powershell
+# 使用Scoop包管理器（清华镜像）
+irm get.scoop.sh | iex
+scoop install mingw -a 64bit
+scoop bucket add versions
+scoop install gcc13
+```
+
+#### **2. 多版本管理**
+```powershell
+# 安装多个GCC版本
+scoop install gcc12 gcc13
+
+# 切换版本（通过环境变量）
+$env:Path = "C:\Users\用户\scoop\apps\gcc13\current\bin;" + $env:Path
+```
+
+#### **3. 镜像配置**
+```powershell
+# 设置Scoop镜像
+scoop config SCOOP_REPO 'https://mirror.nju.edu.cn/git/scoop-skygqi/'
+scoop bucket add main https://mirror.nju.edu.cn/git/scoop-main/
+```
+
+---
+
+### **二、macOS**
+#### **1. 安装最新工具链**
+```bash
+# 使用Homebrew（中科大镜像）
+echo 'export HOMEBREW_API_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles/api"' >> ~/.zshrc
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"' >> ~/.zshrc
+source ~/.zshrc
+
+brew install llvm
+brew install gcc
+```
+
+#### **2. 多版本管理**
+```bash
+# 安装多版本GCC
+brew install gcc@13 gcc@12
+
+# 切换版本（以GCC13为例）
+export PATH="/usr/local/opt/gcc@13/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/gcc@13/lib"
+export CPPFLAGS="-I/usr/local/opt/gcc@13/include"
+```
+
+---
+
+### **三、RHEL 9/AlmaLinux/Rocky Linux**
+#### **1. 安装最新工具链**
+```bash
+# 启用EPEL和SCL（清华大学镜像）
+sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+         -e 's|^#baseurl=http://mirror.centos.org|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos|g' \
+         -i /etc/yum.repos.d/CentOS-*.repo
+
+sudo dnf install epel-release
+sudo dnf install centos-release-scl
+
+# 安装开发工具集
+sudo dnf groupinstall "Development Tools"
+sudo dnf install gcc-toolset-13
+```
+
+#### **2. 多版本管理**
+```bash
+# 启用SCL环境
+scl enable gcc-toolset-13 bash
+
+# 查看可用版本
+scl -l
+```
+
+---
+
+### **四、Ubuntu 24.04/Ubuntu Server**
+#### **1. 安装最新工具链**
+```bash
+# 配置清华源
+sudo sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
+
+sudo apt update
+sudo apt install build-essential gcc-13 g++-13
+```
+
+#### **2. 多版本管理**
+```bash
+# 设置alternatives
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 90
+
+# 交互式切换
+sudo update-alternatives --config gcc
+```
+
+---
+
+### **五、Alpine Linux**
+#### **1. 安装最新工具链**
+```bash
+# 配置阿里云镜像
+echo "http://mirrors.aliyun.com/alpine/latest-stable/main" > /etc/apk/repositories
+echo "http://mirrors.aliyun.com/alpine/latest-stable/community" >> /etc/apk/repositories
+
+apk update
+apk add build-base clang
+```
+
+#### **2. 多版本管理**
+```bash
+# 安装GCC12
+apk add gcc12 g++12
+
+# 创建符号链接
+ln -sf /usr/bin/gcc-12 /usr/local/bin/gcc
+```
+
+---
+
+### **六、通用配置**
+#### **跨平台构建工具**
+```bash
+# CMake配置镜像（CPM.cmake）
+set(CPM_USE_LOCAL_PACKAGES TRUE)
+CPMAddPackage(
+  NAME Catch2
+  GIT_REPOSITORY https://hub.nuaa.cf/catchorg/Catch2.git
+  GIT_TAG        v3.5.0
+)
+```
+
+#### **编译环境验证**
+```bash
+# 验证GCC版本
+gcc --version
+
+# 简单测试程序
+echo -e '#include <iostream>\nint main(){std::cout<<"Hello\\n";}' > test.cpp
+g++ -o test test.cpp && ./test
+```
+
+---
+
+### **七、高级工具链管理**
+#### **Docker多版本环境**
+```dockerfile
+# 多阶段构建示例
+FROM gcc:13-bookworm AS builder
+COPY . .
+RUN make
+
+FROM gcc:12-bullseye AS runtime
+COPY --from=builder /app .
+CMD ["./app"]
+```
+
+#### **conda环境管理**
+```bash
+conda create -n cpp20 gcc=13
+conda activate cpp20
+```
+
+---
+
+### **八、注意事项**
+1. **ABI兼容性**：
+   - 混合使用不同版本的运行时库可能导致崩溃
+   - 推荐使用 `-static-libstdc++` 静态链接标准库
+
+2. **内核头文件兼容**：
+   ```bash
+   # Alpine需要单独安装
+   apk add linux-headers
+   ```
+
+3. **Windows路径处理**：
+   - 使用 `/I` 代替 `-I`（MSVC）
+   - 路径分隔符使用反斜杠 `\`
+
+通过以上步骤，可在各平台搭建灵活的多版本C/C++开发环境。生产环境建议使用Docker容器化方案保证一致性。
 
 
 
@@ -765,29 +956,732 @@ rustup show
 
 
 
+### **Windows 11**
+#### **安装Node.js环境**
+1. 使用nvm-windows管理Node版本：
+   ```powershell
+   curl -o nvm-setup.exe https://mirrors.tencent.com/nodejs-release/nvm/v1.1.12/nvm-setup.exe
+   ./nvm-setup.exe
+   nvm install 20 --arch=x64 --proxy=http://mirrors.tencent.com
+   nvm use 20
+   ```
+
+#### **配置国内镜像**
+```powershell
+npm config set registry https://registry.npmmirror.com
+npm config set disturl https://mirrors.tencent.com/nodejs-release/
+```
+
+#### **安装最新TypeScript**
+```powershell
+npm install -g typescript@latest
+tsc --version
+```
+
+#### **多版本管理**
+```powershell
+npm install -g typescript@4.9.5
+npx -p typescript@4.9.5 tsc --version
+```
+
+### **macOS**
+#### **安装Node.js环境**
+```bash
+export NVM_NODEJS_ORG_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/
+curl -o- https://mirrors.tuna.tsinghua.edu.cn/nvm/latest/install.sh | bash
+nvm install --lts
+```
+
+#### **配置镜像与安装TS**
+```bash
+npm config set registry https://registry.npmmirror.com
+npm install -g typescript@latest
+```
+
+#### **多版本管理**
+```bash
+mkdir project-ts5 && cd project-ts5
+npm install typescript@5.0
+npm link typescript@5.0
+```
+
+### **RHEL/AlmaLinux/Rocky Linux**
+#### **安装Node.js**
+```bash
+curl -sL https://mirrors.tuna.tsinghua.edu.cn/nodesource/setup_20.x | sudo bash -
+sudo dnf install -y nodejs
+```
+
+#### **配置与安装**
+```bash
+npm config set registry https://registry.npmmirror.com
+sudo npm install -g typescript@latest
+```
+
+#### **多版本管理**
+```bash
+sudo alternatives --install /usr/bin/tsc tsc /usr/lib/node_modules/typescript/bin/tsc 100
+sudo alternatives --config tsc
+```
+
+### **Ubuntu 24.04/Server**
+#### **安装Node.js**
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+#### **配置与安装**
+```bash
+npm config set registry https://registry.npmmirror.com
+sudo npm install -g typescript@latest
+```
+
+#### **多版本共存**
+```bash
+sudo npm install -g typescript@5.0 --prefix /usr/local/ts5
+export PATH="/usr/local/ts5/bin:$PATH"
+```
+
+### **Alpine Linux**
+#### **安装Node.js**
+```bash
+echo "http://mirrors.aliyun.com/alpine/latest-stable/main" > /etc/apk/repositories
+apk update
+apk add nodejs npm
+```
+
+#### **配置与安装**
+```bash
+npm config set registry https://registry.npmmirror.com
+npm install -g typescript@latest
+```
+
+#### **多版本管理**
+```bash
+mkdir ts4 && cd ts4
+npm install typescript@4.9
+alias ts4='$(npm bin)/tsc'
+```
+
+### **通用多版本方案**
+#### **项目级版本控制**
+```bash
+npm init -y
+npm install typescript@5.0
+npx tsc --version
+```
+
+#### **版本切换工具**
+```bash
+npm install -g ts-node@10.9.1
+ts-node -v
+```
+
+### **IDE配置建议**
+在VSCode中配置：
+```json
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}
+```
+
+### **验证镜像配置**
+```bash
+npm config get registry
+time npm install typescript --registry=https://registry.npmmirror.com
+```
+
+通过以上步骤，可以在各操作系统上安装和管理TypeScript的多个版本，并利用国内镜像加速安装过程。
+
 
 
 ## C#
 
 
 
+---
+
+### **一、Windows 11**
+
+#### **1. 安装最新.NET SDK**
+
+```powershell
+# 使用微软官方安装脚本（国内镜像加速）
+irm https://dot.net/v1/dotnet-install.ps1 -Proxy 'http://mirrors.cloud.tencent.com' | iex
+```
+
+#### **2. 多版本管理**
+
+```powershell
+# 查看已安装版本
+dotnet --list-sdks
+
+# 安装指定版本（如7.0.400）
+dotnet-install.ps1 -Channel 7.0 -Runtime dotnet -InstallDir "$env:LocalAppData\Microsoft\dotnet"
+
+# 全局版本切换（修改系统PATH顺序）
+$env:PATH = "C:\Users\[用户名]\AppData\Local\Microsoft\dotnet\;" + $env:PATH
+```
+
+#### **3. NuGet镜像配置**
+
+```powershell
+# 创建NuGet配置文件
+New-Item -Path ~\.nuget\NuGet -ItemType Directory -Force
+@"
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="TencentCloud" value="https://mirrors.cloud.tencent.com/nuget/" />
+  </packageSources>
+</configuration>
+"@ | Out-File -FilePath ~\.nuget\NuGet\NuGet.Config
+```
+
+---
+
+### **二、macOS**
+
+#### **1. 安装最新.NET SDK**
+
+```bash
+# 使用Homebrew（配置清华镜像）
+echo 'export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"' >> ~/.zshrc
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"' >> ~/.zshrc
+source ~/.zshrc
+
+brew install --cask dotnet-sdk
+```
+
+#### **2. 多版本管理**
+
+```bash
+# 安装多个版本
+brew install --cask dotnet-sdk6 dotnet-sdk7
+
+# 查看可用版本
+ls /usr/local/share/dotnet/sdk/
+
+# 使用global.json指定版本
+dotnet new globaljson --sdk-version 7.0.400
+```
+
+---
+
+### **三、RHEL 9/AlmaLinux/Rocky Linux**
+
+#### **1. 安装最新.NET SDK**
+
+```bash
+# 配置微软仓库（国内镜像加速）
+sudo rpm -Uvh https://mirrors.tuna.tsinghua.edu.cn/dotnet/linux/rhel/9/prod.repo
+
+# 安装.NET 8 SDK
+sudo dnf install dotnet-sdk-8.0
+```
+
+#### **2. 多版本管理**
+
+```bash
+# 安装多版本
+sudo dnf install dotnet-sdk-7.0 dotnet-sdk-6.0
+
+# 使用符号链接切换版本
+sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet7
+sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet8
+
+# 验证版本
+dotnet8 --version
+```
+
+---
+
+### **四、Ubuntu 24.04/Ubuntu Server**
+
+#### **1. 安装最新.NET SDK**
+
+```bash
+# 配置清华镜像源
+wget https://mirrors.tuna.tsinghua.edu.cn/dotnet/ubuntu/dotnet-8.list -O /etc/apt/sources.list.d/dotnet-8.list
+sudo apt update
+
+# 安装SDK
+sudo apt install dotnet-sdk-8.0
+```
+
+#### **2. 多版本管理**
+
+```bash
+# 添加多个版本仓库
+wget https://mirrors.tuna.tsinghua.edu.cn/dotnet/ubuntu/dotnet-7.list -O /etc/apt/sources.list.d/dotnet-7.list
+sudo apt update
+
+# 安装其他版本
+sudo apt install dotnet-sdk-7.0
+
+# 使用update-alternatives管理
+sudo update-alternatives --install /usr/bin/dotnet dotnet /usr/share/dotnet/dotnet 100
+```
+
+---
+
+### **五、Alpine Linux**
+
+#### **1. 安装最新.NET SDK**
+
+```bash
+# 配置阿里云镜像
+echo "http://mirrors.aliyun.com/alpine/latest-stable/main" > /etc/apk/repositories
+echo "http://mirrors.aliyun.com/alpine/latest-stable/community" >> /etc/apk/repositories
+
+# 安装.NET依赖
+apk add icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
+
+# 下载并安装.NET（手动选择版本）
+wget https://mirrors.tuna.tsinghua.edu.cn/dotnet/linux/alpine/x64/dotnet-sdk-8.0.300-linux-musl-x64.tar.gz
+mkdir -p $HOME/dotnet && tar zxf dotnet-sdk-8.0.300-linux-musl-x64.tar.gz -C $HOME/dotnet
+export PATH=$PATH:$HOME/dotnet
+```
+
+---
+
+### **六、通用配置**
+
+#### **1. 项目级版本控制**
+
+```bash
+# 创建global.json文件
+dotnet new globaljson --sdk-version 7.0.400 --force
+
+# 文件内容示例：
+{
+  "sdk": {
+    "version": "7.0.400",
+    "rollForward": "latestFeature"
+  }
+}
+```
+
+#### **2. CI/CD优化配置**
+
+```bash
+# Docker多阶段构建示例
+FROM mcr.mirrors.ustc.edu.cn/dotnet/sdk:8.0 AS build
+COPY . .
+RUN dotnet publish -c Release -o out
+
+FROM mcr.mirrors.ustc.edu.cn/dotnet/aspnet:8.0
+COPY --from=build /app/out .
+ENTRYPOINT ["dotnet", "MyApp.dll"]
+```
+
+---
+
+### **七、验证与调试**
+
+```bash
+# 检查SDK和运行时版本
+dotnet --info
+
+# 输出示例：
+.NET SDK:
+ Version:           8.0.300
+ Commit:            abcdef01234
+Runtime Environment:
+ OS Name:     alpine
+ OS Version:  3.19
+```
+
+---
+
+### **八、注意事项**
+
+1. **架构兼容性**：  
+
+   - ARM设备需使用`arm64`架构包（如苹果M系列芯片）  
+   - Alpine需选择`musl`版本包  
+
+2. **安全更新**：  
+
+   ```bash
+   # Ubuntu自动更新检查
+   sudo unattended-upgrade --dry-run
+   ```
+
+3. **企业级支持**：  
+
+   - RHEL系推荐使用`Red Hat Software Collections (RHSCL)`  
+
+   - 长期支持版本（LTS）选择：  
+
+     ```bash
+     sudo dnf module install dotnet-7.0-eol
+     ```
+
+通过以上步骤，可在各主流操作系统上搭建灵活且高效的C#开发环境，并适配国内网络环境。生产环境建议结合Docker容器化部署方案。
+
 
 
 ## Erlang
 
+### **Windows 11**
+#### **使用预编译二进制文件**
+1. 访问 [Erlang官网](https://www.erlang.org/downloads) 下载最新Windows安装程序。
+2. 安装时选择国内镜像服务器以加速下载。
 
+#### **使用Scoop包管理器**
+```powershell
+scoop bucket add versions
+scoop install erlang
+```
+
+### **macOS**
+#### **使用Homebrew**
+```bash
+brew install erlang
+```
+
+#### **配置国内镜像**
+```bash
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### **RHEL/AlmaLinux/Rocky Linux**
+#### **使用EPEL仓库**
+```bash
+sudo dnf install epel-release
+sudo dnf install erlang
+```
+
+#### **配置国内镜像**
+```bash
+sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+         -e 's|^#baseurl=http://download.fedoraproject.org/pub|baseurl=https://mirrors.tuna.tsinghua.edu.cn|g' \
+         -i /etc/yum.repos.d/epel*
+sudo dnf clean all
+sudo dnf makecache
+```
+
+### **Ubuntu 24.04/Server**
+#### **使用APT仓库**
+```bash
+wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
+sudo dpkg -i erlang-solutions_2.0_all.deb
+sudo apt update
+sudo apt install erlang
+```
+
+#### **配置国内镜像**
+```bash
+sudo sed -i 's|https://packages.erlang-solutions.com|https://mirrors.tuna.tsinghua.edu.cn/erlang|g' /etc/apt/sources.list.d/erlang-solutions.list
+sudo apt update
+```
+
+### **Alpine Linux**
+#### **使用APK包管理器**
+```bash
+apk add erlang
+```
+
+#### **配置国内镜像**
+```bash
+echo "http://mirrors.aliyun.com/alpine/latest-stable/main" > /etc/apk/repositories
+echo "http://mirrors.aliyun.com/alpine/latest-stable/community" >> /etc/apk/repositories
+apk update
+```
+
+### **多版本管理**
+#### **使用Kerl工具**
+```bash
+# 安装Kerl
+curl -O https://raw.githubusercontent.com/kerl/kerl/master/kerl
+chmod a+x kerl
+sudo mv kerl /usr/local/bin
+
+# 构建指定版本
+kerl build 25.3.2.6 25.3.2.6
+kerl install 25.3.2.6 /path/to/erlang-25.3.2.6
+
+# 激活版本
+. /path/to/erlang-25.3.2.6/activate
+```
+
+### **通用配置**
+#### **验证安装**
+```bash
+erl -version
+```
+
+#### **配置国内Hex镜像（包管理）**
+```bash
+# 配置Hex镜像
+mix local.hex --if-missing --force
+mix hex.config mirror_url https://hexpm.upyun.com
+```
+
+通过以上步骤，可以在各操作系统上安装和管理Erlang的多个版本，并利用国内镜像加速安装过程。
 
 
 
 ## PHP
 
+### **Windows 11**
+#### **使用XAMPP或WampServer**
+1. 下载并安装[XAMPP](https://www.apachefriends.org/zh_cn/index.html)或[WampServer](http://www.wampserver.com/)，它们包含PHP的最新版本。
 
+#### **手动安装PHP**
+1. 访问 [PHP官网](https://windows.php.net/download/) 下载最新版本。
+2. 配置环境变量，将PHP安装目录添加到PATH。
 
+### **macOS**
+#### **使用Homebrew**
+```bash
+brew install php
+```
 
+#### **配置国内镜像**
+```bash
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### **RHEL/AlmaLinux/Rocky Linux**
+#### **使用Remi仓库**
+```bash
+sudo dnf install https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-9.rpm
+sudo dnf module enable php:remi-8.3
+sudo dnf install php
+```
+
+#### **配置镜像**
+```bash
+sudo sed -i 's|baseurl=http://rpms.remirepo.net|baseurl=https://mirrors.tuna.tsinghua.edu.cn/remi|g' /etc/yum.repos.d/remi*.repo
+sudo dnf clean all
+sudo dnf makecache
+```
+
+### **Ubuntu 24.04/Server**
+#### **使用Ondřej Surý的PPA**
+```bash
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+sudo apt install php8.3
+```
+
+#### **配置国内镜像**
+```bash
+sudo sed -i 's|http://ppa.launchpad.net|https://launchpad.proxy.ustclug.org|g' /etc/apt/sources.list.d/ondrej-ubuntu-php-*.list
+sudo apt update
+```
+
+### **Alpine Linux**
+#### **使用APK包管理器**
+```bash
+apk add php83
+```
+
+#### **配置国内镜像**
+```bash
+echo "http://mirrors.aliyun.com/alpine/latest-stable/main" > /etc/apk/repositories
+echo "http://mirrors.aliyun.com/alpine/latest-stable/community" >> /etc/apk/repositories
+apk update
+```
+
+### **多版本管理**
+#### **使用update-alternatives（Ubuntu/Debian）**
+```bash
+sudo update-alternatives --install /usr/bin/php php /usr/bin/php8.3 100
+sudo update-alternatives --install /usr/bin/php php /usr/bin/php8.2 90
+sudo update-alternatives --config php
+```
+
+#### **使用Remi仓库（RHEL系）**
+```bash
+sudo dnf module reset php
+sudo dnf module enable php:remi-8.2
+sudo dnf install php
+```
+
+### **配置PHP.ini**
+```bash
+sudo sed -i 's|;date.timezone =|date.timezone = Asia/Shanghai|g' /etc/php/8.3/php.ini
+```
+
+### **验证安装**
+```bash
+php -v
+```
+
+### **使用Docker多版本**
+```dockerfile
+FROM php:8.3-apache
+COPY . /var/www/html
+```
+
+通过以上步骤，可以在各操作系统上安装和管理PHP的多个版本，并利用国内镜像加速安装过程。
 
 ## Ruby
 
+以下是在各平台安装最新版Ruby、配置国内镜像及多版本管理的详细指南：
 
+---
+
+### **一、Windows 11**
+#### 1. 安装最新Ruby
+- **推荐方式**：使用RubyInstaller
+  1. 下载最新版：[RubyInstaller](https://rubyinstaller.org/)
+  2. 安装时勾选 **Add Ruby to PATH** 和 **MSYS2 Development Toolchain**
+
+#### 2. 配置国内镜像
+```bash
+gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+```
+
+#### 3. 多版本管理
+- 使用 `ruby-installer` 或 `uru` 工具
+```bash
+# 安装uru
+gem install uru
+uru ls           # 列出已安装版本
+uru 3.3.0        # 切换版本
+```
+
+---
+
+### **二、macOS**
+#### 1. 安装最新Ruby
+```bash
+brew install rbenv ruby-build
+rbenv install 3.3.0   # 替换为最新版本号
+rbenv global 3.3.0
+```
+
+#### 2. 配置国内镜像
+```bash
+echo "gem: --source=https://gems.ruby-china.com/" >> ~/.gemrc
+```
+
+#### 3. 多版本管理
+```bash
+rbenv install 3.2.0   # 安装其他版本
+rbenv versions        # 查看所有版本
+rbenv local 3.2.0     # 设置当前目录使用指定版本
+```
+
+---
+
+### **三、RHEL/AlmaLinux/Rocky Linux**
+#### 1. 安装最新Ruby
+```bash
+sudo dnf install git curl gcc make zlib-devel openssl-devel
+curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
+curl -sSL https://get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
+rvm install ruby-3.3.0
+```
+
+#### 2. 配置国内镜像
+```bash
+bundle config mirror.https://rubygems.org https://gems.ruby-china.com
+```
+
+#### 3. 多版本管理
+```bash
+rvm install 3.2.0    # 安装其他版本
+rvm use 3.2.0        # 切换版本
+rvm list             # 查看已安装版本
+```
+
+---
+
+### **四、Ubuntu 24.04/Ubuntu Server**
+#### 1. 安装最新Ruby
+```bash
+sudo apt update
+sudo apt install -y git curl autoconf bison build-essential libssl-dev libyaml-dev libreadline-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+rbenv install 3.3.0
+rbenv global 3.3.0
+```
+
+#### 2. 配置国内镜像
+```bash
+gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+```
+
+#### 3. 多版本管理
+```bash
+rbenv install 3.2.0
+rbenv local 3.2.0   # 项目级版本切换
+```
+
+---
+
+### **五、Alpine Linux**
+#### 1. 安装最新Ruby
+```bash
+sudo apk add git curl build-base libffi-dev openssl-dev readline-dev zlib-dev
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+cd ~/.rbenv && src/configure && make -C src
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.profile
+echo 'eval "$(rbenv init -)"' >> ~/.profile
+source ~/.profile
+rbenv install 3.3.0
+```
+
+#### 2. 配置镜像
+```bash
+echo "gem: --source=https://gems.ruby-china.com/" >> ~/.gemrc
+```
+
+---
+
+### **六、Docker 环境**
+#### 1. 基于官方Ruby镜像
+```Dockerfile
+FROM ruby:3.3.0-alpine
+RUN gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+```
+
+#### 2. 自定义基础镜像（Ubuntu）
+```Dockerfile
+FROM ubuntu:24.04
+RUN apt update && apt install -y rbenv ruby-build
+ENV PATH="/root/.rbenv/bin:$PATH"
+RUN rbenv install 3.3.0 && rbenv global 3.3.0
+RUN gem sources --add https://gems.ruby-china.com/
+```
+
+---
+
+### **七、通用多版本管理**
+推荐工具：
+- **rbenv**：轻量级，适合所有平台
+- **RVM**：功能更丰富，但依赖较多
+
+```bash
+# 使用rbenv
+rbenv install --list      # 查看可安装版本
+rbenv install 3.2.0       # 安装旧版本
+rbenv global 3.3.0        # 全局默认版本
+rbenv local 3.2.0         # 项目级版本
+```
+
+---
+
+### **总结**
+1. **镜像加速**：统一替换 `https://gems.ruby-china.com`
+2. **多版本管理**：优先使用 `rbenv` 或 `RVM`
+3. **依赖安装**：所有系统均需安装编译工具链（如 `gcc`、`make`）
+4. **Docker最佳实践**：优先使用官方镜像并添加镜像配置
 
 
 
