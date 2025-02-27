@@ -64,7 +64,7 @@ divElements.forEach(function (element) {
 ## 元素值的设置/选中/取消选中
 
 ```js
-// 以下 getElementById 可以使用 getElementByTagName、getEle
+// 以下 getElementById 可以使用 getElementByTagName、getElementsByClassName等方法进行替换
 
 // input 输入框
 document.getElementById('myInput').value="设置的文本内容";

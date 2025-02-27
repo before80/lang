@@ -90,6 +90,7 @@ ordered = false
 # style = "manni"
 #style = "igor"
 style = "doom-one2"
+#style = "hrdark"
 linenos = true
 #noClasses = true
 #lineNumbersInTable = true
