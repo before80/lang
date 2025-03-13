@@ -56,7 +56,7 @@ draft = false
 >
 > **示例数据集（存储以下 URL 路由）：**
 >
-> ```markdown
+> ```sh
 > /user
 > /user/profile
 > /user/settings
@@ -67,7 +67,7 @@ draft = false
 >
 > 普通的 Trie（前缀树）会逐字符存储：
 >
-> ```markdown
+> ```sh
 >       /
 >       ├── u
 >       │   ├── s
@@ -102,7 +102,7 @@ draft = false
 >
 > Radix Tree 通过 **合并公共前缀**，减少节点数：
 >
-> ```markdown
+> ```sh
 > 	  /
 >       ├── user
 >       │   ├── / (终结)
@@ -119,14 +119,14 @@ draft = false
 >
 > **3. 为什么 Gin 使用 Radix Tree？**
 >
-> Gin 的路由匹配采用 **Radix Tree**，相比传统线性匹配（O(m)），它可以更快地匹配 URL 路由，适用于高并发场景。
+> ​	Gin 的路由匹配采用 **Radix Tree**，相比传统线性匹配（O(m)），它可以更快地匹配 URL 路由，适用于高并发场景。
 >
 > **Gin 的路由存储示例**
 >
 > ​	假设注册以下路由：
 >
-> ```
-> bash复制代码/users
+> ```sh
+> /users
 > /users/:id
 > /users/:id/profile
 > /articles/:category/:id
@@ -134,8 +134,8 @@ draft = false
 >
 > **Radix Tree 存储结构：**
 >
-> ```
-> bash复制代码      /
+> ```sh
+>       /
 >       ├── users
 >       │   ├── / (终结)
 >       │   ├── :id
@@ -152,11 +152,11 @@ draft = false
 >
 > ------
 >
-> ## **4. 总结**
+> **4. 总结**
 >
 > - **Radix Tree 通过合并前缀减少存储空间，提高匹配效率。**
 > - **Gin 使用 Radix Tree 来优化 URL 路由匹配，提升查询速度。**
-> - **查询时间复杂度通常为 `O(k)`，相比于传统 O(m) 线性遍历方式更高效。**
+> - **查询时间复杂度通常为 `O(k)`，相比于传统 `O(m)` 线性遍历方式更高效。**
 
 ## 有什么用？
 
@@ -289,15 +289,41 @@ r.GET("/user/:name/*action", func(c *gin.Context) {
 })
 ```
 
-​	当访问 `/user/john/send` 时，`name` 为 `john`，`action` 为 `/send`，输出 `john is /send`"。
+​	
 
-​	当访问 `/user/john` 时，`name` 为 `john`，`action` 为空字符串，输出 `john is` 。
+```sh
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/user/john/talking                                                                           
+john is /talking
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/user/john
+<a href="/user/john/">Moved Permanently</a>.
 
-​	当访问 `/user/john/send/hello` 时，`name` 为 `john`，`action` 为`/send/hello`，输出 `john is /send/hello`。
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/user
+404 page not found
+```
+
+
+
+| 特性         | 冒号语法 `:param`      | 通配符语法 `*param`      |
+| ------------ | ---------------------- | ------------------------ |
+| **匹配范围** | 单个路径段（不含斜杠） | 剩余所有路径（可含斜杠） |
+| **位置限制** | 可出现在路径中间       | 必须位于路由末尾         |
+| **参数内容** | 纯字符串（无 `/`）     | 可包含 `/` 的路径字符串  |
 
 ### 路由到静态资源
 
+
+
+| **方式**            | **方法**                                | **描述**                              | **示例**                                                     |
+| ------------------- | --------------------------------------- | ------------------------------------- | ------------------------------------------------------------ |
+| 内置方法 - 目录     | `router.Static(prefix, root)`           | 服务目录下所有文件，通过前缀 URL 访问 | `router.Static("/static", "./public")`                       |
+| 内置方法 - 文件系统 | `router.StaticFS(prefix, fs)`           | 服务自定义文件系统，通过前缀 URL 访问 | `router.StaticFS("/more_static", http.Dir("my_file_system"))` |
+| 内置方法 - 单文件   | `router.StaticFile(url, filepath)`      | 服务单个文件，映射到特定 URL          | `router.StaticFile("/favicon.ico", "./resources/favicon.ico")` |
+| 第三方库            | `github.com/gin-contrib/static`         | 提供中间件，支持目录索引、嵌入文件等  | `r.Use(static.Serve("/", static.LocalFile("/tmp", true)))`   |
+| 手动处理            | `c.File(filepath)` 或 `http.FileServer` | 自定义处理静态文件请求                | `r.Any("/*path", func(c *gin.Context) { c.File("./public/" + c.Param("path")) })` |
+
 #### router.Static方法
+
+​	将指定目录下的静态文件映射到路由前缀。
 
 ```go
 func (group *RouterGroup) Static(relativePath, root string) IRoutes {
@@ -317,9 +343,7 @@ func main() {
 
 ​	将 `./public` 目录下的文件通过 `/static` 路径提供。
 
-​	例如，访问 `/static/css/style.css` 会返回 `./public/css/style.css`。
-
-​	如果文件不存在，则返回`404 page not found`。
+​	当访问 `/static/css/style.css` 会返回 `./public/css/style.css`（存在该文件的情况）。若文件不存在，则返回`404 page not found`。
 
 #### router.StaticFS方法
 
@@ -344,39 +368,496 @@ func (group *RouterGroup) StaticFS(relativePath string, fs http.FileSystem) IRou
 
 
 
-
-
-
-
 ### 路由分组
+
+​	Gin 框架中的 **路由分组** 是一种将具有相同前缀、中间件或功能的路由统一`管理的机制`，能显著提升代码可维护性和扩展性。
+
+#### **路由分组的核心作用**
+
+1. **统一前缀管理**
+   为多个路由设置共享的 URL 前缀（如 `/api/v1`），避免重复定义。
+2. **中间件共享**
+   在分组层级应用中间件（如身份验证、日志），减少冗余代码。
+3. **模块化开发**
+   将不同业务模块的路由拆分到独立文件，降低耦合度。
+
+#### 用法
+
+##### 基本用法
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	r := gin.Default()
+
+	// 创建 `/api` 分组
+	api := r.Group("/api")
+	{
+		api.GET("/ping", func(c *gin.Context) {
+			c.JSON(200, gin.H{"message": "pong"})
+		})
+
+		api.GET("/hello", func(c *gin.Context) {
+			c.JSON(200, gin.H{"message": "Hello API"})
+		})
+	}
+
+	// 启动服务器
+	r.Run(":8080")
+}
+```
+
+- `curl http://localhost:8080/api/ping`返回：`{"message": "pong"}`
+
+##### 嵌套分组
+
+```go
+func main() {
+	r := gin.Default()
+
+	// `api` 分组
+	api := r.Group("/api")
+	{
+		api.GET("/status", func(c *gin.Context) {
+			c.JSON(200, gin.H{"status": "ok"})
+		})
+
+		// `api/v1` 子分组
+		v1 := api.Group("/v1")
+		{
+			v1.GET("/users", func(c *gin.Context) {
+				c.JSON(200, gin.H{"users": []string{"Alice", "Bob"}})
+			})
+
+			v1.GET("/posts", func(c *gin.Context) {
+				c.JSON(200, gin.H{"posts": []string{"Post 1", "Post 2"}})
+			})
+		}
+	}
+
+	r.Run(":8080")
+}
+```
+
+```sh
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/api/ping
+{"message":"pong"}
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/api/status
+{"status":"ok"}
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/api/v1/users
+{"users":["Alice","Bob"]}
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/api/v1/posts
+{"posts":["Post 1","Post 2"]}
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/api/v1/nothing
+404 page not found
+```
+
+
+
+##### 为路由分组添加中间件
+
+```go
+func AuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		token := c.GetHeader("Authorization")
+		if token != "valid-token" {
+			c.JSON(401, gin.H{"error": "Unauthorized"})
+			c.Abort()
+			return
+		}
+		c.Next() // 继续处理请求
+	}
+}
+
+func main() {
+	r := gin.Default()
+
+	// `admin` 组，应用 `AuthMiddleware`
+	admin := r.Group("/admin")
+	admin.Use(AuthMiddleware()) 
+	{
+		admin.GET("/dashboard", func(c *gin.Context) {
+			c.JSON(200, gin.H{"dashboard": "Welcome Admin!"})
+		})
+	}
+
+	r.Run(":8080")
+}
+```
+
+- `curl -H "Authorization: invalid-token" http://localhost:8080/admin/dashboard` 返回：`{"error": "Unauthorized"}`
+- `curl -H "Authorization: valid-token" http://localhost:8080/admin/dashboard` 返回：`{"dashboard": "Welcome Admin!"}`
+
+### 路由冲突时gin怎么选择路由？
+
+| 路由类型         | 示例            | 优先级 | 匹配范围             |
+| ---------------- | --------------- | ------ | -------------------- |
+| **静态路由**     | `/user/profile` | 最高   | 精确匹配             |
+| **路径参数路由** | `/user/:id`     | 次高   | 单段动态值（非空）   |
+| **通配符路由**   | `/user/*action` | 最低   | 多段动态值（可为空） |
 
 ## 请求信息
 
 ### 获取请求信息
 
-#### 请求的HTTP方法
+#### 基本请求信息
 
-#### 请求的路径
-
-#### 请求携带的Cookie
-
-#### 请求头
+```go
+c.Request.Method      // 请求方法（GET、POST、PUT、DELETE 等）
+c.Request.URL.Path    // 请求路径（如 `/api/user/1`）
+c.Request.Proto       // HTTP 版本（如 `HTTP/1.1`）
+c.Request.Host        // 请求主机（如 `example.com[:端口]`）
+c.Request.RequestURI  // 完整 URI（如 `/api/user?id=1`）
+c.Request.RemoteAddr  // 客户端 IP 和端口（如 `192.168.1.100:54321`）
+```
 
 #### 请求参数
 
-##### GET请求参数
+##### 查询参数
 
 
 
-##### 表单请求参数
+##### 路径参数/路由变量
+
+​	如果定义了 **路由参数/路由变量**，可以用 `Param()` 获取：
+
+```go
+r := gin.Default()
+r.GET("/user/:name/*action", func(c *gin.Context) {
+    name := c.Param("name")
+    action := c.Param("action")
+    c.String(200, name+" is "+action)
+})
+r.Run(":8080")
+```
+
+```sh
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/user/john/talking
+john is /talking
+```
 
 
 
-##### 查询参数参数
+##### 表单参数
+
+| 方法                                  | 适用场景                            | 说明                                |
+| ------------------------------------- | ----------------------------------- | ----------------------------------- |
+| `c.PostForm("key")`                   | `application/x-www-form-urlencoded` | 获取单个表单参数                    |
+| `c.DefaultPostForm("key", "default")` | `application/x-www-form-urlencoded` | 获取表单参数，支持默认值            |
+| `c.PostFormMap("key")`                | `application/x-www-form-urlencoded` | 以 `map[string]string` 形式获取参数 |
+| `c.MultipartForm()`                   | `multipart/form-data`               | 处理复杂表单和文件上传              |
+
+###### `c.PostForm()`和 `DefaultPostForm` - 获取 `application/x-www-form-urlencoded` 表单参数
+
+​	当表单 `Content-Type` 为 `application/x-www-form-urlencoded` 时，使用 `c.PostForm("参数名")` 获取参数。
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	r := gin.Default()
+
+	r.POST("/form", func(c *gin.Context) {
+		// 获取单个表单参数
+		username := c.PostForm("username")
+		password := c.PostForm("password")
+
+		// 获取带默认值的参数（如果参数不存在，则返回默认值）
+		role := c.DefaultPostForm("role", "user")
+
+		c.JSON(200, gin.H{
+			"username": username,
+			"password": password,
+			"role":     role,
+		})
+	})
+
+	r.Run(":8080")
+}
+```
+
+```sh
+curl -X POST "http://localhost:8080/form" -d "username=admin&password=123456"
+```
+
+> ​	`-X` 的作用是指定 HTTP 请求方法，比如 `GET`、`POST`、`PUT`、`DELETE` 等，是`--header`的简写。它允许你明确指定 HTTP 请求的类型，而不是默认的 `GET` 请求。
+>
+> ​	`-d` 的作用是 **指定发送的数据**，是`--data`的简写。通常，这些数据会以表单数据（`application/x-www-form-urlencoded`）或 JSON 格式发送，具体取决于请求的 `Content-Type` 头。
+>
+> >发送表单数据（`application/x-www-form-urlencoded`）
+> >
+> >```sh
+> >curl -X POST "http://example.com/api" -d "username=admin&password=123456"
+> >```
+> >
+> >发送 JSON 数据（`application/json`）
+> >
+> >```sh
+> >curl -X POST "http://example.com/api" \
+> >     -H "Content-Type: application/json" \
+> >     -d '{"username": "admin", "password": "123456"}'
+> >```
+> > `-H`用于指定请求头，是`--header`的简写。
+
+
+返回：
+
+```json
+{
+  "username": "admin",
+  "password": "123456",
+  "role": "user"
+}
+```
+
+###### c.PostFormMap()` - 获取 `map[string]string
+
+​	如果表单参数有多个值，可以用 `c.PostFormMap()` 获取。
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"log"
+)
+
+func main() {
+	r := gin.Default()
+
+	r.POST("/form-map", func(c *gin.Context) {
+		// 获取表单数据（map[string]string）
+		formData := c.PostFormMap("user")
+
+		// 输出数据
+		log.Println("Form Data:", formData)
+
+		// 返回 JSON 响应
+		c.JSON(200, gin.H{
+			"user": formData,
+		})
+	})
+
+	r.Run(":8080")
+}
+
+```
+
+```sh
+curl -X POST "http://localhost:8080/form-map" -d "user[name]=admin&user[email]=admin@example.com&user[password]=123456"
+```
+
+​	返回：
+
+```json
+{
+  "user": {
+    "name": "admin",
+    "email": "admin@example.com",
+    "password": "123456"
+  }
+}
+```
+
+
+
+###### `c.MultipartForm()` - 处理 `multipart/form-data`（包括文件上传）
+
+​	`c.MultipartForm()` 用于处理 `multipart/form-data` 类型的请求，通常用于处理文件上传。它返回一个 `*multipart.Form` 类型，可以通过 `Form` 获取表单字段，通过 `File` 获取上传的文件。
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"log"
+)
+
+func main() {
+	r := gin.Default()
+
+	r.POST("/upload", func(c *gin.Context) {
+		// 获取表单字段
+		description := c.DefaultPostForm("description", "No description")
+
+		// 获取 multipart/form-data 中的所有文件
+		form, err := c.MultipartForm()
+		if err != nil {
+			c.JSON(400, gin.H{"error": "multipart form parsing error"})
+			return
+		}
+
+		// 获取文件列表
+		files := form.File["file"]
+
+		// 保存每个文件
+		for _, file := range files {
+			// 保存文件到本地
+			dst := fmt.Sprintf("./uploads/%s", file.Filename)
+			if err := c.SaveUploadedFile(file, dst); err != nil {
+				c.JSON(500, gin.H{"error": "file upload error"})
+				return
+			}
+			log.Println("File saved to:", dst)
+		}
+
+		// 返回响应
+		c.JSON(200, gin.H{
+			"description": description,
+			"file_count":  len(files),
+		})
+	})
+
+	r.Run(":8080")
+}
+```
+
+> **提示**
+>
+> ​	若`./uploads`目录不存在，`gin`也会帮你自动创建出来，其权限位为`0750`。
+
+```sh
+curl -X POST "http://localhost:8080/upload" -F "description=file description" -F "file=@/path/to/your/file"
+
+curl -X POST "http://localhost:8080/upload" -F "description=Protocol Picture" -F "file=@D:\Downloads\protocol.png"
+```
+
+> ​	`curl -F`（或 `curl --form`）用于 **发送 `multipart/form-data` 请求**，这是表单提交中常用的内容类型，尤其用于上传文件。它允许你发送一个包含表单字段和文件的请求。
+>
+> ​	语法如下：
+>
+> ```sh
+> curl -F "<field_name>=<field_value>" <URL>
+> ```
+>
+> - `<field_name>`：表单字段的名称。
+>
+> - `<field_value>`：字段的值。如果字段是文件，使用 `@<file_path>` 来指定文件路径。
+
+#### Cookie
+
+
+
+#### 请求头
+
+```go
+c.GetHeader("User-Agent") // 获取单个请求头
+c.Request.Header          // 获取所有请求头（map[string][]string）
+c.Request.Header.Get("Content-Type") // 获取特定请求头
+c.Request.Header.Values("Accept") // 获取多值请求头
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	r := gin.Default()
+
+	r.Any("/headers", func(c *gin.Context) {
+		// 获取单个请求头（User-Agent）
+		userAgent := c.GetHeader("User-Agent")
+
+		// 获取所有请求头（map[string][]string）
+		allHeaders := c.Request.Header
+
+		// 获取特定请求头（Content-Type）
+		contentType := c.Request.Header.Get("Content-Type")
+
+		// 获取多值请求头（Accept）
+		acceptValues := c.Request.Header.Values("Accept")
+
+		// 输出所有信息
+		c.JSON(200, gin.H{
+			"User-Agent":   userAgent,
+			"All-Headers":  allHeaders,
+			"Content-Type": contentType,
+			"Accept":       acceptValues,
+		})
+
+		// 在服务器终端打印
+		fmt.Printf("User-Agent:%v\n", userAgent)
+		fmt.Printf("All-Headers:%v\n", allHeaders)
+		fmt.Printf("Content-Type:%v\n", contentType)
+		fmt.Printf("Accept: %v\n", acceptValues)
+	})
+
+	r.Run(":8080") // 运行服务器
+}
+```
+
+​	返回类似以下结果：
+
+```json
+{
+  "Accept": [
+    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+  ],
+  "All-Headers": {
+    "Accept": [
+      "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    ],
+    "Accept-Encoding": [
+      "gzip, deflate, br, zstd"
+    ],
+    "Accept-Language": [
+      "zh-CN,zh;q=0.9"
+    ],
+    "Connection": [
+      "keep-alive"
+    ],
+    "Sec-Ch-Ua": [
+      "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+    ],
+    "Sec-Ch-Ua-Mobile": [
+      "?0"
+    ],
+    "Sec-Ch-Ua-Platform": [
+      "\"Windows\""
+    ],
+    "Sec-Fetch-Dest": [
+      "document"
+    ],
+    "Sec-Fetch-Mode": [
+      "navigate"
+    ],
+    "Sec-Fetch-Site": [
+      "none"
+    ],
+    "Sec-Fetch-User": [
+      "?1"
+    ],
+    "Upgrade-Insecure-Requests": [
+      "1"
+    ],
+    "User-Agent": [
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+    ]
+  },
+  "Content-Type": "",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+}
+```
 
 
 
 #### 表单上传的文件
+
+
 
 #### 转换获取到的数据到指定类型的变量中
 
@@ -390,15 +871,25 @@ func (group *RouterGroup) StaticFS(relativePath string, fs http.FileSystem) IRou
 
 ### 响应方式
 
+
+
 ### 重定向
+
+
 
 #### HTTP重定向
 
+
+
 #### 路由重定向
+
+
 
 ## 中间件
 
 ### 中间件的类型
+
+
 
 ### 中间件的定义
 
