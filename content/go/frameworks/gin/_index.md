@@ -1,4 +1,7 @@
-+++
+
+
+
+
 title = "gin"
 date = 2025-03-12T12:59:19+08:00
 weight = 1
@@ -672,7 +675,61 @@ func main() {
 
 ```
 
+#### `github.com/gin-contrib/static`
 
+##### 示例 1 - 基于 URL 前缀的多目录服务
+
+```go
+
+```
+
+```powershell
+
+```
+
+
+
+##### 示例 2 - 带权限验证的静态文件服务
+
+```go
+
+```
+
+```powershell
+
+```
+
+示例
+
+```go
+
+```
+
+```powershell
+
+```
+
+
+
+示例
+
+```go
+
+```
+
+```powershell
+
+```
+
+示例
+
+```go
+
+```
+
+```powershell
+
+```
 
 ### 路由分组
 
@@ -1619,25 +1676,946 @@ PS D:\GoPrjs2\ginDemo> curl -X POST http://localhost:8080/upload -F "username=gi
 
 ### 设置请求信息
 
+#### 设置新的请求头
+
+```go
+func handler(c *gin.Context) {
+    // 设置新的请求头
+    c.Request.Header.Set("X-Custom-Header", "HeaderValue")
+    // 继续处理请求
+    c.Next()
+}
+```
+
 
 
 ## 响应数据
 
 ### 响应方式
 
+#### 字符串响应
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+func main() {
+	// 初始化 Gin 路由
+	r := gin.Default()
+
+	// 示例 1：根路径返回固定字符串
+	r.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "Hello, World!")
+	})
+
+	// 示例 2：带路径参数的动态字符串响应
+	r.GET("/greet/:name", func(c *gin.Context) {
+		name := c.Param("name") // 获取路径参数
+		c.String(http.StatusOK, "Hello, %s!", name)
+	})
+
+	// 示例 3：带查询参数的条件响应
+	r.GET("/status", func(c *gin.Context) {
+		status := c.Query("status") // 获取查询参数
+		switch status {
+		case "up":
+			c.String(http.StatusOK, "Service is up and running!")
+		case "down":
+			c.String(http.StatusServiceUnavailable, "Service is down.")
+		default:
+			c.String(http.StatusBadRequest, "Invalid status parameter.")
+		}
+	})
+
+	// 启动服务
+	r.Run(":8080")
+}
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080
+Hello, World!
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/greet/Bob 
+Hello, Bob!
+PS D:\GoPrjs2\ginDemo> curl "http://localhost:8080/status?status=up"                    
+Service is up and running!
+PS D:\GoPrjs2\ginDemo> curl "http://localhost:8080/status?status=down"
+Service is down.
+PS D:\GoPrjs2\ginDemo> curl "http://localhost:8080/status"            
+Invalid status parameter.
+```
+
+#### 字节流响应
+
+
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+func main() {
+	// 初始化路由
+	r := gin.Default()
+
+	// 定义一个返回字节流的路由
+	r.GET("/bytes", func(c *gin.Context) {
+		// 创建示例字节流数据
+		byteData := []byte("Hello, World from byte stream!\n")
+
+		// 直接返回字节流
+		c.Data(
+			http.StatusOK,               // 状态码
+			"text/plain; charset=utf-8", // MIME 类型
+			byteData,                    // 字节数据
+		)
+		//若需要更底层的控制，可以使用 c.Writer 直接写入字节
+		//c.Writer.WriteHeader(http.StatusOK)
+		//c.Writer.Header().Set("Content-Type", "text/plain")
+		//c.Writer.Write(byteData)
+	})
+
+	// 启动服务
+	r.Run(":8080")
+}
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/bytes     
+Hello, World from byte stream!
+PS D:\GoPrjs2\ginDemo> curl -i http://localhost:8080/bytes
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Date: Sun, 16 Mar 2025 09:50:44 GMT
+Content-Length: 31
+
+Hello, World from byte stream!
+```
+
+
+
+#### 结构化-JSON响应
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+// User 定义一个结构体，用于返回 JSON 数据
+type User struct {
+	Name    string `json:"name"` // JSON 字段名与结构体字段默认一致
+	Age     int    `json:"age"`
+	IsAdmin bool   `json:"is_admin"`
+}
+
+func main() {
+	// 初始化路由
+	r := gin.Default()
+
+	// 定义一个返回 JSON 的路由
+	r.GET("/json", func(c *gin.Context) {
+		// 创建示例数据
+		user := User{
+			Name:    "Alice",
+			Age:     30,
+			IsAdmin: true,
+		}
+
+		c.JSON(
+			http.StatusOK, // 状态码
+			user,          // 数据
+		)
+	})
+
+	// 启动服务器
+	r.Run(":8080")
+}
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/json   
+{"name":"Alice","age":30,"is_admin":true}
+PS D:\GoPrjs2\ginDemo> curl -i http://localhost:8080/json
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Sun, 16 Mar 2025 05:18:09 GMT
+Content-Length: 41
+
+{"name":"Alice","age":30,"is_admin":true}
+
+```
+
+
+
+
+
+#### 结构化-Indented JSON响应
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+// User 定义一个结构体，用于返回 JSON 数据
+type User struct {
+	Name    string `json:"name"`    // JSON 字段名与结构体字段默认一致
+	Age     int    `json:"age"`
+	IsAdmin bool   `json:"is_admin"`
+}
+
+func main() {
+	// 初始化路由
+	r := gin.Default()
+
+	// 定义一个返回 Indented JSON 的路由
+	r.GET("/indented-json", func(c *gin.Context) {
+		// 创建示例数据
+		user := User{
+			Name:    "Alice",
+			Age:     30,
+			IsAdmin: true,
+		}
+
+		// 使用 IndentedJSON 方法返回缩进格式的 JSON
+		c.IndentedJSON(
+			http.StatusOK, // 状态码
+			user,          // 数据
+		)
+	})
+
+	// 启动服务器
+	r.Run(":8080")
+}
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/indented-json  
+{
+    "name": "Alice",
+    "age": 30,
+    "is_admin": true
+}
+PS D:\GoPrjs2\ginDemo> curl -i http://localhost:8080/indented-json
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Sun, 16 Mar 2025 04:05:38 GMT
+Content-Length: 60
+
+{
+    "name": "Alice",
+    "age": 30,
+    "is_admin": true
+}
+```
+
+
+
+
+
+#### 结构化-XML响应
+
+```go
+package main
+
+import (
+    "github.com/gin-gonic/gin"
+    "net/http"
+)
+
+type Person struct {
+    Name    string `xml:"name"`
+    Age     int    `xml:"age"`
+    Message string `xml:"message"`
+}
+
+func main() {
+    router := gin.Default()
+    router.GET("/xml", func(c *gin.Context) {
+        person := Person{Name: "Alice", Age: 30, Message: "Hello, World!"}
+        c.XML(http.StatusOK, person)
+    })
+    router.Run(":8080")
+}
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl  http://localhost:8080/xml  
+<Person><name>Alice</name><age>30</age><message>Hello, World!</message></Person>
+PS D:\GoPrjs2\ginDemo> curl -i http://localhost:8080/xml
+HTTP/1.1 200 OK
+Content-Type: application/xml; charset=utf-8
+Date: Sun, 16 Mar 2025 03:58:39 GMT
+Content-Length: 80
+
+<Person><name>Alice</name><age>30</age><message>Hello, World!</message></Person>
+```
+
+
+
+
+
+#### 结构化-YAML响应
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+// User 定义一个结构体，用于返回 YAML 数据
+type User struct {
+	Name    string `json:"name" yaml:"name"` // 可选：显式指定 YAML 标签（字段名默认使用结构体字段）
+	Age     int    `json:"age" yaml:"age"`
+	IsAdmin bool   `json:"is_admin" yaml:"is_admin"`
+}
+
+func main() {
+	// 初始化路由
+	r := gin.Default()
+
+	// 定义一个返回 YAML 的路由
+	r.GET("/yaml", func(c *gin.Context) {
+		// 创建示例数据
+		user := User{
+			Name:    "Alice",
+			Age:     30,
+			IsAdmin: true,
+		}
+
+		// 直接使用结构体返回 YAML
+		c.YAML(http.StatusOK, user)
+	})
+
+	// 启动服务器
+	r.Run(":8080")
+}
+
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/yaml
+name: Alice
+age: 30
+is_admin: true
+PS D:\GoPrjs2\ginDemo> curl -i http://localhost:8080/yaml
+HTTP/1.1 200 OK
+Content-Type: application/yaml; charset=utf-8
+Date: Sun, 16 Mar 2025 03:59:40 GMT
+Content-Length: 35
+
+name: Alice
+age: 30
+is_admin: true
+```
+
+
+
+
+
+#### HTML模板渲染
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+func main() {
+	// 初始化路由
+	r := gin.Default()
+
+	// 加载模板文件（加载 templates 文件夹下的所有 .html 文件）
+	r.LoadHTMLGlob("templates/*")
+
+	// 定义路由：渲染 HTML 模板
+	r.GET("/greet", func(c *gin.Context) {
+		// 传递数据到模板
+		data := gin.H{
+			"title":   "欢迎页面",
+			"message": "你好，欢迎来到 Gin 模板渲染示例！",
+		}
+		// 渲染模板 greet.html
+		c.HTML(http.StatusOK, "greet.html", data)
+	})
+
+	// 启动服务（默认监听 :8080）
+	r.Run()
+}
+```
+
+`greet.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{.title}}</title>
+</head>
+<body>
+	<h1>{{.message}}</h1>
+</body>
+</html>
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/greet
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>欢迎页面</title>
+</head>
+<body>
+<h1>你好，欢迎来到 Gin 模板渲染示例！</h1>
+</body>
+</html>
+PS D:\GoPrjs2\ginDemo> curl -i http://localhost:8080/greet
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Date: Sun, 16 Mar 2025 10:04:35 GMT
+Content-Length: 165
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>欢迎页面</title>
+</head>
+<body>
+<h1>你好，欢迎来到 Gin 模板渲染示例！</h1>
+</body>
+</html>
+```
+
+> ​	若`c.HTML(http.StatusOK, "greet.html", data)`写成：`c.HTML(http.StatusOK, "notExist.html", data)`，则：
+>
+> ```powershell
+> PS D:\GoPrjs2\ginDemo> curl -i http://localhost:8080/greet
+> HTTP/1.1 200 OK
+> Content-Type: text/html; charset=utf-8
+> Date: Sun, 16 Mar 2025 10:07:34 GMT
+> Content-Length: 0
+> ```
+>
+> 
+
+
+
+#### 返回文件
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+func main() {
+	// 初始化路由
+	r := gin.Default()
+
+	// 示例 1：返回固定文件（直接返回文件）
+	r.GET("/file", func(c *gin.Context) {
+		// 直接返回文件（文件路径为相对路径）
+		c.File("./static/image.png")
+	})
+
+	// 示例 2：强制下载文件（设置 Content-Disposition）
+	r.GET("/download", func(c *gin.Context) {
+		// 指定文件路径和下载名称
+		c.FileAttachment("./static/image.png", "image.png")
+	})
+
+	// 加载模板文件（加载 templates 文件夹下的所有 .html 文件）
+	r.LoadHTMLGlob("templates/*")
+
+	// 定义路由：渲染 HTML 模板
+	r.GET("/", func(c *gin.Context) {
+		// 渲染模板 greet.html
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
+
+	// 示例 3：静态文件目录映射
+	r.Static("/static", "./static")
+
+	// 启动服务
+	r.Run(":8080")
+}
+
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/file -o image2.png -v
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /file HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.10.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Accept-Ranges: bytes
+< Content-Length: 470216
+< Content-Type: image/png
+< Last-Modified: Sun, 09 Mar 2025 13:59:03 GMT
+< Date: Sun, 16 Mar 2025 13:10:29 GMT
+<
+{ [102227 bytes data]
+100  459k  100  459k    0     0  8902k      0 --:--:-- --:--:-- --:--:-- 9566k
+* Connection #0 to host localhost left intact
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/download -o image3.png -v
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /download HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.10.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Accept-Ranges: bytes
+< Content-Disposition: attachment; filename="image.png"
+< Content-Length: 470216
+< Content-Type: image/png
+< Last-Modified: Sun, 09 Mar 2025 13:59:03 GMT
+< Date: Sun, 16 Mar 2025 13:11:14 GMT
+<
+{ [102172 bytes data]
+100  459k  100  459k    0     0  6721k      0 --:--:-- --:--:-- --:--:-- 7174k
+* Connection #0 to host localhost left intact
+```
+
+> ​	`Content-Disposition: attachment; filename="image.png"`的作用：通过设置 `Content-Disposition: attachment`，浏览器会认为响应内容是一个需要下载的附件（而非直接在页面中显示）。即使内容是浏览器支持的格式（如图片、PDF），也会弹出“保存为”对话框，让用户选择保存位置。其中`filename="image.png"` 指定了浏览器在下载对话框中显示的**建议文件名**。用户可以选择修改此名称，但默认会使用该名称。
+>
+> ​	`attachment`表示响应内容应作为附件下载，而不是直接在浏览器中显示。对比 `inline`：
+> 如果设置为 `inline`，浏览器会尝试直接显示内容（如图片或 PDF 在浏览器内打开），而非下载。
+>
+> ​	`filename`指定下载文件的默认名称。若文件名包含路径（如 `filename="dir/image.png"`），浏览器会忽略路径，仅使用最后一部分（`image.png`）。**`filename` 的值必须是 ASCII 编码**，否则可能导致乱码或文件名显示异常。**中文或特殊字符问题**：需使用编码方案（如 RFC 5987）解决，例如：
+>
+> ```sh
+> Content-Disposition: attachment; filename*=UTF-8''%E4%B8%AD%E6%96%87%E5%9B%BE%E7%89%87.png
+> ```
+>
+> ​	如果同时设置了 `Content-Disposition` 的 `filename` 和 `<a>` 标签的 `download` 属性，**服务器的 `filename` 优先级更高**。
+>
+> ```html
+> <a href="/download" download="custom-name.png">下载</a>
+> ```
+>
+> ​	如果服务器响应头为 `filename="image.png"`，则实际下载名仍为 `image.png`。
+>
+> ​	即使设置了 `attachment`，仍建议正确设置 `Content-Type`，以避免浏览器尝试直接解析内容。
+>
+> ​	即使设置了 `attachment`，仍建议正确设置 `Content-Type`，以避免浏览器尝试直接解析内容。
+>
+> ​	即使设置了 `attachment`，仍建议正确设置 `Content-Type`，以避免浏览器尝试直接解析内容。
+>
+> ```sh
+> Content-Type: application/octet-stream
+> ```
+>
+> ​	此类型强制浏览器下载，而不关联默认程序。
+>
+> > ​	`Content-Type: application/octet-stream` 是 HTTP 头部中用于指示响应内容为**通用二进制流**的 MIME 类型。以下是其核心作用和应用场景：
+> >
+> > 主要作用
+> >
+> > 1. **标识二进制数据**
+> >    明确告知客户端（如浏览器）返回的内容是未解析的原始字节流，没有特定的格式或结构，需按二进制数据处理。
+> > 2. **强制触发文件下载**
+> >    浏览器通常会直接下载此类内容，而非尝试解析或展示（如显示文本、图片等）。若需自定义文件名，可配合 `Content-Disposition: attachment; filename="文件名"` 使用。
+> > 3. **兼容未知文件类型**
+> >    当服务器无法确定文件的具体类型，或需兼容任意格式（如用户上传的未知文件）时，`application/octet-stream` 作为默认类型更安全。
+> >
+> > ------
+> >
+> > 典型应用场景
+> >
+> > - **文件下载服务**
+> >   用于提供任意格式文件的下载（如 `.bin`、未分类文件），确保浏览器直接保存而非解析。
+> > - **动态生成的二进制数据**
+> >   如加密文件、生成的报表或日志，服务器无需预定义具体类型，使用此类型通用处理。
+> > - **防止内容误解析**
+> >   避免浏览器将二进制文件（如可执行文件）错误识别为文本/图片等类型，导致乱码或安全风险。
+
+
+
+#### 文件下载
+
+```go
+
+```
+
+
+
+```powershell
+
+```
+
+
+
+
+
+#### 重定向
+
+​	参见重定向部分。
+
+#### 流式响应与事件推送
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"github.com/gin-gonic/gin"
+
+	"io"
+	"math/rand"
+	"time"
+)
+
+func main() {
+	router := gin.Default()
+
+	// SSE 事件流路由
+	router.GET("/sse", func(c *gin.Context) {
+		// 设置 SSE 所需的响应头
+		c.Header("Content-Type", "text/event-stream")
+		c.Header("Cache-Control", "no-cache")
+		c.Header("Connection", "keep-alive")
+		c.Header("Access-Control-Allow-Origin", "*") // 允许跨域
+
+		// 创建事件通道
+		eventChan := make(chan string)
+
+		// 启动数据生成goroutine
+		go generateEvents(eventChan, c.Request.Context().Done())
+
+		// 持续向客户端发送事件
+		c.Stream(func(w io.Writer) bool {
+			if event, ok := <-eventChan; ok {
+				c.SSEvent("message", event) // 使用 Gin 的 SSEvent 辅助方法
+				return true
+			}
+			return false // 通道关闭时结束流
+		})
+
+		// 客户端断开连接时关闭通道
+		defer close(eventChan)
+	})
+
+	// 静态页面路由 (用于测试)
+	router.StaticFile("/", "./client.html")
+
+	router.Run(":8080")
+}
+
+// generateEvents 生成模拟事件数据
+func generateEvents(eventChan chan<- string, done <-chan struct{}) {
+	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			// 生成随机数据
+			data := map[string]interface{}{
+				"timestamp": time.Now().Format(time.RFC3339),
+				"value":     rand.Intn(100),
+			}
+			jsonData, _ := json.Marshal(data)
+			eventChan <- string(jsonData)
+
+		case <-done: // 当客户端断开时
+			return
+		}
+	}
+}
+
+```
+
+`client.html`：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SSE 测试客户端</title>
+</head>
+<body>
+<h1>实时数据监控</h1>
+<div id="output" style="white-space: pre-wrap;"></div>
+
+<script>
+  const output = document.getElementById('output');
+
+  // 创建 EventSource 连接
+  const eventSource = new EventSource('http://localhost:8080/sse');
+
+  // 监听 message 事件
+  eventSource.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    output.innerHTML += `[${data.timestamp}] 当前值: ${data.value}\n`;
+  };
+
+  // 处理错误
+  eventSource.onerror = function(err) {
+    console.error('SSE 错误:', err);
+    eventSource.close();
+  };
+</script>
+</body>
+</html>
+```
+
+![061811315](_index_img/061811315.gif)
+
+
+
 
 
 ### 重定向
 
+​	Gin支持两种主要的重定向方式：HTTP 重定向和路由器重定向。
 
+| 特性       | HTTP 重定向                  | 路由器重定向                                     |
+| ---------- | ---------------------------- | ------------------------------------------------ |
+| 实现方式   | `c.Redirect(code, location)` | 修改 `c.Request.URL.Path` + `r.HandleContext(c)` |
+| 客户端行为 | 收到 3xx 响应，发起新请求    | 无响应变化，服务器内部处理                       |
+| 地址栏变化 | 是（浏览器更新 URL）         | 否（保持原 URL）                                 |
+| 适用场景   | 外部跳转、SEO 优化           | 内部路径映射、动态路由                           |
+| 支持状态码 | 300-399 及 201               | 无状态码，服务器内部操作                         |
+
+#### HTTP重定向状态码
+
+| 状态码  | 英文名             | 中文名     | 使用场景                                                     | HTTP版本 | 适用场景                                       | 对客户端的影响                                 | 对搜索引擎影响                 | 注意事项                                                     |
+| ------- | ------------------ | ---------- | ------------------------------------------------------------ | -------- | ---------------------------------------------- | ---------------------------------------------- | ------------------------------ | ------------------------------------------------------------ |
+| **300** | Multiple Choices   | 多重选择   | 服务器返回多个可选资源（如不同格式），客户端需手动选择       | HTTP/1.1 | 内容协商（如多语言或多格式资源）               | 展示可选资源列表，不自动跳转                   | 无直接影响，但可能降低爬虫效率 | 极少使用，需明确提供选择方式（如 `Link` 头）                 |
+| **301** | Moved Permanently  | 永久移动   | 资源永久迁移到新 URL                                         | HTTP/1.0 | 域名更换、URL 永久重构                         | 自动跳转并缓存新 URL，后续请求直接访问新地址   | 更新索引，权重传递到新 URL     | 避免滥用，否则缓存难以清除                                   |
+| **302** | Found              | 临时移动   | 资源临时迁移到新 URL（历史遗留行为）                         | HTTP/1.0 | 临时维护、A/B 测试                             | 自动跳转，但可能将 POST 改为 GET（非严格行为） | 不传递权重，保留原 URL 索引    | 推荐用 **307/303** 替代                                      |
+| **303** | See Other          | 参见其他   | 强制客户端用 **GET** 方法访问新资源，常用于 POST 后的结果展示 | HTTP/1.1 | 表单提交后跳转到结果页                         | 自动跳转并强制使用 GET 方法                    | 与 302 类似，但语义更明确      | 确保目标资源支持 GET                                         |
+| **304** | Not Modified       | 未修改     | 客户端缓存有效，无需重新传输资源                             | HTTP/1.1 | 缓存验证（配合 `If-Modified-Since` 或 `ETag`） | 使用本地缓存，减少带宽消耗                     | 无直接影响                     | **不属于重定向**，用于优化缓存协商，响应中需包含`ETag`或`Last-Modified`标头。需正确设置缓存头（`Last-Modified`/`ETag`） |
+| **305** | Use Proxy          | 使用代理   | 请求必须通过指定代理访问（已废弃）                           | HTTP/1.1 | 代理配置（现代架构中极少使用）                 | 客户端需通过代理重试请求                       | 无影响                         | 因安全风险被废弃，现代浏览器不再支持                         |
+| **306** | (Unused)           | （未使用） | 原为 `Switch Proxy`，HTTP/1.1 中已移除                       | -        | -                                              | -                                              | -                              | 原为`Switch Proxy`，已从标准中移除，保留未使用。仅作历史参考 |
+| **307** | Temporary Redirect | 临时重定向 | 资源临时迁移到新 URL，严格保持原始请求方法（如 POST）        | HTTP/1.1 | API 重定向、需要保持请求方法                   | 自动跳转并保持原始方法                         | 不传递权重，保留原 URL 索引    | 适用于需要严格方法保持的场景                                 |
+| **308** | Permanent Redirect | 永久重定向 | 资源永久迁移到新 URL，严格保持原始请求方法                   | HTTP/1.1 | RESTful API 的永久迁移                         | 自动跳转并缓存新 URL，保持原始方法             | 更新索引，权重传递到新 URL     | 替代 301 的严格版本，但兼容性需验证                          |
+
+> ​	`Last-Modified` 标头：是一种HTTP 响应头，表示服务器上资源（如网页、图片、文件）**最后修改的时间**，格式为 `GMT`（格林尼治标准时间），例如：
+> `Last-Modified: Fri, 12 May 2023 18:53:33 GMT`。其作用是用于判断客户端（如浏览器）缓存的资源是否已过期。客户端首次请求资源时，服务器返回资源内容及 `Last-Modified` 时间。客户端后续请求时，若**缓存未过期**，会发送请求头 `If-Modified-Since`（值为之前的 `Last-Modified` 时间），询问资源是否被修改。服务器对比时间：若资源未修改，返回 **304 Not Modified**（不返回资源内容，仅返回头信息），减少带宽消耗。若资源被修改，返回 **200 OK** 及新内容。
+>
+> ​	`Last-Modified`**适用场景**：
+>
+> - 资源修改频率较低，且修改时间能准确反映内容变化。
+>
+> - 服务器能高效获取文件的最后修改时间（如静态资源）。
+>
+> 
+>
+>  	`Last-Modified`**局限性**：
+>
+> - **时间精度问题**：`Last-Modified` 的时间精度是 **秒级**，无法检测到 1 秒内的多次修改。
+> - **时间同步问题**：若客户端与服务器时间不同步，可能导致缓存判断错误（如[5]提到的 `Expires` 时间不一致问题）。
+> - **不适用频繁修改的资源**：如某些动态生成的文件可能周期性更新时间但内容未变。
+>
+> `ETag` 标头：是一种HTTP 响应头，服务器为资源生成的 **唯一标识符**（字符串），通常基于文件内容的哈希值或其他元数据生成。格式为双引号包裹的字符串，例如：`ETag: "50b1c1d4f775c61:df3"` 或 `ETag: W/"12345"`（`W/` 表示弱校验）。
+>
+> `ETag`**作用**：
+>
+> - 精确缓存验证：通过唯一标识符判断资源是否变化。
+>   - 客户端首次请求资源时，服务器返回资源内容及 `ETag`。
+>   - 客户端后续请求时，发送请求头 `If-None-Match`（值为之前的 `ETag`），让服务器验证标识符是否匹配。
+>   - 服务器对比标识符：
+>     - 若匹配，返回 **304 Not Modified**。
+>     - 若不匹配，返回 **200 OK** 及新内容。
+>
+> ------
+>
+> `ETag`**适用场景**：
+>
+> - 需要 **精确判断资源是否变化** 的场景（如秒级修改、动态内容）。
+> - 文件内容变化但修改时间未更新的情况（如某些服务器配置问题）。
+> - 需要更细粒度控制缓存一致性时。
+>
+> ------
+>
+> `ETag`**类型与优先级**：
+>
+> - **强 ETag**：精确匹配（如 `ETag: "abc123"`）。
+> - **弱 ETag**：仅比较哈希值的一部分（如 `ETag: W/"abc123"`），用于近似匹配（如版本号）。
+> - **优先级**：`ETag` 的优先级高于 `Last-Modified`（如[1][4]所述）。
+>
+> ------
+>
+> `ETag`**局限性**：
+>
+> - **服务器开销**：生成 `ETag` 需要计算哈希值，可能增加服务器负载。
+> - **配置复杂度**：需合理设计生成规则（如 Apache 默认使用文件 inode、修改时间、大小生成 ETag，见[2]）。
+>
+> | **特性**         | **Last-Modified**                  | **ETag**                       |
+> | ---------------- | ---------------------------------- | ------------------------------ |
+> | **验证方式**     | 时间戳（秒级）                     | 唯一标识符（哈希值）           |
+> | **精度**         | 秒级，无法检测 1 秒内的修改        | 精确到内容变化，即使时间未变   |
+> | **适用场景**     | 静态资源、修改频率低的资源         | 动态资源、频繁修改的资源       |
+> | **请求头配合**   | `If-Modified-Since`                | `If-None-Match`                |
+> | **优先级**       | 次要，当 `ETag` 存在时被忽略       | 主要，优先级更高               |
+> | **时间同步问题** | 存在（依赖客户端与服务器时间一致） | 无（基于内容哈希，与时间无关） |
 
 #### HTTP重定向
+
+​	HTTP 重定向通过 `c.Redirect()` 方法实现，客户端会收到重定向响应并发起新请求，支持多种状态码（如 301、302）。HTTP 重定向支持的状态码包括 300-399 范围及 201，常见的有 301（永久移动）、302（临时找到）等。若手动指定非 3xx 状态码 + `Location` 头（如 `201`），需直接操作头部：
+
+```go
+c.Header("Location", "https://new-resource-url")
+c.Status(201)  // 不会触发跳转
+```
+
+```go
+package main
+
+import (
+    "github.com/gin-gonic/gin"
+    "net/http"
+)
+
+func main() {
+    r := gin.Default()
+    r.GET("/old-page", func(c *gin.Context) {
+        c.Redirect(http.StatusMovedPermanently, "/new-page")
+    })
+    r.GET("/new-page", func(c *gin.Context) {
+        c.String(200, "这是新页面。")
+    })
+    r.Run(":8080")
+}
+```
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/old-page
+<a href="/new-page">Moved Permanently</a>.
+
+PS D:\GoPrjs2\ginDemo> curl -v http://localhost:8080/old-page        
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /old-page HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.10.1
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Content-Type: text/html; charset=utf-8
+< Location: /new-page
+< Date: Sun, 16 Mar 2025 00:29:48 GMT
+< Content-Length: 44
+<
+<a href="/new-page">Moved Permanently</a>.
+
+* Connection #0 to host localhost left intact
+PS D:\GoPrjs2\ginDemo> curl -L http://localhost:8080/old-page
+这是新页面。
+```
 
 
 
 #### 路由重定向
 
+​	路由器重定向通过修改请求路径并使用 `r.HandleContext(c)` 处理，属于服务器内部操作，客户端无感知。
 
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	r := gin.Default()
+	r.GET("/redirect-me", func(c *gin.Context) {
+		c.Request.URL.Path = "/secret-page"
+		r.HandleContext(c)
+	})
+	r.GET("/secret-page", func(c *gin.Context) {
+		c.String(200, "欢迎来到秘密页面！")
+	})
+	r.Run(":8080")
+}
+
+```
+
+
+
+```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/redirect-me   
+欢迎来到秘密页面！
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/redirect-me -v
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /redirect-me HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.10.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: text/plain; charset=utf-8
+< Date: Sun, 16 Mar 2025 01:45:52 GMT
+< Content-Length: 27
+<
+欢迎来到秘密页面！* Connection #0 to host localhost left intact
+
+```
+
+### 设置响应信息
+
+#### 设置响应头
 
 ## 中间件
 
@@ -1659,7 +2637,7 @@ PS D:\GoPrjs2\ginDemo> curl -X POST http://localhost:8080/upload -F "username=gi
 | **发布模式（Release Mode）** | `gin.ReleaseMode` | **精简日志**，仅输出关键错误信息     | **生产环境**       |
 | **测试模式（Test Mode）**    | `gin.TestMode`    | **无日志输出**                       | **单元测试**       |
 
-​	设置方式有：
+### 设置方式以及优先级
 
 | 方式                 | 优先级     | 适用场景                       |
 | -------------------- | ---------- | ------------------------------ |
