@@ -12,6 +12,8 @@ draft = false
 
 +++
 
+https://app.studyraid.com/en/read/5926/130176/built-in-middleware
+
 ## 是什么？
 
 ​	[Gin](https://github.com/gin-gonic/gin) 是一个用Go语言编写的`Web框架`，以高性能和简洁著称，类似于 Martini，但性能更高。
@@ -2143,34 +2145,15 @@ func main() {
 	// 初始化路由
 	r := gin.Default()
 
-	// 示例 1：返回固定文件（直接返回文件）
+	// 返回固定文件（直接返回文件）
 	r.GET("/file", func(c *gin.Context) {
 		// 直接返回文件（文件路径为相对路径）
 		c.File("./static/image.png")
-	})
-
-	// 示例 2：强制下载文件（设置 Content-Disposition）
-	r.GET("/download", func(c *gin.Context) {
-		// 指定文件路径和下载名称
-		c.FileAttachment("./static/image.png", "image.png")
-	})
-
-	// 加载模板文件（加载 templates 文件夹下的所有 .html 文件）
-	r.LoadHTMLGlob("templates/*")
-
-	// 定义路由：渲染 HTML 模板
-	r.GET("/", func(c *gin.Context) {
-		// 渲染模板 greet.html
-		c.HTML(http.StatusOK, "index.html", nil)
-	})
-
-	// 示例 3：静态文件目录映射
-	r.Static("/static", "./static")
+	})	
 
 	// 启动服务
 	r.Run(":8080")
 }
-
 ```
 
 
@@ -2200,6 +2183,52 @@ PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/file -o image2.png -v
 { [102227 bytes data]
 100  459k  100  459k    0     0  8902k      0 --:--:-- --:--:-- --:--:-- 9566k
 * Connection #0 to host localhost left intact
+
+```
+
+
+
+#### 文件下载
+
+##### `c.FileAttachment(filepath, filename string)`
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+func main() {
+	// 初始化路由
+	r := gin.Default()	
+
+	//强制下载文件（设置 Content-Disposition）
+	r.GET("/download", func(c *gin.Context) {
+		// 指定文件路径和下载名称
+		c.FileAttachment("./static/image.png", "image.png")
+	})
+
+	// 加载模板文件（加载 templates 文件夹下的所有 .html 文件）
+	r.LoadHTMLGlob("templates/*")
+
+	// 定义路由：渲染 HTML 模板
+	r.GET("/", func(c *gin.Context) {
+		// 渲染模板 greet.html
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
+
+
+	// 启动服务
+	r.Run(":8080")
+}
+
+```
+
+
+
+```powershell
 PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/download -o image3.png -v
 * Host localhost:8080 was resolved.
 * IPv6: ::1
@@ -2226,6 +2255,7 @@ PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/download -o image3.png -v
 100  459k  100  459k    0     0  6721k      0 --:--:-- --:--:-- --:--:-- 7174k
 * Connection #0 to host localhost left intact
 ```
+
 
 > ​	`Content-Disposition: attachment; filename="image.png"`的作用：通过设置 `Content-Disposition: attachment`，浏览器会认为响应内容是一个需要下载的附件（而非直接在页面中显示）。即使内容是浏览器支持的格式（如图片、PDF），也会弹出“保存为”对话框，让用户选择保存位置。其中`filename="image.png"` 指定了浏览器在下载对话框中显示的**建议文件名**。用户可以选择修改此名称，但默认会使用该名称。
 >
@@ -2280,21 +2310,148 @@ PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/download -o image3.png -v
 > > - **防止内容误解析**
 > >   避免浏览器将二进制文件（如可执行文件）错误识别为文本/图片等类型，导致乱码或安全风险。
 
+##### c.File(filepath string)
 
-
-#### 文件下载
+###### 纯后端
 
 ```go
+package main
 
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	r := gin.Default()
+
+	// 下载文件的路由
+	r.GET("/download/:filename", func(c *gin.Context) {
+		// 获取文件名
+		filename := c.Param("filename")
+		downloadPath := "./static/" + filename // 文件的绝对或相对路径
+
+		// 设置响应头，触发下载
+		c.Header("Content-Disposition", "attachment; filename="+filename)
+		c.Header("Content-Type", "application/octet-stream")
+
+		// 直接返回文件
+		c.File(downloadPath)
+	})
+
+	r.Run(":8080")
+}
 ```
-
-
 
 ```powershell
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/download/image.png -o image1.png 
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  459k  100  459k    0     0  14.0M      0 --:--:-- --:--:-- --:--:-- 14.4M
+PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/download/image.png -o image2.png -v
+* Host localhost:8080 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying [::1]:8080...
+* Connected to localhost (::1) port 8080
+* using HTTP/1.x
+> GET /download/image.png HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.10.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Accept-Ranges: bytes
+< Content-Disposition: attachment; filename=image.png
+< Content-Length: 470216
+< Content-Type: application/octet-stream
+< Last-Modified: Sun, 09 Mar 2025 13:59:03 GMT
+< Date: Mon, 17 Mar 2025 06:06:21 GMT
+<
+{ [102159 bytes data]
+100  459k  100  459k    0     0  8479k      0 --:--:-- --:--:-- --:--:-- 9183k
+* Connection #0 to host localhost left intact
+```
+
+###### 前后端分离
+
+```go
+package main
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	r := gin.Default()
+
+	// 静态文件服务，为方便起见，直接提供前端页面
+	r.StaticFile("/", "./static/index.html")
+
+	// 下载文件的API路由
+	r.GET("/api/download", func(c *gin.Context) {
+		filename := "image.png" // 需要下载的文件名
+		filePath := "./static/" + filename
+
+		// 设置响应头
+		c.Header("fileName", filename)
+		c.Header("Content-Type", "application/octet-stream")
+		c.Header("Content-Disposition", "attachment; filename="+filename)
+
+		// 返回文件
+		c.File(filePath)
+	})
+
+	r.Run(":8080")
+}
 
 ```
 
+`index.html`：
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Download Example</title>
+</head>
+<body>
+<button id="downloadBtn">Download File</button>
+
+<script>
+    document.getElementById('downloadBtn').addEventListener('click', function () {
+        fetch('/api/download', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => {
+                // 获取文件名
+                const fileName = response.headers.get('fileName') || 'defaultFileName.pdf';
+                return response.blob().then(blob => ({ blob, fileName }));
+            })
+            .then(({ blob, fileName }) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = fileName; // 使用获取到的文件名
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                alert('Download started');
+            })
+            .catch(console.error);
+    });
+</script>
+</body>
+</html>
+```
+
+##### `c.DataFromReader`
 
 
 
