@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "OnlyBindQueryString"
+date = 2025-03-18T17:01:17+08:00
+weight = 270
 type = "docs"
 description = ""
 isCJKLanguage = true

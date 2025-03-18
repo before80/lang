@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "UsingHTTPMethod"
+date = 2025-03-18T17:01:47+08:00
+weight = 420
 type = "docs"
 description = ""
 isCJKLanguage = true

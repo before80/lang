@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "CustomLogFile"
+date = 2025-03-18T17:00:46+08:00
+weight = 110
 type = "docs"
 description = ""
 isCJKLanguage = true

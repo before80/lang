@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "ParametersInPath"
+date = 2025-03-18T17:01:19+08:00
+weight = 280
 type = "docs"
 description = ""
 isCJKLanguage = true

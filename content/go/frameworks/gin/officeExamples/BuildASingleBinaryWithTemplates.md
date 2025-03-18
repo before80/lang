@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "BuildASingleBinaryWithTemplates"
+date = 2025-03-18T17:00:38+08:00
+weight = 60
 type = "docs"
 description = ""
 isCJKLanguage = true

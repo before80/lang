@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "Cookie"
+date = 2025-03-18T17:00:42+08:00
+weight = 80
 type = "docs"
 description = ""
 isCJKLanguage = true

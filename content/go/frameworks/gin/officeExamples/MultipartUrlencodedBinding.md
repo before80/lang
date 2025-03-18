@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "MultipartUrlencodedBinding"
+date = 2025-03-18T17:01:12+08:00
+weight = 240
 type = "docs"
 description = ""
 isCJKLanguage = true

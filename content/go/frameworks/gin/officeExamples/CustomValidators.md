@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "CustomValidators"
+date = 2025-03-18T17:00:50+08:00
+weight = 130
 type = "docs"
 description = ""
 isCJKLanguage = true

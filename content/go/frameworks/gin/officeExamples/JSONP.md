@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "JSONP"
+date = 2025-03-18T17:01:06+08:00
+weight = 210
 type = "docs"
 description = ""
 isCJKLanguage = true

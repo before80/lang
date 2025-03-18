@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "XMLJSONYAMLProtoBufRendering"
+date = 2025-03-18T19:25:54+08:00
+weight = 450
 type = "docs"
 description = ""
 isCJKLanguage = true

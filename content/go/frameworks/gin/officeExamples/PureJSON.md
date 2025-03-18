@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "PureJSON"
+date = 2025-03-18T17:01:21+08:00
+weight = 290
 type = "docs"
 description = ""
 isCJKLanguage = true

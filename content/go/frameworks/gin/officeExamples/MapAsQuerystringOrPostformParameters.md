@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-date = {{ .Date }}
-weight = 1
+title = "MapAsQuerystringOrPostformParameters"
+date = 2025-03-18T17:01:08+08:00
+weight = 220
 type = "docs"
 description = ""
 isCJKLanguage = true
