@@ -1,5 +1,5 @@
 +++
-title = "BindForm-dataRequestWithCustomStruct"
+title = "Bind form-data request with custom struct"
 date = 2025-03-18T17:00:30+08:00
 weight = 20
 type = "docs"
@@ -8,6 +8,8 @@ isCJKLanguage = true
 draft = false
 
 +++
+
+> 原文：[https://gin-gonic.com/docs/examples/bind-form-data-request-with-custom-struct/](https://gin-gonic.com/docs/examples/bind-form-data-request-with-custom-struct/)
 
 ## 源码
 

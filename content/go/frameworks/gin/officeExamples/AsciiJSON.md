@@ -9,6 +9,8 @@ draft = false
 
 +++
 
+> 原文：[https://gin-gonic.com/docs/examples/ascii-json/](https://gin-gonic.com/docs/examples/ascii-json/)
+
 ## 源码
 
 ```go

@@ -9,6 +9,8 @@ draft = false
 
 +++
 
+> 原文：[https://gin-gonic.com/docs/examples/bind-query-or-post/](https://gin-gonic.com/docs/examples/bind-query-or-post/)
+
 ## 源码
 
 ```go

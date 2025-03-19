@@ -1,5 +1,5 @@
 +++
-title = "BindHtmlCheckboxes"
+title = "Bind html checkboxes"
 date = 2025-03-18T17:00:32+08:00
 weight = 30
 type = "docs"
@@ -8,6 +8,8 @@ isCJKLanguage = true
 draft = false
 
 +++
+
+> 原文：[https://gin-gonic.com/docs/examples/bind-html-checkbox/](https://gin-gonic.com/docs/examples/bind-html-checkbox/)
 
 ## 源码
 
