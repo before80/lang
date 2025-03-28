@@ -964,7 +964,7 @@ func main() {
 
 
 
-```
+```powershell
 PS D:\GoPrjs2\ginDemo> curl  http://localhost:8080/product?id=123
 Product ID: "123"
 PS D:\GoPrjs2\ginDemo> curl  http://localhost:8080/product       
@@ -1145,7 +1145,7 @@ r.GET("/user/:name/*action", func(c *gin.Context) {
 r.Run(":8080")
 ```
 
-```sh
+```powershell
 PS D:\GoPrjs2\ginDemo> curl http://localhost:8080/user/john/talking
 john is /talking
 ```
@@ -1198,7 +1198,7 @@ func main() {
 curl -X POST "http://localhost:8080/form" -d "username=admin&password=123456"
 ```
 
-> ​	`-X` 的作用是指定 HTTP 请求方法，比如 `GET`、`POST`、`PUT`、`DELETE` 等，是`--header`的简写。它允许你明确指定 HTTP 请求的类型，而不是默认的 `GET` 请求。
+> ​	`-X` 的作用是指定 HTTP 请求方法，比如 `GET`、`POST`、`PUT`、`DELETE` 等，是`--request`的简写。它允许你明确指定 HTTP 请求的类型，而不是默认的 `GET` 请求。
 >
 > ​	`-d` 的作用是 **指定发送的数据**，是`--data`的简写。通常，这些数据会以表单数据（`application/x-www-form-urlencoded`）或 JSON 格式发送，具体取决于请求的 `Content-Type` 头。
 >
@@ -1537,7 +1537,7 @@ func main() {
 
 ​	`c.FormFile("file_field")` 方法获取上传的单个文件。
 
-```
+```go
 package main
 
 import (
