@@ -1,7 +1,7 @@
 +++
-title = "{{ .Name }}"
-linkTitle = "{{ .Name }}"
-date = {{ .Date }}
+title = "c"
+linkTitle = "c"
+date = 2025-04-11T15:21:45+08:00
 type="docs"
 description = ""
 isCJKLanguage = true
@@ -10,5 +10,4 @@ draft = false
 	weight = 20
 +++
 
-
-
+> 原文：
