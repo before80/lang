@@ -1,0 +1,159 @@
++++
+title = "比较运算符"
+date = 2025-04-12T20:50:51+08:00
+weight = 170
+type = "docs"
+description = ""
+isCJKLanguage = true
+draft = false
+
++++
+
+> 原文：[https://zh.cppreference.com/w/c/language/operator_comparison](https://zh.cppreference.com/w/c/language/operator_comparison)
+
+​	比较运算符是二元运算符，它们测试条件，而若条件逻辑上为真则返回 1，若条件为假则返回 0。
+
+| 运算符 |  运算符名  |   示例   |      描述      |
+| :----: | :--------: | :------: | :------------: |
+|  `==`  |    等于    | `a == b` |    a 等于 b    |
+|  `!=`  |   不等于   | `a != b` |   a 不等于b    |
+|  `<`   |    小于    | `a < b`  |    a 小于 b    |
+|  `>`   |    大于    | `a > b`  |    a 大于 b    |
+|  `<=`  | 小于或等于 | `a <= b` | a 小于或等于 b |
+|  `>=`  | 大于或等于 | `a >= b` | a 大于或等于 b |
+
+## 关系运算符
+
+​	关系运算符表达式的形式为
+
+| *lhs* `<` *rhs*  | (1)  |      |
+| ---------------- | ---- | ---- |
+| *lhs* `>` *rhs*  | (2)  |      |
+| *lhs* `<=` *rhs* | (3)  |      |
+| *lhs* `>=` *rhs* | (4)  |      |
+
+1) 小于表达式
+2) 大于表达式
+3) 小于或等于表达式
+4) 大于或等于表达式
+
+​	其中
+
+| *lhs*, *rhs* | -    | 都拥有实数类型或都拥有指向对象指针类型的表达式 |
+| ------------ | ---- | ---------------------------------------------- |
+
+​	任何关系运算符表达式的类型均为 int，而当指定关系成立时其值（非左值）为 1，而当指定关系不成立时其值为 0。
+
+​	若 *lhs* 和 *rhs* 是任何[实数类型](https://zh.cppreference.com/w/c/language/types)的表达式，则
+
+- 进行[一般算术转换](https://zh.cppreference.com/w/c/language/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2)
+- 以通常数学意义比较操作数转换后的值（但正零与负零比较相等，且任何涉及 NaN 的比较均返回零）
+
+> 注意
+>
+> ​	不能用这些运算符比较复数和虚数。
+
+​	若 *lhs* 和 *rhs* 是指针类型的表达式，则它们必须都是指向[兼容类型](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)对象的指针，但忽略被指向对象上的限定。
+
+- 指向并非数组元素的对象的指针被当做如同它是指向有一个元素的数组的首元素的指针
+- 若两个指针指向同一对象，或都指向同一数组的尾后一位置，则它们比较相等
+- 若两个指针指向同一数组的不同元素，则指向有较大下标的元素的指针比较大。
+- 若一个指针指向数组元素，而另一指针指向同一数组的尾后一位置，则尾后一位置指针比较大于
+- 若两个指针指向同一[结构体](https://zh.cppreference.com/w/c/language/struct)的成员，则指向结构体声明中较后声明的成员的指针，比较大于指向较先声明的成员的指针。
+- 指向同一联合体成员的指针比较相等
+- 所有其他指针比较引起未定义行为
+
+```c
+#include <assert.h>
+int main(void)
+{
+    assert(1 < 2);
+    assert(2+2 <= 4.0); // int 可转换为 double ，二个 4.0 比较相等
+ 
+    struct { int x,y; } s;
+    assert(&s.x < &s.y); // 结构体成员以声明顺序比较
+ 
+    double d = 0.0/0.0; // NaN
+    assert( !(d < d) );
+    assert( !(d > d) );
+    assert( !(d <= d) );
+    assert( !(d >= d) );
+    assert( !(d == d) );
+ 
+    float f = 0.1; // f = 0.100000001490116119384765625
+    double g = 0.1; // g = 0.1000000000000000055511151231257827021181583404541015625
+    assert(f > g); // 不同值
+}
+```
+
+## 相等性运算符
+
+​	相等性运算符的形式为
+
+| *lhs* `==` *rhs* | (1)  |
+| ---------------- | ---- |
+| *lhs* `!=` *rhs* | (2)  |
+
+1) 等于表达式
+2) 不等于表达式
+
+​	其中：
+
+lhs, rhs	-	下列表达式之一：
+
+- 都拥有任何[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)（包括复数和虚数）
+- 均拥有 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 类型(C23 起)
+- 一个拥有 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 类型而另一个是空指针常量(C23 起)
+
+- 都是指向[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)类型的对象或函数的指针，忽略所指向类型的限定符
+- 一个是指向对象的指针，而另一个是指向（可有限定的）void
+- 一个是指向对象或函数的指针，而另一个是如 [NULL](https://zh.cppreference.com/w/c/types/NULL) 或 nullptr(C23 起)的空指针常量
+
+​	任何相等性运算符表达式的类型均为 int，当指定关系成立时其值（非左值）为 1，而当指定关系不成立时其值为 0。
+
+- 若两个运算数都拥有算术类型，则进行[一般算术转换](https://zh.cppreference.com/w/c/language/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2)，而以通常数学意义比较所得值（但正零和负零比较相等，而任何涉及 NaN 值的比较，包括与自身的相等，都返回零）。特别是若复数类型值的实部比较相等且虚部比较相等，则它们相等。
+- 两个 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 值或一个 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 与一个空指针常量比较相等 (C23 起)
+
+- 若一个操作数为指针而另一空指针常量，则首先[转换](https://zh.cppreference.com/w/c/language/conversion)空指针常量为该指针的类型（给出空指针值），并以后述方式比较两个指针
+- 若一个操作数是指针而另一者为指向 void 的指针，则[转换](https://zh.cppreference.com/w/c/language/conversion)非 void 指针为指向 void 指针，并以后述方式比较两个指针
+- 若下列任一为真，则两个指针比较相等：
+  - 它们都是其类型的空指针值
+  - 它们都是指向相同对象或函数的指针
+  - 一个指针指向结构体/联合体/数组对象，而另一个指向其首成员/任何成员/首元素
+  - 它们都是指向同一数组末元素后一位置的指针
+  - 一个是数组尾后一位置指针，另一个指向（同类型）的相异数组起始，而后一数组在更大的数组或无填充的结构体中后随前一数组
+
+
+（同关系运算符，指向非数组元素的对象的指针表现如同指向大小为 1 的数组元素的指针）
+
+## 注意
+
+​	不能自动比较结构体类型的对象，而通过 [memcmp](https://zh.cppreference.com/w/c/string/byte/memcmp) 比较它们不可靠，因为填充字节可拥有任何值。
+
+​	因为指针比较能用于指向 `void` 的指针，故 C 中可定义宏 [NULL](https://zh.cppreference.com/w/c/types/NULL) 为 (void*)0，不过 C++ 中这会非法，因为其中 `void` 指针不可隐式转换为有类型指针。
+
+​	比较浮点值是否相等时应谨慎，因为许多运算的结果无法准确表示，而必须舍入。实践中，通常以允许最后位置相差一或多个单位的方式比较浮点数。
+
+```c
+#include <assert.h>
+int main(void)
+{
+    assert(2+2 == 4.0); // int 可转换为 double，二个 4.0 比较相等
+ 
+    int n[2][3] = {1,2,3,4,5,6};
+    int* p1 = &n[0][2]; // 第一栏中的最后元素
+    int* p2 = &n[1][0]; // 第二栏的起始
+    assert(p1+1 == p2); // 比较相等
+ 
+    double d = 0.0/0.0; // NaN
+    assert( d != d ); // NaN 不等于自身
+ 
+    float f = 0.1; // f = 0.100000001490116119384765625
+    double g = 0.1; // g = 0.1000000000000000055511151231257827021181583404541015625
+    assert(f != g); // 不同值
+}
+```
+
+## 参阅
+
+比较运算符的 [C++ 文档](https://zh.cppreference.com/w/cpp/language/operator_comparison)
