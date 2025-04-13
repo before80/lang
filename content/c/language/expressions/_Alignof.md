@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/_Alignof](https://zh.cppreference.com/w/c/language/_Alignof)
 
-查询其运算数类型的对齐要求。
+​	查询其运算数类型的对齐要求。
 
 ## 语法
 
@@ -19,23 +19,21 @@ draft = false
 | ------------------------ | ---- | ------------------ |
 | `alignof(` *类型名* `)`  |      | (C23 起)           |
 
-| 通常通过便利宏 [`alignof`](https://zh.cppreference.com/w/c/types) 使用此运算符，该宏于头文件 `stdalign.h` 提供。 | (C23 前) |
-| ------------------------------------------------------------ | -------- |
-|                                                              |          |
+​	通常通过便利宏 [`alignof`](https://zh.cppreference.com/w/c/types) 使用此运算符，该宏于头文件 `stdalign.h` 提供。(C23 前)
 
 ## 解释
 
-返回*类型名* ﻿ 所[指名](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E5.90.8D)的类型的[对齐要求](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)。若*类型名* ﻿为数组类型，则结果为数组元素的对齐要求。*类型名* ﻿不能为函数类型或不完整类型。
+​	返回*类型名* ﻿ 所[指名](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E5.90.8D)的类型的[对齐要求](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)。若*类型名* ﻿为数组类型，则结果为数组元素的对齐要求。*类型名* ﻿不能为函数类型或不完整类型。
 
-结果是 [size_t](https://zh.cppreference.com/w/c/types/size_t) 类型整数常量。
+​	结果是 [size_t](https://zh.cppreference.com/w/c/types/size_t) 类型整数常量。
 
-不求值其运算数（故用作运算数的外部标识符不必有定义）。
+​	不求值其运算数（故用作运算数的外部标识符不必有定义）。
 
-若*类型名* ﻿为 [VLA](https://zh.cppreference.com/w/c/language/array) 类型，则不求值其大小表达式。
+​	若*类型名* ﻿为 [VLA](https://zh.cppreference.com/w/c/language/array) 类型，则不求值其大小表达式。
 
 ## 注解
 
-作为非标准扩展，一些 C 编译器允许把 `_Alignof`(C23 前)`alignof`(C23 起) 用于表达式。
+​	作为非标准扩展，一些 C 编译器允许把 `_Alignof`(C23 前)`alignof`(C23 起) 用于表达式。
 
 ## 关键词
 
@@ -43,7 +41,7 @@ draft = false
 
 ## 示例
 
-```
+```c
 #include <stdalign.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -60,16 +58,16 @@ int main(void)
 
 可能的输出：
 
-```
+```txt
 Alignment of char = 1
 Alignment of max_align_t = 16
 alignof(float[10]) = 4
 alignof(struct{char c; int n;}) = 4
 ```
 
-### 缺陷报告
+## 缺陷报告
 
-下列更改行为的缺陷报告追溯地应用于以前出版的 C 标准。
+​	下列更改行为的缺陷报告追溯地应用于以前出版的 C 标准。
 
 | 缺陷报告                                                     | 应用于 | 出版时的行为                                      | 正确行为 |
 | ------------------------------------------------------------ | ------ | ------------------------------------------------- | -------- |

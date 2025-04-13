@@ -93,7 +93,7 @@ int main(void)
   - 若实参的值以两个类型均可表示，则认为相同整数类型的有符号和无符号版本兼容。
   - 认为指向 void 指针和指向（可有 cvr 限定的）字符类型指针兼容
 
-## 注解
+### 注解
 
 ​	指代所调用的函数的 *表达式* 和所有实参的求值，互相之间[无定序](https://zh.cppreference.com/w/c/language/eval_order)（但在函数开始执行前有一个序列点）
 
@@ -122,7 +122,7 @@ int main(void)
 
 ​	必须用在作用域中的原型调用忽略不使用实参的函数，如 [printf](https://zh.cppreference.com/w/c/io/fprintf)（这种函数的原型需要使用[尾随省略号](https://zh.cppreference.com/w/c/language/variadic)形参），以避免未定义行为。
 
-当前准备函数形参的语义的标准遣词是有缺陷的，因为它指定在调用时形参从实参赋值，这错误地拒绝了 const 限定的形参或成员类型，并且不恰当地应用了在许多平台上对于函数形参无法实现的 volatile 语义。C11 后的缺陷报告 [DR427](https://open-std.org/JTC1/SC22/WG14/www/docs/n2396.htm#dr_427) 提议将该语义从赋值改为初始化，但被作为非缺陷关闭。
+​	当前准备函数形参的语义的标准遣词是有缺陷的，因为它指定在调用时形参从实参赋值，这错误地拒绝了 const 限定的形参或成员类型，并且不恰当地应用了在许多平台上对于函数形参无法实现的 volatile 语义。C11 后的缺陷报告 [DR427](https://open-std.org/JTC1/SC22/WG14/www/docs/n2396.htm#dr_427) 提议将该语义从赋值改为初始化，但被作为非缺陷关闭。
 
 ​	其 *表达式* 完全由一个标识符组成，而未声明该标识符的函数调用表达式，表现为通过将该标识符声明如下：(C99 前)
 
@@ -249,7 +249,7 @@ int a[(2,3)]; // OK：大小为 3 的 VLA 数组（因为 (2, 3) 不是常量表
  (sizeof(*(void *)(x))           // 因不完整类型而错误
 ```
 
-## 注解
+### 注解
 
 ​	条件运算符决不是[左值表达式](https://zh.cppreference.com/w/c/language/value_category)，尽管它可以返回结构体/联合体类型的对象。其他可以返回结构体的表达式仅有[赋值](https://zh.cppreference.com/w/c/language/operator_assignment)、[逗号](https://zh.cppreference.com/w/c/language/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6)、[函数调用](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)和[复合字面量](https://zh.cppreference.com/w/c/language/compound_literal)。
 

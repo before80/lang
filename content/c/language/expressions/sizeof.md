@@ -11,9 +11,9 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/sizeof](https://zh.cppreference.com/w/c/language/sizeof)
 
-查询对象或类型的大小。
+​	查询对象或类型的大小。
 
-在必须知道对象实际大小时使用。
+​	在必须知道对象实际大小时使用。
 
 ## 语法
 
@@ -32,35 +32,29 @@ draft = false
 
 ​	取决于计算机架构，[字节](https://en.wikipedia.org/wiki/byte)可能由 8 或更多位构成，准确数量作为 [CHAR_BIT](https://zh.cppreference.com/w/c/types/limits) 提供。
 
-​	sizeof(char)、sizeof(signed char) 和 sizeof(unsigned char) 始终返回 1。
+​	`sizeof(char)`、`sizeof(signed char)` 和 `sizeof(unsigned char)` 始终返回 1。
 
 `sizeof` 不能用于函数类型、不完整类型（含void）或[位域](https://zh.cppreference.com/w/c/language/bit_field)左值。
 
-​	应用 sizeof 到 [结构体](https://zh.cppreference.com/w/c/language/struct)或[联合体](https://zh.cppreference.com/w/c/language/union)类型运算数时，结果是这种对象中的总字节数，包含内部和尾随填充。尾随填充使得若对象在数组中，则此数组中下个元素的对齐要求会得到满足，换言之，`sizeof(T)` 返回 T[] 数组中元素的大小。
+​	应用 `sizeof` 到 [结构体](https://zh.cppreference.com/w/c/language/struct)或[联合体](https://zh.cppreference.com/w/c/language/union)类型运算数时，结果是这种对象中的总字节数，包含内部和尾随填充。尾随填充使得若对象在数组中，则此数组中下个元素的对齐要求会得到满足，换言之，`sizeof(T)` 返回 T[] 数组中元素的大小。
 
-| 若 *类型* 为 [VLA](https://zh.cppreference.com/w/c/language/array) 类型，而更改其表达式的值不影响 sizeof 的结果，则不指定是否求值该大小表达式。 | (C99 起) |
-| ------------------------------------------------------------ | -------- |
-|                                                              |          |
+​	若 *类型* 为 [VLA](https://zh.cppreference.com/w/c/language/array) 类型，而更改其表达式的值不影响 `sizeof` 的结果，则不指定是否求值该大小表达式。(C99 起)
 
-除非 *表达式* 为 [VLA](https://zh.cppreference.com/w/c/language/array)，(C99 起)不求值 *表达式* 且 `sizeof` 运算符能在整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)中使用。
+​	除非 *表达式* 为 [VLA](https://zh.cppreference.com/w/c/language/array)，(C99 起)不求值 *表达式* 且 `sizeof` 运算符能在整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)中使用。
 
-| 若 *表达式* 的类型为[非常量长度数组](https://zh.cppreference.com/w/c/language/array)类型，则求值 *表达式*，并在运行时计算其所求值的数组大小。 | (C99 起) |
-| ------------------------------------------------------------ | -------- |
-|                                                              |          |
+​	若 *表达式* 的类型为[非常量长度数组](https://zh.cppreference.com/w/c/language/array)类型，则求值 *表达式*，并在运行时计算其所求值的数组大小。(C99 起)
 
-任何[数组](https://zh.cppreference.com/w/c/language/array) a ，包含 VLA (C99 起)的元素数可用表达式 sizeof a / sizeof a[0] 确定。注意若 a 拥有指针类型（例如在函数形参类型调整的数组到指针转换后），此表达式会简单地将指针类型中的字节数除以被指向类型中的字节数。
+​	任何[数组](https://zh.cppreference.com/w/c/language/array) a ，包含 VLA (C99 起)的元素数可用表达式 `sizeof a / sizeof a[0]` 确定。注意若 a 拥有指针类型（例如在函数形参类型调整的数组到指针转换后），此表达式会简单地将指针类型中的字节数除以被指向类型中的字节数。
 
-### 关键词
+## 关键词
 
 [`sizeof`](https://zh.cppreference.com/w/c/keyword/sizeof)
 
-### 示例
+## 示例
 
-示例输出对应拥有 64 位指针和 32 位 int 的平台
+​	示例输出对应拥有 64 位指针和 32 位 int 的平台
 
-运行此代码
-
-```
+```c
 #include <stdio.h>
  
 int main(void)
@@ -85,7 +79,7 @@ int main(void)
 
 可能的输出：
 
-```
+```txt
 sizeof(float)          = 4
 sizeof(void(*)(void))  = 8
 sizeof(char[10])       = 10
