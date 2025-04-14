@@ -1,7 +1,7 @@
 +++
 title = "<stdio.h>"
 date = 2025-04-13T23:02:13+08:00
-weight = 1
+weight = 220
 type = "docs"
 description = ""
 isCJKLanguage = true
