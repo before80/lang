@@ -22,7 +22,7 @@ draft = false
 
 | [NULL   ](https://zh.cppreference.com/w/c/types/NULL)        | 实现定义的空指针常量 (宏常量)                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [LC_ALL   LC_COLLATE   LC_CTYPE   LC_MONETARY   LC_NUMERIC   LC_TIME   ](https://zh.cppreference.com/w/c/locale/LC_categories) | [setlocale](https://zh.cppreference.com/w/c/locale/setlocale) 所用的本地环境类别 (宏常量) |
+| [LC_ALL   LC_COLLATE <br /> LC_CTYPE  <br />LC_MONETARY  <br />LC_NUMERIC  <br />LC_TIME   ](https://zh.cppreference.com/w/c/locale/LC_categories) | [setlocale](https://zh.cppreference.com/w/c/locale/setlocale) 所用的本地环境类别 (宏常量) |
 
 ## 函数
 

@@ -11,71 +11,65 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/complex](https://zh.cppreference.com/w/c/header/complex)
 
-此标头是[复数算术](https://zh.cppreference.com/w/c/numeric/complex)库的一部分。
+​	此标头是[复数算术](https://zh.cppreference.com/w/c/numeric/complex)库的一部分。
+
+
 
 ## 类型
 
-| [imaginary](https://zh.cppreference.com/w/c/numeric/complex/imaginary)(C99) | 虚数类型宏 (关键词宏) |
+| [imaginary (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/imaginary) | 虚数类型宏 (关键词宏) |
 | ------------------------------------------------------------ | --------------------- |
-| [complex](https://zh.cppreference.com/w/c/numeric/complex/complex)(C99) | 复数类型宏 (关键词宏) |
-
-xxxxxxxxxx14 1#if __STDC_VERSION__ >= 202311L2#   define __STDC_VERSION_ASSERT_H__ 202311L3#   ifdef NDEBUG4#       define assert(...) ((void)0)5#   else6#       define assert(...) /* 由实现定义 */7#   endif8#else9#   ifdef NDEBUG10#       define assert(condition) ((void)0)11#   else12#       define assert(condition) /* 由实现定义 */13#   endif14#endifc
+| [complex (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/complex) | 复数类型宏 (关键词宏) |
 
 ## 虚数常量
 
-| [_Imaginary_I](https://zh.cppreference.com/w/c/numeric/complex/Imaginary_I)(C99) | 虚数单位常量 i (宏常量)       |
+| [_Imaginary_I (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/Imaginary_I) | 虚数单位常量 i (宏常量)       |
 | ------------------------------------------------------------ | ----------------------------- |
-| [_Complex_I](https://zh.cppreference.com/w/c/numeric/complex/Complex_I)(C99) | 复数单位常量 i (宏常量)       |
-| [I](https://zh.cppreference.com/w/c/numeric/complex/I)(C99)  | 复数或虚数单位常量 i (宏常量) |
+| [_Complex_I (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/Complex_I) | 复数单位常量 i (宏常量)       |
+| [I (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/I) | 复数或虚数单位常量 i (宏常量) |
 
+## 操作
 
-
-## 操作 
-
-| [CMPLX (C11)@!br /!@CMPLXF (C11)@!br /!@CMPLXL (C11)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/CMPLX) | 由实部和虚部构建复数 (宏函数) |
+| [CMPLX (C11)<br />CMPLXF (C11)<br />CMPLXL (C11)<br />](https://zh.cppreference.com/w/c/numeric/complex/CMPLX) | 由实部和虚部构建复数 (宏函数) |
 | ------------------------------------------------------------ | ----------------------------- |
-| [creal (C99)@!br /!@crealf (C99)@!br /!@creall (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/creal) | 计算复数的实部 (函数)         |
-| [cimag (C99)@!br /!@cimagf (C99)@!br /!@cimagl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/cimag) | 计算复数的虚部 (函数)         |
-| [cabs (C99)@!br /!@cabsf (C99)@!br /!@cabsl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/cabs) | 计算复数的模（绝对值） (函数) |
-| [carg (C99)@!br /!@cargf (C99)@!br /!@cargl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/carg) | 计算复数的辐角 (函数)         |
-| [conj (C99)@!br /!@conjf (C99)@!br /!@conjl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/conj) | 计算共轭复数 (函数)           |
-| [cproj (C99)@!br /!@cprojf (C99)@!br /!@cprojl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/cproj) | 计算黎曼球上的投影 (函数)     |
-|                                                              |                               |
+| [creal (C99)<br />crealf (C99)<br />creall (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/creal) | 计算复数的实部 (函数)         |
+| [cimag (C99)<br />cimagf (C99)<br />cimagl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/cimag) | 计算复数的虚部 (函数)         |
+| [cabs (C99)<br />cabsf (C99)<br />cabsl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/cabs) | 计算复数的模（绝对值） (函数) |
+| [carg (C99)<br />cargf (C99)<br />cargl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/carg) | 计算复数的辐角 (函数)         |
+| [conj (C99)<br />conjf (C99)<br />conjl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/conj) | 计算共轭复数 (函数)           |
+| [cproj (C99)<br />cprojf (C99)<br />cprojl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/cproj) | 计算黎曼球上的投影 (函数)     |
 
-##### 指数函数
+### 指数函数
 
-| [cexp (C99)@!br /!@cexpf (C99)@!br /!@cexpl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/cexp) | 计算复数的 e 底指数 (函数) |
+| [cexp (C99)<br />cexpf (C99)<br />cexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/cexp) | 计算复数的 e 底指数 (函数) |
 | ------------------------------------------------------------ | -------------------------- |
-| [clog (C99)@!br /!@clogf (C99)@!br /!@clogl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/clog) | 计算复数的自然对数 (函数)  |
-|                                                              |                            |
+| [clog (C99)<br />clogf (C99)<br />clogl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/clog) | 计算复数的自然对数 (函数)  |
 
-##### 幂函数
+### 幂函数
 
-| [cpow (C99)@!br /!@cpowf (C99)@!br /!@cpowl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/cpow) | 计算复数幂函数 (函数) |
+| [cpow (C99)<br />cpowf (C99)<br />cpowl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/cpow) | 计算复数幂函数 (函数) |
 | ------------------------------------------------------------ | --------------------- |
-| [csqrt (C99)@!br /!@csqrtf (C99)@!br /!@csqrtl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/csqrt) | 计算复数平方根 (函数) |
-|                                                              |                       |
+| [csqrt (C99)<br />csqrtf (C99)<br />csqrtl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/csqrt) | 计算复数平方根 (函数) |
 
-##### 三角函数
+### 三角函数
 
-| [csin (C99)@!br /!@csinf (C99)@!br /!@csinl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/csin) | 计算复数正弦 (函数)   |
+| [csin (C99)<br />csinf (C99)<br />csinl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/csin) | 计算复数正弦 (函数)   |
 | ------------------------------------------------------------ | --------------------- |
-| [ccos (C99)@!br /!@ccosf (C99)@!br /!@ccosl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/ccos) | 计算复数余弦 (函数)   |
-| [ctan (C99)@!br /!@ctanf (C99)@!br /!@ctanl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/ctan) | 计算复数正切 (函数)   |
-| [casin (C99)@!br /!@casinf (C99)@!br /!@casinl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/casin) | 计算复数反正弦 (函数) |
-| [cacos (C99)@!br /!@cacosf (C99)@!br /!@cacosl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/cacos) | 计算复数反余弦 (函数) |
-| [catan (C99)@!br /!@catanf (C99)@!br /!@catanl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/catan) | 计算复数反正切 (函数) |
-|                                                              |                       |
+| [ccos (C99)<br />ccosf (C99)<br />ccosl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/ccos) | 计算复数余弦 (函数)   |
+| [ctan (C99)<br />ctanf (C99)<br />ctanl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/ctan) | 计算复数正切 (函数)   |
+| [casin (C99)<br />casinf (C99)<br />casinl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/casin) | 计算复数反正弦 (函数) |
+| [cacos (C99)<br />cacosf (C99)<br />cacosl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/cacos) | 计算复数反余弦 (函数) |
+| [catan (C99)<br />catanf (C99)<br />catanl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/catan) | 计算复数反正切 (函数) |
 
-##### 双曲函数
+### 双曲函数
 
-| [csinh (C99)@!br /!@csinhf (C99)@!br /!@csinhl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/csinh) | 计算复数双曲正弦 (函数)   |
+| [csinh (C99)<br />csinhf (C99)<br />csinhl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/csinh) | 计算复数双曲正弦 (函数)   |
 | ------------------------------------------------------------ | ------------------------- |
-| [ccosh (C99)@!br /!@ccoshf (C99)@!br /!@ccoshl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/ccosh) | 计算复双曲余弦 (函数)     |
-| [ctanh (C99)@!br /!@ctanhf (C99)@!br /!@ctanhl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/ctanh) | 计算复数双曲正切 (函数)   |
-| [casinh (C99)@!br /!@casinhf (C99)@!br /!@casinhl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/casinh) | 计算复数反双曲正弦 (函数) |
-| [cacosh (C99)@!br /!@cacoshf (C99)@!br /!@cacoshl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/cacosh) | 计算复数反双曲余弦 (函数) |
-| [catanh (C99)@!br /!@catanhf (C99)@!br /!@catanhl (C99)@!br /!@](https://zh.cppreference.com/w/c/numeric/complex/catanh) | 计算复数反双曲正切 (函数) |
+| [ccosh (C99)<br />ccoshf (C99)<br />ccoshl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/ccosh) | 计算复双曲余弦 (函数)     |
+| [ctanh (C99)<br />ctanhf (C99)<br />ctanhl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/ctanh) | 计算复数双曲正切 (函数)   |
+| [casinh (C99)<br />casinhf (C99)<br />casinhl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/casinh) | 计算复数反双曲正弦 (函数) |
+| [cacosh (C99)<br />cacoshf (C99)<br />cacoshl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/cacosh) | 计算复数反双曲余弦 (函数) |
+| [catanh (C99)<br />catanhf (C99)<br />catanhl (C99)<br />](https://zh.cppreference.com/w/c/numeric/complex/catanh) | 计算复数反双曲正切 (函数) |
 
 ## 概要
 

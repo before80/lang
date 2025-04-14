@@ -4,7 +4,7 @@
 
 ```js
 // 1
-// 将 出现在表格中的h4 h5 h6 单独出来，生成菜单后方便查找
+// 将 出现在表格中的h3 h4 h5 h6 单独出来，生成菜单后方便查找
 
 function splitTableByHeadings() {
     const tables = document.querySelectorAll('table.t-dsc-begin');
@@ -14,7 +14,7 @@ function splitTableByHeadings() {
 
         // 收集所有需要分割的行索引
         rows.forEach((row, index) => {
-            const headings = row.querySelectorAll('h4, h5, h6');
+            const headings = row.querySelectorAll('h3, h4, h5, h6');
             if (headings.length > 0) {
                 splitIndices.push(index);
             }
@@ -27,7 +27,7 @@ function splitTableByHeadings() {
             newTable.classList.add('t-dsc-begin');
 
             const headingRow = rows[splitIndex];
-            const heading = headingRow.querySelector('h4, h5, h6');
+            const heading = headingRow.querySelector('h3, h4, h5, h6');
 
             // 移除当前表格中分割点之后的行，并添加到新表格
             for (let j = rows.length - 1; j > splitIndex; j--) {

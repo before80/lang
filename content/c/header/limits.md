@@ -15,20 +15,20 @@ draft = false
 
 ## 核心语言整数类型的极限
 
-| BOOL_WIDTH   (C23)                                           | `_Bool` 的位宽 (宏常量)                                      |
+| BOOL_WIDTH (C23)<br />                                       | `_Bool` 的位宽 (宏常量)                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| BOOL_MAX   (C29)                                             | `_Bool` 的最大值 (宏常量)                                    |
-| CHAR_BIT                                                     | 字节的位数 (宏常量)                                          |
-| MB_LEN_MAX                                                   | 多字节字符的最大字节数 (宏常量)                              |
-| CHAR_WIDTH   (C23)                                           | char 的位宽，同 `CHAR_BIT` (宏常量)                          |
-| CHAR_MIN                                                     | char 的最小值 (宏常量)                                       |
-| CHAR_MAX                                                     | char 的最大值 (宏常量)                                       |
-| SCHAR_WIDTH   SHRT_WIDTH   INT_WIDTH   LONG_WIDTH   LLONG_WIDTH   (C23)   (C23)   (C23)   (C23)   (C23) | 分别为 signed char、short、int、long 和 long long 的位宽 (宏常量) |
-| SCHAR_MIN   SHRT_MIN   INT_MIN   LONG_MIN   LLONG_MIN               (C99) | 分别是 signed char、short、int、long 和 long long 的最小值 (宏常量) |
-| SCHAR_MAX   SHRT_MAX   INT_MAX   LONG_MAX   LLONG_MAX               (C99) | 分别是 signed char、short、int、long 和 long long 的最大值 (宏常量) |
-| UCHAR_WIDTH   USHRT_WIDTH   UINT_WIDTH   ULONG_WIDTH   ULLONG_WIDTH   (C23)   (C23)   (C23)   (C23)   (C23) | 分别为 unsigned char、unsigned short、unsigned int、unsigned long 和 unsigned long long 的位宽 (宏常量) |
-| UCHAR_MAX   USHRT_MAX   UINT_MAX   ULONG_MAX   ULLONG_MAX               (C99) | 分别是 unsigned char、unsigned short、unsigned int、 unsigned long 和 unsigned long long 的最大值 (宏常量) |
-| BITINT_MAXWIDTH   (C23)                                      | 类型说明符 `_BitInt(N)` 中的位精确整数支持的最大宽度 N，大于或等于 `ULLONG_WIDTH` (宏常量) |
+| BOOL_MAX (C29)<br />                                         | `_Bool` 的最大值 (宏常量)                                    |
+| CHAR_BIT<br />                                               | 字节的位数 (宏常量)                                          |
+| MB_LEN_MAX<br />                                             | 多字节字符的最大字节数 (宏常量)                              |
+| CHAR_WIDTH (C23)<br />                                       | char 的位宽，同 `CHAR_BIT` (宏常量)                          |
+| CHAR_MIN<br />                                               | char 的最小值 (宏常量)                                       |
+| CHAR_MAX<br />                                               | char 的最大值 (宏常量)                                       |
+| SCHAR_WIDTH (C23)<br />SHRT_WIDTH (C23)<br />INT_WIDTH (C23)<br />LONG_WIDTH (C23)<br />LLONG_WIDTH (C23)<br /> | 分别为 signed char、short、int、long 和 long long 的位宽 (宏常量) |
+| SCHAR_MIN <br />SHRT_MIN <br />INT_MIN <br />LONG_MIN <br />LLONG_MIN (C99)<br /> | 分别是 signed char、short、int、long 和 long long 的最小值 (宏常量) |
+| SCHAR_MAX <br />SHRT_MAX <br />INT_MAX <br />LONG_MAX <br />LLONG_MAX (C99)<br /> | 分别是 signed char、short、int、long 和 long long 的最大值 (宏常量) |
+| UCHAR_WIDTH (C23)<br />USHRT_WIDTH (C23)<br />UINT_WIDTH (C23)<br />ULONG_WIDTH (C23)<br />ULLONG_WIDTH (C23)<br /> | 分别为 unsigned char、unsigned short、unsigned int、unsigned long 和 unsigned long long 的位宽 (宏常量) |
+| UCHAR_MAX <br />USHRT_MAX <br />UINT_MAX <br />ULONG_MAX <br />ULLONG_MAX (C99)<br /> | 分别是 unsigned char、unsigned short、unsigned int、 unsigned long 和 unsigned long long 的最大值 (宏常量) |
+| BITINT_MAXWIDTH (C23)<br />                                  | 类型说明符 `_BitInt(N)` 中的位精确整数支持的最大宽度 N，大于或等于 `ULLONG_WIDTH` (宏常量) |
 
 ## 概要
 

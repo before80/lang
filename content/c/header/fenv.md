@@ -13,31 +13,31 @@ draft = false
 
 ​	此标头是[浮点数环境](https://zh.cppreference.com/w/c/numeric/fenv)库的一部分。
 
-## 类型
+### 类型
 
-| 在标头 `**`<fenv.h>`**` 定义                                 |                                    |
-| ------------------------------------------------------------ | ---------------------------------- |
-| fenv_t                                                       | 表示整个浮点数环境的类型           |
-| 1#define EDOM   /* 由实现定义 */2#define EILSEQ /* 由实现定义 */3#define ERANGE /* 由实现定义 */4 5#define errno  /* 由实现定义 */6 7// 仅当实现定义了 __STDC_LIB_EXT1__，并且用户代码8// 在对 <errno.h> 的所有包含前定义了 __STDC_WANT_LIB_EXT1__：9#ifdef __STDC_WANT_LIB_EXT1__10#define __STDC_LIB_EXT1__  /* 由实现定义 */11#define errno_t            /* 由实现定义 */12#endifc | 表示所有浮点数状态标志的汇集的类型 |
+| 在标头 `<fenv.h>` 定义 |                                    |
+| ---------------------- | ---------------------------------- |
+| fenv_t                 | 表示整个浮点数环境的类型           |
+| fexcept_t              | 表示所有浮点数状态标志的汇集的类型 |
 
-## 函数
+### 函数
 
-| [feclearexcept   ](https://zh.cppreference.com/w/c/numeric/fenv/feclearexcept)(C99) | 清除指定的浮点数异常状态标志 (函数)                          |
+| [feclearexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feclearexcept) | 清除指定的浮点数异常状态标志 (函数)                          |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [fetestexcept   ](https://zh.cppreference.com/w/c/numeric/fenv/fetestexcept)(C99) | 确认设置了哪些浮点数异常状态标志 (函数)                      |
-| [feraiseexcept   ](https://zh.cppreference.com/w/c/numeric/fenv/feraiseexcept)(C99) | 引发指定的浮点数异常 (函数)                                  |
-| [fegetexceptflag   fesetexceptflag   ](https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag)(C99)   (C99) | 将指定的浮点数异常状态标志从指定的浮点数环境获取，再设置到指定浮点数环境的操作。 (函数) |
-| [fegetround   fesetround   ](https://zh.cppreference.com/w/c/numeric/fenv/feround)(C99)   (C99) | 获得或设置数字的舍入方向 (函数)                              |
-| [fegetenv   fesetenv   ](https://zh.cppreference.com/w/c/numeric/fenv/feenv)(C99)   (C99) | 保存或恢复当前浮点数环境，包括异常的标志和数字的舍弃模式 (函数) |
-| [feholdexcept   ](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept)(C99) | 保存当前环境的异常状态标志，再清除所有异常状态标志，并忽略所有未来错误 (函数) |
-| [feupdateenv   ](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv)(C99) | 恢复之前保存的浮点数环境，并引发之前已经引发过的异常，使其存在于当前内存环境中 (函数) |
+| [fetestexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/fetestexcept) | 确认设置了哪些浮点数异常状态标志 (函数)                      |
+| [feraiseexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feraiseexcept) | 引发指定的浮点数异常 (函数)                                  |
+| [fegetexceptflag (C99)<br />fesetexceptflag (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag) | 将指定的浮点数异常状态标志从指定的浮点数环境获取，再设置到指定浮点数环境的操作。 (函数) |
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数)                              |
+| [fegetenv (C99)<br />fesetenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feenv) | 保存或恢复当前浮点数环境，包括异常的标志和数字的舍弃模式 (函数) |
+| [feholdexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) | 保存当前环境的异常状态标志，再清除所有异常状态标志，并忽略所有未来错误 (函数) |
+| [feupdateenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv) | 恢复之前保存的浮点数环境，并引发之前已经引发过的异常，使其存在于当前内存环境中 (函数) |
 
-## 宏
+### 宏
 
-| [FE_ALL_EXCEPT   FE_DIVBYZERO   FE_INEXACT   FE_INVALID   FE_OVERFLOW   FE_UNDERFLOW   ](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)(C99) | 浮点数异常 (宏常量)     |
+| [FE_ALL_EXCEPT (C99)<br />FE_DIVBYZERO (C99)<br />FE_INEXACT<br />FE_INVALID<br />FE_OVERFLOW<br />FE_UNDERFLOW<br />](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) | 浮点数异常 (宏常量)     |
 | ------------------------------------------------------------ | ----------------------- |
-| [FE_DOWNWARD   FE_TONEAREST   FE_TOWARDZERO   FE_UPWARD   ](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)(C99) | 浮点数舍入方向 (宏常量) |
-| [FE_DFL_ENV   ](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV)(C99) | 默认浮点数环境 (宏常量) |
+| [FE_DOWNWARD (C99)<br />FE_TONEAREST (C99)<br />FE_TOWARDZERO<br />FE_UPWARD<br />](https://zh.cppreference.com/w/c/numeric/fenv/FE_round) | 浮点数舍入方向 (宏常量) |
+| [FE_DFL_ENV (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV) | 默认浮点数环境 (宏常量) |
 
 ## 概要
 
