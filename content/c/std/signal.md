@@ -1,5 +1,5 @@
 +++
-title = "signal"
+title = "<signal.h>"
 date = 2025-04-14T22:17:16+08:00
 weight = 1
 type = "docs"

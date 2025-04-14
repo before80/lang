@@ -1,5 +1,5 @@
 +++
-title = "stdlib.h"
+title = "<stdlib.h>"
 date = 2025-04-14T16:54:35+08:00
 weight = 1
 type = "docs"
@@ -8,6 +8,18 @@ isCJKLanguage = true
 draft = false
 
 +++
+
+## 类型
+
+### constraint_handler_t
+
+```c
+typedef void (*constraint_handler_t)( const char *restrict msg,
+                                      void *restrict ptr,
+                                      errno_t error); // (2)	(C11 起)
+```
+
+​	参见：[set_constraint_handler_s 函数](#set_constraint_handler_s)
 
 ## 宏
 
@@ -38,9 +50,9 @@ draft = false
 
 **注解**
 
-`EXIT_SUCCESS` 和值零都能指示程序执行成功的状态，尽管并不要求 `EXIT_SUCCESS` 等于零。
+​	`EXIT_SUCCESS` 和值零都能指示程序执行成功的状态，尽管并不要求 `EXIT_SUCCESS` 等于零。
 
-示例
+**示例**
 
 ```c
 #include <stdio.h>
@@ -94,7 +106,7 @@ _Noreturn void _Exit( int exit_code );// (C11 起)(C23 前)
 
 **返回值**
 
-（无）
+​	（无）
 
 **示例**
 
@@ -186,6 +198,140 @@ int main(void)
 ```txt
 error opening file data.txt in function main()
 ```
+
+### abort_handler_s <- (C11 起)
+
+原址：[https://zh.cppreference.com/w/c/error/abort_handler_s](https://zh.cppreference.com/w/c/error/abort_handler_s)
+
+```c
+void abort_handler_s( const char * restrict msg,
+                      void * restrict ptr,
+                      errno_t error
+                    ); // (C11 起)
+```
+
+​	向 [stderr](https://zh.cppreference.com/w/c/io) 写入实现定义的消息，其中必须包含 `msg` 所指向字符串，然后调用 [abort()](https://zh.cppreference.com/w/c/program/abort) 。
+
+​	指向此函数的指针可以传递给 [set_constraint_handler_s](https://zh.cppreference.com/w/c/error/set_constraint_handler_s) 以建立运行时制约违规处理函数。
+
+​	同所有边界检查函数， `abort_handler_s` 仅若实现定义了 `__STDC_LIB_EXT1__` ，且用户在包含 `<stdlib.h>` 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 `1` 才保证可用。
+
+**参数**
+
+| msg   | -    | 指向要写到标准错误输出的消息的指针                           |
+| ----- | ---- | ------------------------------------------------------------ |
+| ptr   | -    | 指向实现定义的对象的指针或空指针。实现定义对象的例子，是给出检测到违规的函数名和检测到违规时的行号的对象 |
+| error | -    | `errno_t` 类型的正值                                         |
+
+**返回值**
+
+​	无；此函数不会返回到调用方
+
+**注意**
+
+​	若从未调用 `set_constraint_handler_s` ，则默认处理函数是实现定义的：可以为 abort_handler_s 、 ignore_handler_s 或另外的实现定义处理函数。
+
+**示例**
+
+```c
+#define __STDC_WANT_LIB_EXT1__ 1
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+#ifdef __STDC_LIB_EXT1__
+    char dst[2];
+    set_constraint_handler_s(ignore_handler_s);
+    int r = strcpy_s(dst, sizeof dst, "Too long!");
+    printf("dst = \"%s\", r = %d\n", dst, r);
+    set_constraint_handler_s(abort_handler_s);
+    r = strcpy_s(dst, sizeof dst, "Too long!");
+    printf("dst = \"%s\", r = %d\n", dst, r);
+#endif
+}
+```
+
+可能的输出：
+
+```txt
+dst = "", r = 22
+abort_handler_s was called in response to a runtime-constraint violation.
+ 
+The runtime-constraint violation was caused by the following expression in strcpy_s:
+(s1max <= (s2_len=strnlen_s(s2, s1max)) ) (in string_s.c:62)
+ 
+Note to end users: This program was terminated as a result
+of a bug present in the software. Please reach out to your
+software's vendor to get more help.
+Aborted
+```
+
+### aligned_alloc <- (C11 起)
+
+原址：[https://zh.cppreference.com/w/c/memory/aligned_alloc](https://zh.cppreference.com/w/c/memory/aligned_alloc)
+
+```c
+void *aligned_alloc( size_t alignment, size_t size ); // (C11 起)
+```
+
+​	分配 `size` 个字节的未初始化存储空间，按照 `alignment` 指定对齐。`size` 形参必须是 `alignment` 的整数倍。
+
+​	`aligned_alloc` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。
+
+​	解分配一块内存区域的先前 [free](https://zh.cppreference.com/w/c/memory/free)、 `free_sized` 及 `free_aligned_sized`(C23 起) 或 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 调用*同步于*分配同一块或部分相同的内存区域的 `aligned_alloc` 调用。此同步出现于任何通过解分配函数所作的内存访问之后，和任何 `aligned_alloc` 所作出的内存访问之前。所有操作每块特定内存区域的分配和解分配函数拥有单独全序。
+
+**参数**
+
+| alignment | -    | 指定对齐。必须是实现支持的合法对齐。 |
+| --------- | ---- | ------------------------------------ |
+| size      | -    | 分配的字节数。alignment 的整数倍。   |
+
+**返回值**
+
+​	成功时，返回指向新分配内存的指针。为避免内存泄漏，返回的指针必须用 [free()](https://zh.cppreference.com/w/c/memory/free) 或 `realloc()` 解分配。
+
+​	失败时，返回空指针。
+
+**注解**
+
+​	传递不是 `alignment` 整数倍的 `size`，或传递实现不支持的 `alignment`，会令函数失败并返回空指针（出版时的 C11 指定此为未定义行为，这已经为 [DR460](https://open-std.org/JTC1/SC22/WG14/www/docs/summary.htm#dr_460) 所更正）。[N2072](https://open-std.org/JTC1/SC22/WG14/www/docs/n2072.htm) 提议移除大小限制，使之能在限制性的对齐边界分配小对象（类似 [`alignas`](https://zh.cppreference.com/w/c/language/_Alignas)）。
+
+​	作为“实现支持”要求的例子，POSIX 函数 [`posix_memalign`](https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_memalign.html) 接受任何是二的幂且为 `sizeof(void*)` 倍数的 `alignment`，而基于 POSIX 的 `aligned_alloc` 实现继承了此项要求。
+
+​	基础对齐始终得到支持。若 `alignment` 是二的幂且不大于 `_Alignof`([max_align_t](http://zh.cppreference.com/w/c/types/max_align_t))，则 `aligned_alloc` 可以简单地调用 [malloc](https://zh.cppreference.com/w/c/memory/malloc)。
+
+​	常规的 [malloc](https://zh.cppreference.com/w/c/memory/malloc) 分配适用于具有任何基础对齐的对象类型的内存。`aligned_alloc` 适用于过对齐分配，例如对 [SSE](https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions)、缓存线或 [VM 页](https://en.wikipedia.org/wiki/Page_(computer_memory)#Multiple_page_sizes)边界。
+
+​	Microsoft C 运行时库不支持此函数，因为其 `std::free` 的实现[无法处理任意种类的对齐分配](https://learn.microsoft.com/en-us/cpp/standard-library/cstdlib#remarks-6)。MS CRT 提供 [`_aligned_malloc`](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/aligned-malloc) 作为替代（其结果应以 [`_aligned_free`](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/aligned-free) 释放）。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    int *p1 = malloc(10*sizeof *p1);
+    printf("default-aligned addr:   %p\n", (void*)p1);
+    free(p1);
+ 
+    int *p2 = aligned_alloc(1024, 1024*sizeof *p2);
+    printf("1024-byte aligned addr: %p\n", (void*)p2);
+    free(p2);
+}
+```
+
+可能的输出：
+
+```txt
+default-aligned addr:   0x1e40c20
+1024-byte aligned addr: 0x1e41000
+```
+
+
 
 ### at_quick_exit <- (C11 起)
 
@@ -300,6 +446,87 @@ f2
 f1
 ```
 
+### calloc
+
+原址：[https://zh.cppreference.com/w/c/memory/calloc](https://zh.cppreference.com/w/c/memory/calloc)
+
+```c
+void* calloc( size_t num, size_t size );
+```
+
+​	为 `num` 个 `size` 大小的对象的数组分配内存，并将分配存储中的所有字节初始化为零。
+
+​	若分配成功，会返回指向分配内存块最低位（首位）字节的指针，它为任何具有[基础对齐](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)的对象类型适当地对齐。
+
+​	若 `size` 为零，则行为是实现定义的（可返回空指针，或返回不可用于访问存储的非空指针）。
+
+​	`calloc` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。解分配一块内存区域的先前 [free](https://zh.cppreference.com/w/c/memory/free)、 `free_sized` 及 `free_aligned_sized`(C23 起) 或 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 调用*同步于*分配同一块或部分相同的内存区域的 `calloc` 调用。此同步出现于任何通过解分配函数所作的内存访问之后，和任何 `calloc` 所作出的内存访问之前。所有操作每块特定内存区域的分配和解分配函数拥有单独全序。(C11 起)
+
+
+
+**参数**
+
+| num  | -    | 对象数目       |
+| ---- | ---- | -------------- |
+| size | -    | 每个对象的大小 |
+
+**返回值**
+
+​	成功时，返回指向新分配内存开头的指针。为避免内存泄漏，必须用 [free()](https://zh.cppreference.com/w/c/memory/free) 或 `realloc()` 解分配返回的指针。
+
+​	失败时，返回空指针。
+
+**注解**
+
+​	因为对齐需求的缘故，分配的字节数不必等于 num * size 。
+
+​	初始化所有位为零不保证浮点数或指针分别被初始化为 0.0 或空指针值（尽管这在所有常见平台上都为真）。
+
+​	本来（C89中），已经为了接纳这种代码增加对零大小的支持：
+
+```c
+OBJ *p = calloc(0, sizeof(OBJ)); // “零长度”占位
+...
+while(1)
+{ 
+    p = realloc(p, c * sizeof(OBJ)); // 重分配，直至大小稳定
+    ... // 可能会修改 c 或跳出循环的代码
+}
+```
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    int *p1 = calloc(4, sizeof(int));    // 分配并清零 4 个 int 的数组
+    int *p2 = calloc(1, sizeof(int[4])); // 等价，直接命名数组类型
+    int *p3 = calloc(4, sizeof *p3);     // 等价，免去重复类型名
+ 
+    if(p2)
+    {
+        for(int n=0; n<4; ++n) // 打印数组
+            printf("p2[%d] == %d\n", n, p2[n]);
+    }
+ 
+    free(p1);
+    free(p2);
+    free(p3);
+}
+```
+
+输出：
+
+```txt
+p2[0] == 0
+p2[1] == 0
+p2[2] == 0
+p2[3] == 0
+```
+
 ### exit
 
 原址：[https://zh.cppreference.com/w/c/program/exit](https://zh.cppreference.com/w/c/program/exit)
@@ -364,7 +591,190 @@ int main(void)
 error opening file data.txt in function main()
 ```
 
+### free
 
+原址：[https://zh.cppreference.com/w/c/memory/free](https://zh.cppreference.com/w/c/memory/free)
+
+```c
+void free( void* ptr );
+```
+
+​	解分配之前由 [malloc()](https://zh.cppreference.com/w/c/memory/malloc)、[calloc()](https://zh.cppreference.com/w/c/memory/calloc)、`aligned_alloc()`(C11 起) 或 [realloc()](https://zh.cppreference.com/w/c/memory/realloc) 分配的空间。
+
+​	若 `ptr` 为空指针，则函数不进行操作。
+
+​	若 `ptr` 的值不等于之前从 [malloc()](https://zh.cppreference.com/w/c/memory/malloc)、[calloc()](https://zh.cppreference.com/w/c/memory/calloc)、[realloc()](https://zh.cppreference.com/w/c/memory/realloc) 或 aligned_alloc()(C11 起) 返回的值，则行为未定义。
+
+​	若 `ptr` 所指代的内存区域已经被解分配，则行为未定义，即是说已经以 `ptr` 为实参调用过 `free()`、`free_sized()`、`free_aligned_sized()`(C23 起) 或 [realloc()](https://zh.cppreference.com/w/c/memory/realloc)，而且没有后继的 [malloc()](https://zh.cppreference.com/w/c/memory/malloc)、[calloc()](https://zh.cppreference.com/w/c/memory/calloc)、[realloc()](https://zh.cppreference.com/w/c/memory/realloc) 或 aligned_alloc()(C11 起) 调用以 `ptr` 为结果。
+
+​	若在 `free()` 返回后通过指针 `ptr` 访问内存，则行为未定义（除非另一个分配函数恰好返回等于 `ptr` 的值）。
+
+​	`free` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。解分配一块内存区域的 `free` 调用*同步于*分配同一块或部分相同的内存区域的后续任何分配函数的调用。此同步出现于任何通过解分配函数所作的内存访问之后，和任何分配函数所作出的内存访问之前。所有操作每块特定内存区域的分配和解分配函数拥有单独全序。(C11 起)
+
+**参数**
+
+| ptr  | -    | 指向要解分配的内存的指针 |
+| ---- | ---- | ------------------------ |
+
+**返回值**
+
+​	（无）
+
+**注解**
+
+​	此函数接收空指针（并对其不处理）以减少特例的数量。不管分配成功与否，分配函数返回的指针都能传递给 `free()` 。
+
+**示例**
+
+```c
+#include <stdlib.h>
+ 
+int main(void)
+{
+    int *p1 = malloc(10*sizeof *p1);
+    free(p1); // 每一个分配的指针都必须释放
+ 
+    int *p2 = calloc(10, sizeof *p2);
+    int *p3 = realloc(p2, 1000*sizeof *p3);
+    if(p3) // p3 非空表示 p2 已被 realloc 释放
+       free(p3);
+    else // p3 为空表示 p2 未被释放
+       free(p2);
+}
+```
+
+### free_aligned_sized <- (C23 起)
+
+原址：[https://zh.cppreference.com/w/c/memory/free_aligned_sized](https://zh.cppreference.com/w/c/memory/free_aligned_sized)
+
+```c
+void free_aligned_sized( void* ptr, size_t alignment, size_t size ); // (C23 起)
+```
+
+​	若 ptr 为空指针或为对 aligned_alloc 的调用结果，其中 alignment 等于所请求的对齐而 size 等于所请求的分配大小，则本函数等价于 [free](http://zh.cppreference.com/w/c/memory/free)(ptr)。否则，其行为未定义。
+
+​	[malloc](https://zh.cppreference.com/w/c/memory/malloc)、[calloc](https://zh.cppreference.com/w/c/memory/calloc) 或 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 的调用结果不能传递给 `free_aligned_sized`。
+
+​	`free_aligned_sized` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。
+
+​	解分配一块内存区域的 `free_aligned_sized` 调用*同步于*分配同一块或部分相同的内存区域的后续任何分配函数的调用。此同步出现于任何通过解分配函数所作的内存访问之后，和任何分配函数所作出的内存访问之前。所有操作每块特定内存区域的分配和解分配函数拥有单独全序。
+
+**参数**
+
+| ptr       | -    | 指向欲接分配内存的指针 |
+| --------- | ---- | ---------------------- |
+| alignment | -    | 欲解分配内存的对齐     |
+| size      | -    | 欲解分配内存的大小     |
+
+**返回值**
+
+​	（无）
+
+**示例**
+
+> 本节未完成 
+>
+> 原因：暂无示例
+
+### free_sized <- (C23 起)
+
+原址：[https://zh.cppreference.com/w/c/memory/free_sized](https://zh.cppreference.com/w/c/memory/free_sized)
+
+```c
+void free_sized( void* ptr, size_t size ); // (C23 起)
+```
+
+​	解分配之前由 [malloc()](https://zh.cppreference.com/w/c/memory/malloc)、[calloc()](https://zh.cppreference.com/w/c/memory/calloc) 或 [realloc()](https://zh.cppreference.com/w/c/memory/realloc)（但非 aligned_alloc()）分配的存储空间。
+
+> 本节未完成
+>
+> 原因：share wording among `free_*` family
+
+​	`free_sized` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。
+
+​	解分配一块内存区域的 `free_sized` 调用*同步于*分配同一块或部分相同的内存区域的后续任何分配函数的调用。此同步出现于任何通过解分配函数所作的内存访问之后，和任何分配函数所作出的内存访问之前。所有操作每块特定内存区域的分配和解分配函数拥有单独全序。
+
+**参数**
+
+| ptr  | -    | 指向欲解分配内存的指针       |
+| ---- | ---- | ---------------------------- |
+| size | -    | 之前传递给分配函数的内存大小 |
+
+**返回值**
+
+​	（无）
+
+**注解**
+
+​	本节未完成
+
+**可能的实现**
+
+```c
+void free_sized(void* ptr, size_t /*size*/)
+{
+    free(ptr);
+}
+```
+
+**示例**
+
+```c
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+typedef struct
+{
+    size_t size;     // 当前的元素数
+    size_t capacity; // 保留的元素数
+    void** data;
+} PtrVector;
+ 
+PtrVector vector_create(size_t initial_capacity)
+{
+    PtrVector ret =
+    {
+        .capacity = initial_capacity,
+        .data = (void**) malloc(initial_capacity * sizeof(void*))
+    };
+    return ret;
+}
+ 
+void vector_delete(PtrVector* self)
+{
+    free_sized(self->data, self->capacity * sizeof(void*));
+}
+ 
+void vector_push_back(PtrVector* self, void* value)
+{
+    if (self->size == self->capacity)
+    {
+        self->capacity *= 2;
+        self->data = (void**) realloc(self->data, self->capacity * sizeof(void*));
+    }
+    self->data[self->size++] = value;
+}
+ 
+int main()
+{
+    int data = 42;
+    float pi = 3.141592f;
+    PtrVector v = vector_create(8);
+    vector_push_back(&v, &data);
+    vector_push_back(&v, &pi);
+    printf("data[0] = %i\n", *(int*)v.data[0]);
+    printf("data[1] = %f\n", *(float*)v.data[1]);
+    vector_delete(&v);
+}
+```
+
+输出：
+
+```txt
+data[0] = 42
+data[1] = 3.141592
+```
 
 ### getenv
 
@@ -437,7 +847,78 @@ int main(void)
 Your PATH is /home/gamer/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/share/games
 ```
 
+### ignore_handler_s <- (C11 起)
 
+原址：[https://zh.cppreference.com/w/c/error/ignore_handler_s](https://zh.cppreference.com/w/c/error/ignore_handler_s)
+
+```c
+void ignore_handler_s( const char * restrict msg,
+                       void * restrict ptr,
+                       errno_t error
+                     ); // (C11 起)
+```
+
+​	该函数只是返回到调用方，而不进行任何动作。
+
+​	可以将指向此函数的指针传递给 [set_constraint_handler_s](https://zh.cppreference.com/w/c/error/set_constraint_handler_s) 以建立无任何动作的运行时制约违规处理函数。
+
+​	同所有边界检查函数， `ignore_handler_s` 仅若实现定义了 `__STDC_LIB_EXT1__` ，且用户在包含 `<stdlib.h>` 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 `1` 才保证可用。
+
+
+
+**参数**
+
+| msg   | -    | 指向描述错误的字符串的指针                                   |
+| ----- | ---- | ------------------------------------------------------------ |
+| ptr   | -    | 指向实现定义的对象的指针或空指针。实现定义对象的例子有，给出检测到违规的函数的称和检测到违规时的行号的对象 |
+| error | -    | 要由调用方函数返回的错误号，若它正好是返回 `errno_t` 的函数之一 |
+
+**返回值**
+
+​	（无）
+
+**注意**
+
+​	若以 `ignore_handler_s` 为运行时制约违规处理函数，则可通过检验带边界检查函数的调用结果检测违规，这对于不同函数可能不同（非零 `errno_t` ，在输出字符串的第一个字节写入了空字符，等等）。
+
+​	若从不调用 `set_constraint_handler_s` ，则默认处理是实现定义的：它可以是 `abort_handler_s` 、 `ignore_handler_s` 或另外的实现定义处理函数。
+
+**示例**
+
+```c
+#define __STDC_WANT_LIB_EXT1__ 1
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+#ifdef __STDC_LIB_EXT1__
+    char dst[2];
+    set_constraint_handler_s(ignore_handler_s);
+    int r = strcpy_s(dst, sizeof dst, "Too long!");
+    printf("dst = \"%s\", r = %d\n", dst, r);
+    set_constraint_handler_s(abort_handler_s);
+    r = strcpy_s(dst, sizeof dst, "Too long!");
+    printf("dst = \"%s\", r = %d\n", dst, r);
+#endif
+}
+```
+
+可能的输出：
+
+```txt
+dst = "", r = 22
+abort_handler_s was called in response to a runtime-constraint violation.
+ 
+The runtime-constraint violation was caused by the following expression in strcpy_s:
+(s1max <= (s2_len=strnlen_s(s2, s1max)) ) (in string_s.c:62)
+ 
+Note to end users: This program was terminated as a result
+of a bug present in the software. Please reach out to your
+software's vendor to get more help.
+Aborted
+```
 
 ### memalignment <- (C23 起)
 
@@ -490,6 +971,67 @@ int main()
 ```txt
 0
 128
+```
+
+### malloc
+
+原址：[https://zh.cppreference.com/w/c/memory/malloc](https://zh.cppreference.com/w/c/memory/malloc)
+
+```c
+void* malloc( size_t size );
+```
+
+​	分配 `size` 字节的未初始化内存。
+
+​	若分配成功，则返回为任何拥有[基础对齐](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)的对象类型对齐的指针。
+
+​	若 `size` 为零，则 `malloc` 的行为实现是其实现（生成）时定义的。例如可返回空指针。亦可返回非空指针；但不应当[解引用](https://zh.cppreference.com/w/c/language/operator_member_access)这种指针，而且应将它传递给 [free](https://zh.cppreference.com/w/c/memory/free) 以避免内存泄漏。
+
+​	`malloc` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。解分配一块内存区域的先前 [free](https://zh.cppreference.com/w/c/memory/free)、 `free_sized` 及 `free_aligned_sized`(C23 起) 或 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 调用*同步于*分配同一块或部分相同的内存区域的 `malloc` 调用。此同步出现于任何通过解分配函数所作的内存访问之后，和任何 `malloc` 所作出的内存访问之前。所有操作每块特定内存区域的分配和解分配函数拥有单独全序。(C11 起)
+
+**参数**
+
+| size | -    | 要分配的字节数 |
+| ---- | ---- | -------------- |
+
+**返回值**
+
+​	成功时，返回指向新分配内存的指针。为避免内存泄漏，必须用 [free()](https://zh.cppreference.com/w/c/memory/free) 或 [realloc()](https://zh.cppreference.com/w/c/memory/realloc) 解分配返回的指针。
+
+​	失败时，返回空指针。
+
+**示例**
+
+```c
+#include <stdio.h>   
+#include <stdlib.h> 
+ 
+int main(void) 
+{
+    int *p1 = malloc(4*sizeof(int));  // 足以分配 4 个 int 的数组
+    int *p2 = malloc(sizeof(int[4])); // 等价，直接命名数组类型
+    int *p3 = malloc(4*sizeof *p3);   // 等价，免去重复类型名
+ 
+    if(p1) {
+        for(int n=0; n<4; ++n) // 置入数组
+            p1[n] = n*n;
+        for(int n=0; n<4; ++n) // 打印出来
+            printf("p1[%d] == %d\n", n, p1[n]);
+    }
+ 
+    free(p1);
+    free(p2);
+    free(p3);
+}
+```
+
+输出：
+
+```txt
+p1[0] == 0
+p1[1] == 1
+p1[2] == 4
+p1[3] == 9
 ```
 
 ### quick_exit <- (C11 起)
@@ -552,9 +1094,189 @@ pushed second
 pushed first
 ```
 
+### realloc
 
+原址：[https://zh.cppreference.com/w/c/memory/realloc](https://zh.cppreference.com/w/c/memory/realloc)
 
+```c
+void *realloc( void *ptr, size_t new_size );
+```
 
+​	重新分配给定的内存区域。若 `ptr` 非 NULL，则它必须是之前为 [malloc()](https://zh.cppreference.com/w/c/memory/malloc)、[calloc()](https://zh.cppreference.com/w/c/memory/calloc) 或 `realloc()` 所分配，并且仍未被 [free](https://zh.cppreference.com/w/c/memory/free) 或 `realloc` 的调用所释放。否则，结果未定义。
+
+​	重新分配按以下二者之一执行：
+
+a) 可能的话，扩张或收缩 ptr 所指向的现有内存区域。新旧大小中的较小者范围内的区域的内容保持不变。若扩张范围，则数组新增部分的内容是未定义的。
+
+b) 分配一个大小为 `new_size` 字节的新内存块，并复制大小等于新旧大小中较小者的内存区域，然后释放旧内存块。
+
+​	若无足够内存，则不释放旧内存块，并返回空指针。
+
+​	若 ptr 为 [NULL](https://zh.cppreference.com/w/c/types/NULL)，则行为与调用 [malloc](http://zh.cppreference.com/w/c/memory/malloc)(new_size) 相同。
+
+​	否则，
+
+​	若 new_size 为零，则行为是实现定义的（可能返回空指针，该情况下可能或可能不释放旧内存，或可能返回某个不能用于访问存储的非空指针）。这种用法被弃用（经由 [C DR 400](https://open-std.org/JTC1/SC22/WG14/www/docs/n2396.htm#dr_400)）。(C17 起) (C23 前)
+
+​	若 `new_size` 为零，则行为未定义。(C23 起)
+
+​	`realloc` 是线程安全的：它表现得如同只访问通过其实参可见的内存区域，而非任何静态存储。先前令 [free](https://zh.cppreference.com/w/c/memory/free) 或 `realloc` 归还一块内存区域的调用，*同步于*任何分配函数的调用，包括分配相同或部分相同内存区域的 `realloc` 。这种同步出现于任何解分配函数所做的内存访问后，和任何 `realloc` 所做内存访问前。所有操作一块特定内存区域的分配及解分配函数拥有单独全序。(C11 起)
+
+**参数**
+
+| ptr      | -    | 指向需要重新分配的内存区域的指针 |
+| -------- | ---- | -------------------------------- |
+| new_size | -    | 数组的新大小（字节数）           |
+
+**返回值**
+
+​	成功时，返回指向新分配内存的指针。返回的指针必须用 [free()](https://zh.cppreference.com/w/c/memory/free) 或 `realloc()` 归还。原指针 ptr 失效，而且任何通过它的访问是未定义行为（即使重分配是就地的）。
+
+​	失败时，返回空指针。原指针 `ptr` 保持有效，并需要通过 [free()](https://zh.cppreference.com/w/c/memory/free) 或 `realloc()` 归还。
+
+**注解**
+
+​	本来（C89 中），增加对零大小的支持是为了容纳这种代码：
+
+```c
+OBJ *p = calloc(0, sizeof(OBJ)); // “零长度”占位
+/*...*/
+while(1) { 
+    p = realloc(p, c * sizeof(OBJ)); // 重分配，直至大小稳定
+    /* 可能会修改 c 或跳出循环的代码 */
+}
+```
+
+**示例**
+
+```c
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+ 
+void print_storage_info(const int* next, const int* prev, int ints)
+{
+    if (next)
+        printf("%s location: %p. Size: %d ints (%ld bytes).\n",
+               (next != prev ? "New" : "Old"), (void*)next, ints, ints * sizeof(int));
+    else
+        printf("Allocation failed.\n");
+}
+ 
+int main(void)
+{
+    const int pattern[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    const int pattern_size = sizeof pattern / sizeof(int);
+    int *next = NULL, *prev = NULL;
+ 
+    if ((next = (int*)malloc(pattern_size * sizeof *next))) // 分配数组
+    {
+        memcpy(next, pattern, sizeof pattern); // 填充数组
+        print_storage_info(next, prev, pattern_size);
+    }
+    else
+        return EXIT_FAILURE;
+ 
+    // 以如下各值作为新的存储大小，在循环中重新分配。
+    const int realloc_size[] = {10, 12, 512, 32768, 65536, 32768};
+ 
+    for (int i = 0; i != sizeof realloc_size / sizeof(int); ++i)
+    {
+        if ((next = (int*)realloc(prev = next, realloc_size[i] * sizeof(int))))
+        {
+            print_storage_info(next, prev, realloc_size[i]);
+            assert(!memcmp(next, pattern, sizeof pattern));  // 持有模式内容
+        }
+        else // 若 realloc 失败，则需要释放原指针
+        {
+            free(prev);
+            return EXIT_FAILURE;
+        }
+    }
+ 
+    free(next); // 最后，释放存储
+    return EXIT_SUCCESS;
+}
+```
+
+可能的输出：
+
+```txt
+New location: 0x144c010. Size: 8 ints (32 bytes).
+Old location: 0x144c010. Size: 10 ints (40 bytes).
+New location: 0x144c450. Size: 12 ints (48 bytes).
+Old location: 0x144c450. Size: 512 ints (2048 bytes).
+Old location: 0x144c450. Size: 32768 ints (131072 bytes).
+New location: 0x7f490c5bd010. Size: 65536 ints (262144 bytes).
+Old location: 0x7f490c5bd010. Size: 32768 ints (131072 bytes).
+```
+
+### set_constraint_handler_s
+
+原址：[https://zh.cppreference.com/w/c/error/set_constraint_handler_s](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)
+
+```c
+constraint_handler_t set_constraint_handler_s( constraint_handler_t handler ); // (1)	(C11 起)
+```
+
+1) 配置所有[带边界检查函数](https://zh.cppreference.com/w/c/error#.E8.BE.B9.E7.95.8C.E6.A3.80.E6.9F.A5)在发生运行时制约违规时所调用的处理函数，或恢复成默认处理函数（若 `handler` 是空指针）。
+2) 指向将在运行时制约违规时调用的处理函数的指针。
+
+​	若从不调用 `set_constraint_handler_s`，则默认处理是实现定义的：它可以是 abort_handler_s、ignore_handler_s 或另外的实现定义处理函数。
+
+​	同所有边界检查函数， `set_constraint_handler_s, constraint_handler_t` 仅若实现定义了 `__STDC_LIB_EXT1__` ，且用户在包含 `<stdlib.h>` 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+
+​	与所有带边界检查的函数一样，仅当实现定义了 `__STDC_LIB_EXT1__` 并且用户在包含 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 之前将 `__STDC_WANT_LIB_EXT1__` 定义为整数常量 1 时，`set_constraint_handler_s` 和 `constraint_handler_t` 才保证可用。
+
+**参数**
+
+| handler | -    | `constraint_handler_t` 类型的函数指针或空指针                |
+| ------- | ---- | ------------------------------------------------------------ |
+| msg     | -    | 指向描述错误的字符串的指针                                   |
+| ptr     | -    | 指向由实现定义的对象的指针或为空指针。由实现定义的对象的例子可以给出检测到违规的函数的名字和检测到违规的行号 |
+| error   | -    | 如果所调用的函数刚好是返回 `errno_t` 的函数，则是将由此函数返回的错误 |
+
+**返回值**
+
+​	指向先前安装的运行时制约处理函数的指针（注意：此指针决不会是空指针，因为调用 set_constraint_handler_s([NULL](http://zh.cppreference.com/w/c/types/NULL)) 会设置系统默认处理函数）。
+
+**示例**
+
+```c
+#define __STDC_WANT_LIB_EXT1__ 1
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+#ifdef __STDC_LIB_EXT1__
+    char dst[2];
+    set_constraint_handler_s(ignore_handler_s);
+    int r = strcpy_s(dst, sizeof dst, "Too long!");
+    printf("dst = \"%s\", r = %d\n", dst, r);
+    set_constraint_handler_s(abort_handler_s);
+    r = strcpy_s(dst, sizeof dst, "Too long!");
+    printf("dst = \"%s\", r = %d\n", dst, r);
+#endif
+}
+```
+
+可能的输出：
+
+```txt
+dst = "", r = 22
+abort_handler_s was called in response to a runtime-constraint violation.
+ 
+The runtime-constraint violation was caused by the following expression in strcpy_s:
+(s1max <= (s2_len=strnlen_s(s2, s1max)) ) (in string_s.c:62)
+ 
+Note to end users: This program was terminated as a result
+of a bug present in the software. Please reach out to your
+software's vendor to get more help.
+Aborted
+```
 
 ### system
 
@@ -583,7 +1305,7 @@ int system( const char *command );
 
 ​	相关的 POSIX 函数 [popen](http://pubs.opengroup.org/onlinepubs/9699919799/functions/popen.html) 令 `command` 生成的输出对调用方可用。
 
-示例
+**示例**
 
 ​	此示例中有 unix 命令 **date +%A** 的系统调用，以及（可能安装的）**gcc** 编译器附带命令行参数（*`--version`*）的系统调用：
 
