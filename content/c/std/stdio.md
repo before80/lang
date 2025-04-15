@@ -1071,11 +1071,13 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 
 ​	从各种资源读取数据，按照 `format` 转译，并将结果存储到指定位置。
 
-1) 从 [stdin](https://zh.cppreference.com/w/c/io) 读取数据
-2) 从文件流 `stream` 读取数据
-3) 从空终止字符串 `buffer` 读取数据。抵达字符串结尾等价于 `fscanf` 的抵达文件尾条件
+1）从 [stdin](https://zh.cppreference.com/w/c/io) 读取数据
 
-4-6) 同 (1-3) ，除了 `%c` 、 `%s` 及 `%[` 转换指示符要求二个参数（通常的指针和指示获取用数组大小的 `rsize_t` 类型的值，在以 `%c` 读取单个字符时可以为 `1` ），并调用当前安装的[约束处理函数](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)：
+2）从文件流 `stream` 读取数据
+
+3）从空终止字符串 `buffer` 读取数据。抵达字符串结尾等价于 `fscanf` 的抵达文件尾条件
+
+4-6） 同 (1-3) ，除了 `%c` 、 `%s` 及 `%[` 转换指示符要求二个参数（通常的指针和指示获取用数组大小的 `rsize_t` 类型的值，在以 `%c` 读取单个字符时可以为 `1` ），并调用当前安装的[约束处理函数](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)：
 
 - 任何指针类型的参数为空指针
 
@@ -1382,12 +1384,15 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 
 ​	从给定位置加载数据，转换为字符串等价物，并写结果到各种池。
 
-1) 将结果写入输出流 [stdout](https://zh.cppreference.com/w/c/io)。
-2) 将结果写入输出流 stream。
-3) 将结果写入字符串 buffer。如果所写入的字符串（加上终止空字符）超出由 buffer 所指向的数组的大小，则行为未定义。
-4) 将结果写入字符串 buffer。至多写 bufsz - 1 个字符。产生的字符串会以空字符终止，除非 bufsz 为零。若 bufsz 为零，则不写入任何内容，且 buffer 可以是空指针，然而依旧计算返回值（会写入的字符数，不包含空终止符）并返回。
+1）将结果写入输出流 [stdout](https://zh.cppreference.com/w/c/io)。
 
-5-8) 同 (1-4) ，除了在运行时检测下列错误，并调用当前安装的[约束处理函数](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)：
+2）将结果写入输出流 stream。
+
+3）将结果写入字符串 buffer。如果所写入的字符串（加上终止空字符）超出由 buffer 所指向的数组的大小，则行为未定义。
+
+4）将结果写入字符串 buffer。至多写 bufsz - 1 个字符。产生的字符串会以空字符终止，除非 bufsz 为零。若 bufsz 为零，则不写入任何内容，且 buffer 可以是空指针，然而依旧计算返回值（会写入的字符数，不包含空终止符）并返回。
+
+5-8） 同 (1-4) ，除了在运行时检测下列错误，并调用当前安装的[约束处理函数](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)：
 
 - format 中存在转换说明符 `%n`
 
