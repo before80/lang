@@ -1,7 +1,7 @@
 +++
 title = "数值"
 date = 2025-04-15T18:16:16+08:00
-weight = 1
+weight = 130
 type = "docs"
 description = ""
 isCJKLanguage = true

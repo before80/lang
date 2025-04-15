@@ -9,6 +9,8 @@ draft = false
 
 +++
 
+## 类型
+
 ## 宏
 
 ### EDOM

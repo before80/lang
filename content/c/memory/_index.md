@@ -1,7 +1,7 @@
 +++
 title = "动态内存管理"
 date = 2025-04-14T23:37:53+08:00
-weight = 1
+weight = 70
 type = "docs"
 description = ""
 isCJKLanguage = true

@@ -1,7 +1,7 @@
 +++
 title = "实验性 C 特性"
 date = 2025-04-15T19:29:35+08:00
-weight = 1
+weight = 150
 type = "docs"
 description = ""
 isCJKLanguage = true

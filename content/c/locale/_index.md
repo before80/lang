@@ -1,7 +1,7 @@
 +++
 title = "本地化支持"
 date = 2025-04-15T19:23:53+08:00
-weight = 1
+weight = 100
 type = "docs"
 description = ""
 isCJKLanguage = true
