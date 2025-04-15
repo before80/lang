@@ -3,6 +3,20 @@
 替换html
 
 ```js
+// 在p标签前面插入&zeroWidthSpace;
+var pElements = document.querySelectorAll('p');
+
+pElements.forEach(function(element) { 
+    	var newspan = document.createElement('span');
+    	newspan.textContent='&zeroWidthSpace;';
+       	if (element.firstChild) {
+        	element.insertBefore(newspan, element.firstChild);
+    	} else {
+        	// 如果 p 元素没有子节点，直接将新 span 元素添加到 p 元素中
+        	element.appendChild(newspan);
+    	}
+});
+
 // 1
 // 将 出现在表格中的h3 h4 h5 h6 单独出来，生成菜单后方便查找
 
@@ -147,11 +161,43 @@ let ttElements = document.querySelectorAll('a tt');
 
 ```txt
 
-// @! 替换成 <
+@! 替换成 <
 
-// !@ 替换成 >
+!@ 替换成 >
 
-// @!br /!@ 替换成 <br />
+@!br /!@ 替换成 <br />
+
+// 查找匹配如下字符
+&zeroWidthSpace;
+
+// 替换成 tab
+​	
+
+// 在 std目录下
+// 查找匹配如下字符
+### 返回值
+
+// 替换成
+**返回值**
+
+// 在 std目录下
+// 查找匹配如下字符
+### 示例
+
+// 替换成
+**示例**
+
+// 在 std目录下
+// 查找匹配如下字符
+### 参数
+
+// 替换成
+**参数**
+
+
+// 查找匹配如下字符
+运行此代码
+// 替换成 空
 
 ```
 
@@ -176,81 +222,5 @@ _ 对应 底数
 
 
 
-```
-function splitTableByHeadings() {
-    const tables = document.querySelectorAll('table.t-dsc-begin');
-    tables.forEach((table) => {
-        const splitIndices = [];
-        const rows = Array.from(table.rows);
 
-        // 收集所有需要分割的行索引
-        rows.forEach((row, index) => {
-            const headings = row.querySelectorAll('h4, h5, h6');
-            if (headings.length > 0) {
-                splitIndices.push(index);
-            }
-        });
-
-        // 从后往前分割表格，避免索引混乱
-        for (let i = splitIndices.length - 1; i >= 0; i--) {
-            const splitIndex = splitIndices[i];
-            const newTable = document.createElement('table');
-            newTable.classList.add('t-dsc-begin');
-
-            const headingRow = rows[splitIndex];
-            const heading = headingRow.querySelector('h4, h5, h6');
-
-            // 移除当前表格中分割点之后的行，并添加到新表格
-            for (let j = rows.length - 1; j > splitIndex; j--) {
-                const rowToMove = rows[j];
-                if (rowToMove.parentNode) {
-                    newTable.insertBefore(rowToMove.cloneNode(true), newTable.firstChild);
-                    rowToMove.parentNode.removeChild(rowToMove);
-                }
-            }
-
-            // 插入标题元素
-            table.parentNode.insertBefore(heading, table.nextSibling);
-
-            // 插入新表格
-            table.parentNode.insertBefore(newTable, heading.nextSibling);
-        }
-
-        // 处理标题在第一行的情况
-        const firstRow = table.rows[0];
-        if (firstRow) {
-            const firstRowHeadings = firstRow.querySelectorAll('h4, h5, h6');
-            if (firstRowHeadings.length > 0) {
-                const newTable = document.createElement('table');
-                newTable.classList.add('t-dsc-begin');
-
-                const heading = firstRowHeadings[0];
-
-                // 移除原表格的第一行
-                if (firstRow.parentNode) {
-                    firstRow.parentNode.removeChild(firstRow);
-                }
-
-                // 将原表格剩余行添加到新表格
-                const remainingRows = Array.from(table.rows);
-                remainingRows.forEach((row) => {
-                    if (row.parentNode) {
-                        newTable.appendChild(row.cloneNode(true));
-                        row.parentNode.removeChild(row);
-                    }
-                });
-
-                // 插入标题元素
-                table.parentNode.insertBefore(heading, table.nextSibling);
-
-                // 插入新表格
-                table.parentNode.insertBefore(newTable, heading.nextSibling);
-            }
-        }
-    });
-}
-
-// 调用函数
-splitTableByHeadings();
-```
 
