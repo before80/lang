@@ -24,6 +24,7 @@ math = true
 原址：[https://zh.cppreference.com/w/c/error/set_constraint_handler_s](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)
 
 ```c
+constraint_handler_t set_constraint_handler_s( constraint_handler_t handler ); // (1)	(C11 起)
 typedef void (*constraint_handler_t)( const char *restrict msg,
                                       void *restrict ptr,
                                       errno_t error); // (2)	(C11 起)
@@ -2579,6 +2580,9 @@ Old location: 0x7f490c5bd010. Size: 32768 ints (131072 bytes).
 
 ```c
 constraint_handler_t set_constraint_handler_s( constraint_handler_t handler ); // (1)	(C11 起)
+typedef void (*constraint_handler_t)( const char *restrict msg,
+                                      void *restrict ptr,
+                                      errno_t error); // (2)	(C11 起)
 ```
 
 1) 配置所有 [带边界检查函数](https://zh.cppreference.com/w/c/error#.E8.BE.B9.E7.95.8C.E6.A3.80.E6.9F.A5) 在发生运行时制约违规时所调用的处理函数，或恢复成默认处理函数（若 `handler` 是空指针）。
