@@ -9,9 +9,14 @@ draft = false
 
 +++
 
-> 原文：[https://zh.cppreference.com/w/c/variadic/va_start](https://zh.cppreference.com/w/c/variadic/va_start)
-
 ## 类型
+
+
+
+
+
+
+
 
 ### va_list
 
@@ -19,6 +24,7 @@ draft = false
 
 ```c
 /* 未指明 */ va_list;
+
 ```
 
 ​	`va_list` 是一个完整对象类型，适于保有宏 va_start、va_copy、va_arg 及 va_end 所需的信息。
@@ -29,12 +35,20 @@ draft = false
 
 ## 宏
 
+
+
+
+
+
+
+
 ### va_arg
 
 原址：[https://zh.cppreference.com/w/c/variadic/va_arg](https://zh.cppreference.com/w/c/variadic/va_arg)
 
 ```c
 T va_arg( va_list ap, T );
+
 ```
 
 ​	`va_arg` 宏展开成 `T` 类型的表达式，表达式对应来自 va_list `ap` 的下个实参。
@@ -85,13 +99,22 @@ int main(void)
 {
     printf("%f\n", stddev(4, 25.0, 27.3, 26.9, 25.7));
 }
+
 ```
 
 输出：
 
 ```txt
 0.920258
+
 ```
+
+
+
+
+
+
+
 
 ### va_copy <- 99+
 
@@ -99,6 +122,7 @@ int main(void)
 
 ```c
 void va_copy( va_list dest, va_list src ); // (C99 起)
+
 ```
 
 ​	`va_copy` 宏把 `src` 复制到 `dest`。
@@ -151,13 +175,22 @@ int main(void)
 {
     printf("%f\n", sample_stddev(4, 25.0, 27.3, 26.9, 25.7));
 }
+
 ```
 
 可能的输出：
 
 ```txt
 0.920258
+
 ```
+
+
+
+
+
+
+
 
 ### va_end
 
@@ -165,6 +198,7 @@ int main(void)
 
 ```c
 void va_end( va_list ap );
+
 ```
 
 ​	`va_end` 宏对由 va_start 或 va_copy 的调用所初始化的 `ap` 对象进行清理。`va_end` 可以修改 `ap` 的值，使得它不再能使用。
@@ -180,6 +214,13 @@ void va_end( va_list ap );
 
 （无）
 
+
+
+
+
+
+
+
 ### va_start
 
 原址：[https://zh.cppreference.com/w/c/variadic/va_start](https://zh.cppreference.com/w/c/variadic/va_start)
@@ -187,6 +228,7 @@ void va_end( va_list ap );
 ```c
 void va_start( va_list ap, parmN ); // (C23 前)
 void va_start( va_list ap, ... ); // (C23 起)
+
 ```
 
 `va_start` 宏使函数能访问跟在具名实参 `parmN` 后的(C23 前)可变参数。
@@ -250,6 +292,7 @@ int main(void)
     printf("%d\n", add_nums_C23(4, 25, 25, 50, 50));
 #endif
 }
+
 ```
 
 可能的输出：
@@ -257,6 +300,7 @@ int main(void)
 ```txt
 150
 150
+
 ```
 
 

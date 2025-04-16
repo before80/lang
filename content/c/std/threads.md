@@ -11,6 +11,13 @@ draft = false
 
 ## 类型
 
+
+
+
+
+
+
+
 ### cnd_t
 
 原址：
@@ -20,6 +27,13 @@ typedef /* 见描述 */ cnd_t;
 ```
 
 ​	条件变量标识符
+
+
+
+
+
+
+
 
 
 
@@ -35,6 +49,13 @@ typedef /* 见描述 */ mtx_t;
 
 
 
+
+
+
+
+
+
+
 ### thrd_start_t
 
 原址：
@@ -42,7 +63,6 @@ typedef /* 见描述 */ mtx_t;
 ```c
 typedef /* 见描述 */ thrd_start_t;
 ```
-
 
 
 
@@ -58,7 +78,6 @@ typedef /* 见描述 */ thrd_t;
 
 
 
-
 ### tss_dtor_t
 
 原址：
@@ -66,7 +85,6 @@ typedef /* 见描述 */ thrd_t;
 ```c
 typedef /* 见描述 */ tss_dtor_t;
 ```
-
 
 
 
@@ -84,6 +102,13 @@ typedef /* 见描述 */ tss_t;
 
 
 ## 宏
+
+
+
+
+
+
+
 
 ### ONCE_FLAG_INIT <- 11+
 
@@ -154,6 +179,7 @@ called once
 
 
 
+
 ### TSS_DTOR_ITERATIONS <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/TSS_DTOR_ITERATIONS](https://zh.cppreference.com/w/c/thread/TSS_DTOR_ITERATIONS)
@@ -163,9 +189,16 @@ called once
 (C11 起)
 ```
 
-​	展开成正的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)，它定义 [thrd_exit](https://zh.cppreference.com/w/c/thread/thrd_exit) 将对线程局域存储指针调用析构器的最大次数。
+​	展开成正的整数 [常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)，它定义 [thrd_exit](https://zh.cppreference.com/w/c/thread/thrd_exit) 将对线程局域存储指针调用析构器的最大次数。
 
 ​	此常量等价于 POSIX 的 `PTHREAD_DESTRUCTOR_ITERATIONS`。
+
+
+
+
+
+
+
 
 
 
@@ -192,6 +225,13 @@ enum {
 | `mtx_recursive` | 递归互斥体 |
 | `mtx_timed`     | 定时互斥体 |
 
+
+
+
+
+
+
+
 ### mtx_recursive <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/mtx_types](https://zh.cppreference.com/w/c/thread/mtx_types)
@@ -214,6 +254,13 @@ enum {
 | `mtx_plain`     | 平常互斥体 |
 | `mtx_recursive` | 递归互斥体 |
 | `mtx_timed`     | 定时互斥体 |
+
+
+
+
+
+
+
 
 
 
@@ -242,6 +289,13 @@ enum {
 
 
 
+
+
+
+
+
+
+
 ### once_flag <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/call_once](https://zh.cppreference.com/w/c/thread/call_once)
@@ -264,11 +318,11 @@ typedef /* 未指明 */ once_flag  //	(2)	(C11 起)
 
 **返回值**
 
-（无）
+​	（无）
 
 **注意**
 
-此函数的 POSIX 等价物是 [`pthread_once`](http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_once.html)。
+​	此函数的 POSIX 等价物是 [`pthread_once`](http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_once.html)。
 
 **示例**
 
@@ -309,6 +363,9 @@ int main(void)
 called once
 ```
 
+
+
+
 ### thrd_busy <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_errors](https://zh.cppreference.com/w/c/thread/thrd_errors)
@@ -328,6 +385,13 @@ enum {
 
 
 
+
+
+
+
+
+
+
 ### thrd_error <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_errors](https://zh.cppreference.com/w/c/thread/thrd_errors)
@@ -342,7 +406,6 @@ enum {
     thrd_error = /* 未指明 */
 };
 ```
-
 
 
 
@@ -365,7 +428,6 @@ enum {
 
 
 
-
 ### thrd_success <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_errors](https://zh.cppreference.com/w/c/thread/thrd_errors)
@@ -380,7 +442,6 @@ enum {
     thrd_error = /* 未指明 */
 };
 ```
-
 
 
 
@@ -403,8 +464,7 @@ enum {
 
 
 
-
-### thread_local <- 11+ 23 D
+### thread_local <- 11+ 23 R
 
 原址：[https://zh.cppreference.com/w/c/thread/thread_local](https://zh.cppreference.com/w/c/thread/thread_local)
 
@@ -412,7 +472,7 @@ enum {
 #define thread_local _Thread_local // (C11 起) (C23 移除)
 ```
 
-​	便利宏，用于指定对象拥有[线程局部存储期](https://zh.cppreference.com/w/c/language/storage_duration)。
+​	便利宏，用于指定对象拥有 [线程局部存储期](https://zh.cppreference.com/w/c/language/storage_duration)。
 
 **注解**
 
@@ -421,6 +481,13 @@ enum {
 
 
 ## 函数
+
+
+
+
+
+
+
 ### call_once <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/call_once](https://zh.cppreference.com/w/c/thread/call_once)
@@ -431,9 +498,11 @@ typedef /* 未指明 */ once_flag  //	(2)	(C11 起)
 #define ONCE_FLAG_INIT /* 未指明 */ //(3)	(C11 起)
 ```
 
-1) 调用函数 `func` 恰好一次，即使从多个线程调用。函数 `func` 的完成与先前或后继的用同一 `flag` 对象的对 `call_once` 调用同步。
-2) 足以保有 `call_once` 所用标志的完整对象类型。
-3) 展开成能用于初始化 `once_flag` 类型对象的值。
+1）调用函数 `func` 恰好一次，即使从多个线程调用。函数 `func` 的完成与先前或后继的用同一 `flag` 对象的对 `call_once` 调用同步。
+
+2）足以保有 `call_once` 所用标志的完整对象类型。
+
+3）展开成能用于初始化 `once_flag` 类型对象的值。
 
 **参数**
 
@@ -443,11 +512,11 @@ typedef /* 未指明 */ once_flag  //	(2)	(C11 起)
 
 **返回值**
 
-（无）
+​	（无）
 
 **注意**
 
-此函数的 POSIX 等价物是 [`pthread_once`](http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_once.html)。
+​	此函数的 POSIX 等价物是 [`pthread_once`](http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_once.html)。
 
 **示例**
 
@@ -490,6 +559,7 @@ called once
 
 
 
+
 ### cnd_broadcast <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/cnd_broadcast](https://zh.cppreference.com/w/c/thread/cnd_broadcast)
@@ -509,6 +579,13 @@ int cnd_broadcast( cnd_t *cond );
 **返回值**
 
 ​	若成功则为 [thrd_success](https://zh.cppreference.com/w/c/thread/thrd_errors)，否则为 [thrd_error](https://zh.cppreference.com/w/c/thread/thrd_errors)。
+
+
+
+
+
+
+
 
 
 
@@ -536,6 +613,13 @@ void cnd_destroy( cnd_t* cond );
 
 
 
+
+
+
+
+
+
+
 ### cnd_init <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/cnd_init](https://zh.cppreference.com/w/c/thread/cnd_init)
@@ -558,6 +642,13 @@ int cnd_init( cnd_t* cond );
 
 
 
+
+
+
+
+
+
+
 ### cnd_signal <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/cnd_signal](https://zh.cppreference.com/w/c/thread/cnd_signal)
@@ -577,6 +668,13 @@ int cnd_signal( cnd_t *cond );
 **返回值**
 
 ​	若成功则为 [thrd_success](https://zh.cppreference.com/w/c/thread/thrd_errors)，否则为 [thrd_error](https://zh.cppreference.com/w/c/thread/thrd_errors)。
+
+
+
+
+
+
+
 
 
 
@@ -604,6 +702,13 @@ int cnd_timedwait( cnd_t* restrict cond, mtx_t* restrict mutex,
 **返回值**
 
 ​	若成功则为 [thrd_success](https://zh.cppreference.com/w/c/thread/thrd_errors)，若在锁定互斥前抵达时限则为 thrd_timedout，若出现错误则为 [thrd_error](https://zh.cppreference.com/w/c/thread/thrd_errors)。
+
+
+
+
+
+
+
 
 
 
@@ -682,6 +787,7 @@ main 线程被唤醒，准备退出
 
 
 
+
 ### mtx_destroy <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/mtx_destroy](https://zh.cppreference.com/w/c/thread/mtx_destroy)
@@ -703,6 +809,13 @@ void mtx_destroy( mtx_t *mutex );
 **返回值**
 
 （无）
+
+
+
+
+
+
+
 
 
 
@@ -736,6 +849,13 @@ int mtx_init( mtx_t* mutex, int type );
 
 
 
+
+
+
+
+
+
+
 ### mtx_lock <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/mtx_lock](https://zh.cppreference.com/w/c/thread/mtx_lock)
@@ -749,7 +869,7 @@ int mtx_lock( mtx_t* mutex );
 
 ​	若该互斥体已被当前线程锁定且非递归，则行为未定义。
 
-​	先前在同一互斥体上对 [mtx_unlock](https://zh.cppreference.com/w/c/thread/mtx_unlock) 的调用*同步于*此操作，而且任何给定互斥体上的所有锁定/解锁操作构成单独全序（类似原子对象的修改顺序）。
+​	先前在同一互斥体上对 [mtx_unlock](https://zh.cppreference.com/w/c/thread/mtx_unlock) 的调用 *同步于* 此操作，而且任何给定互斥体上的所有锁定/解锁操作构成单独全序（类似原子对象的修改顺序）。
 
 **参数**
 
@@ -759,6 +879,13 @@ int mtx_lock( mtx_t* mutex );
 **返回值**
 
 ​	若成功则为 [thrd_success](https://zh.cppreference.com/w/c/thread/thrd_errors)，否则为 [thrd_error](https://zh.cppreference.com/w/c/thread/thrd_errors)。
+
+
+
+
+
+
+
 
 
 
@@ -778,7 +905,7 @@ int mtx_timedlock( mtx_t *restrict mutex,
 
 ​	若该互斥体不支持超时，则行为未定义。
 
-​	先前在同一互斥体上对 [mtx_unlock](https://zh.cppreference.com/w/c/thread/mtx_unlock) 的调用*同步于*此操作（若此操作成功），而且任何给定的互斥体上的所有锁定/解锁组成单独全序（类似原子对象上的修改顺序）。
+​	先前在同一互斥体上对 [mtx_unlock](https://zh.cppreference.com/w/c/thread/mtx_unlock) 的调用 *同步于* 此操作（若此操作成功），而且任何给定的互斥体上的所有锁定/解锁组成单独全序（类似原子对象上的修改顺序）。
 
 **参数**
 
@@ -789,6 +916,13 @@ int mtx_timedlock( mtx_t *restrict mutex,
 **返回值**
 
 ​	若成功则为 [thrd_success](https://zh.cppreference.com/w/c/thread/thrd_errors)，若已在锁定互斥体前抵达时限则为 thrd_timedout，若出现错误则为 [thrd_error](https://zh.cppreference.com/w/c/thread/thrd_errors)。
+
+
+
+
+
+
+
 
 
 
@@ -803,7 +937,7 @@ int mtx_trylock( mtx_t *mutex );
 
 ​	尝试锁定 `mutex` 所指向的互斥而不阻塞。若该互斥已被锁定则立即返回。
 
-​	同一互斥上对 [mtx_unlock](https://zh.cppreference.com/w/c/thread/mtx_unlock) 的先前调用*同步于*此操作（若此操作成功），而且任何给定互斥上的所有锁定/解锁操作构成单独全序（类似于原子对象上的修改顺序）。
+​	同一互斥上对 [mtx_unlock](https://zh.cppreference.com/w/c/thread/mtx_unlock) 的先前调用 *同步于* 此操作（若此操作成功），而且任何给定互斥上的所有锁定/解锁操作构成单独全序（类似于原子对象上的修改顺序）。
 
 **参数**
 
@@ -824,6 +958,13 @@ int mtx_trylock( mtx_t *mutex );
 
 
 
+
+
+
+
+
+
+
 ### mtx_unlock <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/mtx_unlock](https://zh.cppreference.com/w/c/thread/mtx_unlock)
@@ -837,7 +978,7 @@ int mtx_unlock( mtx_t *mutex );
 
 ​	若调用方线程未锁定该互斥体，则行为未定义。
 
-​	在同一互斥体上，此函数*同步于*后继的 [mtx_lock](https://zh.cppreference.com/w/c/thread/mtx_lock)、[mtx_trylock](https://zh.cppreference.com/w/c/thread/mtx_trylock) 或 [mtx_timedlock](https://zh.cppreference.com/w/c/thread/mtx_timedlock)。给定互斥上的所有锁/解锁操作构成单独全序体（类似原子对象上的修改顺序）。
+​	在同一互斥体上，此函数 *同步于* 后继的 [mtx_lock](https://zh.cppreference.com/w/c/thread/mtx_lock)、[mtx_trylock](https://zh.cppreference.com/w/c/thread/mtx_trylock) 或 [mtx_timedlock](https://zh.cppreference.com/w/c/thread/mtx_timedlock)。给定互斥上的所有锁/解锁操作构成单独全序体（类似原子对象上的修改顺序）。
 
 **参数**
 
@@ -847,6 +988,13 @@ int mtx_unlock( mtx_t *mutex );
 **返回值**
 
 ​	若成功则为 [thrd_success](https://zh.cppreference.com/w/c/thread/thrd_errors)，否则为 [thrd_error](https://zh.cppreference.com/w/c/thread/thrd_errors)。
+
+
+
+
+
+
+
 
 
 
@@ -862,7 +1010,7 @@ int thrd_create( thrd_t *thr, thrd_start_t func, void *arg ); // (C11 起)
 
 ​	若成功，则设置 `thr` 所指向的对象为新线程的标识符。
 
-​	此函数的完成*同步于*线程的开始。
+​	此函数的完成 *同步于* 线程的开始。
 
 **参数**
 
@@ -887,6 +1035,13 @@ int thrd_create( thrd_t *thr, thrd_start_t func, void *arg ); // (C11 起)
 
 
 
+
+
+
+
+
+
+
 ### thrd_current <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_current](https://zh.cppreference.com/w/c/thread/thrd_current)
@@ -900,11 +1055,18 @@ thrd_t thrd_current(void);
 
 **参数**
 
-（无）
+​	（无）
 
 **返回值**
 
 ​	调用方线程的标识符。
+
+
+
+
+
+
+
 
 
 
@@ -1004,6 +1166,7 @@ nodetach fail 32754
 
 
 
+
 ### thrd_equal <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_equal](https://zh.cppreference.com/w/c/thread/thrd_equal)
@@ -1023,6 +1186,13 @@ int thrd_equal( thrd_t lhs, thrd_t rhs );
 **返回值**
 
 ​	若 `lhs` 与 `rhs` 表示同一线程则为非零值，否则为 0。
+
+
+
+
+
+
+
 
 
 
@@ -1054,6 +1224,13 @@ _Noreturn void thrd_exit( int res ); // (C11 起)(C23 前)
 
 
 
+
+
+
+
+
+
+
 ### thrd_join <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_join](https://zh.cppreference.com/w/c/thread/thrd_join)
@@ -1067,7 +1244,7 @@ int thrd_join( thrd_t thr, int *res );
 
 ​	若 `res` 不是空指针，则将该线程的结果码放置到 `res` 所指向的位置。
 
-​	该线程的终止*同步于*此函数的完成。
+​	该线程的终止 *同步于* 此函数的完成。
 
 ​	若该线程之前已被另一线程分离或合并，则行为未定义。
 
@@ -1083,6 +1260,13 @@ int thrd_join( thrd_t thr, int *res );
 
 
 
+
+
+
+
+
+
+
 ### thrd_sleep <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_sleep](https://zh.cppreference.com/w/c/thread/thrd_sleep)
@@ -1093,7 +1277,7 @@ int thrd_sleep( const struct timespec* duration,
 (C11 起)
 ```
 
-​	阻塞当前线程的执行，*至少*直至经过 `duration` 所指向的基于 TIME_UTC 的时长。
+​	阻塞当前线程的执行，*至少* 直至经过 `duration` 所指向的基于 TIME_UTC 的时长。
 
 ​	若收到不忽略的信号（[signal](https://zh.cppreference.com/w/c/program/signal)），则可以较早地从休眠恢复。此情况下，若 `remaining` 非 [NULL](https://zh.cppreference.com/w/c/types/NULL)，则存储剩余时长到 `remaining` 所指向的对象中。
 
@@ -1141,6 +1325,7 @@ Time: Mon Feb  2 16:18:42 2015
 
 
 
+
 ### thrd_yield <- 11+
 
 原址：[https://zh.cppreference.com/w/c/thread/thrd_yield](https://zh.cppreference.com/w/c/thread/thrd_yield)
@@ -1162,7 +1347,7 @@ void thrd_yield(void);
 
 **注意**
 
-​	此函数的准确行为取决于实现，特别是使用中的 OS 调度器和系统状态。例如，先进先出的实时调度器（Linux 的`SCHED_FIFO`）会挂起当前线程，并将它放在准备运行的相同优先级线程队列尾部，而若无处于相同优先级的线程，则 `yield` 无效果。
+​	此函数的准确行为取决于实现，特别是使用中的 OS 调度器和系统状态。例如，先进先出的实时调度器（Linux 的 `SCHED_FIFO`）会挂起当前线程，并将它放在准备运行的相同优先级线程队列尾部，而若无处于相同优先级的线程，则 `yield` 无效果。
 
 ​	此函数的 POSIX 等价版本是 [`sched_yield`](http://pubs.opengroup.org/onlinepubs/9699919799/functions/sched_yield.html)。
 
@@ -1213,14 +1398,13 @@ Waited for 100.344 us
 
 
 
+
 ### tss_create <- 11+
 
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -1249,7 +1433,7 @@ void tss_delete( tss_t tss_id );
 
 **返回值**
 
-（无）
+​	（无）
 
 **注意**
 
@@ -1262,6 +1446,13 @@ void tss_delete( tss_t tss_id );
 > 本节未完成 
 >
 > 原因：暂无示例
+
+
+
+
+
+
+
 
 ### tss_get <- 11+
 
@@ -1294,6 +1485,13 @@ void *tss_get( tss_t tss_key );
 > 本节未完成 
 >
 > 原因：暂无示例
+
+
+
+
+
+
+
 
 ### tss_set <- 11+
 
@@ -1341,6 +1539,4 @@ int thread_func(void *arg) {
     }
 } // 对 TSS 上存储的指针调用 free()
 ```
-
-
 

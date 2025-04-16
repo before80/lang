@@ -15,6 +15,13 @@ draft = false
 
 
 
+
+
+
+
+
+
+
 ### FILE
 
 原址：[https://zh.cppreference.com/w/c/io/FILE](https://zh.cppreference.com/w/c/io/FILE)
@@ -68,6 +75,13 @@ typedef /* 未指明 */ FILE;
 
 
 
+
+
+
+
+
+
+
 ### errno_t
 
 原址：
@@ -75,7 +89,6 @@ typedef /* 未指明 */ FILE;
 ```c
 typedef /* 见描述 */ errno_t;
 ```
-
 
 
 
@@ -88,11 +101,16 @@ typedef /* 见描述 */ errno_t;
 typedef /* 由实现定义 */ fpos_t;
 ```
 
-
-
 `	fpos_t` 是非数组完整对象类型，能用于存储（由 [fgetpos](https://zh.cppreference.com/w/c/io/fgetpos) ）及恢复（由 [fsetpos](https://zh.cppreference.com/w/c/io/fsetpos) ） C 流的位置与多字节解析状态（若存在）。
 
 ​	宽面向的 C 流的多字节解析状态以 [mbstate_t](https://zh.cppreference.com/w/c/string/multibyte/mbstate_t) 对象表示，其值由 [fgetpos](https://zh.cppreference.com/w/c/io/fgetpos) 作为 `fpos_t` 对象的值的一部分存储。(C95 起)
+
+
+
+
+
+
+
 
 ### rsize_t
 
@@ -101,7 +119,6 @@ typedef /* 由实现定义 */ fpos_t;
 ```c
 typedef /* 见描述 */ rsize_t;
 ```
-
 
 
 
@@ -169,9 +186,8 @@ size = 400
 SIZE_MAX = 18446744073709551615
 ```
 
-
-
 ## 宏
+
 
 
 
@@ -179,182 +195,209 @@ SIZE_MAX = 18446744073709551615
 
 ### BUFSIZ
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	[setbuf](https://zh.cppreference.com/w/c/io/setbuf) 所用的缓冲区大小 (宏常量)
 
 
 ### EOF
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	`int` 类型的负数整数常量表达式 (宏常量)
 
 
 ### FILENAME_MAX
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	保有最长受支持文件名所需的 char 数组大小 (宏常量)
 
 
 ### FOPEN_MAX
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	保有最长受支持文件名所需的 char 数组大小 (宏常量)
 
 
 ### L_tmpnam
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
+​	保有 [tmpnam](https://zh.cppreference.com/w/c/io/tmpnam) 结果所需的 char 数组大小 (宏常量)
 
 
+### L_tmpnam_s(C11)
 
-
-### L_tmpnam_s
-
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	保有 tmpnam_s 结果所需的 char 数组大小 (宏常量)
 
 
 ### NULL
 
-原址：
+原址：[https://zh.cppreference.com/w/c/types/NULL](https://zh.cppreference.com/w/c/types/NULL)
 
 ```c
-
+#define NULL /* 由实现定义 */
 ```
 
+​	宏 `NULL` 是实现定义的空指针常量，可为
+
+- 值为 0 的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)
+- [转换为](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2) void* 的值为 0 的整数常量表达式
+- 预定义常量 [`<ullpt>`](https://zh.cppreference.com/w/c/language/nullptr)(C23 起)
+
+​	空指针常量能[转换](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2)为任何指针类型；转换结果是该类型的空指针值。
+
+**注解**
+
+​	[POSIX 要求](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/stddef.h.html) `NULL` 被定义为转换为 void* 的值为 0 的整数常量表达式。
+
+**可能的实现**
+
+```C
+// 兼容 C++： #define NULL 0 // 不兼容 C++： #define NULL (10*2 - 20) #define NULL ((void*)0) // C23 起（与 C++11 及之后兼容） #define NULL nullptr
+```
+
+**示例**
+
+
+
+```c
+#include <inttypes.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    // 任何类型的指针均能设为 NULL
+    int* p = NULL;
+    struct S *s = NULL;
+    void(*f)(int, double) = NULL;
+    printf("%p %p %p\n", (void*)p, (void*)s, (void*)(long)f);
+ 
+    // 多数返回指针的函数用空指针指示错误
+    char *ptr = malloc(0xFULL);
+    if (ptr == NULL)
+        printf("Out of memory");
+    else
+        printf("ptr = %#" PRIxPTR"\n", (uintptr_t)ptr);
+    free(ptr);
+}
+```
+
+​	可能的输出：
+
+```txt
+(nil) (nil) (nil)
+ptr = 0xc001cafe
+```
 
 
 
 
 ### SEEK_CUR
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fseek](https://zh.cppreference.com/w/c/io/fseek)
 
 ```c
-
+#define SEEK_CUR    /* 未指明 */
 ```
 
-
-
+​	指示从文件当前位置开始寻位的 [fseek](https://zh.cppreference.com/w/c/io/fseek) 参数
 
 
 ### SEEK_END
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fseek](https://zh.cppreference.com/w/c/io/fseek)
 
 ```c
-
+#define SEEK_END    /* 未指明 */
 ```
 
-
-
+​	指示从文件尾开始寻位的 [fseek](https://zh.cppreference.com/w/c/io/fseek) 参数
 
 
 ### SEEK_SET
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fseek](https://zh.cppreference.com/w/c/io/fseek)
 
 ```c
-
+#define SEEK_SET    /* 未指明 */
 ```
 
-
-
+​	指示从文件首开始寻位的 [fseek](https://zh.cppreference.com/w/c/io/fseek) 参数
 
 
 ### TMP_MAX
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
+​	[tmpnam](https://zh.cppreference.com/w/c/io/tmpnam) 所能生成的独有文件名的最大数量
 
 
+### TMP_MAX_S(C11)
 
-
-### TMP_MAX_S
-
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	tmpnam_s 所能生成的独有文件名的最大数量(宏常量)
 
 
 ### _IOFBF
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	指示全缓冲 I/O 的 [setvbuf](https://zh.cppreference.com/w/c/io/setvbuf) 参数(宏常量)
 
 
 ### _IOLBF
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	指示行缓冲 I/O 的 [setvbuf](https://zh.cppreference.com/w/c/io/setvbuf) 参数(宏常量)
 
 
 ### _IONBF
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F)
 
 ```c
-
 ```
 
-
-
+​	指示无缓冲 I/O 的 [setvbuf](https://zh.cppreference.com/w/c/io/setvbuf) 参数(宏常量)
 
 
 ### _PRINTF_NAN_LEN_MAX
@@ -362,9 +405,7 @@ SIZE_MAX = 18446744073709551615
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -374,9 +415,65 @@ SIZE_MAX = 18446744073709551615
 原址：
 
 ```c
-
 ```
 
+
+
+
+### size_t
+
+原址：[https://zh.cppreference.com/w/c/types/size_t](https://zh.cppreference.com/w/c/types/size_t)
+
+```c
+typedef /* 由实现定义 */ size_t;
+```
+
+​	`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`<izeo>`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+
+​	`size_t` 的位宽不小于 16。(C99 起)
+
+**注解**
+
+​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
+
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+
+**可能的实现**
+
+```c
+typedef typeof(sizeof(0)) size_t; // C23 起合法
+```
+
+**示例**
+
+
+
+```c
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    const size_t N = 101;
+    int numbers[N];
+    size_t sum = 0;
+    for (size_t ndx = 0; ndx < N; ++ndx)
+        sum += numbers[ndx] = ndx;
+    size_t size = sizeof numbers;
+    printf("sum = %zu\n", sum);
+    printf("size = %zu\n", size);
+    printf("SIZE_MAX = %zu\n", SIZE_MAX);
+}
+```
+
+​	可能的输出：
+
+```txt
+sum = 5050
+size = 400
+SIZE_MAX = 18446744073709551615
+```
 
 
 
@@ -386,9 +483,7 @@ SIZE_MAX = 18446744073709551615
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -398,9 +493,7 @@ SIZE_MAX = 18446744073709551615
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -410,27 +503,67 @@ SIZE_MAX = 18446744073709551615
 原址：
 
 ```c
-
 ```
-
-
 
 
 
 ## 函数
 
 
-
 ### clearerr
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/clearerr](https://zh.cppreference.com/w/c/io/clearerr)
 
 ```c
-
+void clearerr( FILE *stream );
 ```
 
+​	重置给定文件流的错误标志和 [`EOF`](https://zh.cppreference.com/w/c/io#.E5.AE.8F.E5.B8.B8.E9.87.8F) 指示器。
+
+**参数**
+
+| stream | -    | 要重置错误标志的文件流 |
+| ------ | ---- | ---------------------- |
+
+**返回值**
+
+​	（无）
+
+**示例**
 
 
+
+```c
+#include <stdio.h>
+#include <assert.h>
+ 
+int main(void)
+{
+    FILE* tmpf = tmpfile();
+    fputs("cppreference.com\n", tmpf);
+    rewind(tmpf);
+    int ch;
+    for (int ch; (ch = fgetc(tmpf)) != EOF; putchar(ch)) { }
+ 
+    assert(feof(tmpf)); // 此循环期待以 EOF 终止
+    puts("End of file reached");
+ 
+    clearerr(tmpf);  // 清除 EOF
+ 
+    puts(feof(tmpf) ? "EOF indicator set"
+                    : "EOF indicator cleared");
+ 
+ 
+}
+```
+
+​	输出：
+
+```txt
+cppreference.com
+End of file reached
+EOF indicator cleared
+```
 
 
 ### fclose
@@ -505,14 +638,13 @@ Hello, world!
 
 
 
+
 ### feof
 
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -522,9 +654,7 @@ Hello, world!
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -557,6 +687,13 @@ int fflush( FILE* stream );
 ​	POSIX 通过定义 `fflush` 对输入流的效果[扩展它的规定](http://pubs.opengroup.org/onlinepubs/9699919799/functions/fflush.html)，只要该流还表示一个文件或另一个可定位设备：该情况下重寻位 POSIX 文件指针以匹配 C 流指针（这有效地撤销任何读缓冲），并舍弃任何尚未回读的 [ungetc](https://zh.cppreference.com/w/c/io/ungetc) 或 [ungetwc](https://zh.cppreference.com/w/c/io/ungetwc) 的效果。
 
 ​	微软（Microsoft）也通过定义 `fflush` 对输入流的效果扩展它的规定：在 Visual Studio 2013 及以前的版本中，[放弃输入缓冲区](https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2013/9yky46tz(v=vs.120))；在 Visual Studio 2015 及以后的版本中，[无影响并保留缓冲区](https://msdn.microsoft.com/en-us/library/9yky46tz.aspx)。
+
+
+
+
+
+
+
 
 
 
@@ -633,14 +770,13 @@ Hello, world!
 
 
 
+
 ### fgetpos
 
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -725,6 +861,7 @@ int main(void)
 "
 抵达文件尾
 ```
+
 
 
 
@@ -833,6 +970,7 @@ Hello, world!
 
 
 
+
 ### fopen_s
 
 原址：[https://zh.cppreference.com/w/c/io/fopen](https://zh.cppreference.com/w/c/io/fopen)
@@ -938,6 +1076,7 @@ Hello, world!
 
 
 
+
 ### fprintf
 
 原址：[https://zh.cppreference.com/w/c/io/fprintf](https://zh.cppreference.com/w/c/io/fprintf)
@@ -962,6 +1101,13 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 ```
 
 参见：[printf](#printf)
+
+
+
+
+
+
+
 
 
 
@@ -992,40 +1138,207 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### fputc
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fputc](https://zh.cppreference.com/w/c/io/fputc)
 
 ```c
-
+int fputc( int ch, FILE *stream );
+int putc( int ch, FILE *stream );
 ```
 
+​	写入字符 `ch` 到给定输出流 stream 。 putc() 可以实现为宏并对 stream 求值超过一次，故对应的参数决不应是有副效应的表达式。
+
+​	在内部，在写入前将字符转换为 unsigned char 。
+
+**参数**
+
+| ch     | -    | 要写入的字符 |
+| ------ | ---- | ------------ |
+| stream | -    | 输出流       |
+
+**返回值**
+
+​	成功时，返回被写入字符。
+
+​	失败时，返回 [EOF](https://zh.cppreference.com/w/c/io) 并设置 stream 上的*错误*指示器（见 [ferror()](https://zh.cppreference.com/w/c/io/ferror) ）。
+
+**示例**
+
+​	显示带错误检查的 `putc`
+
+
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    int ret_code = 0;
+    for (char c = 'a'; (ret_code != EOF) && (c != 'z'); c++)
+        ret_code = putc(c, stdout);
+ 
+    // 测试是否抵达 EOF。
+    if (ret_code == EOF && ferror(stdout))
+    {
+        perror("putc()");
+        fprintf(stderr, "putc() failed in file %s at line # %d\n",
+                __FILE__, __LINE__ - 7);
+        exit(EXIT_FAILURE);
+    }
+    putc('\n', stdout);
+ 
+    return EXIT_SUCCESS;
+}
+```
+
+​	输出：
+
+```txt
+abcdefghijklmnopqrstuvwxy
+```
 
 
 
 
 ### fputs
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fputs](https://zh.cppreference.com/w/c/io/fputs)
 
 ```c
-
+int fputs( const char*          str, FILE*          stream ); // (C99 前)
+int fputs( const char* restrict str, FILE* restrict stream ); // (C99 起)
 ```
 
+​	将以NULL结尾的字符串 str 的每个字符写入到输出流 stream，如同通过重复执行 [fputc](https://zh.cppreference.com/w/c/io/fputc)。
+
+​	不写入 str 的终止空字符。
+
+**参数**
+
+| str    | -    | 要写入的空终止字符串 |
+| ------ | ---- | -------------------- |
+| stream | -    | 输出流               |
+
+**返回值**
+
+​	成功时，返回非负值。
+
+​	失败时，返回 [EOF](https://zh.cppreference.com/w/c/io) 并设置 stream 上的*错误*指示器（见 [ferror](https://zh.cppreference.com/w/c/io/ferror)）。
+
+**注解**
+
+​	相关函数 [puts](https://zh.cppreference.com/w/c/io/puts) 后附新换行符到输出，而 `fputs` 写入不修改的字符串。
+
+​	不同的实现返回不同的非负数：一些返回最后写入的字符，一些返回写入的字符数（或若字符串长于 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 则为该值），一些简单地非负常量，例如零。
+
+**示例**
 
 
+
+```c
+#include <stdio.h>
+ 
+int main(void)
+{
+    int rc = fputs("Hello World", stdout);
+ 
+    if (rc == EOF)
+       perror("fputs()"); // POSIX 要求设置 errno
+}
+```
+
+​	输出：
+
+```txt
+Hello World
+```
 
 
 ### fread
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fread](https://zh.cppreference.com/w/c/io/fread)
 
 ```c
-
+size_t fread( void          *buffer, size_t size, size_t count,
+              FILE          *stream ); // (C99 前)
+size_t fread( void *restrict buffer, size_t size, size_t count,
+              FILE *restrict stream ); // (C99 起)
 ```
 
+​	从给定输入流 stream 读取至多 count 个对象到数组 buffer 中，如同以对每个对象调用 size 次 [fgetc](https://zh.cppreference.com/w/c/io/fgetc) ，并按顺序存储结果到转译为 unsigned char 数组的 buffer 中的相继位置。流的文件位置指示器前进读取的字符数。
+
+​	若出现错误，则流的文件位置指示器的结果值不确定。若读入部分的元素，则元素值不确定。
+
+**参数**
+
+| buffer | -    | 指向要读取的数组中首个对象的指针 |
+| ------ | ---- | -------------------------------- |
+| size   | -    | 每个对象的字节大小               |
+| count  | -    | 要读取的对象数                   |
+| stream | -    | 读取来源的输入文件流             |
+
+**返回值**
+
+​	成功读取的对象数，若出现错误或文件尾条件，则可能小于 count 。
+
+​	若 size 或 count 为零，则 `fread` 返回零且不进行其他动作。
+
+​	`fread` 不区别文件尾和错误，而调用者必须用 [feof](https://zh.cppreference.com/w/c/io/feof) 和 [ferror](https://zh.cppreference.com/w/c/io/ferror) 鉴别出现者为何。
+
+**示例**
 
 
+
+```c
+#include <stdio.h>
+ 
+enum { SIZE = 5 };
+int main(void)
+{
+    const double a[SIZE] = {1.0, 2.0, 3.0, 4.0, 5.0};
+    printf("Array has size %ld bytes, element size: %ld\n", sizeof a, sizeof *a);
+    FILE *fp = fopen("test.bin", "wb"); // 必须用二进制模式
+    fwrite(a, sizeof *a, SIZE, fp); // 写 double 的数组
+    fclose(fp);
+ 
+    double b[SIZE];
+    fp = fopen("test.bin","rb");
+    const size_t ret_code = fread(b, sizeof b[0], SIZE, fp); // 读 double 的数组
+    if(ret_code == SIZE)
+    {
+        printf("Array at %p read successfully, contents:\n", (void*)&a);
+        for(int n = 0; n != SIZE; ++n)
+            printf("%f ", b[n]);
+        putchar('\n');
+    }
+    else // 错误处理
+    {
+       if (feof(fp))
+          printf("Error reading test.bin: unexpected end of file\n");
+       else if (ferror(fp))
+           perror("Error reading test.bin");
+    }
+ 
+    fclose(fp);
+}
+```
+
+​	可能的输出：
+
+```txt
+Array has size 40 bytes, element size: 8
+Array at 0x1337f00d6960 read successfully, contents:
+1.000000 2.000000 3.000000 4.000000 5.000000
+```
 
 
 ### freopen
@@ -1033,9 +1346,7 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -1045,9 +1356,7 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -1243,6 +1552,7 @@ warr[1] = U+6c34
 
 
 
+
 ### fscanf_s
 
 原址：[https://zh.cppreference.com/w/c/io/fscanf](https://zh.cppreference.com/w/c/io/fscanf)
@@ -1264,52 +1574,339 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 
 
 
+
 ### fseek
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fseek](https://zh.cppreference.com/w/c/io/fseek)
 
 ```c
-
+int fseek( FILE* stream, long offset, int origin );
+#define SEEK_SET    /* 未指明 */
+​	#define SEEK_CUR    /* 未指明 */
+#define SEEK_END    /* 未指明 */
 ```
 
+​	设置文件流 stream 的文件位置指示器为 offset 所指向的值。
+
+​	若 stream 以二进制模式打开，则新位置恰好是文件起始后（若 origin 为 [SEEK_SET](https://zh.cppreference.com/w/c/io)）或当前文件位置后（若 origin 为 [SEEK_CUR](https://zh.cppreference.com/w/c/io)），或文件结尾后（若 origin 为 [SEEK_END](https://zh.cppreference.com/w/c/io)）的 offset 字节。不要求二进制流支持 [SEEK_END](https://zh.cppreference.com/w/c/io)，尤其是当其输出中附加了空字节时。
+
+​	若 stream 以文本模式打开，则仅有的受支持 offset 值为零（可用于任何 origin）和先前在关联到同一个文件的流上对 [ftell](https://zh.cppreference.com/w/c/io/ftell) 的调用的返回值（仅可用于 [SEEK_SET](https://zh.cppreference.com/w/c/io) 的 origin）。
+
+​	若 stream 为宽取向，则文本和二进制流的限制均适用（允许 [ftell](https://zh.cppreference.com/w/c/io/ftell) 的结果与 [SEEK_SET](https://zh.cppreference.com/w/c/io) 一同使用，并允许零偏移量以 [SEEK_SET](https://zh.cppreference.com/w/c/io) 和 [SEEK_CUR](https://zh.cppreference.com/w/c/io) 但非 [SEEK_END](https://zh.cppreference.com/w/c/io) 为基准）。
+
+​	除了更改文件位置指示器， `fseek` 还撤销 [ungetc](https://zh.cppreference.com/w/c/io/ungetc) 的效果并清除文件尾状态，如果适用。
+
+​	若发生读或写错误，则设置流的错误指示器（ [ferror](https://zh.cppreference.com/w/c/io/ferror) ）而不影响文件位置。
+
+**参数**
+
+| stream | -    | 要修改的文件流                                               |
+| ------ | ---- | ------------------------------------------------------------ |
+| offset | -    | 相对 origin 迁移的字符数                                     |
+| origin | -    | `offset` 所加上的位置。它能拥有下列值之一：[SEEK_SET](https://zh.cppreference.com/w/c/io)、[SEEK_CUR](https://zh.cppreference.com/w/c/io)、[SEEK_END](https://zh.cppreference.com/w/c/io) |
+
+**返回值**
+
+​	成功时为 0 ，否则为非零。
+
+**注解**
+
+​	在巡位到宽流的非结尾位置后，下个对任意输出函数的调用可能令剩下的文件内容未定义，例如通过输出一个长度不同的多字节序列。
+
+​	对于文本流，offset 仅有的合法值是 0（可应用于任意 origin）和先前 [ftell](https://zh.cppreference.com/w/c/io/ftell) 调用的返回值（仅可应用于 [SEEK_SET](https://zh.cppreference.com/w/c/io)）。
+
+​	POSIX 允许在文件尾之后巡位。若在此巡位后进行输出，则任何间隙中的读取将返回零字节。在文件系统支持的场合，这会创建一个*稀疏文件*。
+
+​	POSIX 亦要求 `fseek` 先进行 [fflush](https://zh.cppreference.com/w/c/io/fflush) ，若有任何未写入数据（但是否恢复迁移状态是实现定义的）。
+
+​	POSIX 规定，[`fseek`](https://pubs.opengroup.org/onlinepubs/9699919799/functions/fseek.html) 错误时应返回 -1，并设置 [errno](https://zh.cppreference.com/w/c/error/errno) 以标明该错误。
+
+​	Windows 中，应使用 [`_fseeki64`](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/fseek-fseeki64) 以支持大小超过 2GiB 的文件。
+
+**示例**
+
+​	`fseek` 及错误检查
 
 
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    // 准备 double 值的数组。
+    #define SIZE 5
+    double A[SIZE] = {1.0, 2.0, 3.0, 4.0, 5.0};
+ 
+    // 将数组写入文件。
+    FILE * fp = fopen("test.bin", "wb");
+    fwrite(A, sizeof(double), SIZE, fp);
+    fclose (fp);
+ 
+    // 将各 double 值读取到数组 B 中。
+    double B[SIZE];
+    fp = fopen("test.bin", "rb");
+ 
+    // 设置文件位置指示器到第三个 double 值之前。
+    if (fseek(fp, sizeof(double) * 2L, SEEK_SET) != 0)
+    {
+        fprintf(stderr, "fseek() 失败，文件 %s 行 # %d\n",
+                __FILE__, __LINE__ - 2);
+        fclose(fp);
+        return EXIT_FAILURE;
+    }
+ 
+    int ret_code = fread(B, sizeof(double), 1, fp); // 读取一个 double 值
+    printf("ret_code == %d\n", ret_code);           // 打印所读取值的数量
+    printf("B[0] == %.1f\n", B[0]);                 // 打印一个值
+ 
+    fclose(fp);
+    return EXIT_SUCCESS;
+}
+```
+
+​	可能的输出：
+
+```txt
+ret_code == 1
+B[0] == 3.0
+```
 
 
 ### fsetpos
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fgetpos](https://zh.cppreference.com/w/c/io/fgetpos)
 
 ```c
-
+int fgetpos( FILE*          stream, fpos_t*          pos ); // (C99 前)
+int fgetpos( FILE* restrict stream, fpos_t* restrict pos ); // (C99 起)
 ```
 
+​	获得文件流 stream 的文件位置指示器和当前分析状态（若存在），并将它们存储于 pos 所指向的对象。存储的值仅在作为 [fsetpos](https://zh.cppreference.com/w/c/io/fsetpos) 的输入的情况有意义。
+
+**参数**
+
+| stream | -    | 要检验的文件流                                               |
+| ------ | ---- | ------------------------------------------------------------ |
+| pos    | -    | 指向要存储文件位置指示器到的 [fpos_t](https://zh.cppreference.com/w/c/io) 对象的指针 |
+
+**返回值**
+
+​	成功时为 0，否则非零值。
+
+**示例**
 
 
+
+```c
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    // 准备保有 4 个 double 类型值的文件
+    enum {SIZE = 4};
+    FILE* fp = fopen("test.bin", "wb");
+    assert(fp);
+    int rc = fwrite((double[SIZE]){1.1, 2.2, 3.3, 4.4}, sizeof(double), SIZE, fp);
+    assert(rc == SIZE);
+    fclose(fp);
+ 
+    // 演示使用 fsetpos 返回到文件起始
+    fp = fopen("test.bin", "rb");
+    fpos_t pos;
+    fgetpos(fp, &pos);               // 存储文件起始于 pos
+    double d;
+    rc = fread(&d, sizeof d, 1, fp); // 读取首个 double
+    assert(rc == 1);
+    printf("文件中的第一个值: %.1f\n", d);
+    fsetpos(fp,&pos);                // 移动文件位置回文件起始
+    rc = fread(&d, sizeof d, 1, fp); // 再次读取首个 double
+    assert(rc == 1);
+    printf("再次读取文件中的第一个值: %.1f\n", d);
+    fclose(fp);
+ 
+    // 演示错误处理
+    rc = fsetpos(stdin, &pos);
+    if(rc)
+        perror("无法对 stdin fsetpos");
+}
+```
+
+​	输出：
+
+```txt
+文件中的第一个值: 1.1
+再次读取文件中的第一个值: 1.1
+无法对 stdin fsetpos: Illegal seek
+```
 
 
 ### ftell
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/ftell](https://zh.cppreference.com/w/c/io/ftell)
 
 ```c
-
+long ftell( FILE *stream );
 ```
 
+​	返回流 stream 的文件位置指示器。
+
+​	若流以二进制模式打开，则由此函数获得的值是从文件开始的字节数。
+
+​	若流以文本模式打开，则由此函数返回的值未指定，且仅若作为 [fseek()](https://zh.cppreference.com/w/c/io/fseek) 的输入才有意义。
+
+**参数**
+
+| stream | -    | 要检验的文件流 |
+| ------ | ---- | -------------- |
+
+**返回值**
+
+​	成功时为文件位置指示器，若失败发生则为 -1L 。
+
+​	失败时，设 errno 对象为实现定义的正值。
+
+**注解**
+
+​	Windows 中，应使用 [`_ftelli64`](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/ftell-ftelli64) 以支持大小超过 2GiB 的文件。
+
+**示例**
+
+​	演示 `ftell()` 带错误检查。向文件写出少量浮点数后再从中读取它们。
 
 
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+ 
+/* 如果条件不满足，则退出程序并给出错误消息。 */
+void check(_Bool condition, const char* func, int line)
+{
+    if (condition)
+        return;
+    perror(func);
+    fprintf(stderr, "%s failed in file %s at line # %d\n", func, __FILE__, line - 1);
+    exit(EXIT_FAILURE);
+}
+ 
+int main(void)
+{
+    /* 准备浮点数的数组。 */
+    #define SIZE 5
+    double A[SIZE] = {1.1, 2.0, 3.0, 4.0, 5.0};
+ 
+    /* 写数组到文件。 */
+    const char* fname = "/tmp/test.bin";
+    FILE* file = fopen(fname, "wb");
+    check(file != NULL, "fopen()", __LINE__);
+ 
+    const int write_count = fwrite(A, sizeof(double), SIZE, file);
+    check(write_count == SIZE, "fwrite()", __LINE__);
+ 
+    fclose (file);
+ 
+    /* 读取浮点数到数组 B。 */
+    double B[SIZE];
+    file = fopen(fname, "rb");
+    check(file != NULL, "fopen()", __LINE__);
+ 
+    long int pos = ftell(file); /* 位置指示器在文件起始 */
+    check(pos != -1L, "ftell()", __LINE__);
+    printf("pos: %ld\n", pos);
+ 
+ 
+    const int read_count = fread(B, sizeof(double), 1, file); /* 读取一个浮点数 */
+    check(read_count == 1, "fread()", __LINE__);
+ 
+    pos = ftell(file); /* 读取一个浮点数后的位置指示器 */
+    check(pos != -1L, "ftell()", __LINE__);
+    printf("pos: %ld\n", pos);
+    printf("B[0]: %.1f\n", B[0]); /* 打印一个浮点数 */
+ 
+    return EXIT_SUCCESS; 
+}
+```
+
+​	可能的输出：
+
+```txt
+pos: 0
+pos: 8
+B[0]: 1.1
+```
 
 
 ### fwrite
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fwrite](https://zh.cppreference.com/w/c/io/fwrite)
 
 ```c
-
+size_t fwrite( const void *buffer, size_t size, size_t count,
+               FILE *stream );
+(C99 前)
+size_t fwrite( const void *restrict buffer, size_t size, size_t count,
+               FILE *restrict stream );
+(C99 起)
 ```
 
+​	从给定数组 buffer 向输出流 stream 写入 count 个对象。各个对象的写入，如同将每个对象解读为 unsigned char 数组，并对每个对象调用 size 次 [fputc](https://zh.cppreference.com/w/c/io/fputc) 以将那些 unsigned char 按顺序写入 stream 一般来进行。文件位置指示器前进所写入的字节数。
+
+​	如果发生错误，则所造成的该流的文件位置指示器的值是不确定的。
+
+**参数**
+
+| buffer | -    | 指向数组中要被写入的首个对象的指针 |
+| ------ | ---- | ---------------------------------- |
+| size   | -    | 每个对象的大小                     |
+| count  | -    | 要被写入的对象数                   |
+| stream | -    | 指向输出流的指针                   |
+
+**返回值**
+
+​	成功写入的对象数，若错误发生则可能小于 count。
+
+​	若 size 或 count 为零，则 `fwrite` 返回零且不进行其他动作。
+
+**示例**
 
 
+
+```c
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+enum { SIZE = 5 };
+ 
+int main(void)
+{
+    double a[SIZE] = {1, 2, 3, 4, 5};
+    FILE* f1 = fopen("file.bin", "wb");
+    assert(f1);
+    size_t r1 = fwrite(a, sizeof a[0], SIZE, f1);
+    printf("wrote %zu elements out of %d requested\n", r1, SIZE);
+    fclose(f1);
+ 
+    double b[SIZE];
+    FILE* f2 = fopen("file.bin", "rb");
+    size_t r2 = fread(b, sizeof b[0], SIZE, f2);
+    fclose(f2);
+    printf("read back: ");
+    for (size_t i = 0; i < r2; ++i)
+        printf("%0.2f ", b[i]);
+}
+```
+
+​	输出：
+
+```txt
+wrote 5 elements out of 5 requested
+read back: 1.00 2.00 3.00 4.00 5.00
+```
 
 
 ### getc
@@ -1323,16 +1920,71 @@ int getc( FILE* stream ); // (2)
 
 参见：[fgetc](#fgetc)
 
+
+
+
+
+
+
+
 ### getchar
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/getchar](https://zh.cppreference.com/w/c/io/getchar)
 
 ```c
-
+int getchar(void);
 ```
 
+​	从 [stdin](https://zh.cppreference.com/w/c/io) 读取下一个字符。
+
+​	等价于 [getc](http://zh.cppreference.com/w/c/io/fgetc)([stdin](http://zh.cppreference.com/w/c/io)) 。
+
+**参数**
+
+​	（无）
+
+**返回值**
+
+​	成功时为获得的字符，失败时为 [EOF](https://zh.cppreference.com/w/c/io) 。
+
+​	若失败由文件尾条件产生，则另外设置 [stdin](https://zh.cppreference.com/w/c/io) 上的*文件尾*指示器（见 [feof()](https://zh.cppreference.com/w/c/io/feof) ）。若失败由某些其他错误产生，则设置 [stdin](https://zh.cppreference.com/w/c/io) 上的*错误*指示器（见 [ferror()](https://zh.cppreference.com/w/c/io/ferror) ）。
+
+**示例**
+
+​	演示 `getchar` 带错误检查
 
 
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    for (int ch; (ch = getchar()) != EOF;) // 从 stdin 读/打印 "abcde"
+        printf("%c", ch);
+ 
+    // 测试抵达 EOF 的原因。
+    if (feof(stdin)) // 若因文件尾条件失败
+        puts("End of file reached");
+    else if (ferror(stdin)) // 若因别的错误失败
+    {
+        perror("getchar()");
+        fprintf(stderr, "getchar() failed in file %s at line # %d\n",
+                __FILE__, __LINE__ - 9);
+        exit(EXIT_FAILURE);
+    }
+ 
+    return EXIT_SUCCESS;
+}
+```
+
+​	可能的输出：
+
+```txt
+abcde
+End of file reached
+```
 
 
 ### gets_s
@@ -1340,9 +1992,7 @@ int getc( FILE* stream ); // (2)
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -1352,9 +2002,7 @@ int getc( FILE* stream ); // (2)
 原址：
 
 ```c
-
 ```
-
 
 
 
@@ -1568,6 +2216,7 @@ int main(void)
 
 
 
+
 ### printf_s
 
 原址：[https://zh.cppreference.com/w/c/io/fprintf](https://zh.cppreference.com/w/c/io/fprintf)
@@ -1595,40 +2244,147 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### putc
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/fputc](https://zh.cppreference.com/w/c/io/fputc)
 
 ```c
-
+int fputc( int ch, FILE *stream );
+int putc( int ch, FILE *stream );
 ```
 
+参见：[fputc](#fputc)
 
 
 
 
 ### putchar
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/putchar](https://zh.cppreference.com/w/c/io/putchar)
 
 ```c
-
+int putchar( int ch );
 ```
 
+​	写字符 ch 到 [stdout](https://zh.cppreference.com/w/c/io)。在内部，字符于写入前被转换为 unsigned char。
+
+​	等价于 [putc](http://zh.cppreference.com/w/c/io/fputc)(ch, [stdout](http://zh.cppreference.com/w/c/io))。
+
+**参数**
+
+| ch   | -    | 要被写入的字符 |
+| ---- | ---- | -------------- |
+
+**返回值**
+
+​	成功时返回写入的字符。
+
+​	失败时返回 [EOF](https://zh.cppreference.com/w/c/io) 并设置 [stdout](https://zh.cppreference.com/w/c/io) 上的*错误*指示器（见 [ferror()](https://zh.cppreference.com/w/c/io/ferror)）。
+
+**示例**
+
+​	展示 `putchar` 带错误检查
 
 
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main(void)
+{
+    int ret_code = 0;
+    for (char c = 'a'; (ret_code != EOF) && (c != 'z'); c++)
+        ret_code = putchar(c);
+ 
+    // 测试是否抵达 EOF。
+    if (ret_code == EOF && ferror(stdout))
+    {
+        fprintf(stderr, "putchar() failed in file %s at line # %d\n",
+                __FILE__, __LINE__ - 6);
+        perror("putchar()");
+        exit(EXIT_FAILURE);
+    }
+    putchar('\n');
+ 
+    // putchar 返回值不等于参数
+    int r = 0x1070;
+    printf("\n0x%x\n", r);
+    r = putchar(r);
+    printf("\n0x%x\n", r);
+}
+```
+
+​	输出：
+
+```txt
+abcdefghijklmnopqrstuvwxy
+ 
+0x1070
+p
+0x70
+```
 
 
 ### puts
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/puts](https://zh.cppreference.com/w/c/io/puts)
 
 ```c
-
+int puts( const char *str );
 ```
 
+​	写入每个来自空终止字符串 str 的字符及附加换行符 `'\n'` 到输出流 [stdout](https://zh.cppreference.com/w/c/io) ，如同以重复执行 [fputc](https://zh.cppreference.com/w/c/io/fputc) 写入。
+
+​	不写入来自 `str` 的空终止字符。
+
+**参数**
+
+| str  | -    | 要写入的字符串 |
+| ---- | ---- | -------------- |
+
+**返回值**
+
+​	成功时返回非负值。
+
+​	失败时，返回 [EOF](https://zh.cppreference.com/w/c/io) 并设置 `stdout` 的*错误*指示器（见 [ferror()](https://zh.cppreference.com/w/c/io/ferror)）。
+
+**注意**
+
+​	`puts` 函数后附一个换行字符到输出，而 [fputs](https://zh.cppreference.com/w/c/io/fputs) 不这么做。
+
+​	不同的实现返回不同的非负数：一些返回最后写入的字符，一些返回写入的字符数（或若字符串长于 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 则返回它），一些简单地返回非负常量。
+
+​	在重定向 [stdout](https://zh.cppreference.com/w/c/io) 到文件时，导致 `puts` 失败的典型原因是用尽了文件系统的空间。
+
+**示例**
 
 
+
+```c
+#include <stdio.h>
+ 
+int main(void)
+{
+    int rc = puts("Hello World");
+ 
+    if (rc == EOF)
+        perror("puts()"); // POSIX 要求设置 errno
+}
+```
+
+​	输出：
+
+```txt
+Hello World
+```
 
 
 ### remove
@@ -1706,6 +2462,7 @@ Double-remove failed: No such file or directory
 
 
 
+
 ### rename
 
 原址：[https://zh.cppreference.com/w/c/io/rename](https://zh.cppreference.com/w/c/io/rename)
@@ -1779,16 +2536,72 @@ a
 
 
 
+
 ### rewind
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/rewind](https://zh.cppreference.com/w/c/io/rewind)
 
 ```c
-
+void rewind( FILE *stream );
 ```
 
+​	移动文件位置指示器到给定文件流的起始。
+
+​	函数等价于 [fseek](http://zh.cppreference.com/w/c/io/fseek)(stream, 0, [SEEK_SET](http://zh.cppreference.com/w/c/io));，但它会清除文件尾和错误指示器。
+
+​	此函数丢弃任何来自先前对 [ungetc](https://zh.cppreference.com/w/c/io/ungetc) 调用的效果。
+
+**参数**
+
+| stream | -    | 要修改的文件流 |
+| ------ | ---- | -------------- |
+|        |      |                |
+
+**返回值**
+
+​	（无）
+
+**示例**
+
+​	此例演示如何读文件二次
 
 
+
+```c
+#include <stdio.h>
+ 
+char str[20];
+ 
+int main(void)
+{
+    FILE *f;
+    char ch;
+ 
+    f = fopen("file.txt", "w");
+    for (ch = '0'; ch <= '9'; ch++) {
+        fputc(ch, f);
+    }
+    fclose(f);
+ 
+    f = fopen("file.txt", "r");
+    fread(str, 1, 10, f);
+    puts(str);
+ 
+    rewind(f);
+    fread(str, 1, 10, f);
+    puts(str);
+    fclose(f);
+ 
+    return 0;
+}
+```
+
+​	输出：
+
+```txt
+0123456789
+0123456789
+```
 
 
 ### scanf
@@ -1812,6 +2625,13 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 
 
 
+
+
+
+
+
+
+
 ### scanf_s
 
 原址：[https://zh.cppreference.com/w/c/io/fscanf](https://zh.cppreference.com/w/c/io/fscanf)
@@ -1830,6 +2650,13 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 ```
 
 ​	参见：[fscanf](#fscanf)
+
+
+
+
+
+
+
 
 ### setbuf
 
@@ -1901,6 +2728,7 @@ ab
 
 
 
+
 ### setvbuf
 
 原址：[https://zh.cppreference.com/w/c/io/setvbuf](https://zh.cppreference.com/w/c/io/setvbuf)
@@ -1960,11 +2788,11 @@ int main(void) {
 ```
 // 使得一些 POSIX 函数可见，诸如 `int fileno(FILE*)`:
 #define _POSIX_SOURCE
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
- 
+
 int main(void)
 {
     FILE* fp = fopen("/tmp/test.txt", "w+");
@@ -1973,27 +2801,27 @@ int main(void)
         perror("fopen");
         return EXIT_FAILURE;
     }
- 
+
     struct stat stats;
     if (fstat(fileno(fp), &stats) == -1) // 仅限 POSIX
     {
         perror("fstat");
         return EXIT_FAILURE;
     }
- 
+     
     printf("BUFSIZ is %d, but optimal block size is %ld\n", BUFSIZ, stats.st_blksize);
     if (setvbuf(fp, NULL, _IOFBF, stats.st_blksize) != 0)
     {
         perror("setvbuf failed"); // POSIX 版本设置 errno
         return EXIT_FAILURE;
     }
- 
+     
     int ch;
     while((ch=fgetc(fp)) != EOF); // read entire file: use truss/strace to
                                   // observe the read(2) syscalls used
     while((ch=fgetc(fp)) != EOF); // 读整个文件：可用 truss/strace 观察
                                   // 所使用的 read(2) 系统调用
- 
+     
     fclose(fp);
     return EXIT_SUCCESS;
 }
@@ -2004,6 +2832,7 @@ int main(void)
 ```txt
 BUFSIZ is 8192, but optimal block size is 65536
 ```
+
 
 
 
@@ -2034,6 +2863,13 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### snprintf_s
 
 原址：[https://zh.cppreference.com/w/c/io/fprintf](https://zh.cppreference.com/w/c/io/fprintf)
@@ -2058,6 +2894,13 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 ```
 
 参见：[printf](#printf)
+
+
+
+
+
+
+
 
 
 
@@ -2086,6 +2929,13 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 
 参见：[printf](#printf)
 
+
+
+
+
+
+
+
 ### sprintf_s
 
 原址：[https://zh.cppreference.com/w/c/io/fprintf](https://zh.cppreference.com/w/c/io/fprintf)
@@ -2113,6 +2963,13 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### sscanf
 
 原址：[https://zh.cppreference.com/w/c/io/fscanf](https://zh.cppreference.com/w/c/io/fscanf)
@@ -2134,6 +2991,13 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 
 
 
+
+
+
+
+
+
+
 ### sscanf_s
 
 原址：[https://zh.cppreference.com/w/c/io/fscanf](https://zh.cppreference.com/w/c/io/fscanf)
@@ -2152,6 +3016,13 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 ```
 
 ​	参见：[fscanf](#fscanf)
+
+
+
+
+
+
+
 
 ### tmpfile
 
@@ -2224,6 +3095,7 @@ TMP_MAX = 238328, FOPEN_MAX = 16
 got back from the file: 'Hello'
 File name: /tmp/tmpfjptPe5 (deleted)
 ```
+
 
 
 
@@ -2301,6 +3173,7 @@ File name: /tmp/tmpfjptPe5 (deleted)
 
 
 
+
 ### tmpnam
 
 原址：[https://zh.cppreference.com/w/c/io/tmpnam](https://zh.cppreference.com/w/c/io/tmpnam)
@@ -2312,7 +3185,6 @@ errno_t tmpnam_s(char *filename_s, rsize_t maxsize); // (2)	(C11 起)
 #define TMP_MAX_S      /* 未指明 */  // (C11 起)
 #define L_tmpnam       /* 未指明 */
 #define L_tmpnam_s     /* 未指明 */ // (C11 起)
-
 ```
 
 1) 创建独有的合法文件名（长度不长于 [L_tmpnam](https://zh.cppreference.com/w/c/io)）并将它存储于 filename 所指向的字符串。此函数足以生成至多 [TMP_MAX](https://zh.cppreference.com/w/c/io) 个独有文件名，但它们中的一部分甚至全部可能正在文件系统中使用，从而不适合作为返回值。
@@ -2388,6 +3260,7 @@ temporary file name: /tmp/file90dLlR
 temporary file name: /tmp/fileY9LWAg
 temporary file name: /tmp/filexgv8PF
 ```
+
 
 
 
@@ -2402,7 +3275,6 @@ errno_t tmpnam_s(char *filename_s, rsize_t maxsize); // (2)	(C11 起)
 #define TMP_MAX_S      /* 未指明 */  // (C11 起)
 #define L_tmpnam       /* 未指明 */
 #define L_tmpnam_s     /* 未指明 */ // (C11 起)
-
 ```
 
 1) 创建独有的合法文件名（长度不长于 [L_tmpnam](https://zh.cppreference.com/w/c/io)）并将它存储于 filename 所指向的字符串。此函数足以生成至多 [TMP_MAX](https://zh.cppreference.com/w/c/io) 个独有文件名，但它们中的一部分甚至全部可能正在文件系统中使用，从而不适合作为返回值。
@@ -2481,16 +3353,108 @@ temporary file name: /tmp/filexgv8PF
 
 
 
+
 ### ungetc
 
-原址：
+原址：[https://zh.cppreference.com/w/c/io/ungetc](https://zh.cppreference.com/w/c/io/ungetc)
 
 ```c
-
+int ungetc( int ch, FILE* stream );
 ```
 
+​	若 ch 不等于 [EOF](https://zh.cppreference.com/w/c/io)，则推入字符 ch（转译为 unsigned char）到与流 stream 关联的输入缓冲区，方式满足从 stream 的后继读取操作将取得该字符。不修改与流关联的外部设备。
+
+​	流重寻位操作 [fseek](https://zh.cppreference.com/w/c/io/fseek)、[fsetpos](https://zh.cppreference.com/w/c/io/fsetpos) 和 [rewind](https://zh.cppreference.com/w/c/io/rewind) 弃去 `ungetc` 的效果。
+
+​	若多次调用 `ungetc` 而无介入其间的读取或重寻位，则可能失败（换言之，保证大小为 1 的回放缓冲区，但任何更大的缓冲区是实现定义的）。若成功进行多次 `ungetc` ，则读取操作以 `ungetc` 的逆序取得回放的字符。
+
+​	若 ch 等于 [EOF](https://zh.cppreference.com/w/c/io)，则操作失败而不影响流。
+
+​	对 `ungetc` 的成功调用清除文件尾状态标志 [feof](https://zh.cppreference.com/w/c/io/feof)。
+
+​	在二进制流上对 `ungetc` 的成功调用将流位置指示器减少一（若流位置指示器为零，则行为不确定）。
+
+​	在文本流上对 `ungetc` 的成功调用以未指定方式修改流位置指示器，但保证在以读取操作取得所有回放字符后，流位置指示器等于其在 `ungetc` 之前的值。
+
+**参数**
+
+| ch     | -    | 要推入输入流缓冲区的字符 |
+| ------ | ---- | ------------------------ |
+| stream | -    | 要回放字符到的文件流     |
+
+**返回值**
+
+​	成功时返回 ch。
+
+​	失败时返回 [EOF](https://zh.cppreference.com/w/c/io)，而给定的流保持不变。
+
+**注解**
+
+​	实践中，回放缓冲区的大小会在 4k（Linux、MacOS）和 4（Solaris）或保证的最小值 1（HPUX、AIX）间变化。
+
+​	若回放的字符等于存在于外部字符序列中该位置的字符，则回放缓冲区的表观大小可以更大（实现可以简单地自减读取的文件位置指示器，并避免维护回放缓冲区）。
+
+**示例**
+
+​	展示 `ungetc` 的原目的：实现 [scanf](https://zh.cppreference.com/w/c/io/fscanf)
 
 
+
+```c
+#include <ctype.h>
+#include <stdio.h>
+ 
+void demo_scanf(const char* fmt, FILE* s)
+{
+    while (*fmt != '\0')
+    {
+        if (*fmt == '%')
+        {
+            int c;
+            switch (*++fmt)
+            {
+                case 'u':
+                    while (isspace(c=getc(s))) {}
+                    unsigned int num = 0;
+                    while (isdigit(c))
+                    {
+                        num = num*10 + c-'0';
+                        c = getc(s);
+                    }
+                    printf("%%u scanned %u\n", num);
+                    ungetc(c, s);
+                    break;
+                case 'c':
+                    c = getc(s);
+                    printf("%%c scanned '%c'\n", c);
+                    break;
+            }
+        }
+        else
+            ++fmt;
+    }
+}
+ 
+int main(void)
+{
+    FILE* f = fopen("input.txt", "w+");
+    if (f != NULL)
+    {
+        fputs("123x", f);
+        rewind(f);
+        demo_scanf("%u%c", f);
+        fclose(f);
+    }
+    return 0;
+}
+```
+
+​	输出：
+
+```txt
+%u scanned 123
+%c scanned 'x'
+```
 
 
 ### vfprintf
@@ -2666,6 +3630,7 @@ int main(void)
 
 
 
+
 ### vfprintf_s
 
 原址：[https://zh.cppreference.com/w/c/io/vfprintf](https://zh.cppreference.com/w/c/io/vfprintf)
@@ -2691,6 +3656,13 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 ```
 
 参见：[vfpfintf](#vfpfintf)
+
+
+
+
+
+
+
 
 
 
@@ -2843,6 +3815,7 @@ Parsing '1 a'...failure
 
 
 
+
 ### vfscanf_s
 
 原址：[https://zh.cppreference.com/w/c/io/vfscanf](https://zh.cppreference.com/w/c/io/vfscanf)
@@ -2861,6 +3834,13 @@ int vsscanf_s( const char *restrict buffer, const char *restrict format,
 ```
 
 参见：[vfscanf](#vfscanf)
+
+
+
+
+
+
+
 
 
 
@@ -2892,6 +3872,13 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### vprintf_s
 
 原址：[https://zh.cppreference.com/w/c/io/vfprintf](https://zh.cppreference.com/w/c/io/vfprintf)
@@ -2920,6 +3907,13 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### vscanf
 
 原址：[https://zh.cppreference.com/w/c/io/vfscanf](https://zh.cppreference.com/w/c/io/vfscanf)
@@ -2941,6 +3935,13 @@ int vsscanf_s( const char *restrict buffer, const char *restrict format,
 
 
 
+
+
+
+
+
+
+
 ### vscanf_s
 
 原址：[https://zh.cppreference.com/w/c/io/vfscanf](https://zh.cppreference.com/w/c/io/vfscanf)
@@ -2959,6 +3960,13 @@ int vsscanf_s( const char *restrict buffer, const char *restrict format,
 ```
 
 参见：[vfscanf](#vfscanf)
+
+
+
+
+
+
+
 
 
 
@@ -2990,6 +3998,13 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### vsnprintf_s
 
 原址：[https://zh.cppreference.com/w/c/io/vfprintf](https://zh.cppreference.com/w/c/io/vfprintf)
@@ -3015,6 +4030,13 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 ```
 
 参见：[vfpfintf](#vfpfintf)
+
+
+
+
+
+
+
 
 
 
@@ -3045,9 +4067,7 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 参见：[vfpfintf](#vfpfintf)
 
 ```c
-
 ```
-
 
 
 
@@ -3080,6 +4100,13 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 
 
 
+
+
+
+
+
+
+
 ### vsscanf
 
 原址：[https://zh.cppreference.com/w/c/io/vfscanf](https://zh.cppreference.com/w/c/io/vfscanf)
@@ -3098,6 +4125,13 @@ int vsscanf_s( const char *restrict buffer, const char *restrict format,
 ```
 
 参见：[vfscanf](#vfscanf)
+
+
+
+
+
+
+
 
 
 

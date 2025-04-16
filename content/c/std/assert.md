@@ -11,6 +11,15 @@ draft = false
 
 ## 宏
 
+
+
+
+
+
+
+
+
+
 ### assert
 
 原址：[https://zh.cppreference.com/w/c/error/assert](https://zh.cppreference.com/w/c/error/assert)
@@ -29,13 +38,14 @@ draft = false
 #else
 #define assert(...) /*implementation defined*/
 #endif
+
 ```
 
 ​	宏 `assert` 的定义依赖于另一个宏 NDEBUG，它并非由标准库定义。
 
 ​	若在源代码中包含 [`<assert.h>`](https://zh.cppreference.com/w/c/header/assert) 之处 NDEBUG 被定义为宏名，则 `assert` 不做任何事。
 
-​	若 NDEBUG 未定义，则 `assert` 检查其实参(C23 前)从 __VA_ARGS__ 组合成的表达式(C23 起)（必须拥有标量类型，否则行为未定义）与零比较是否相等。若相等，则 `assert` 在标准错误输出上输出特定于实现的诊断信息，并调用 [abort](http://zh.cppreference.com/w/c/program/abort)()。要求诊断信息必须包含表达式的文本，以及[预定义变量](https://zh.cppreference.com/w/c/language/function_definition) __func__ 与(C99 起)[预定义宏](https://zh.cppreference.com/w/c/preprocessor/replace) __FILE__ 和 __LINE__ 的值。
+​	若 NDEBUG 未定义，则 `assert` 检查其实参(C23 前)从 __VA_ARGS__ 组合成的表达式(C23 起)（必须拥有标量类型，否则行为未定义）与零比较是否相等。若相等，则 `assert` 在标准错误输出上输出特定于实现的诊断信息，并调用 [abort](http://zh.cppreference.com/w/c/program/abort)()。要求诊断信息必须包含表达式的文本，以及[预定义变量](https://zh.cppreference.com/w/c/language/function_definition) `__func__` 与(C99 起)[预定义宏](https://zh.cppreference.com/w/c/preprocessor/replace) `__FILE__` 和 `__LINE__` 的值。
 
 **参数**
 
@@ -48,11 +58,13 @@ draft = false
 
 **注解**
 
-​	没有用于向 `assert` 错误添加额外消息的标准化接口。一种可移植的包含它的方式是使用[逗号运算符](https://zh.cppreference.com/w/c/language/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6)，或者与字符串字面量一起使用 &&：
+​	没有用于向 `assert` 错误添加额外消息的标准化接口。一种可移植的包含它的方式是使用[逗号运算符](https://zh.cppreference.com/w/c/language/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6)，或者与字符串字面量一起使用 `&&`：
+
 
 ```
 assert(("There are five lights", 2 + 2 == 5));
 assert(2 + 2 == 5 && "There are five lights");
+
 ```
 
 ​	`assert` 在 [Microsoft CRT](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/assert-macro-assert-wassert) 中的实现不遵从 C99 以及后续标准版本，因为其底层函数（`_wassert`）不接收 __func__ 或等价的替代品。
@@ -82,6 +94,7 @@ int main(void)
  
     return 0;
 }
+
 ```
 
 可能的输出：
@@ -92,7 +105,14 @@ a.out: main.cpp:10: main: Assertion `x >= 0.0' failed.
  
 --- 定义 NDEBUG 时的输出：---
 sqrt(x) = -nan
+
 ```
+
+
+
+
+
+
 
 ### static_assert
 
@@ -100,6 +120,7 @@ sqrt(x) = -nan
 
 ```c
 #define static_assert _Static_assert // (C11 起) (C23 移除)
+
 ```
 
 ​	此便利宏展开成关键词 [`_Static_assert`](https://zh.cppreference.com/w/c/keyword/_Static_assert)。
@@ -115,6 +136,7 @@ int main(void)
     static_assert(sizeof(int) < sizeof(char),   // 编译时错误
                   "this program requires that int is less than char");
 }
+
 ```
 
 **注解**

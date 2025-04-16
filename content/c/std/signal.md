@@ -11,12 +11,20 @@ draft = false
 
 ## 类型
 
+
+
+
+
+
+
+
 ### sig_atomic_t
 
 原址：[https://zh.cppreference.com/w/c/program/sig_atomic_t](https://zh.cppreference.com/w/c/program/sig_atomic_t)
 
 ```c
 typedef /* 未指明 */ sig_atomic_t;
+
 ```
 
 ​	即使在进行由信号造成的异步中断时，亦能作为原子实体访问的整数类型。
@@ -44,6 +52,7 @@ int main(void)
     raise(SIGINT);
     printf("SignalValue:   %d\n", gSignalStatus);
 }
+
 ```
 
 可能的输出：
@@ -52,9 +61,17 @@ int main(void)
 SignalValue:   0
 Sending signal 2
 SignalValue:   2
+
 ```
 
 ## 宏
+
+
+
+
+
+
+
 
 ### SIG_ERR
 
@@ -62,6 +79,7 @@ SignalValue:   2
 
 ```c
 #define SIG_ERR /* 由实现定义 */
+
 ```
 
 ​	`void (*)(int)` 类型的值。当由 [signal](https://zh.cppreference.com/w/c/program/signal) 所返回时，指示出现了错误。
@@ -97,6 +115,7 @@ int main(void)
     printf("Exit main()\n");
     return EXIT_SUCCESS;
 }
+
 ```
 
 输出：
@@ -105,7 +124,15 @@ int main(void)
 Sending signal 15
 Received signal 15
 Exit main()
+
 ```
+
+
+
+
+
+
+
 
 ### SIG_DFL
 
@@ -113,7 +140,15 @@ Exit main()
 
 ```c
 #define SIG_DFL /* 由实现定义 */
+
 ```
+
+
+
+
+
+
+
 
 ### SIG_IGN 
 
@@ -121,6 +156,7 @@ Exit main()
 
 ```c
 #define SIG_IGN /* 由实现定义 */
+
 ```
 
 ​	**SIG_DFL** 和 **SIG_IGN** 宏展开成不等于任何函数地址的整数表达式。宏定义用于 [signal](http://zh.cppreference.com/w/c/program/signal)() 函数的信号处理策略。
@@ -142,12 +178,14 @@ int main(void)
     raise(SIGTERM);
     printf("Exit main()\n");   /* 永不抵达 */
 }
+
 ```
 
 输出：
 
 ```txt
 （无）
+
 ```
 
 **示例**
@@ -163,13 +201,22 @@ int main(void)
     raise(SIGTERM);
     printf("Exit main()\n");
 }
+
 ```
 
 输出：
 
 ```txt
 Exit main()
+
 ```
+
+
+
+
+
+
+
 
 ### SIGTERM
 
@@ -177,7 +224,15 @@ Exit main()
 
 ```c
 #define SIGTERM /* 由实现定义 */
+
 ```
+
+
+
+
+
+
+
 
 
 
@@ -187,7 +242,15 @@ Exit main()
 
 ```c
 #define SIGSEGV /* 由实现定义 */
+
 ```
+
+
+
+
+
+
+
 
 
 
@@ -197,7 +260,15 @@ Exit main()
 
 ```c
 #define SIGINT /* 由实现定义 */
+
 ```
+
+
+
+
+
+
+
 
 
 
@@ -207,7 +278,15 @@ Exit main()
 
 ```c
 #define SIGILL /* 由实现定义 */
+
 ```
+
+
+
+
+
+
+
 
 
 
@@ -217,7 +296,15 @@ Exit main()
 
 ```c
 #define SIGABRT /* 由实现定义 */
+
 ```
+
+
+
+
+
+
+
 
 
 
@@ -227,11 +314,12 @@ Exit main()
 
 ```c
 #define SIGFPE /* 由实现定义 */
+
 ```
 
 ​	上面每个宏常量都展开成拥有相异值的整数常量表达式，表示发送给程序的不同信号。
 
-| 常量      | 解释                                                         |
+| 宏常量    | 解释                                                         |
 | --------- | ------------------------------------------------------------ |
 | `SIGTERM` | 发送给程序的终止请求                                         |
 | `SIGSEGV` | 非法内存访问（段错误）                                       |
@@ -242,12 +330,20 @@ Exit main()
 
 ## 函数
 
+
+
+
+
+
+
+
 ### raise
 
 原址：[https://zh.cppreference.com/w/c/program/raise](https://zh.cppreference.com/w/c/program/raise)
 
 ```c
 int raise( int sig );
+
 ```
 
 ​	发送 `sig` 信号给程序。调用以 [signal()](https://zh.cppreference.com/w/c/program/signal) 指定的信号处理函数。
@@ -283,6 +379,7 @@ int main(void)
     raise(SIGTERM);
     printf("Exit main()\n");
 }
+
 ```
 
 输出：
@@ -291,7 +388,15 @@ int main(void)
 Sending signal 15
 Received signal 15
 Exit main()
+
 ```
+
+
+
+
+
+
+
 
 ### signal
 
@@ -299,6 +404,7 @@ Exit main()
 
 ```c
 void (*signal( int sig, void (*handler) (int))) (int);
+
 ```
 
 ​	设置信号 `sig` 的错误处理函数。可将错误处理函数设置为，进行默认处理、忽略信号或调用用户定义函数。
@@ -375,6 +481,7 @@ int main(void)
   raise(SIGINT);
   printf("SignalValue: %d\n", gSignalStatus);
 }
+
 ```
 
 输出：

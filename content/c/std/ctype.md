@@ -9,8 +9,6 @@ draft = false
 
 +++
 
-> 原文：
-
 ## 类型
 
 
@@ -24,6 +22,13 @@ draft = false
 
 
 ## 函数
+
+
+
+
+
+
+
 
 
 
@@ -79,6 +84,9 @@ isalnum('\xdf') 在默认 C 本地环境中返回 0
 isalnum('\xdf') in ISO-8859-1 locale returned 1
 ```
 
+
+
+
 ### isalpha
 
 原址：[https://zh.cppreference.com/w/c/string/byte/isalpha](https://zh.cppreference.com/w/c/string/byte/isalpha)
@@ -129,6 +137,9 @@ isalpha('\xdf') 在默认 C 本地环境中返回 0
 isalpha('\xdf') 在 ISO-8859-1 本地环境中返回 1
 ```
 
+
+
+
 ### isblank <- 99+
 
 原址：[https://zh.cppreference.com/w/c/string/byte/isblank](https://zh.cppreference.com/w/c/string/byte/isblank)
@@ -148,7 +159,7 @@ int isblank( int ch ); // (C99 起)
 
 **返回值**
 
-若字符为空白字符则为非零值，否则为零。
+​	若字符为空白字符则为非零值，否则为零。
 
 **示例**
 
@@ -173,6 +184,9 @@ int main(void)
 0x09
 0x20
 ```
+
+
+
 
 ### iscntrl
 
@@ -221,6 +235,9 @@ int main(void)
 在默认的 C 本地环境中，\x94 不是控制字符
 在 ISO-8859-1 本地环境中，\x94 是控制字符
 ```
+
+
+
 
 ### isdigit
 
@@ -271,6 +288,9 @@ int main(void)
 0123456789
 ```
 
+
+
+
 ### isgraph
 
 原址：[https://zh.cppreference.com/w/c/string/byte/isgraph](https://zh.cppreference.com/w/c/string/byte/isgraph)
@@ -319,14 +339,57 @@ int main(void)
 在 ISO-8859-1 本地环境中，\xb6 是图形字符
 ```
 
+
+
+
 ### islower
 
-原址：
+原址：[https://zh.cppreference.com/w/c/string/byte/islower](https://zh.cppreference.com/w/c/string/byte/islower)
 
 ```c
+int islower( int ch );
 
 ```
+​	检查给定字符是否按照当前 C 本地环境分类为小写字符。默认 "C" 本地环境中，`islower` 仅对小写字母（`abcdefghijklmnopqrstuvwxyz`）返回非零值。
 
+​	若 `islower` 返回非零值，则保证同一 C 本地环境中 [iscntrl](http://zh.cppreference.com/w/c/string/byte/iscntrl)、[isdigit](http://zh.cppreference.com/w/c/string/byte/isdigit)、[ispunct](http://zh.cppreference.com/w/c/string/byte/ispunct) 和 [isspace](http://zh.cppreference.com/w/c/string/byte/isspace) 对同一字符返回零。
+
+​	若 ch 不可表示为 unsigned char 且不等于 [EOF](http://zh.cppreference.com/w/c/io)，则行为未定义。
+
+**参数**
+
+| ch   | -    | 要分类的字符 |
+| ---- | ---- | ------------ |
+
+**返回值**
+
+​	若字符为小写字母则为非零值，否则为零。
+
+**示例**
+
+
+
+```c
+#include <ctype.h>
+#include <locale.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    unsigned char c = '\xe5'; // ISO-8859-1 的字母 å
+    printf("在默认的 C 本地环境中，\\xe5 %s是小写字母\n",
+           islower(c) ? "" : "不" );
+    setlocale(LC_ALL, "en_GB.iso88591");
+    printf("在 ISO-8859-1 本地环境中，\\xe5 %s是小写字母\n",
+           islower(c) ? "" : "不" );
+}
+```
+​	可能的输出：
+
+```txt
+在默认的 C 本地环境中，\xe5 不是小写字母
+在 ISO-8859-1 本地环境中，\xe5 是小写字母
+```
 
 
 
@@ -376,6 +439,9 @@ int main(void)
 在默认的 C 本地环境中，\xa0 不是可打印字符
 在 ISO-8859-1 本地环境中，\xa0 是可打印字符
 ```
+
+
+
 
 ### ispunct
 
@@ -427,26 +493,113 @@ int main(void)
 
 
 
+
 ### isspace
 
-原址：
+原址：[https://zh.cppreference.com/w/c/string/byte/isspace](https://zh.cppreference.com/w/c/string/byte/isspace)
 
 ```c
-
+int isspace( int ch );
 ```
 
+​	检查给定的字符是否为：
+
+- 标准空白字符：
+  - 空格（0x20），`' '`、
+  - 换页（0x0c），`'\f'`、
+  - 换行（0x0a），`'\n'`、
+  - 回车（0x0d），`'\r'`、
+  - 水平制表符（0x09），`'\t'`、
+  - 垂直制表符（0x0b），`'\v'`，
+
+- 或者本地环境特定的空白字符。
+
+​	若 ch 的值不能表示为 unsigned char 且不等于 [EOF](http://zh.cppreference.com/w/c/io)，则行为未定义。
+
+**参数**
+
+| ch   | -    | 要分类的字符 |
+| ---- | ---- | ------------ |
+
+**返回值**
+
+​	若字符为空白符则为非零值，否则为零。
+
+**示例**
+
+
+
+```c
+#include <ctype.h>
+#include <limits.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    for (int ndx = 0; ndx <= UCHAR_MAX; ++ndx)
+        if (isspace(ndx))
+            printf("0x%02x ", ndx);
+}
+```
+
+​	输出：
+
+```txt
+0x09 0x0a 0x0b 0x0c 0x0d 0x20
+```
 
 
 
 
 ### isupper
 
-原址：
+原址：[https://zh.cppreference.com/w/c/string/byte/isupper](https://zh.cppreference.com/w/c/string/byte/isupper)
 
 ```c
-
+int isupper( int ch );
 ```
 
+​	根据当前 C 本地环境检查给定字符是否为大写字母。在默认 `"C"` 本地环境中，`isupper` 仅对大写拉丁字母（`ABCDEFGHIJKLMNOPQRSTUVWXYZ`）返回非零值。
+
+​	若 `isupper`返回非零，则保证 [iscntrl](https://zh.cppreference.com/w/c/string/byte/iscntrl)、[isdigit](https://zh.cppreference.com/w/c/string/byte/isdigit)、[ispunct](https://zh.cppreference.com/w/c/string/byte/ispunct) 及 [isspace](https://zh.cppreference.com/w/c/string/byte/isspace) 在同一 C 本地环境中对同一字符返回零。
+
+​	若 ch 的值不能表示为 unsigned char 且不等于 [EOF](http://zh.cppreference.com/w/c/io)，则行为未定义。
+
+**参数**
+
+| ch   | -    | 要分类的字符 |
+| ---- | ---- | ------------ |
+
+**返回值**
+
+​	若字符为大写字母则为非零值，否则为零。
+
+**示例**
+
+
+
+```c
+#include <ctype.h>
+#include <locale.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    unsigned char c = '\xc6'; // ISO-8859-1的 字母 Æ 
+    printf("在默认的 C 本地环境中，\\xc6 %s是大写字母\n",
+           isupper(c) ? "" : "不" );
+    setlocale(LC_ALL, "en_GB.iso88591");
+    printf("在 ISO-8859-1 本地环境中，\\xc6 %s是大写字母\n",
+           isupper(c) ? "" : "不" );
+}
+```
+
+​	可能的输出：
+
+```txt
+在默认的 C 本地环境中，\xc6 不是大写字母
+在 ISO-8859-1 本地环境中，\xc6 是大写字母
+```
 
 
 
@@ -500,6 +653,9 @@ int main(void)
 0123456789ABCDEFabcdef
 ```
 
+
+
+
 ### islower
 
 原址：[https://zh.cppreference.com/w/c/string/byte/islower](https://zh.cppreference.com/w/c/string/byte/islower)
@@ -547,6 +703,9 @@ int main(void)
 在默认的 C 本地环境中，\xe5 不是小写字母
 在 ISO-8859-1 本地环境中，\xe5 是小写字母
 ```
+
+
+
 
 ### isspace
 
@@ -603,6 +762,9 @@ int main(void)
 0x09 0x0a 0x0b 0x0c 0x0d 0x20
 ```
 
+
+
+
 ### isupper
 
 原址：[https://zh.cppreference.com/w/c/string/byte/isupper](https://zh.cppreference.com/w/c/string/byte/isupper)
@@ -650,6 +812,10 @@ int main(void)
 在默认的 C 本地环境中，\xc6 不是大写字母
 在 ISO-8859-1 本地环境中，\xc6 是大写字母
 ```
+
+
+
+
 ### tolower
 
 原址：[https://zh.cppreference.com/w/c/string/byte/tolower](https://zh.cppreference.com/w/c/string/byte/tolower)
@@ -709,6 +875,10 @@ Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
 在 iso8859-1 中，tolower('0xb4') 得到 0xb4
 在 iso8859-15 中，tolower('0xb4') 得到 0xb8
 ```
+
+
+
+
 ### toupper
 
 原址：[https://zh.cppreference.com/w/c/string/byte/toupper](https://zh.cppreference.com/w/c/string/byte/toupper)
@@ -765,6 +935,4 @@ aA bB cC dD eE fF gG hH iI jJ kK lL mM nN oO pP qQ rR sS tT uU vV wW xX yY zZ
 iso8859-1 下，toupper('0xb8') 结果为 0xb8
 iso8859-15 下，toupper('0xb8') 结果为 0xb4
 ```
-
-
 
