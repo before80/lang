@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`continue` 语句](https://zh.cppreference.com/w/c/language/continue)：用作该语句的声明
+- [`continue` 语句]({{< ref "/c/language/statements/continue" >}})：用作该语句的声明

@@ -29,13 +29,13 @@ draft = false
 
 ​	C 风格注释通常用于注释大块文本或小片代码；不过亦可用它们注释单行。只需以 `/*` 和 `*/` 环绕文本，即可将文本作为 C 风格注释插入。C 风格注释告诉编译器忽略 `/*` 和 `*/` 间的所有内容。尽管不是 C 标准的一部分，`/**` 和 `*/` 常用于指示文档块；这是合法的，因为第二个星号仅仅被当做注释的一部分。
 
-​	若非处于[字符常量](https://zh.cppreference.com/w/c/language/character_constant)、[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)或注释之内，字符 `/*` 即引入一段注释。检验这种注释的内容时，仅鉴别各个多字节字符并寻找终止注释的 `*/`。C 风格注释不能嵌套。
+​	若非处于[字符常量]({{< ref "/c/language/expressions/character_constant" >}})、[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})或注释之内，字符 `/*` 即引入一段注释。检验这种注释的内容时，仅鉴别各个多字节字符并寻找终止注释的 `*/`。C 风格注释不能嵌套。
 
 > **C++ 风格**
 >
 > ​	C++ 风格注释通常用于注释单行文本或代码；不过亦可将它们放在一起组成多行注释。只需将 `//` 置于文本前并在文本后跟随换行符，即将文本作为 C++ 风格注释插入。C++ 风格注释告诉编译器忽略 `//` 和换行符间的所有内容。
 >
-> ​	若非处于[字符常量](https://zh.cppreference.com/w/c/language/character_constant)、[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)或注释之内，字符 `//` 即引入一段注释，它包含所有多字节字符，直至但不包含下个换行符。检验这种注释的内容时，仅鉴别各个多字节字符并寻找终止注释的换行符。C++ 风格注释能嵌套：
+> ​	若非处于[字符常量]({{< ref "/c/language/expressions/character_constant" >}})、[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})或注释之内，字符 `//` 即引入一段注释，它包含所有多字节字符，直至但不包含下个换行符。检验这种注释的内容时，仅鉴别各个多字节字符并寻找终止注释的换行符。C++ 风格注释能嵌套：
 >
 > ```c++
 > //  y = f(x);   // 调用算法

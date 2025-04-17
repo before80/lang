@@ -11,11 +11,11 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/stdint](https://zh.cppreference.com/w/c/header/stdint)
 
-​	本标头是[类型支持](https://zh.cppreference.com/w/c/types)库的一部分，提供[定宽整数类型](https://zh.cppreference.com/w/c/types/integer#.E7.B1.BB.E5.9E.8B)，且是[数值极限](https://zh.cppreference.com/w/c/types/limits#.E5.BA.93.E7.B1.BB.E5.9E.8B.E5.88.AB.E5.90.8D.E7.9A.84.E6.9E.81.E9.99.90)接口的一部分。
+​	本标头是[类型支持]({{< ref "/c/types" >}})库的一部分，提供[定宽整数类型]({{< ref "/c/types/integer#.E7.B1.BB.E5.9E.8B" >}})，且是[数值极限]({{< ref "/c/types/limits#.E5.BA.93.E7.B1.BB.E5.9E.8B.E5.88.AB.E5.90.8D.E7.9A.84.E6.9E.81.E9.99.90" >}})接口的一部分。
 
 > 本节未完成 
 >
-> 原因：7.22 Integer types <stdint.h>, copy/share parts of [c/types/integer](https://zh.cppreference.com/w/c/types/integer) and [c/types/limits](https://zh.cppreference.com/w/c/types/limits)
+> 原因：7.22 Integer types <stdint.h>, copy/share parts of [c/types/integer]({{< ref "/c/types/integer" >}}) and [c/types/limits]({{< ref "/c/types/limits" >}})
 
 ## 概要
 

@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [线程存储类说明符](https://zh.cppreference.com/w/c/language/storage_duration) (C23 起)
+- [线程存储类说明符]({{< ref "/c/language/declarations/storage_duration" >}}) (C23 起)

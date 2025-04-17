@@ -36,19 +36,19 @@ math = true
 
 ## 溢出
 
-​	无符号整数算术始终进行 \\(modulo 2^n\\)，其中 n 是该特定整数中的位数。例如对于 `unsigned int`，加一到 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 得到0，而从 0 减一得到 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits)。
+​	无符号整数算术始终进行 \\(modulo 2^n\\)，其中 n 是该特定整数中的位数。例如对于 `unsigned int`，加一到 [UINT_MAX]({{< ref "/c/types/limits" >}}) 得到0，而从 0 减一得到 [UINT_MAX]({{< ref "/c/types/limits" >}})。
 
 ​	有符号整数算术运算溢出（结果不符合结果类型）时，行为未定义：可以按照表示（典型为补码）的规则回卷，可以在某些平台上或由于编译器选项（例如 gcc 和 clang 中的 `-ftrapv`）触发陷阱，或可以完全[被编译器优化掉](http://blog.llvm.org/2011/05/what-every-c-programmer-should-know_14.html)。
 
 ### 浮点数环境
 
-​	若设置 [`#pragma STDC FENV_ACCESS`](https://zh.cppreference.com/w/c/preprocessor/impl) 为 `ON`，则所有浮点数算术运算符均遵循当前浮点数[舍入方向](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)并报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误，除非它们是[静态初始化式](https://zh.cppreference.com/w/c/language/initialization)的一部分（该情况下不引发浮点数异常，而舍入模式为到最接近）。
+​	若设置 [`#pragma STDC FENV_ACCESS`](https://zh.cppreference.com/w/c/preprocessor/impl) 为 `ON`，则所有浮点数算术运算符均遵循当前浮点数[舍入方向](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)并报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误，除非它们是[静态初始化式]({{< ref "/c/language/initialization" >}})的一部分（该情况下不引发浮点数异常，而舍入模式为到最接近）。
 
 ### 浮点数缩略
 
 ​	除非设置 [`#pragma STDC FP_CONTRACT`](https://zh.cppreference.com/w/c/preprocessor/impl) 为 `OFF`，否则可能如同中间结果拥有无限范围和精度一般进行所有浮点数算术，这种优化省略掉了当准确按写法求值表达式时，会观察到的舍入误差和浮点数异常。例如，允许以单条融合乘加 CPU 指令实现 `(x*y) + z`，或把 `a = x*x*x*x`; 优化成 `tmp = x*x; a = tmp*tmp`。
 
-​	与缩略无关，浮点数算术的中间结果可以拥有异于其类型所指定的范围和精度，见 [FLT_EVAL_METHOD](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD)。
+​	与缩略无关，浮点数算术的中间结果可以拥有异于其类型所指定的范围和精度，见 [FLT_EVAL_METHOD]({{< ref "/c/types/limits/FLT_EVAL_METHOD" >}})。
 
 ## 一元算术
 
@@ -61,19 +61,19 @@ math = true
 1) 一元加（提升）
 2) 一元减（相反数）
 
-| *表达式* | -    | 任意[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)的表达式 |
+| *表达式* | -    | 任意[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})的表达式 |
 | -------- | ---- | ------------------------------------------------------------ |
 
-​	一元加和一元减都首先在其操作数上应用[整数提升](https://zh.cppreference.com/w/c/language/conversion)，然后
+​	一元加和一元减都首先在其操作数上应用[整数提升]({{< ref "/c/language/expressions/conversion" >}})，然后
 
 - 一元加返回提升后的值
 - 一元减返回提升后值的相反数（除了 NaN 的相反数是另一 NaN）
 
-表达式类型为提升后的类型，而[值类别](https://zh.cppreference.com/w/c/language/value_category)为非左值。
+表达式类型为提升后的类型，而[值类别]({{< ref "/c/language/expressions/value_category" >}})为非左值。
 
 ### 注意
 
-​	在典型（补码）平台上应用到 [INT_MIN](https://zh.cppreference.com/w/c/types/limits)、[LONG_MIN](https://zh.cppreference.com/w/c/types/limits) 或 [LLONG_MIN](https://zh.cppreference.com/w/c/types/limits) 时，一元减引起有符号整数溢出所致的未定义行为。
+​	在典型（补码）平台上应用到 [INT_MIN]({{< ref "/c/types/limits" >}})、[LONG_MIN]({{< ref "/c/types/limits" >}}) 或 [LLONG_MIN]({{< ref "/c/types/limits" >}}) 时，一元减引起有符号整数溢出所致的未定义行为。
 
 ​	C++ 中一元运算符 `+` 亦能用于其他内建类型，例如数组和函数，但 C 中不能。
 
@@ -133,10 +133,10 @@ sizeof char: 1 sizeof int: 4
 | *lhs* `-` *rhs* | (2)  |      |
 
 1) 加法：*lhs* 与 *rhs* 必须为下列之一：
-   - 都拥有[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)，包含复数和虚数
+   - 都拥有[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})，包含复数和虚数
    - 一个是指向完整对象的指针类型，另一个拥有整数类型
 2) 减法：*lhs* 与 *rhs* 必须为下列之一：
-   - 都拥有[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)，包含复数和虚数
+   - 都拥有[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})，包含复数和虚数
    - *lhs* 拥有指向完整对象的指针类型，*rhs* 拥有整数类型
    - 都是指向拥有[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)类型的完整对象指针，忽略限定符
 
@@ -144,9 +144,9 @@ sizeof char: 1 sizeof int: 4
 
 ### 算术加法与减法
 
-​	若两个操作数都拥有[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)，则
+​	若两个操作数都拥有[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})，则
 
-- 首先，进行[一般算术转换](https://zh.cppreference.com/w/c/language/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2)
+- 首先，进行[一般算术转换]({{< ref "/c/language/expressions/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2" >}})
 - 然后，遵循一般数学规则，对操作数提升后的值进行加或减（对于减法，从 *lhs* 减去 *rhs*），但
   - 若操作数之一为 `NaN`，则结果为 `NaN`
   - 无穷大减无穷大为 `NaN` 并引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
@@ -178,9 +178,9 @@ sizeof char: 1 sizeof int: 4
 ​	仅若原指针和结果指针都指向同一数组中的元素，或该数组的尾后一位置，行为才有定义。注意在 p 指向数组首元素时，执行 p-1 是未定义行为，并且在某些平台上可能失败。
 
 - 若指针 `P1` 指向下标为 `I` 的数组元素（或尾后一位置）而 `P2` 是指向同一数组的下标为 `J` 的元素（或尾后一位置），则
-  - `P1-P2` 拥有等于 `I-J` 的值和 [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) 类型（有符号整数类型，最大大小典型地为能声明的最大对象的一半）
+  - `P1-P2` 拥有等于 `I-J` 的值和 [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) 类型（有符号整数类型，最大大小典型地为能声明的最大对象的一半）
 
-​	仅当结果适合于 [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) 时，行为才有定义。
+​	仅当结果适合于 [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) 时，行为才有定义。
 
 ​	为指针算术的目的，把指向非数组元素的对象的指针当做指向大小为 1 的数组首元素的指针。
 
@@ -202,11 +202,11 @@ p = p + 1;       // p == &a[1]（VLA 所用的指针算术一如平常）
 | *lhs* `/` *rhs* | (2)  |      |
 | *lhs* `%` *rhs* | (3)  |      |
 
-1) 乘法。*lhs* 与 *rhs* 必须拥有[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)
-2) 除法。*lhs* 与 *rhs* 必须拥有[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)
-3) 余数。*lhs* 与 *rhs* 必须拥有[整数类型](https://zh.cppreference.com/w/c/language/arithmetic_types)
+1) 乘法。*lhs* 与 *rhs* 必须拥有[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})
+2) 除法。*lhs* 与 *rhs* 必须拥有[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})
+3) 余数。*lhs* 与 *rhs* 必须拥有[整数类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})
 
-- 首先，进行[一般算术转换](https://zh.cppreference.com/w/c/language/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2)。然后……
+- 首先，进行[一般算术转换]({{< ref "/c/language/expressions/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2" >}})。然后……
 
 ### 乘法
 
@@ -216,7 +216,7 @@ p = p + 1;       // p == &a[1]（VLA 所用的指针算术一如平常）
 - 无穷大乘零给出 `NaN` 并引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
 - 无穷大乘非零给出无穷大（即使对于复参数）
 
-​	因为 C 中，任何带至少一个无穷大部分的[复数值](https://zh.cppreference.com/w/c/language/arithmetic_types)为无穷大，即使另一部分为 `NaN`，故一般算术规则不适用于复复乘法。其他浮点数操作数的组合遵循下表：
+​	因为 C 中，任何带至少一个无穷大部分的[复数值]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})为无穷大，即使另一部分为 `NaN`，故一般算术规则不适用于复复乘法。其他浮点数操作数的组合遵循下表：
 
 |   *    |      u       |      iv       |    u + iv     |
 | :----: | :----------: | :-----------: | :-----------: |
@@ -271,7 +271,7 @@ inf + i*nan
 - 若第一操作数为复无穷大，而第二操作数为有限，则 `/` 运算符的结果为复无穷大
 - 若第一操作数为有限而第二操作数为复无穷大，则 `/` 运算符的结果为零
 
-​	因为 C 中，任何带至少一个无穷大部分的[复数值](https://zh.cppreference.com/w/c/language/arithmetic_types)为无穷大，即使另一部分为 NaN ，故一般算术规则不适用于复复除法。其他浮点数操作数的组合遵循下表：
+​	因为 C 中，任何带至少一个无穷大部分的[复数值]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})为无穷大，即使另一部分为 NaN ，故一般算术规则不适用于复复除法。其他浮点数操作数的组合遵循下表：
 
 |   /    |       u        |       iv        |
 | :----: | :------------: | :-------------: |
@@ -322,7 +322,7 @@ inf + i*nan
 | *lhs*, *rhs* | -    | 整数类型的表达式 |
 | ------------ | ---- | ---------------- |
 
-​	首先，运算符 `&`、`^` 和 `|` 在两个操作数上进行[一般算术转换](https://zh.cppreference.com/w/c/language/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2)，而运算符 ~ 在其唯一的操作数上进行[整数提升](https://zh.cppreference.com/w/c/language/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87)。
+​	首先，运算符 `&`、`^` 和 `|` 在两个操作数上进行[一般算术转换]({{< ref "/c/language/expressions/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2" >}})，而运算符 ~ 在其唯一的操作数上进行[整数提升]({{< ref "/c/language/expressions/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87" >}})。
 
 ​	然后，逐位实施对应的逻辑运算符；即按照应用到操作数的每位的逻辑运算（或、与、非、异或），设置或清除结果的对应位。
 
@@ -383,7 +383,7 @@ Selecting bits: 0x00000070
 | *lhs*, *rhs* | -    | 整数类型的表达式 |
 | ------------ | ---- | ---------------- |
 
-​	首先，在每个操作数上独自进行[整数提升](https://zh.cppreference.com/w/c/language/conversion)（注意：这不同于其他二元算术运算符，它们全都进行一般算术转换）。结果类型为 *lhs* 在提升后的类型。
+​	首先，在每个操作数上独自进行[整数提升]({{< ref "/c/language/expressions/conversion" >}})（注意：这不同于其他二元算术运算符，它们全都进行一般算术转换）。结果类型为 *lhs* 在提升后的类型。
 
 ​	若 *rhs* 为负或大于或等于提升后的 *lhs* 中的位数，则行为未定义。
 

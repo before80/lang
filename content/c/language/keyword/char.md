@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [字符类型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E5.AD.97.E7.AC.A6.E7.B1.BB.E5.9E.8B)（ `char` 、 `signed char` 以及 `unsigned char` ）的*类型指定符*
+- [字符类型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E5.AD.97.E7.AC.A6.E7.B1.BB.E5.9E.8B" >}})（ `char` 、 `signed char` 以及 `unsigned char` ）的*类型指定符*

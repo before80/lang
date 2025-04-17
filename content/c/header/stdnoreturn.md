@@ -15,7 +15,7 @@ draft = false
 
 ## 宏
 
-| noreturn(C11)(C23 弃用) | 便利宏，展开为 [`_Noreturn`](https://zh.cppreference.com/w/c/keyword/_Noreturn) (关键词宏) |
+| noreturn(C11)(C23 弃用) | 便利宏，展开为 [`_Noreturn`]({{< ref "/c/language/keyword/_Noreturn" >}}) (关键词宏) |
 | ----------------------- | ------------------------------------------------------------ |
 
 ### 概要

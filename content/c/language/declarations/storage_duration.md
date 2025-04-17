@@ -17,10 +17,10 @@ draft = false
 
 ## 解释
 
-​	存储类说明符出现于[声明](https://zh.cppreference.com/w/c/language/declarations)和[复合字面量](https://zh.cppreference.com/w/c/language/compound_literal)表达式(C23 起)中。至多可使用一个说明符，但可以将 `_Thread_local`(C23 前)[thread_local](http://zh.cppreference.com/w/c/thread/thread_local)(C23 起) 与 `static` 或 `extern` 组合以调整链接(C11 起)。存储类说明符确定其所声明的名称的两个独立属性：*存储期* ﻿与*链接*。
+​	存储类说明符出现于[声明]({{< ref "/c/language/declarations" >}})和[复合字面量]({{< ref "/c/language/expressions/compound_literal" >}})表达式(C23 起)中。至多可使用一个说明符，但可以将 `_Thread_local`(C23 前)[thread_local](http://zh.cppreference.com/w/c/thread/thread_local)(C23 起) 与 `static` 或 `extern` 组合以调整链接(C11 起)。存储类说明符确定其所声明的名称的两个独立属性：*存储期* ﻿与*链接*。
 
 1) `auto` 说明符只允许用于声明于块作用域的对象（除了函数形参列表）。它指示自动存储期与无链接，也是这种声明的默认属性。
-2) `register` 说明符只允许用于声明于块作用域的对象，包括函数形参列表。它指示自动存储期与无链接（即这种声明的默认属性），但另外提示优化器，若可能则将此对象的值存储于 CPU 寄存器中。无论此优化是否发生，声明为 `register` 的对象不能用作[取址运算符](https://zh.cppreference.com/w/c/language/operator_member_access)的参数，不能用 [`_Alignas`](https://zh.cppreference.com/w/c/language/_Alignas)(C23 前)[`alignas`](https://zh.cppreference.com/w/c/language/alignas)(C23 起)(C11 起)，而且 `register` 数组不能转换为指针。
+2) `register` 说明符只允许用于声明于块作用域的对象，包括函数形参列表。它指示自动存储期与无链接（即这种声明的默认属性），但另外提示优化器，若可能则将此对象的值存储于 CPU 寄存器中。无论此优化是否发生，声明为 `register` 的对象不能用作[取址运算符]({{< ref "/c/language/expressions/operator_member_access" >}})的参数，不能用 [`_Alignas`]({{< ref "/c/language/declarations/_Alignas" >}})(C23 前)[`alignas`](https://zh.cppreference.com/w/c/language/alignas)(C23 起)(C11 起)，而且 `register` 数组不能转换为指针。
 3) `static` 说明符指定静态存储期（除非与 `_Thread_local` 组合）(C11 起)和内部链接（除非用于块作用域）。它能用于在文件作用域的函数，以及文件和块作用域的变量，但不能用于函数形参列表。
 4) `extern` 指定静态存储期（除非与 `_Thread_local`(C23 前)[thread_local](http://zh.cppreference.com/w/c/thread/thread_local)(C23 起) 组合）(C11 起)和外部链接。它能用于文件和块作用域中的函数和对象声明（除了函数形参列表）。若 `extern` 出现在已经声明带内部链接的标识符的再声明上，则链接仍为内部。否则（若前一声明为外部、无链接或不在作用域内）链接为外部。
 5) `_Thread_local`(C23 前)[thread_local](http://zh.cppreference.com/w/c/thread/thread_local)(C23 起) 指示*线程存储期*。它不能用于函数声明。若将它用在对象声明上，则它必须在同一对象的每次声明上都存在。若将它用在块作用域声明上，则必须与 `static` 或 `extern` 之一组合以决定链接。(C11 起)
@@ -39,7 +39,7 @@ draft = false
 
 ## 存储期
 
-​	每个[对象](https://zh.cppreference.com/w/c/language/object)都有称为*存储期* ﻿的属性，它限制对象的[生存期](https://zh.cppreference.com/w/c/language/lifetime)。C 中有四种存储期：
+​	每个[对象]({{< ref "/c/language/basic_concepts/object" >}})都有称为*存储期* ﻿的属性，它限制对象的[生存期]({{< ref "/c/language/basic_concepts/lifetime" >}})。C 中有四种存储期：
 
 ​	*线程* ﻿存储期。存储期是创建对象的线程的整个执行过程，在启动线程时初始化存储于对象的值。每个线程拥有其自身的独立对象。若执行访问此对象的表达式的线程，不是执行其初始化的线程，则行为是实现定义的。所有声明为 `_Thread_local`(C23 前)[thread_local](http://zh.cppreference.com/w/c/thread/thread_local)(C23 起) 的对象拥有此存储期。(C11 起)
 
@@ -53,7 +53,7 @@ draft = false
 
 
 
-​	若同一标识符在同一翻译单元中一同带内部和外部链接出现，则行为未定义。这在使用[试探性定义](https://zh.cppreference.com/w/c/language/extern)时有可能发生。
+​	若同一标识符在同一翻译单元中一同带内部和外部链接出现，则行为未定义。这在使用[试探性定义]({{< ref "/c/language/declarations/extern" >}})时有可能发生。
 
 ### 链接与库
 
@@ -61,7 +61,7 @@ draft = false
 >
 > 原因：这或许应该为 [c/language](https://zh.cppreference.com/w/c/language) 中杂项下的顶层条目？
 
-​	带外部链接的声明常在头文件中可用，这使得所有 [#include](https://zh.cppreference.com/w/c/preprocessor/include) 了该头文件的翻译单元都可以指代定义于别处的相同标识符。
+​	带外部链接的声明常在头文件中可用，这使得所有 [#include]({{< ref "/c/language/preprocessor/include" >}}) 了该头文件的翻译单元都可以指代定义于别处的相同标识符。
 
 ​	任何出现于头文件中的带内部链接的声明，在每个包含该文件的翻译单元中产生一个分离而独立的对象。
 
@@ -105,13 +105,13 @@ int main(void)
 
 ## 关键词
 
-[`auto`](https://zh.cppreference.com/w/c/keyword/auto), [`register`](https://zh.cppreference.com/w/c/keyword/register), [`static`](https://zh.cppreference.com/w/c/keyword/static), [`extern`](https://zh.cppreference.com/w/c/keyword/extern), [`_Thread_local`](https://zh.cppreference.com/w/c/keyword/_Thread_local) [`thread_local`](https://zh.cppreference.com/w/c/keyword/thread_local)
+[`auto`]({{< ref "/c/language/keyword/auto" >}}), [`register`]({{< ref "/c/language/keyword/register" >}}), [`static`]({{< ref "/c/language/keyword/static" >}}), [`extern`]({{< ref "/c/language/keyword/extern" >}}), [`_Thread_local`]({{< ref "/c/language/keyword/_Thread_local" >}}) [`thread_local`]({{< ref "/c/language/keyword/thread_local" >}})
 
 ## 注解
 
-​	一般通过定义于头文件 [`<threads.h>`](https://zh.cppreference.com/w/c/header/threads) 的便利宏 [thread_local](https://zh.cppreference.com/w/c/thread/thread_local) 使用关键词 `_Thread_local`。(C23 前)
+​	一般通过定义于头文件 [`<threads.h>`]({{< ref "/c/header/threads" >}}) 的便利宏 [thread_local](https://zh.cppreference.com/w/c/thread/thread_local) 使用关键词 `_Thread_local`。(C23 前)
 
-​	C 语言文法中，[`typedef`](https://zh.cppreference.com/w/c/language/typedef) 和 [`constexpr`](https://zh.cppreference.com/w/c/language/constexpr)(C23 起) 说明符在形式上列作存储类说明符，但并不指定存储。
+​	C 语言文法中，[`typedef`]({{< ref "/c/language/declarations/typedef" >}}) 和 [`constexpr`](https://zh.cppreference.com/w/c/language/constexpr)(C23 起) 说明符在形式上列作存储类说明符，但并不指定存储。
 
 ​	`auto` 说明符还用于类型推断。(C23 起)
 

@@ -11,21 +11,21 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/name_space](https://zh.cppreference.com/w/c/language/name_space)
 
-​	在 C 程序中遇到[标识符](https://zh.cppreference.com/w/c/language/identifier)时，会查找定位引入该标识符的，并且在当前[作用域内](https://zh.cppreference.com/w/c/language/scope)的[声明](https://zh.cppreference.com/w/c/language/declarations)。若同一标识符的多个声明属于不同种被称作“命名空间”的类别，则 C 允许它们同时存在于作用域内：
+​	在 C 程序中遇到[标识符]({{< ref "/c/language/basic_concepts/identifier" >}})时，会查找定位引入该标识符的，并且在当前[作用域内]({{< ref "/c/language/basic_concepts/scope" >}})的[声明]({{< ref "/c/language/declarations" >}})。若同一标识符的多个声明属于不同种被称作“命名空间”的类别，则 C 允许它们同时存在于作用域内：
 
-1) 标号命名空间：所有声明为[标号](https://zh.cppreference.com/w/c/language/statements#.E6.A0.87.E5.8F.B7)的标识符。
-2) 标签名：所有声明为[结构体](https://zh.cppreference.com/w/c/language/struct)、[联合体](https://zh.cppreference.com/w/c/language/union)及[枚举类型](https://zh.cppreference.com/w/c/language/enum)名称的标识符。注意所有这三种标签共享同一命名空间。
-3) 成员名：所有声明为[结构体](https://zh.cppreference.com/w/c/language/struct)或[联合体](https://zh.cppreference.com/w/c/language/union)之一的成员的标识符。每个结构体和联合体引入它自己的这种命名空间。
-4) 全局属性命名空间：标准定义的[属性记号](https://zh.cppreference.com/w/c/language/attributes)或实现定义的属性前缀。(C23 起)
+1) 标号命名空间：所有声明为[标号]({{< ref "/c/language/statements#.E6.A0.87.E5.8F.B7" >}})的标识符。
+2) 标签名：所有声明为[结构体]({{< ref "/c/language/declarations/struct" >}})、[联合体]({{< ref "/c/language/declarations/union" >}})及[枚举类型]({{< ref "/c/language/declarations/enum" >}})名称的标识符。注意所有这三种标签共享同一命名空间。
+3) 成员名：所有声明为[结构体]({{< ref "/c/language/declarations/struct" >}})或[联合体]({{< ref "/c/language/declarations/union" >}})之一的成员的标识符。每个结构体和联合体引入它自己的这种命名空间。
+4) 全局属性命名空间：标准定义的[属性记号]({{< ref "/c/language/declarations/attributes" >}})或实现定义的属性前缀。(C23 起)
 5)  非标准属性名：属性前缀之后的属性名。每个属性前缀均拥有它所引入的实现定义属性所在的分离的命名空间。(C23 起)
 
 6) 所有其他标识符，称之为“通常标识符”以别于 (1-5)（函数名、对象名、typedef 名、枚举常量）。
 
 ​	在查找点，根据使用方式确定标识符所属的命名空间：
 
-1) 作为 [goto 语句](https://zh.cppreference.com/w/c/language/goto)操作数出现的标识符，会在标号命名空间中查找。
+1) 作为 [goto 语句]({{< ref "/c/language/statements/goto" >}})操作数出现的标识符，会在标号命名空间中查找。
 2) 关键词 `struct`、`union` 或 `enum` 之后的标识符，会在标签命名空间中查找。
-3) [成员访问](https://zh.cppreference.com/w/c/language/operator_member_access)或通过指针的成员访问运算符之后的标识符，会在类型成员命名空间中查找，该类型由成员访问运算符的左操作数确定。
+3) [成员访问]({{< ref "/c/language/expressions/operator_member_access" >}})或通过指针的成员访问运算符之后的标识符，会在类型成员命名空间中查找，该类型由成员访问运算符的左操作数确定。
 4) 直接出现于属性说明符（`[[...]]`）中的标识符，会在全局属性命名空间中查找。(C23 起)
 5) 后随属性前缀之后的 `::` 记号的标识符，会在属性前缀所引入命名空间中查找。(C23 起)
 
@@ -33,9 +33,9 @@ draft = false
 
 ## 注解
 
-​	[宏](https://zh.cppreference.com/w/c/preprocessor/replace)名不是任何命名空间的一部分，因为语义分析前，预处理器会替换它们。
+​	[宏]({{< ref "/c/language/preprocessor/replace" >}})名不是任何命名空间的一部分，因为语义分析前，预处理器会替换它们。
 
-​	一个常见举措是将结构体/联合体/枚举的名称注入通常命名空间，以 [typedef](https://zh.cppreference.com/w/c/language/typedef) 声明：
+​	一个常见举措是将结构体/联合体/枚举的名称注入通常命名空间，以 [typedef]({{< ref "/c/language/declarations/typedef" >}}) 声明：
 
 ```c
 struct A { };       // 于标签命名空间中引入名称A

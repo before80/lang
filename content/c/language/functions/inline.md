@@ -22,7 +22,7 @@ draft = false
 
 ​	`inline` 说明符的目的是提示编译器做优化，譬如[函数内联](https://en.wikipedia.org/wiki/inline_expansion)，这通常要求编译方能见到函数的定义。编译器能（并且经常）就优化的目的忽略 `inline` 说明符的存在与否。
 
-​	若编译器进行函数内联，则它会以函数体取代所有对它的调用，以避免函数调用的开销（将数据置于栈上和取得结果），这可能会生成更大的可执行文件，因为函数可能会被重复多次。结果同[仿函数宏](https://zh.cppreference.com/w/c/preprocessor/replace)，只是用于该函数的标识符和宏指代可见于定义点的定义，而不指代调用点的定义。
+​	若编译器进行函数内联，则它会以函数体取代所有对它的调用，以避免函数调用的开销（将数据置于栈上和取得结果），这可能会生成更大的可执行文件，因为函数可能会被重复多次。结果同[仿函数宏]({{< ref "/c/language/preprocessor/replace" >}})，只是用于该函数的标识符和宏指代可见于定义点的定义，而不指代调用点的定义。
 
 ​	不管是否进行内联，内联函数都保证下列语义：
 
@@ -42,7 +42,7 @@ inline void f(void)
 
 ​	若非 static 函数声明为 `inline` ，则必须在同一翻译单元中定义它。不使用 `extern` 的内联定义不会对外部可见，而且不会阻止其他翻译单元定义同一函数。这使得 `inline` 关键词成了 `static` 外另一种在头文件定义函数的方式，可以由同一程序的多个翻译单元包含该头文件。
 
-​	若函数在一些翻译单元中声明为 `inline` ，它就不需要在处处皆声明为 `inline` ：至多一个单元会提供常规的非 inline 非 static 函数，或是声明为 `extern inline` 的函数。称此翻译单元提供*外部定义*。为避免未定义行为，若在表达式中使用拥有外部链接的函数名，则程序中必须存在一个外部定义，见[唯一定义规则](https://zh.cppreference.com/w/c/language/extern#.E5.94.AF.E4.B8.80.E5.AE.9A.E4.B9.89.E8.A7.84.E5.88.99)。
+​	若函数在一些翻译单元中声明为 `inline` ，它就不需要在处处皆声明为 `inline` ：至多一个单元会提供常规的非 inline 非 static 函数，或是声明为 `extern inline` 的函数。称此翻译单元提供*外部定义*。为避免未定义行为，若在表达式中使用拥有外部链接的函数名，则程序中必须存在一个外部定义，见[唯一定义规则]({{< ref "/c/language/declarations/extern#.E5.94.AF.E4.B8.80.E5.AE.9A.E4.B9.89.E8.A7.84.E5.88.99" >}})。
 
 ​	内联函数的地址始终是外部定义的地址，但当以此地址进行函数调用时，调用*内联定义*（若存在于翻译单元中）还是*外部定义*是未指定的。定义于内联定义中的 static 对象与定义于外部定义中的 static 对象有别：
 
@@ -65,7 +65,7 @@ extern const char *saddr(void); // 外部定义也会生成
 
 ## 关键词
 
-[`inline`](https://zh.cppreference.com/w/c/keyword/inline)
+[`inline`]({{< ref "/c/language/keyword/inline" >}})
 
 ## 注解
 

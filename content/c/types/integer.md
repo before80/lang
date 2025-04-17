@@ -115,7 +115,7 @@ UINT64_C(0x123) // 可能展开成 0x123ULL 或 0x123UL
 
 ## 示例
 
-​	有关本示例中使用的[格式宏](https://zh.cppreference.com/w/c/types/integer#.E6.A0.BC.E5.BC.8F.E5.AE.8F.E5.B8.B8.E9.87.8F)，另请参见 [C++ 兼容性注解](https://zh.cppreference.com/w/cpp/language/user_literal#.E6.B3.A8.E8.A7.A3)
+​	有关本示例中使用的[格式宏]({{< ref "/c/types/integer#.E6.A0.BC.E5.BC.8F.E5.AE.8F.E5.B8.B8.E9.87.8F" >}})，另请参见 [C++ 兼容性注解](https://zh.cppreference.com/w/cpp/language/user_literal#.E6.B3.A8.E8.A7.A3)
 
 ```c
 #include <inttypes.h>
@@ -145,7 +145,7 @@ lld
 
 ### 参阅
 
-- [算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)
+- [算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})
 
 | 定宽整数类型的 [C++ 文档](https://zh.cppreference.com/w/cpp/types/integer) |
 | ------------------------------------------------------------ |

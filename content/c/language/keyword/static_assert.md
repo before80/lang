@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [静态断言声明](https://zh.cppreference.com/w/c/language/_Static_assert) (C23 起)
+- [静态断言声明]({{< ref "/c/language/declarations/_Static_assert" >}}) (C23 起)

@@ -11,11 +11,11 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/function_declaration](https://zh.cppreference.com/w/c/language/function_declaration)
 
-​	函数声明引入指代函数的[标识符](https://zh.cppreference.com/w/c/language/identifier)，并可选地指定该函数的参数类型（即其*原型*）。函数声明（不同于[定义](https://zh.cppreference.com/w/c/language/function_definition)）可以出现于块作用域和文件作用域中。
+​	函数声明引入指代函数的[标识符]({{< ref "/c/language/basic_concepts/identifier" >}})，并可选地指定该函数的参数类型（即其*原型*）。函数声明（不同于[定义]({{< ref "/c/language/functions/function_definition" >}})）可以出现于块作用域和文件作用域中。
 
 ## 语法
 
-​	在函数声明的[声明文法](https://zh.cppreference.com/w/c/language/declarations)中，*类型说明符* 序列，可选择地由声明式修饰，代表其*返回类型*（可以是任何异于函数和数组的类型），而 *声明符* 有三种形式：
+​	在函数声明的[声明文法]({{< ref "/c/language/declarations" >}})中，*类型说明符* 序列，可选择地由声明式修饰，代表其*返回类型*（可以是任何异于函数和数组的类型），而 *声明符* 有三种形式：
 
 | *非指针声明符* `(` *形参列表* `)` *属性说明符序列*(可选)   | (1)  |          |
 | ---------------------------------------------------------- | ---- | -------- |
@@ -24,20 +24,20 @@ draft = false
 
 ​	其中
 
-| *非指针声明符*   | -    | 除了不带括号的指针声明符以外的任何[声明符](https://zh.cppreference.com/w/c/language/declarations#.E5.A3.B0.E6.98.8E.E7.AC.A6)。包含于此声明符中的标识符成为函数指代符的标识符。 |
+| *非指针声明符*   | -    | 除了不带括号的指针声明符以外的任何[声明符]({{< ref "/c/language/declarations#.E5.A3.B0.E6.98.8E.E7.AC.A6" >}})。包含于此声明符中的标识符成为函数指代符的标识符。 |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *形参列表*       | -    | 或为单一关键词 void，或为*形参*的逗号分隔列表，可以以[省略号形参](https://zh.cppreference.com/w/c/language/variadic)结尾。 |
-| *标识符列表*     | -    | 标识符的逗号分隔列表，仅在声明符被用作旧式[函数定义](https://zh.cppreference.com/w/c/language/function_definition)的一部分的情况下可能 |
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到函数类型 |
+| *形参列表*       | -    | 或为单一关键词 void，或为*形参*的逗号分隔列表，可以以[省略号形参]({{< ref "/c/language/functions/variadic" >}})结尾。 |
+| *标识符列表*     | -    | 标识符的逗号分隔列表，仅在声明符被用作旧式[函数定义]({{< ref "/c/language/functions/function_definition" >}})的一部分的情况下可能 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到函数类型 |
 
-1) 新式 (C89) 函数声明。此声明不仅引入函数指代符自身，而且还为任何将来的[函数调用表达式](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)提供函数原型，强制将使用的实参表达式转换成声明的形参类型，并进行编译时的实参数量检查。
+1) 新式 (C89) 函数声明。此声明不仅引入函数指代符自身，而且还为任何将来的[函数调用表达式]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})提供函数原型，强制将使用的实参表达式转换成声明的形参类型，并进行编译时的实参数量检查。
 
 ```c
 int max(int a, int b); // 声明
 int n = max(12.01, 3.14); // OK：从 double 转换到 int
 ```
 
-2) (C23 前) 旧式 (K&R) 函数定义。此声明不引入函数原型，且任何将来的[函数调用表达式](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)都将进行默认实参提升，而且若实参数量不匹配形参数量则引起未定义行为。
+2) (C23 前) 旧式 (K&R) 函数定义。此声明不引入函数原型，且任何将来的[函数调用表达式]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})都将进行默认实参提升，而且若实参数量不匹配形参数量则引起未定义行为。
 
 ```c
 int max(a, b) 
@@ -50,7 +50,7 @@ int n = max(12.01f, 3.14); // 以二个 double 参数调用 max （提升后）
 
 ## 解释
 
-​	函数的返回类型，由 *说明符与限定符* 中的类型说明符确定，并且像在[声明](https://zh.cppreference.com/w/c/language/declarations)中一样可以由 *声明符* 修改，它必须是非数组对象类型或类型 `void`。若该函数声明不是定义，则返回类型可以[不完整](https://zh.cppreference.com/w/c/language/type#.E4.B8.8D.E5.AE.8C.E6.95.B4.E7.B1.BB.E5.9E.8B)。返回类型不能有 cvr 限定：为构造函数类型的目的，调整任何有限定返回类型为其无限定版本。
+​	函数的返回类型，由 *说明符与限定符* 中的类型说明符确定，并且像在[声明]({{< ref "/c/language/declarations" >}})中一样可以由 *声明符* 修改，它必须是非数组对象类型或类型 `void`。若该函数声明不是定义，则返回类型可以[不完整]({{< ref "/c/language/basic_concepts/type#.E4.B8.8D.E5.AE.8C.E6.95.B4.E7.B1.BB.E5.9E.8B" >}})。返回类型不能有 cvr 限定：为构造函数类型的目的，调整任何有限定返回类型为其无限定版本。
 
 ```
 void f(char *s);                    // 返回类型为 void
@@ -71,7 +71,7 @@ typedef int array_t[3];
 array_t a, h(); // 错误：数组类型不能作为函数返回类型
 ```
 
-​	若函数声明符出现于任何函数外，则其引入的标识符拥有[文件作用域](https://zh.cppreference.com/w/c/language/scope)和[外部链接](https://zh.cppreference.com/w/c/language/storage_duration)，除非使用 `static` 或有较前的 static 声明可见。若声明出现于另一函数内，则标识符拥有块作用域（且亦拥有外部或内部链接）。
+​	若函数声明符出现于任何函数外，则其引入的标识符拥有[文件作用域]({{< ref "/c/language/basic_concepts/scope" >}})和[外部链接]({{< ref "/c/language/declarations/storage_duration" >}})，除非使用 `static` 或有较前的 static 声明可见。若声明出现于另一函数内，则标识符拥有块作用域（且亦拥有外部或内部链接）。
 
 ```c
 int main(void)
@@ -81,7 +81,7 @@ int main(void)
 }
 ```
 
-​	不是[函数定义](https://zh.cppreference.com/w/c/language/function_definition)的一部分的声明中，(C23 前)参数不需要命名：
+​	不是[函数定义]({{< ref "/c/language/functions/function_definition" >}})的一部分的声明中，(C23 前)参数不需要命名：
 
 ```c
 int f(int, int); // 声明
@@ -89,7 +89,7 @@ int f(int, int); // 声明
 // C23 起允许此定义。
 ```
 
-*形参列表* 中的每个形参均是引入单个变量的[声明](https://zh.cppreference.com/w/c/language/declarations)，变量拥有下列额外属性：
+*形参列表* 中的每个形参均是引入单个变量的[声明]({{< ref "/c/language/declarations" >}})，变量拥有下列额外属性：
 
 - 声明符中的标识符是可选的（除非此函数声明是函数定义的一部分）(C23 前)
 
@@ -100,7 +100,7 @@ int f(int, double) { return 1; } // 错误：定义必须命名形参
 // C23 起允许此定义。
 ```
 
-- 对形参允许的[存储类说明符](https://zh.cppreference.com/w/c/language/storage_duration)仅有 `register`，而在非定义的函数声明中忽略它
+- 对形参允许的[存储类说明符]({{< ref "/c/language/declarations/storage_duration" >}})仅有 `register`，而在非定义的函数声明中忽略它
 
 ```c
 int f(static int x); // 错误
@@ -123,7 +123,7 @@ int f(char g(double)); // 声明 int f(char (*g)(double))
 int h(int(void)); // 声明 int h(int (*)(void))
 ```
 
-- 形参列表可以以 `, ...` 或`...`(C23 起) 终止，细节见[变参数函数](https://zh.cppreference.com/w/c/language/variadic)。
+- 形参列表可以以 `, ...` 或`...`(C23 起) 终止，细节见[变参数函数]({{< ref "/c/language/functions/variadic" >}})。
 
 ```c
 int f(int, ...);
@@ -137,10 +137,10 @@ int g(void x); // 错误
 ```
 
 - 任何出现于形参列表中，能被当成 typedef 名或形参名的标识符，都会被当做 typedef 名：int f([size_t](http://zh.cppreference.com/w/c/types/size_t), [uintptr_t](http://zh.cppreference.com/w/c/types/integer)) 被分析成新式声明符，声明一个函数，它接收二个 `size_t` 和 `uintptr_t` 类型的无名形参，而非开始定义接收二个名为“ `size_t` ”和“ `uintptr_t` ”的函数的旧式声明符。
-- 形参列表可以拥有不完整类型而且可以用 VLA 记法 [*](C99 起)（但在[函数定义](https://zh.cppreference.com/w/c/language/function_definition)中，在数组到指针和函数到指针调整后，形参类型必须完整）
-- [属性说明符序列](https://zh.cppreference.com/w/c/language/attributes)亦能应用到函数形参。(C23 起)
+- 形参列表可以拥有不完整类型而且可以用 VLA 记法 [*](C99 起)（但在[函数定义]({{< ref "/c/language/functions/function_definition" >}})中，在数组到指针和函数到指针调整后，形参类型必须完整）
+- [属性说明符序列]({{< ref "/c/language/declarations/attributes" >}})亦能应用到函数形参。(C23 起)
 
-​	其他函数调用机制上的细节见[函数调用运算符](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)，关于从函数返回，见 [`return`](https://zh.cppreference.com/w/c/language/return) 。
+​	其他函数调用机制上的细节见[函数调用运算符]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})，关于从函数返回，见 [`return`]({{< ref "/c/language/statements/return" >}}) 。
 
 ## 注解
 
@@ -159,7 +159,7 @@ int f(void) { return 1; ) // 实际定义
 int g(a,b,c,d) int a,b,c,d; { return 2; } // 实际定义
 ```
 
-和在[函数定义](https://zh.cppreference.com/w/c/language/function_definition)中不同，形参列表可以从 typedef 继承
+和在[函数定义]({{< ref "/c/language/functions/function_definition" >}})中不同，形参列表可以从 typedef 继承
 
 ```c
 typedef int p(int q, int r); // p 是函数类型 int(int, int)

@@ -20,7 +20,7 @@ draft = false
 
 ## 常量
 
-| [NULL   ](https://zh.cppreference.com/w/c/types/NULL)        | 实现定义的空指针常量 (宏常量)                                |
+| [NULL   ]({{< ref "/c/types/NULL" >}})        | 实现定义的空指针常量 (宏常量)                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [LC_ALL   LC_COLLATE <br /> LC_CTYPE  <br />LC_MONETARY  <br />LC_NUMERIC  <br />LC_TIME   ](https://zh.cppreference.com/w/c/locale/LC_categories) | [setlocale](https://zh.cppreference.com/w/c/locale/setlocale) 所用的本地环境类别 (宏常量) |
 
@@ -76,10 +76,10 @@ lconv* localeconv();
 
 ## 注解
 
-- 下列标头中也定义[NULL](https://zh.cppreference.com/w/c/types/NULL)：
-  - [` <string.h>`](https://zh.cppreference.com/w/c/header/string)
-  - [`<time.h>`](https://zh.cppreference.com/w/c/header/time)
-  - [`<stddef.h>`](https://zh.cppreference.com/w/c/header/stddef)
-  - [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio)
-  - [`<wchar.h>`](https://zh.cppreference.com/w/c/header/wchar)
+- 下列标头中也定义[NULL]({{< ref "/c/types/NULL" >}})：
+  - [` <string.h>`]({{< ref "/c/header/string" >}})
+  - [`<time.h>`]({{< ref "/c/header/time" >}})
+  - [`<stddef.h>`]({{< ref "/c/header/stddef" >}})
+  - [`<stdio.h>`]({{< ref "/c/header/stdio" >}})
+  - [`<wchar.h>`]({{< ref "/c/header/wchar" >}})
 

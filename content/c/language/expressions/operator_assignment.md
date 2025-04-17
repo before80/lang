@@ -35,35 +35,35 @@ draft = false
 
 ​	其中
 
-| *lhs* | -    | 任何完整对象类型的[可修改左值](https://zh.cppreference.com/w/c/language/value_category)表达式 |
+| *lhs* | -    | 任何完整对象类型的[可修改左值]({{< ref "/c/language/expressions/value_category" >}})表达式 |
 | ----- | ---- | ------------------------------------------------------------ |
-| *rhs* | -    | 任何[可隐式转换](https://zh.cppreference.com/w/c/language/conversion)成 *lhs* 或与 *lhs* [兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)类型的表达式 |
+| *rhs* | -    | 任何[可隐式转换]({{< ref "/c/language/expressions/conversion" >}})成 *lhs* 或与 *lhs* [兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)类型的表达式 |
 
-​	赋值进行从 *rhs* 的值到 *lhs* 类型的[隐式转换](https://zh.cppreference.com/w/c/language/conversion)，然后用 *rhs* 转换后的值替换 *lhs* 所指代对象中的值。
+​	赋值进行从 *rhs* 的值到 *lhs* 类型的[隐式转换]({{< ref "/c/language/expressions/conversion" >}})，然后用 *rhs* 转换后的值替换 *lhs* 所指代对象中的值。
 
-​	赋值还会返回与存储于 `lhs` 中相同的值（故如 a = b = c 的表达式合法）。赋值表达式的[值类别](https://zh.cppreference.com/w/c/language/value_category)是非左值（故形如 (a = b) = c 的表达式非法）。
+​	赋值还会返回与存储于 `lhs` 中相同的值（故如 a = b = c 的表达式合法）。赋值表达式的[值类别]({{< ref "/c/language/expressions/value_category" >}})是非左值（故形如 (a = b) = c 的表达式非法）。
 
 *rhs* 与 *lhs* 必须满足下列条件之一：
 
-- *lhs* 与 *rhs* 拥有[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)的 [struct](https://zh.cppreference.com/w/c/language/struct) 或 [union](https://zh.cppreference.com/w/c/language/union) 类型，或……
-- *rhs* 必须可[隐式转换](https://zh.cppreference.com/w/c/language/conversion)成 *lhs*，这表示
-  - *lhs* 与 *rhs* 均拥有[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)，此情况下 *lhs* 可有[volatile](https://zh.cppreference.com/w/c/language/volatile) 限定或为[原子的](https://zh.cppreference.com/w/c/language/atomic)(C11 起)
-  - *lhs* 与 *rhs* 均拥有指向[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)类型（忽略限定符）的[指针](https://zh.cppreference.com/w/c/language/pointer)类型，或其中一个指针是指向 void 的指针，而该[转换](https://zh.cppreference.com/w/c/language/conversion)不向所指向类型添加限定符。*lhs* 可以为 [volatile](https://zh.cppreference.com/w/c/language/volatile) 或 [restrict](https://zh.cppreference.com/w/c/language/restrict)(C99 起) 限定，或为[原子的](https://zh.cppreference.com/w/c/language/atomic)(C11 起)。
-  - *lhs* 是（可能被限定或为原子的(C11 起)）指针，而 *rhs* 是空指针常量，如 [NULL](https://zh.cppreference.com/w/c/types/NULL) 或 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 值(C23 起)。
-  - *lhs* 是（可能被限定或为原子的(C11 起)）_Bool 类型而 *rhs* 是指针或 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 值(C23 起)。(C99 起)
-  - *lhs* 是可能被限定或为原子的 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 类型而 *rhs* 是 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 类型。(C23 起)
+- *lhs* 与 *rhs* 拥有[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)的 [struct]({{< ref "/c/language/declarations/struct" >}}) 或 [union]({{< ref "/c/language/declarations/union" >}}) 类型，或……
+- *rhs* 必须可[隐式转换]({{< ref "/c/language/expressions/conversion" >}})成 *lhs*，这表示
+  - *lhs* 与 *rhs* 均拥有[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})，此情况下 *lhs* 可有[volatile]({{< ref "/c/language/declarations/volatile" >}}) 限定或为[原子的]({{< ref "/c/language/declarations/atomic" >}})(C11 起)
+  - *lhs* 与 *rhs* 均拥有指向[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)类型（忽略限定符）的[指针]({{< ref "/c/language/declarations/pointer" >}})类型，或其中一个指针是指向 void 的指针，而该[转换]({{< ref "/c/language/expressions/conversion" >}})不向所指向类型添加限定符。*lhs* 可以为 [volatile]({{< ref "/c/language/declarations/volatile" >}}) 或 [restrict]({{< ref "/c/language/declarations/restrict" >}})(C99 起) 限定，或为[原子的]({{< ref "/c/language/declarations/atomic" >}})(C11 起)。
+  - *lhs* 是（可能被限定或为原子的(C11 起)）指针，而 *rhs* 是空指针常量，如 [NULL]({{< ref "/c/types/NULL" >}}) 或 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 值(C23 起)。
+  - *lhs* 是（可能被限定或为原子的(C11 起)）_Bool 类型而 *rhs* 是指针或 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 值(C23 起)。(C99 起)
+  - *lhs* 是可能被限定或为原子的 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 类型而 *rhs* 是 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 类型。(C23 起)
 
 
 
 ## 注解
 
-​	若 *rhs* 与 *lhs* 在内存中重叠（例如它们是同一联合体的成员），则行为未定义，除非重叠是严格的且两者类型[兼容](https://zh.cppreference.com/w/c/language/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)。
+​	若 *rhs* 与 *lhs* 在内存中重叠（例如它们是同一联合体的成员），则行为未定义，除非重叠是严格的且两者类型[兼容]({{< ref "/c/language/basic_concepts/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B" >}})。
 
 ​	尽管数组不可赋值，但包裹在结构体内的数组可以赋值给另一个相同（或兼容）的结构体类型。
 
-​	更新 *lhs* 的副效应[后序于](https://zh.cppreference.com/w/c/language/eval_order)值计算，但 *lhs* 和 *rhs* 自己并非如此，与通常一样，运算数的求值相对于彼此不定序（故如 `i = ++i` 的表达式结果未定义）。
+​	更新 *lhs* 的副效应[后序于]({{< ref "/c/language/expressions/eval_order" >}})值计算，但 *lhs* 和 *rhs* 自己并非如此，与通常一样，运算数的求值相对于彼此不定序（故如 `i = ++i` 的表达式结果未定义）。
 
-​	赋值会剥除浮点数表达式的额外范围和精度（见 [FLT_EVAL_METHOD](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD)）。
+​	赋值会剥除浮点数表达式的额外范围和精度（见 [FLT_EVAL_METHOD]({{< ref "/c/types/limits/FLT_EVAL_METHOD" >}})）。
 
 ​	C++ 中，赋值表达式是左值表达式，而 C 中不是。
 
@@ -120,11 +120,11 @@ arr1[0]=1 arr1[1]=2 arr2[0]=3 arr2[1]=4
 
 | *op*         | -    | one of `*=`, `/=` `%=`, `+=` `-=`, `<<=`, `>>=`, `&=`, `^=`, `|=` |
 | ------------ | ---- | ------------------------------------------------------------ |
-| *lhs*, *rhs* | -    | 拥有[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)的表达式（其中 *lhs* 可以有限定或是原子的），除非 *op* 是 += 或 -=，此情况允许接受指针类型并具有与 + 和 - 相同的限制 |
+| *lhs*, *rhs* | -    | 拥有[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})的表达式（其中 *lhs* 可以有限定或是原子的），除非 *op* 是 += 或 -=，此情况允许接受指针类型并具有与 + 和 - 相同的限制 |
 
 ​	表达式 *lhs* *@=* *rhs* 与 *lhs* `=` *lhs* *@* `(` *rhs* `)` 完全相同，但只求值一次 *lhs*。
 
-​	若 *lhs* 拥有[原子](https://zh.cppreference.com/w/c/language/atomic)类型，则运算表现为单个带内存顺序 [memory_order_seq_cst](https://zh.cppreference.com/w/c/atomic/memory_order) 的原子读修改写操作对于整数原子类型，复合赋值运算 @= 等价于：(C11 起)
+​	若 *lhs* 拥有[原子]({{< ref "/c/language/declarations/atomic" >}})类型，则运算表现为单个带内存顺序 [memory_order_seq_cst](https://zh.cppreference.com/w/c/atomic/memory_order) 的原子读修改写操作对于整数原子类型，复合赋值运算 @= 等价于：(C11 起)
 
 ```c
 T1* addr = &lhs;

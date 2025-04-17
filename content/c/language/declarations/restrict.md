@@ -11,9 +11,9 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/restrict](https://zh.cppreference.com/w/c/language/restrict)
 
-​	C [类型系统](https://zh.cppreference.com/w/c/language/type)中每一个独立的类型都有数个该类型的*限定*版本，对应 [`const`](https://zh.cppreference.com/w/c/language/const)、[`volatile`](https://zh.cppreference.com/w/c/language/volatile)，以及对于指向对象指针的 `restrict` 限定符中的一个、两个或全部三个。此页面描述 `restrict` 限定符的效果。
+​	C [类型系统]({{< ref "/c/language/basic_concepts/type" >}})中每一个独立的类型都有数个该类型的*限定*版本，对应 [`const`]({{< ref "/c/language/declarations/const" >}})、[`volatile`]({{< ref "/c/language/declarations/volatile" >}})，以及对于指向对象指针的 `restrict` 限定符中的一个、两个或全部三个。此页面描述 `restrict` 限定符的效果。
 
-​	仅有指向[对象类型](https://zh.cppreference.com/w/c/language/type)的指针及其（可能多维的）数组(C23 起)可被 restrict 限定；具体而言，以下是*错误*的：
+​	仅有指向[对象类型]({{< ref "/c/language/basic_concepts/type" >}})的指针及其（可能多维的）数组(C23 起)可被 restrict 限定；具体而言，以下是*错误*的：
 
 - `int restrict *p`
 - `float (* restrict f9)(void)`
@@ -58,7 +58,7 @@ void f(int n, float * restrict r, float * restrict s) {
 }
 ```
 
-​	若以 restrict 类型限定符声明数组类型（通过使用 [typedef](https://zh.cppreference.com/w/c/language/typedef)），则数组类型无 restrict 限定，但其元素类型有 restrict 限定：(C23 前)
+​	若以 restrict 类型限定符声明数组类型（通过使用 [typedef]({{< ref "/c/language/declarations/typedef" >}})），则数组类型无 restrict 限定，但其元素类型有 restrict 限定：(C23 前)
 
 ​	始终认为数组类型与其元素类型同等地拥有 restrict 限定：(C23 起)
 
@@ -200,7 +200,7 @@ void ff(struct t r, struct t s)
 
 ## 关键词
 
-[`restrict`](https://zh.cppreference.com/w/c/keyword/restrict)
+[`restrict`]({{< ref "/c/language/keyword/restrict" >}})
 
 ## 示例
 

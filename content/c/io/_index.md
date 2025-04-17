@@ -11,9 +11,9 @@ draft = false
 
 > 原文[https://zh.cppreference.com/w/c/io](https://zh.cppreference.com/w/c/io)
 
-​	[`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 头文件提供了通用的文件操作支持，并提供了具有窄字符输入/输出功能的函数。
+​	[`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 头文件提供了通用的文件操作支持，并提供了具有窄字符输入/输出功能的函数。
 
-​	[`<wchar.h>`](https://zh.cppreference.com/w/c/header/wchar) 头文件提供了具有宽字符输入/输出功能的函数。
+​	[`<wchar.h>`]({{< ref "/c/header/wchar" >}}) 头文件提供了具有宽字符输入/输出功能的函数。
 
 ​	I/O 流由 **FILE** 类型的对象表示，该对象只能通过 FILE* 类型的指针访问及操作。每个流都与外部的物理设备（文件、标准输入流、打印机、序列端口等）相关联。
 

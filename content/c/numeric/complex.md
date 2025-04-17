@@ -11,11 +11,11 @@ draft = false
 
 > 原文[https://zh.cppreference.com/w/c/numeric/complex](https://zh.cppreference.com/w/c/numeric/complex)
 
-​	若实现定义了宏常量 `__STDC_NO_COMPLEX__`，则不提供头文件 [`<complex.h>`](https://zh.cppreference.com/w/c/header/complex)、复数类型以及此处列出的所有名称。(C11 起)
+​	若实现定义了宏常量 `__STDC_NO_COMPLEX__`，则不提供头文件 [`<complex.h>`]({{< ref "/c/header/complex" >}})、复数类型以及此处列出的所有名称。(C11 起)
 
-​	C 编程语言从 C99 开始支持三种内建类型 `double _Complex`、`float _Complex` 及 `long double _Complex` 的复数数学运算（见 [`<Comple>`](https://zh.cppreference.com/w/c/keyword/_Complex)）。包含头文件 [`<complex.h>`](https://zh.cppreference.com/w/c/header/complex) 时，三种复数类型亦可通过 double [complex](http://zh.cppreference.com/w/c/numeric/complex/complex)、float [complex](http://zh.cppreference.com/w/c/numeric/complex/complex)、long double [complex](http://zh.cppreference.com/w/c/numeric/complex/complex) 使用。
+​	C 编程语言从 C99 开始支持三种内建类型 `double _Complex`、`float _Complex` 及 `long double _Complex` 的复数数学运算（见 [`<Comple>`]({{< ref "/c/language/keyword/_Complex" >}})）。包含头文件 [`<complex.h>`]({{< ref "/c/header/complex" >}}) 时，三种复数类型亦可通过 double [complex](http://zh.cppreference.com/w/c/numeric/complex/complex)、float [complex](http://zh.cppreference.com/w/c/numeric/complex/complex)、long double [complex](http://zh.cppreference.com/w/c/numeric/complex/complex) 使用。
 
-​	除了复数类型，还支持三种虚数类型：`double _Imaginary`、`float _Imaginary` 及 `long double _Imaginary`（见 [`<Imaginar>`](https://zh.cppreference.com/w/c/keyword/_Imaginary)）。包含头文件 [`<complex.h>`](https://zh.cppreference.com/w/c/header/complex) 时，三种虚数类型亦可通过 double [imaginary](http://zh.cppreference.com/w/c/numeric/complex/imaginary)、float [imaginary](http://zh.cppreference.com/w/c/numeric/complex/imaginary) 及 long double [imaginary](http://zh.cppreference.com/w/c/numeric/complex/imaginary) 使用。
+​	除了复数类型，还支持三种虚数类型：`double _Imaginary`、`float _Imaginary` 及 `long double _Imaginary`（见 [`<Imaginar>`]({{< ref "/c/language/keyword/_Imaginary" >}})）。包含头文件 [`<complex.h>`]({{< ref "/c/header/complex" >}}) 时，三种虚数类型亦可通过 double [imaginary](http://zh.cppreference.com/w/c/numeric/complex/imaginary)、float [imaginary](http://zh.cppreference.com/w/c/numeric/complex/imaginary) 及 long double [imaginary](http://zh.cppreference.com/w/c/numeric/complex/imaginary) 使用。
 
 ​	标准算术运算符 `+, -, *, /` 可用于实数、复数及虚数类型的任意混合。
 
@@ -82,7 +82,7 @@ draft = false
 
 ## 注解
 
-​	为未来加入 [`<complex.h>`](https://zh.cppreference.com/w/c/header/complex) 而潜在(C23 起)保留下列函数名，并且在包含该头文件的程序中不可使用：`cerf`、`cerfc`、`cexp2`、`cexpm1`、`clog10`、`clog1p`、`clog2`、`clgamma`、`ctgamma`、`csinpi`、`ccospi`、`ctanpi`、`casinpi`、`cacospi`、`catanpi`、`ccompoundn`、`cpown`、`cpowr`、`crootn`、`crsqrt`、`cexp10m1`、`cexp10`、`cexp2m1`、`clog10p1`、`clog2p1`、`clogp1`(C23 起)，还有它们带 -f 及 -l 后缀的变体。
+​	为未来加入 [`<complex.h>`]({{< ref "/c/header/complex" >}}) 而潜在(C23 起)保留下列函数名，并且在包含该头文件的程序中不可使用：`cerf`、`cerfc`、`cexp2`、`cexpm1`、`clog10`、`clog1p`、`clog2`、`clgamma`、`ctgamma`、`csinpi`、`ccospi`、`ctanpi`、`casinpi`、`cacospi`、`catanpi`、`ccompoundn`、`cpown`、`cpowr`、`crootn`、`crsqrt`、`cexp10m1`、`cexp10`、`cexp2m1`、`clog10p1`、`clog2p1`、`clogp1`(C23 起)，还有它们带 -f 及 -l 后缀的变体。
 
 ​	尽管 C 标准以“复弧双曲正弦（complex arc hyperbolic sine）”等名称指名反双曲函数，双曲函数的反函数却是面积函数。它们的生成是双曲扇形的面积，而非弧长。正确名称是“复反双曲正弦”等等。一些作者会使用“复面积双曲正弦（complex area hyperbolic sine）”等名称。
 

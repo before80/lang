@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- 拥有内部或更常见的外部链接之一的[静态存储期类指定符](https://zh.cppreference.com/w/c/language/storage_duration)。
+- 拥有内部或更常见的外部链接之一的[静态存储期类指定符]({{< ref "/c/language/declarations/storage_duration" >}})。

@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [泛型表达式](https://zh.cppreference.com/w/c/language/generic) (C11 起)
+- [泛型表达式]({{< ref "/c/language/expressions/generic" >}}) (C11 起)

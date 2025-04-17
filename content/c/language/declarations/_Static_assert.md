@@ -19,23 +19,23 @@ draft = false
 | `_Static_assert` `(` *表达式* `)`            |      | (C23 起)(C23 弃用) |
 | `static_assert` `(` *表达式* `)`             |      | (C23 起)           |
 
-| *表达式* | -    | 任何[整数常量表达式](https://zh.cppreference.com/w/c/language/constant_expression) |
+| *表达式* | -    | 任何[整数常量表达式]({{< ref "/c/language/expressions/constant_expression" >}}) |
 | -------- | ---- | ------------------------------------------------------------ |
-| *消息*   | -    | 任何[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal) |
+| *消息*   | -    | 任何[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}}) |
 
-​	此关键词亦可用作便利宏 [`static_assert`](https://zh.cppreference.com/w/c/error/static_assert)，于头文件 [`<assert.h>`](https://zh.cppreference.com/w/c/header/assert) 中提供。(C23 前)
+​	此关键词亦可用作便利宏 [`static_assert`](https://zh.cppreference.com/w/c/error/static_assert)，于头文件 [`<assert.h>`]({{< ref "/c/header/assert" >}}) 中提供。(C23 前)
 
-​	`static_assert` 与 `_Static_assert` 效果相同。`_Static_assert` 是为兼容性保留的弃用拼写。实现亦可定义 `static_assert` 与/或 `_Static_assert` 为预定义宏，而 [`<assert.h>`](https://zh.cppreference.com/w/c/header/assert) 不再提供 `static_assert`。(C23 起)
+​	`static_assert` 与 `_Static_assert` 效果相同。`_Static_assert` 是为兼容性保留的弃用拼写。实现亦可定义 `static_assert` 与/或 `_Static_assert` 为预定义宏，而 [`<assert.h>`]({{< ref "/c/header/assert" >}}) 不再提供 `static_assert`。(C23 起)
 
 ## 解释
 
-​	在编译时求值该常量表达式并将它与零比较。若它比较等于零，则发生编译错误，而编译器必须将*消息* ﻿作为错误消息的一部分显示（但不要求显示[基本字符集](https://zh.cppreference.com/w/c/language/charset)以外的字符）(C23 前)在提供*消息* ﻿时应该将它作为错误消息的一部分显示(C23 起)。
+​	在编译时求值该常量表达式并将它与零比较。若它比较等于零，则发生编译错误，而编译器必须将*消息* ﻿作为错误消息的一部分显示（但不要求显示[基本字符集]({{< ref "/c/language/basic_concepts/charset" >}})以外的字符）(C23 前)在提供*消息* ﻿时应该将它作为错误消息的一部分显示(C23 起)。
 
 ​	否则，若*表达式* ﻿不等于零，则什么都不发生；不生成代码。
 
 ## 关键词
 
-[`_Static_assert`](https://zh.cppreference.com/w/c/keyword/_Static_assert), [`static_assert`](https://zh.cppreference.com/w/c/keyword/static_assert)
+[`_Static_assert`]({{< ref "/c/language/keyword/_Static_assert" >}}), [`static_assert`]({{< ref "/c/language/keyword/static_assert" >}})
 
 ## 示例
 

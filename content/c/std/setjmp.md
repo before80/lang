@@ -51,7 +51,7 @@ typedef /* 未指明 */ jmp_buf;
 
 ​	`setjmp` 的调用必须只出现在下列语境之一中：
 
-1. 选择或迭代语句（[`if`](https://zh.cppreference.com/w/c/language/if)、[`switch`](https://zh.cppreference.com/w/c/language/switch)、[`while`](https://zh.cppreference.com/w/c/language/while)、[`do-while`](https://zh.cppreference.com/w/c/language/do)、[`for`](https://zh.cppreference.com/w/c/language/for)）的完整控制表达式
+1. 选择或迭代语句（[`if`]({{< ref "/c/language/statements/if" >}})、[`switch`]({{< ref "/c/language/statements/switch" >}})、[`while`]({{< ref "/c/language/statements/while" >}})、[`do-while`]({{< ref "/c/language/statements/do" >}})、[`for`]({{< ref "/c/language/statements/for" >}})）的完整控制表达式
 
 ```c
 switch(setjmp(env)) { // ...
@@ -72,7 +72,7 @@ while(!setjmp(env)) { // ...
 
 ```
 
-1. [表达式语句](https://zh.cppreference.com/w/c/language/statements#.E8.A1.A8.E8.BE.BE.E5.BC.8F.E8.AF.AD.E5.8F.A5)的完整表达式（可以将其转型到 `void`）。
+1. [表达式语句]({{< ref "/c/language/statements#.E8.A1.A8.E8.BE.BE.E5.BC.8F.E8.AF.AD.E5.8F.A5" >}})的完整表达式（可以将其转型到 `void`）。
 
 ```c
 setjmp(env);
@@ -84,7 +84,7 @@ setjmp(env);
 ​	一旦返回到 `setjmp` 的作用域:
 
 - 所有可访问对象、浮点状态标志及其他抽象机组件均拥有与在执行 [longjmp](https://zh.cppreference.com/w/c/program/longjmp) 时相同的值，
-- 但含有 `setjmp` 调用的函数中的非 [`volatile`](https://zh.cppreference.com/w/c/language/volatile) 局部变量，若已在 `setjmp` 调用后有所更改，则其值不确定。
+- 但含有 `setjmp` 调用的函数中的非 [`volatile`]({{< ref "/c/language/declarations/volatile" >}}) 局部变量，若已在 `setjmp` 调用后有所更改，则其值不确定。
 
 **参数**
 
@@ -161,7 +161,7 @@ _Noreturn void longjmp( jmp_buf env, int status ); // (C11 起) (C23 前)
 
 ​	跨线程跳转（若调用 `setjmp` 的函数被另一线程执行）亦是未定义行为。(C11 起)
 
-​	若在调用 [setjmp](https://zh.cppreference.com/w/c/program/setjmp) 时，[VLA](https://zh.cppreference.com/w/c/language/array) 或其他[可变修改类型](https://zh.cppreference.com/w/c/language/declarations)的变量在作用域中，并且控制流离开了该作用域，则 `longjmp` 到该 `setjmp` 将引发未定义行为，即使控制流仍然留在该函数内。
+​	若在调用 [setjmp](https://zh.cppreference.com/w/c/program/setjmp) 时，[VLA]({{< ref "/c/language/declarations/array" >}}) 或其他[可变修改类型]({{< ref "/c/language/declarations" >}})的变量在作用域中，并且控制流离开了该作用域，则 `longjmp` 到该 `setjmp` 将引发未定义行为，即使控制流仍然留在该函数内。
 
 ​	在上溯栈的途中，`longjmp` 不会解分配任何 VLA，若其的生存期以此方式终结，则会出现内存泄漏：(C99 起)
 

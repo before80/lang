@@ -14,4 +14,4 @@ draft = false
 ## 用法
 
 - [`double` 类型](https://zh.cppreference.com/w/c/language/types)：用作该类型的声明
-- [`long double` 类型](https://zh.cppreference.com/w/c/language/types)：在与 [`long`](https://zh.cppreference.com/w/c/keyword/long) 结合时用作该类型的声明
+- [`long double` 类型](https://zh.cppreference.com/w/c/language/types)：在与 [`long`]({{< ref "/c/language/keyword/long" >}}) 结合时用作该类型的声明

@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/attributes/nodiscard](https://zh.cppreference.com/w/c/language/attributes/nodiscard)
 
-​	若从转型到 void 以外的[弃值表达式](https://zh.cppreference.com/w/c/language/expressions)，调用声明为 `nodiscard` 的函数，或调用返回声明 `nodiscard` 的结构体/联合体/枚举的函数，则鼓励编译器发出警告。
+​	若从转型到 void 以外的[弃值表达式]({{< ref "/c/language/expressions" >}})，调用声明为 `nodiscard` 的函数，或调用返回声明 `nodiscard` 的结构体/联合体/枚举的函数，则鼓励编译器发出警告。
 
 ## 语法
 
@@ -26,7 +26,7 @@ draft = false
 
 ​	出现于函数声明、枚举声明或结构体/联合体声明。
 
-​	若从转型到 void 以外的[弃值表达式](https://zh.cppreference.com/w/c/language/expressions)，
+​	若从转型到 void 以外的[弃值表达式]({{< ref "/c/language/expressions" >}})，
 
 - 调用声明为 `nodiscard` 的函数，或
 - 调用返回声明 `nodiscard` 的结构体/联合体/枚举的函数，

@@ -872,7 +872,7 @@ int fegetround(void); // (2)	(C99 起)
 
 **注意**
 
-​	当前舍入方向反映最近的 `fesetround` 的效果，亦能以 [FLT_ROUNDS](https://zh.cppreference.com/w/c/types/limits/FLT_ROUNDS) 查询。
+​	当前舍入方向反映最近的 `fesetround` 的效果，亦能以 [FLT_ROUNDS]({{< ref "/c/types/limits/FLT_ROUNDS" >}}) 查询。
 
 **示例**
 

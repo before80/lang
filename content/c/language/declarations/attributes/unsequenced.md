@@ -19,7 +19,7 @@ draft = false
 | ----------------------------------------------------------- | ---- | ---- |
 | `[[` `reproducible` `]]` <br />`[[` `__reproducible__` `]]` | (2)  |      |
 
-1) 指示函数[无作用](https://zh.cppreference.com/w/c/language/attributes/unsequenced#.E6.97.A0.E4.BD.9C.E7.94.A8)、[幂等](https://zh.cppreference.com/w/c/language/attributes/unsequenced#.E5.B9.82.E7.AD.89)、[无状态](https://zh.cppreference.com/w/c/language/attributes/unsequenced#.E6.97.A0.E7.8A.B6.E6.80.81)且[无关联](https://zh.cppreference.com/w/c/language/attributes/unsequenced#.E6.97.A0.E5.85.B3.E8.81.94)。
+1) 指示函数[无作用]({{< ref "/c/language/declarations/attributes/unsequenced#.E6.97.A0.E4.BD.9C.E7.94.A8" >}})、[幂等]({{< ref "/c/language/declarations/attributes/unsequenced#.E5.B9.82.E7.AD.89" >}})、[无状态]({{< ref "/c/language/declarations/attributes/unsequenced#.E6.97.A0.E7.8A.B6.E6.80.81" >}})且[无关联]({{< ref "/c/language/declarations/attributes/unsequenced#.E6.97.A0.E5.85.B3.E8.81.94" >}})。
 2) 指示函数无作用且幂等
 
 ## 解释
@@ -36,7 +36,7 @@ draft = false
 
 ### 无状态
 
-​	如果函数 *F* 或其所调用的任何函数中，具有静态或线程[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的任意对象的定义均为 `const` 但无 `volatile` 限定，则 *F* 是无状态的。
+​	如果函数 *F* 或其所调用的任何函数中，具有静态或线程[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的任意对象的定义均为 `const` 但无 `volatile` 限定，则 *F* 是无状态的。
 
 #### 无关联
 

@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/inttypes](https://zh.cppreference.com/w/c/header/inttypes)
 
-​	此标头是[类型支持](https://zh.cppreference.com/w/c/types)库的一部分，特别是，它是[整数类型格式转换](https://zh.cppreference.com/w/c/types/integer#.E6.A0.BC.E5.BC.8F.E5.AE.8F.E5.B8.B8.E9.87.8F)接口的一部分。
+​	此标头是[类型支持]({{< ref "/c/types" >}})库的一部分，特别是，它是[整数类型格式转换]({{< ref "/c/types/integer#.E6.A0.BC.E5.BC.8F.E5.AE.8F.E5.B8.B8.E9.87.8F" >}})接口的一部分。
 
 > 本节未完成 
 >

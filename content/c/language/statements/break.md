@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/break](https://zh.cppreference.com/w/c/language/break)
 
-​	导致外围 [for](https://zh.cppreference.com/w/c/language/for)、[while](https://zh.cppreference.com/w/c/language/while) 或 [do-while](https://zh.cppreference.com/w/c/language/do) 循环或 [switch 语句](https://zh.cppreference.com/w/c/language/switch)终止。
+​	导致外围 [for]({{< ref "/c/language/statements/for" >}})、[while]({{< ref "/c/language/statements/while" >}}) 或 [do-while]({{< ref "/c/language/statements/do" >}}) 循环或 [switch 语句]({{< ref "/c/language/statements/switch" >}})终止。
 
 ​	在用条件表达式和条件语句终止循环显得笨拙时使用。
 
@@ -19,22 +19,22 @@ draft = false
 
 ​	*属性说明符序列* ﻿(可选) `break` `;`
 
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到 `break` 语句 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到 `break` 语句 |
 | ---------------- | ---- | ------------------------------------------------------------ |
 
-​	只出现在循环体（[while](https://zh.cppreference.com/w/c/language/while)、[do-while](https://zh.cppreference.com/w/c/language/do)、[for](https://zh.cppreference.com/w/c/language/for)）的 *语句* 内，或 [switch](https://zh.cppreference.com/w/c/language/switch) 的 *语句* 内。
+​	只出现在循环体（[while]({{< ref "/c/language/statements/while" >}})、[do-while]({{< ref "/c/language/statements/do" >}})、[for]({{< ref "/c/language/statements/for" >}})）的 *语句* 内，或 [switch]({{< ref "/c/language/statements/switch" >}}) 的 *语句* 内。
 
 ## 解释
 
-​	此语句后，控制被转移到紧随整个循环或 switch 之后的声明或语句，如同由 [goto](https://zh.cppreference.com/w/c/language/goto) 进行。
+​	此语句后，控制被转移到紧随整个循环或 switch 之后的声明或语句，如同由 [goto]({{< ref "/c/language/statements/goto" >}}) 进行。
 
 ## 关键词
 
-[`break`](https://zh.cppreference.com/w/c/keyword/break)
+[`break`]({{< ref "/c/language/keyword/break" >}})
 
 ## 注解
 
-​	`break` 语句不能用于打破多重嵌套循环。[`goto` 语句](https://zh.cppreference.com/w/c/language/goto)可用于此目的。
+​	`break` 语句不能用于打破多重嵌套循环。[`goto` 语句]({{< ref "/c/language/statements/goto" >}})可用于此目的。
 
 ## 示例
 
@@ -84,6 +84,6 @@ int main(void)
 
 ## 参阅
 
-​	[`fallthrough`](https://zh.cppreference.com/w/c/language/attributes/fallthrough)(C23) 指定从前一个 case 标号发生直落是有意的，且不应被会警告直落的编译器进行诊断 (属性指示符)
+​	[`fallthrough`]({{< ref "/c/language/declarations/attributes/fallthrough" >}})(C23) 指定从前一个 case 标号发生直落是有意的，且不应被会警告直落的编译器进行诊断 (属性指示符)
 
 ​	**`break` 语句**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/language/break)**

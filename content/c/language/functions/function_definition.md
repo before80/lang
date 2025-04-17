@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/function_definition](https://zh.cppreference.com/w/c/language/function_definition)
 
-​	函数定义将函数体（声明与语句的序列）与函数名及形参列表关联。不同于[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)，函数定义只允许在文件作用域（不存在嵌套函数）。
+​	函数定义将函数体（声明与语句的序列）与函数名及形参列表关联。不同于[函数声明]({{< ref "/c/language/functions/function_declaration" >}})，函数定义只允许在文件作用域（不存在嵌套函数）。
 
 ​	C 支持二种函数定义的形式：
 
@@ -21,15 +21,15 @@ draft = false
 
 其中
 
-| *属性说明符序列*   | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到函数 |
+| *属性说明符序列*   | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到函数 |
 | ------------------ | ---- | ------------------------------------------------------------ |
-| *说明符与限定符*   | -    | 下列的组合[类型说明符](https://zh.cppreference.com/w/c/language/declarations)，可由声明符修改，组成*返回类型*[存储类说明符](https://zh.cppreference.com/w/c/language/storage_duration)，确定标识符的链接（`static`、`extern` 或无）函数说明符（[`inline`](https://zh.cppreference.com/w/c/language/inline)、[`_Noreturn`](https://zh.cppreference.com/w/c/language/_Noreturn) 或无） |
-| *形参列表声明符*   | -    | 用[形参列表](https://zh.cppreference.com/w/c/language/function_declaration)指代函数各形参的函数类型的声明符 |
-| *标识符列表声明符* | -    | 用[标识符列表](https://zh.cppreference.com/w/c/language/function_declaration)指代函数各形参的函数类型的声明符 |
-| *声明列表*         | -    | 在 *标识符列表声明符* 中声明每个形参的声明序列。这些声明不能使用初始化式，而且仅允许 register 作为[存储类说明符](https://zh.cppreference.com/w/c/language/storage_duration)。 |
-| *函数体*           | -    | [复合语句](https://zh.cppreference.com/w/c/language/statements#.E5.A4.8D.E5.90.88.E8.AF.AD.E5.8F.A5)，是花括号所包括的声明及语句序列，只要调用此函数就会被执行 |
+| *说明符与限定符*   | -    | 下列的组合[类型说明符]({{< ref "/c/language/declarations" >}})，可由声明符修改，组成*返回类型*[存储类说明符]({{< ref "/c/language/declarations/storage_duration" >}})，确定标识符的链接（`static`、`extern` 或无）函数说明符（[`inline`]({{< ref "/c/language/functions/inline" >}})、[`_Noreturn`]({{< ref "/c/language/functions/_Noreturn" >}}) 或无） |
+| *形参列表声明符*   | -    | 用[形参列表]({{< ref "/c/language/functions/function_declaration" >}})指代函数各形参的函数类型的声明符 |
+| *标识符列表声明符* | -    | 用[标识符列表]({{< ref "/c/language/functions/function_declaration" >}})指代函数各形参的函数类型的声明符 |
+| *声明列表*         | -    | 在 *标识符列表声明符* 中声明每个形参的声明序列。这些声明不能使用初始化式，而且仅允许 register 作为[存储类说明符]({{< ref "/c/language/declarations/storage_duration" >}})。 |
+| *函数体*           | -    | [复合语句]({{< ref "/c/language/statements#.E5.A4.8D.E5.90.88.E8.AF.AD.E5.8F.A5" >}})，是花括号所包括的声明及语句序列，只要调用此函数就会被执行 |
 
-1) 新式 (C89) 函数定义。此定义引入函数自身，并为任何将来的[函数调用表达式](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)提供函数原型，强迫从实参表达式转换到声明的形参类型。
+1) 新式 (C89) 函数定义。此定义引入函数自身，并为任何将来的[函数调用表达式]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})提供函数原型，强迫从实参表达式转换到声明的形参类型。
 
 ```c
 int max(int a, int b)
@@ -43,7 +43,7 @@ double g(void)
 }
 ```
 
-2) (C23 前) 旧式 (K&R) 函数定义。此定义不表现为原型，而任何将来的[函数调用表达式](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)将进行默认实参提升。
+2) (C23 前) 旧式 (K&R) 函数定义。此定义不表现为原型，而任何将来的[函数调用表达式]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})将进行默认实参提升。
 
 ```c
 int max(a, b)
@@ -59,7 +59,7 @@ double g()
 
 ## 解释
 
-​	同[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)，函数的返回类型由 *说明符与限定符* 中的类型说明符确定，并像在[声明](https://zh.cppreference.com/w/c/language/declarations)中一样可以由 *声明符* 修改。返回类型必须是完整的非数组对象类型或 void 类型。若返回类型会有 cvr 限定，则为构造函数类型的目的，将它调整为其无限定版本。
+​	同[函数声明]({{< ref "/c/language/functions/function_declaration" >}})，函数的返回类型由 *说明符与限定符* 中的类型说明符确定，并像在[声明]({{< ref "/c/language/declarations" >}})中一样可以由 *声明符* 修改。返回类型必须是完整的非数组对象类型或 void 类型。若返回类型会有 cvr 限定，则为构造函数类型的目的，将它调整为其无限定版本。
 
 ```c
 void f(char *s) { puts(s); } // 返回类型为 void
@@ -69,9 +69,9 @@ int (*foo(const void *p))[3] { // 返回类型是指向 3 个 int 的数组的�
 }
 ```
 
-​	同[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)，为构造函数类型的目的，将形参类型从函数调整到指针，从数组调整到指针，并且为确定[兼容函数类型](https://zh.cppreference.com/w/c/language/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)的目的，忽略所有形参类型的顶层 cvr 限定符。
+​	同[函数声明]({{< ref "/c/language/functions/function_declaration" >}})，为构造函数类型的目的，将形参类型从函数调整到指针，从数组调整到指针，并且为确定[兼容函数类型]({{< ref "/c/language/basic_concepts/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B" >}})的目的，忽略所有形参类型的顶层 cvr 限定符。
 
-​	不同于[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)，不允许无名形参（否则旧式 (K&R) 函数定义中会有冲突），即使不在函数中使用也必须命名它们。仅有的例外是形参列表 (void)。(C23 前)
+​	不同于[函数声明]({{< ref "/c/language/functions/function_declaration" >}})，不允许无名形参（否则旧式 (K&R) 函数定义中会有冲突），即使不在函数中使用也必须命名它们。仅有的例外是形参列表 (void)。(C23 前)
 
 ​	函数定义中形参可以为无名，因为旧式 (K&R) 函数定义已被移除。函数体内不能以名称访问无名形参。(C23 起)
 
@@ -82,7 +82,7 @@ int f(int a, int b) { return 7; } // 定义
 int g(void) { return 8; } // OK：void 不声明参数
 ```
 
-​	在函数体内，每个具名形参都是[左值](https://zh.cppreference.com/w/c/language/value_category)表达式，它们拥有自动[存储期](https://zh.cppreference.com/w/c/language/storage_duration)和[块作用域](https://zh.cppreference.com/w/c/language/scope)。形参在内存中的布局（或者它们究竟是否存储于内存中）是未指定的：这是[调用约定](https://en.wikipedia.org/wiki/Calling_convention)的一部分。
+​	在函数体内，每个具名形参都是[左值]({{< ref "/c/language/expressions/value_category" >}})表达式，它们拥有自动[存储期]({{< ref "/c/language/declarations/storage_duration" >}})和[块作用域]({{< ref "/c/language/basic_concepts/scope" >}})。形参在内存中的布局（或者它们究竟是否存储于内存中）是未指定的：这是[调用约定](https://en.wikipedia.org/wiki/Calling_convention)的一部分。
 
 ```
 int main(int ac, char **av)
@@ -93,7 +93,7 @@ int main(int ac, char **av)
 }
 ```
 
-​	函数调用机制上的其他细节见[函数调用运算符](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)，关于从函数返回，见 [return](https://zh.cppreference.com/w/c/language/return) 。
+​	函数调用机制上的其他细节见[函数调用运算符]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})，关于从函数返回，见 [return]({{< ref "/c/language/statements/return" >}}) 。
 
 ​	`__func__`在每个 *函数体* 内，拥有块作用域和静态存储期的预定义变量 `__func__` 可用，它如同通过以下方式紧跟开花括号后定义：(C99 起)
 
@@ -101,7 +101,7 @@ int main(int ac, char **av)
 static const char __func__[] = "function name";
 ```
 
-​	此特殊标识符有时与[预定义宏常量](https://zh.cppreference.com/w/c/preprocessor/replace) __FILE__ 及 __LINE__ 结合使用，例如为 [assert](https://zh.cppreference.com/w/c/error/assert) 所用。(C99 起)
+​	此特殊标识符有时与[预定义宏常量]({{< ref "/c/language/preprocessor/replace" >}}) __FILE__ 及 __LINE__ 结合使用，例如为 [assert](https://zh.cppreference.com/w/c/error/assert) 所用。(C99 起)
 
 ## 注解
 

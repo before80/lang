@@ -23,10 +23,10 @@ char* p = malloc(10); // 表达式 malloc(10) 类型为 void*，期待 char*
 
 ## 如同赋值的转换
 
-- 在[赋值](https://zh.cppreference.com/w/c/language/operator_assignment)运算符中，右操作数的值被转换成左操作数的无限定类型。
-- 在[标量初始化](https://zh.cppreference.com/w/c/language/scalar_initialization)中，初始化式表达式的值被转换成待初始化对象的无限定类型。
-- 在对有原型函数的[函数调用表达式](https://zh.cppreference.com/w/c/language/operator_other)中，每个实参表达式的值被转换成对应形参的声明类型。
-- 在 [return 语句](https://zh.cppreference.com/w/c/language/return)中，return 的操作数的值被转换成具有该函数返回类型的对象。
+- 在[赋值]({{< ref "/c/language/expressions/operator_assignment" >}})运算符中，右操作数的值被转换成左操作数的无限定类型。
+- 在[标量初始化]({{< ref "/c/language/initialization/scalar_initialization" >}})中，初始化式表达式的值被转换成待初始化对象的无限定类型。
+- 在对有原型函数的[函数调用表达式]({{< ref "/c/language/expressions/operator_other" >}})中，每个实参表达式的值被转换成对应形参的声明类型。
+- 在 [return 语句]({{< ref "/c/language/statements/return" >}})中，return 的操作数的值被转换成具有该函数返回类型的对象。
 
 > 注意
 >
@@ -34,12 +34,12 @@ char* p = malloc(10); // 表达式 malloc(10) 类型为 void*，期待 char*
 
 ## 默认实参提升
 
-​	在[函数调用表达式](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)中，当调用下列函数时
+​	在[函数调用表达式]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})中，当调用下列函数时
 
-1) [无原型函数](https://zh.cppreference.com/w/c/language/function_declaration) (C23 前)，
-2) [变参数函数](https://zh.cppreference.com/w/c/language/variadic)，其中实参表达式是匹配省略号参数的尾部实参之一。
+1) [无原型函数]({{< ref "/c/language/functions/function_declaration" >}}) (C23 前)，
+2) [变参数函数]({{< ref "/c/language/functions/variadic" >}})，其中实参表达式是匹配省略号参数的尾部实参之一。
 
-​	每个整数类型的实参都会经历[整数提升](https://zh.cppreference.com/w/c/language/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87)，而每个 float 类型的实参都隐式转换为 double 类型
+​	每个整数类型的实参都会经历[整数提升]({{< ref "/c/language/expressions/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87" >}})，而每个 float 类型的实参都隐式转换为 double 类型
 
 ```c
 int add_nums(int count, ...);
@@ -54,10 +54,10 @@ int sum = add_nums(2, 'c', true); // add_nums 将以三个 int 调用：(2, 99, 
 
 ​	下列算术运算符的实参会经历隐式转换，以获得*公共实数类型* ﻿，这是执行计算所用的类型：
 
-- [二元算术](https://zh.cppreference.com/w/c/language/operator_arithmetic) `*`, `/`, `%`, `+`, `-`，
-- [关系运算符](https://zh.cppreference.com/w/c/language/operator_comparison) `<`, `>`, `<=`, `>=`, `==`, `!=`，
-- [二元逐位算术](https://zh.cppreference.com/w/c/language/operator_arithmetic) `&`, `^`, `|`，
-- [条件运算符](https://zh.cppreference.com/w/c/language/operator_other) `?:`。
+- [二元算术]({{< ref "/c/language/expressions/operator_arithmetic" >}}) `*`, `/`, `%`, `+`, `-`，
+- [关系运算符]({{< ref "/c/language/expressions/operator_comparison" >}}) `<`, `>`, `<=`, `>=`, `==`, `!=`，
+- [二元逐位算术]({{< ref "/c/language/expressions/operator_arithmetic" >}}) `&`, `^`, `|`，
+- [条件运算符]({{< ref "/c/language/expressions/operator_other" >}}) `?:`。
 
 
 
@@ -84,22 +84,22 @@ int sum = add_nums(2, 'c', true); // add_nums 将以三个 int 调用：(2, 99, 
    - 复数类型保持 float [complex](http://zh.cppreference.com/w/c/numeric/complex/complex)
    - 虚数类型保持 float [imaginary](http://zh.cppreference.com/w/c/numeric/complex/imaginary)
 
-5) 否则两个操作数均为整数。两个操作数都会经历[整数提升](https://zh.cppreference.com/w/c/language/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87)；经过整数提升后，适用于以下情况之一：
+5) 否则两个操作数均为整数。两个操作数都会经历[整数提升]({{< ref "/c/language/expressions/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87" >}})；经过整数提升后，适用于以下情况之一：
 
    - 若两类型相同，则该类型即为公共类型
 
    - 否则，两类型不同：
 
-     - 若两类型有相同的符号性（均为有符号或均为无符号），则拥有较低*转换等级* ﻿[[1\]](https://zh.cppreference.com/w/c/language/conversion#cite_note-1)者会隐式转换[[2\]](https://zh.cppreference.com/w/c/language/conversion#cite_note-2)为另一类型
+     - 若两类型有相同的符号性（均为有符号或均为无符号），则拥有较低*转换等级* ﻿[[1\]]({{< ref "/c/language/expressions/conversion#cite_note-1" >}})者会隐式转换[[2\]]({{< ref "/c/language/expressions/conversion#cite_note-2" >}})为另一类型
      - 否则，两者符号性不同：
        - 若无符号类型的*转换等级*大于或等于有符号类型的等级，则有符号类型操作数会隐式转换成无符号类型
        - 否则，无符号类型的*转换等级*小于有符号类型：
          - 若有符号类型可以表达无符号类型的所有值，则无无符号类型的操作数被隐式转换成有符号操作数的类型。
          - 否则，两个操作数都会经历隐式转换，转换为有符号类型对应的无符号类型。
 
-     (1)[↑](https://zh.cppreference.com/w/c/language/conversion#cite_ref-1) 有关分级规则，参见下文的[整数提升](https://zh.cppreference.com/w/c/language/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87)。
+     (1)[↑]({{< ref "/c/language/expressions/conversion#cite_ref-1" >}}) 有关分级规则，参见下文的[整数提升]({{< ref "/c/language/expressions/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87" >}})。
 
-     (2)[↑](https://zh.cppreference.com/w/c/language/conversion#cite_ref-2) 参见下文[隐式转换语义](https://zh.cppreference.com/w/c/language/conversion#.E9.9A.90.E5.BC.8F.E8.BD.AC.E6.8D.A2.E8.AF.AD.E4.B9.89)中的“整数转换”部分。
+     (2)[↑]({{< ref "/c/language/expressions/conversion#cite_ref-2" >}}) 参见下文[隐式转换语义]({{< ref "/c/language/expressions/conversion#.E9.9A.90.E5.BC.8F.E8.BD.AC.E6.8D.A2.E8.AF.AD.E4.B9.89" >}})中的“整数转换”部分。
 
 ```c
 1.f + 20000001; // int 被转换成 float，给出 20000000.00
@@ -173,21 +173,21 @@ z + f; // z 保持原态，f 被转换成 double ，结果是 double complex
 
 > 注意
 >
-> ​	无关乎一般算术转换，可以在[如同规则](https://zh.cppreference.com/w/c/language/as_if)下，始终以窄于这些规则指定的类型进行计算。
+> ​	无关乎一般算术转换，可以在[如同规则]({{< ref "/c/language/basic_concepts/as_if" >}})下，始终以窄于这些规则指定的类型进行计算。
 
 ## 值变换
 
 ### 左值转换
 
-​	任何非数组类型的[左值表达式](https://zh.cppreference.com/w/c/language/value_category)，在用于异于下列语境时
+​	任何非数组类型的[左值表达式]({{< ref "/c/language/expressions/value_category" >}})，在用于异于下列语境时
 
-- 作为[取值运算符](https://zh.cppreference.com/w/c/language/operator_member_access)的操作数（若允许），
-- 作为前/后[自增减运算符](https://zh.cppreference.com/w/c/language/operator_incdec)的操作数，
-- 作为[成员访问](https://zh.cppreference.com/w/c/language/operator_member_access)（点）运算符的左操作数，
-- 作为[赋值与复合赋值](https://zh.cppreference.com/w/c/language/operator_assignment)运算符的左操作数，
-- 作为 [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 的操作数，
+- 作为[取值运算符]({{< ref "/c/language/expressions/operator_member_access" >}})的操作数（若允许），
+- 作为前/后[自增减运算符]({{< ref "/c/language/expressions/operator_incdec" >}})的操作数，
+- 作为[成员访问]({{< ref "/c/language/expressions/operator_member_access" >}})（点）运算符的左操作数，
+- 作为[赋值与复合赋值]({{< ref "/c/language/expressions/operator_assignment" >}})运算符的左操作数，
+- 作为 [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 的操作数，
 
-​	会经历*左值转换* ﻿：类型保持相同，但失去 [`const`](https://zh.cppreference.com/w/c/language/const)/[`volatile`](https://zh.cppreference.com/w/c/language/volatile)/[`restrict`](https://zh.cppreference.com/w/c/language/restrict) 限定符及[原子](https://zh.cppreference.com/w/c/language/atomic)属性，若原先有。值保持相同，但失去其左值属性（不再能取其地址）。
+​	会经历*左值转换* ﻿：类型保持相同，但失去 [`const`]({{< ref "/c/language/declarations/const" >}})/[`volatile`]({{< ref "/c/language/declarations/volatile" >}})/[`restrict`]({{< ref "/c/language/declarations/restrict" >}}) 限定符及[原子]({{< ref "/c/language/declarations/atomic" >}})属性，若原先有。值保持相同，但失去其左值属性（不再能取其地址）。
 
 ​	若左值拥有不完整类型，则行为未定义。
 
@@ -203,18 +203,18 @@ volatile int* p = &n; // 无左值转换：不读 n 的值
 
 ### 数组到指针转换
 
-​	任何[数组类型](https://zh.cppreference.com/w/c/language/array)的[左值表达式](https://zh.cppreference.com/w/c/language/value_category)(C99 前)[表达式](https://zh.cppreference.com/w/c/language/expressions)(C99 起)，在用于下列语境之外时
+​	任何[数组类型]({{< ref "/c/language/declarations/array" >}})的[左值表达式]({{< ref "/c/language/expressions/value_category" >}})(C99 前)[表达式]({{< ref "/c/language/expressions" >}})(C99 起)，在用于下列语境之外时
 
-- 作为[取址运算符](https://zh.cppreference.com/w/c/language/operator_member_access)的操作数，
-- 作为 [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 的操作数，
+- 作为[取址运算符]({{< ref "/c/language/expressions/operator_member_access" >}})的操作数，
+- 作为 [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 的操作数，
 - 作为 [`typeof`](https://zh.cppreference.com/w/c/language/typeof) 和 [`typeof_unqual`](https://zh.cppreference.com/w/c/language/typeof_unqual) 的操作数 (C23 起)，
-- 作为用于[数组初始化](https://zh.cppreference.com/w/c/language/array_initialization)的字符串字面量，
+- 作为用于[数组初始化]({{< ref "/c/language/initialization/array_initialization" >}})的字符串字面量，
 
 ​	会经历到指向其首元素的非左值指针的转换。
 
-​	若数组声明为 [`register`](https://zh.cppreference.com/w/c/language/storage_duration)，则行为未定义。
+​	若数组声明为 [`register`]({{< ref "/c/language/declarations/storage_duration" >}})，则行为未定义。
 
-​	非左值数组或其任何元素不可访问(C99 前)拥有[临时生存期](https://zh.cppreference.com/w/c/language/lifetime#.E4.B8.B4.E6.97.B6.E7.94.9F.E5.AD.98.E6.9C.9F)(C99 起)。
+​	非左值数组或其任何元素不可访问(C99 前)拥有[临时生存期]({{< ref "/c/language/basic_concepts/lifetime#.E4.B8.B4.E6.97.B6.E7.94.9F.E5.AD.98.E6.9C.9F" >}})(C99 起)。
 
 ```v
 int a[3], b[3][4];
@@ -247,8 +247,8 @@ int main(void) { return 0; }
 
 ​	任何函数指代器表达式，在用于异于下列语境时
 
-- 作为[取址运算符](https://zh.cppreference.com/w/c/language/operator_member_access)的操作数，
-- 作为 [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 的操作数，
+- 作为[取址运算符]({{< ref "/c/language/expressions/operator_member_access" >}})的操作数，
+- 作为 [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 的操作数，
 - 作为 [`typeof`](https://zh.cppreference.com/w/c/language/typeof) 和 [`typeof_unqual`](https://zh.cppreference.com/w/c/language/typeof_unqual) 的操作数 (C23 起)，
 
 ​	会经历到指向表达式所指代函数的指针的转换。
@@ -277,7 +277,7 @@ unsigned char (*b)[] = a; // 则这些指针类型是兼容的
 
 ### 整数提升
 
-​	整数提升是任何*等级*小于或等于 `int` *等级*的整数类型，或是 `_Bool`(C23 前)`bool`(C23 起)、`int`、`signed int`、`unsigned int` 类型的[位域](https://zh.cppreference.com/w/c/language/bit_field)类型的值到 `int` 或 `unsigned int` 类型值的隐式转换。
+​	整数提升是任何*等级*小于或等于 `int` *等级*的整数类型，或是 `_Bool`(C23 前)`bool`(C23 起)、`int`、`signed int`、`unsigned int` 类型的[位域]({{< ref "/c/language/declarations/bit_field" >}})类型的值到 `int` 或 `unsigned int` 类型值的隐式转换。
 
 ​	若 `int` 能表示原类型的整个值域（或原位域的值域），则值转换成 `int` 类型。否则值转化成 `unsigned int` 类型。
 
@@ -323,7 +323,7 @@ void f(x) int x; {} // 函数期待 int
 
 ### 布尔转换 (C99 起)
 
-​	任何标量类型的值可以隐式转换成 `_Bool`(C23 前)`bool`(C23 起)。与值为零的整型常量表达式比较相等的值(C23 前)值为零（对于算术类型）、`null`（对于指针类型），或类型为 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 的值(C23 起)转换成 `0`(C23 前)`false`(C23 起)，所有其他值转换成 `1`(C23 前)`true`(C23 起)。
+​	任何标量类型的值可以隐式转换成 `_Bool`(C23 前)`bool`(C23 起)。与值为零的整型常量表达式比较相等的值(C23 前)值为零（对于算术类型）、`null`（对于指针类型），或类型为 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 的值(C23 起)转换成 `0`(C23 前)`false`(C23 起)，所有其他值转换成 `1`(C23 前)`true`(C23 起)。
 
 ```c
 bool b1 = 0.5;              // b1 == 1 （0.5 转换成 int 会是零）
@@ -486,14 +486,14 @@ double imaginary z = I * (3*I); // 复结果 -3.0+0i 失去实部
 int* p = malloc(10 * sizeof(int)); // malloc 返回 void*
 ```
 
-​	指向无限定类型的指针可以隐式转换成指向该类型有限定版本的指针（换言之，可以添上 [`const`](https://zh.cppreference.com/w/c/language/const)、[`volatile`](https://zh.cppreference.com/w/c/language/volatile)、及 [`restrict`](https://zh.cppreference.com/w/c/language/restrict) 限定符）。原指针与结果比较相等。
+​	指向无限定类型的指针可以隐式转换成指向该类型有限定版本的指针（换言之，可以添上 [`const`]({{< ref "/c/language/declarations/const" >}})、[`volatile`]({{< ref "/c/language/declarations/volatile" >}})、及 [`restrict`]({{< ref "/c/language/declarations/restrict" >}}) 限定符）。原指针与结果比较相等。
 
 ```c
 int n;
 const int* p = &n; // &n 拥有类型 int*
 ```
 
-​	任何拥有值 0 的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)也是一个拥有转换成 void* 类型的零的整数指针表达式，可以隐式转换成任意指针类型（既可以是指向对象指针，又可以是指向函数指针）。结果是该类型的空指针值，保证与任何该类型的非空指针值比较不相等。此整数或 void* 表达式又称*空指针常量*，而且标准库提供此常量作为宏 [NULL](https://zh.cppreference.com/w/c/types/NULL) 的一种定义。
+​	任何拥有值 0 的整数[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})也是一个拥有转换成 void* 类型的零的整数指针表达式，可以隐式转换成任意指针类型（既可以是指向对象指针，又可以是指向函数指针）。结果是该类型的空指针值，保证与任何该类型的非空指针值比较不相等。此整数或 void* 表达式又称*空指针常量*，而且标准库提供此常量作为宏 [NULL]({{< ref "/c/types/NULL" >}}) 的一种定义。
 
 ```c
 int* p = 0;
@@ -510,7 +510,7 @@ double* q = NULL;
 unsigned int n = -1.0; // 未定义行为
 ```
 
-​	指针和整数间（除了从指针到 `_Bool`(C23 前)`bool`(C23 起) 和从拥有零值的整数常量表达式到指针）、指向对象指针间（除了从或到指向 `void` 的指针）以及指向函数指针间（除非函数拥有兼容类型）的转换始终非隐式，并要求有[转换运算符](https://zh.cppreference.com/w/c/language/cast)。
+​	指针和整数间（除了从指针到 `_Bool`(C23 前)`bool`(C23 起) 和从拥有零值的整数常量表达式到指针）、指向对象指针间（除了从或到指向 `void` 的指针）以及指向函数指针间（除非函数拥有兼容类型）的转换始终非隐式，并要求有[转换运算符]({{< ref "/c/language/expressions/cast" >}})。
 
 ​	不存在（隐式或显式的）指向函数指针与指向对象指针（包括 `void*`）或整数间的转换。
 

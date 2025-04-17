@@ -27,7 +27,7 @@ draft = false
 
 ​	其中
 
-| *表达式* | -    | 任何[标量类型](https://zh.cppreference.com/w/c/language/type#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB)的表达式 |
+| *表达式* | -    | 任何[标量类型]({{< ref "/c/language/basic_concepts/type#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB" >}})的表达式 |
 | -------- | ---- | ------------------------------------------------------------ |
 
 ​	逻辑非运算符拥有 `int` 类型。若 *expression* 求值为不等于零的整数则其值为 0。若 *expression* 求值为等于零的整数则其值为 1。（故 `!E` 与 (`0==E`) 相同）
@@ -70,7 +70,7 @@ non-space
 
 ​	逻辑与运算符拥有 int 类型，若 *lhs* 与 *rhs* 都比较不等于零则值为 1。否则值为 0（若 *lhs* 或 *rhs* 之一或两者比较等于零）。
 
-​	在 *lhs* 的求值后有[序列点](https://zh.cppreference.com/w/c/language/eval_order)。若 *lhs* 的结果比较等于零，则完全不求值 *rhs*（是谓*短路求值*）。
+​	在 *lhs* 的求值后有[序列点]({{< ref "/c/language/expressions/eval_order" >}})。若 *lhs* 的结果比较等于零，则完全不求值 *rhs*（是谓*短路求值*）。
 
 ```c
 #include <stdbool.h>
@@ -103,7 +103,7 @@ int main(void)
 
 ​	逻辑或运算符拥有 int 类型，而若 *lhs* 或 *rhs* 比较不等于零则值为 1。否则其值为 0（若 *lhs* 与 *rhs* 都比较等于零）。
 
-​	在 *lhs* 的求值后有[序列点](https://zh.cppreference.com/w/c/language/eval_order)。若 *lhs* 的结果比较不等于零，则完全不求值 *rhs*（是谓*短路求值*）。
+​	在 *lhs* 的求值后有[序列点]({{< ref "/c/language/expressions/eval_order" >}})。若 *lhs* 的结果比较不等于零，则完全不求值 *rhs*（是谓*短路求值*）。
 
 ```c
 #include <stdbool.h>

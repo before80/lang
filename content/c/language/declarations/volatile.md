@@ -11,9 +11,9 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/volatile](https://zh.cppreference.com/w/c/language/volatile)
 
-​	C [类型系统](https://zh.cppreference.com/w/c/language/type)中每一个独立的类型都有数个该类型的*限定* ﻿版本，对应 [`const`](https://zh.cppreference.com/w/c/language/const)、`volatile` 及对于指向对象指针的 [`restrict`](https://zh.cppreference.com/w/c/language/restrict) 限定符中的一个、两个或全部三个。此页面描述 `volatile` 限定符的效果。
+​	C [类型系统]({{< ref "/c/language/basic_concepts/type" >}})中每一个独立的类型都有数个该类型的*限定* ﻿版本，对应 [`const`]({{< ref "/c/language/declarations/const" >}})、`volatile` 及对于指向对象指针的 [`restrict`]({{< ref "/c/language/declarations/restrict" >}}) 限定符中的一个、两个或全部三个。此页面描述 `volatile` 限定符的效果。
 
-​	每一个通过对 volatile 限定类型左值表达式的访问（读与写），对于优化意图都认作可观察副效应，从而严格按照抽象机器的规则求值（即所有写入会在下一个定序点之前的某时完成）。这表明在单个执行线程内，volatile 访问不能被优化掉，亦不能与另一个被[定序点](https://zh.cppreference.com/w/c/language/eval_order)分隔了 volatile 访问的可观察副效应之间进行重排。
+​	每一个通过对 volatile 限定类型左值表达式的访问（读与写），对于优化意图都认作可观察副效应，从而严格按照抽象机器的规则求值（即所有写入会在下一个定序点之前的某时完成）。这表明在单个执行线程内，volatile 访问不能被优化掉，亦不能与另一个被[定序点]({{< ref "/c/language/expressions/eval_order" >}})分隔了 volatile 访问的可观察副效应之间进行重排。
 
 ​	从非 volatile 值到 volatile 值的转换没有效果。欲使用 volatile 语义访问非 volatile 对象，必须先将其地址转换成指向 volatile 类型的指针，再通过该指针访问该对象。
 
@@ -34,7 +34,7 @@ volatile struct s vs;
 // vs.i 和 vs.ci 的类型各是 volatile int 和 const volatile int
 ```
 
-​	若以 volatile 类型限定符声明数组类型（通过使用 [`typedef`](https://zh.cppreference.com/w/c/language/typedef)），则数组类型无 volatile 限定，但其元素类型有。(C23 前)
+​	若以 volatile 类型限定符声明数组类型（通过使用 [`typedef`]({{< ref "/c/language/declarations/typedef" >}})），则数组类型无 volatile 限定，但其元素类型有。(C23 前)
 
 ​	始终认为数组类型与其元素类型同等地拥有 volatile 限定。(C23 起)
 
@@ -47,7 +47,7 @@ void *unqual_ptr = a; // C23 前 OK；C23 起错误
 // 注：clang 即使在 C89-C17 模式也应用 C++/C23 中的规则
 ```
 
-​	若函数类型声明具有 volatile 类型限定（通过使用 [`typedef`](https://zh.cppreference.com/w/c/language/typedef)），则行为未定义。
+​	若函数类型声明具有 volatile 类型限定（通过使用 [`typedef`]({{< ref "/c/language/declarations/typedef" >}})），则行为未定义。
 
 ​	在函数声明中，关键词 `volatile` 可以出现于用以声明数组类型的函数形参的方括号内。它对数组所转换得的指针类型赋予限定。下列两个声明声明同一函数：(C99 起)
 
@@ -80,7 +80,7 @@ p = (int*)vp; // OK：类型转换
 
 ## `volatile` 的用法
 
-1) [`static`](https://zh.cppreference.com/w/c/language/storage_duration) `volatile` 对象模仿映射于内存的 I/O 端口，而 `static` `const` `volatile` 对象模仿映射于内存的输入端口，例如实时时钟：
+1) [`static`]({{< ref "/c/language/declarations/storage_duration" >}}) `volatile` 对象模仿映射于内存的 I/O 端口，而 `static` `const` `volatile` 对象模仿映射于内存的输入端口，例如实时时钟：
 
 ```c
 volatile short *ttyport = (volatile short*)TTYPORT_ADDR;
@@ -98,7 +98,7 @@ for(int i = 0; i < N; ++i)
 
 ## 关键词
 
-[`volatile`](https://zh.cppreference.com/w/c/keyword/volatile)
+[`volatile`]({{< ref "/c/language/keyword/volatile" >}})
 
 ## 示例
 

@@ -13,7 +13,7 @@ draft = false
 
 ​	浮点数环境是浮点数状态标志及实现所支持的控制模式的集合。它是线程局域的，每个线程从亲线程继承其浮点数环境的初始状态。浮点数运算会修改指示反常值或补助信息的浮点数状态标志。浮点数控制模式影响浮点运算的结果。
 
-​	仅当设置 [`<#pragma STDC FENV_ACCES>`](https://zh.cppreference.com/w/cpp/preprocessor/impl) 为 `ON` 时，浮点数环境的访问及修改才有意义。否则具体实现可以自由地假设浮点数控制模式始终是默认值，而且浮点数状态标志始终不被检测或修改。实际上，当前只有少数编译器，如 HP aCC、 Oracle Studio 和 IBM XL 明确支持此 `#pragma`，但总之多数编译器允许有意义地访问浮点数环境。
+​	仅当设置 [`<#pragma STDC FENV_ACCES>`]({{< ref "/c/language/preprocessor/impl" >}}) 为 `ON` 时，浮点数环境的访问及修改才有意义。否则具体实现可以自由地假设浮点数控制模式始终是默认值，而且浮点数状态标志始终不被检测或修改。实际上，当前只有少数编译器，如 HP aCC、 Oracle Studio 和 IBM XL 明确支持此 `#pragma`，但总之多数编译器允许有意义地访问浮点数环境。
 
 ## 类型
 

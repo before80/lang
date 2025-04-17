@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/stdlib](https://zh.cppreference.com/w/c/header/stdlib)
 
-​	此标头是[程序支持工具](https://zh.cppreference.com/w/c/program)库的一部分，特别是，它提供用于程序终止、[内存管理](https://zh.cppreference.com/w/c/memory)、[字符串转换](https://zh.cppreference.com/w/c/string)、[随机数](https://zh.cppreference.com/w/c/numeric/random)生成的函数。此标头还提供了一些[算法](https://zh.cppreference.com/w/c/algorithm)。
+​	此标头是[程序支持工具](https://zh.cppreference.com/w/c/program)库的一部分，特别是，它提供用于程序终止、[内存管理]({{< ref "/c/memory" >}})、[字符串转换]({{< ref "/c/string" >}})、[随机数](https://zh.cppreference.com/w/c/numeric/random)生成的函数。此标头还提供了一些[算法]({{< ref "/c/algorithm" >}})。
 
 ## 函数
 

@@ -27,7 +27,7 @@ draft = false
 
 ## 注解
 
-​	无关乎 FLT_EVAL_METHOD 的值，任何浮点表达式都可以被*缩短*，即如同所有中间结果拥有无限范围和精度一般进行（除非关闭 [`#pragma`](https://zh.cppreference.com/w/cpp/preprocessor/impl) `STDC FP_CONTRACT`）。
+​	无关乎 FLT_EVAL_METHOD 的值，任何浮点表达式都可以被*缩短*，即如同所有中间结果拥有无限范围和精度一般进行（除非关闭 [`#pragma`]({{< ref "/c/language/preprocessor/impl" >}}) `STDC FP_CONTRACT`）。
 
 ​	转型和复制会剥除任何额外的范围和精度：这模拟从扩展精度 `FPU` 寄存器存储值到标准大小内存位置的动作。
 

@@ -11,11 +11,11 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/lifetime](https://zh.cppreference.com/w/c/language/lifetime)
 
-​	C 中每个[对象](https://zh.cppreference.com/w/c/language/object)存在、拥有常地址、保有其最近一次存储值（除非其值不确定），对于 VLA 还有保有其大小(C99 起)的程序执行部分，被称作该对象的*生存期*。
+​	C 中每个[对象]({{< ref "/c/language/basic_concepts/object" >}})存在、拥有常地址、保有其最近一次存储值（除非其值不确定），对于 VLA 还有保有其大小(C99 起)的程序执行部分，被称作该对象的*生存期*。
 
-​	对于声明有自动、静态及线程存储期的对象，生存期等于其[存储期](https://zh.cppreference.com/w/c/language/storage_duration)（注意非 VLA 和 VLA 自动存储期的区别）。
+​	对于声明有自动、静态及线程存储期的对象，生存期等于其[存储期]({{< ref "/c/language/declarations/storage_duration" >}})（注意非 VLA 和 VLA 自动存储期的区别）。
 
-​	对于拥有分配存储期的对象，其生存期始于分配函数的返回（包含从 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 返回），终于 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 或解分配函数的调用。注意因为分配的对象没有[声明类型](https://zh.cppreference.com/w/c/language/object)，首次访问该对象所用的左值表达式类型会成为其[有效类型](https://zh.cppreference.com/w/c/language/object)。
+​	对于拥有分配存储期的对象，其生存期始于分配函数的返回（包含从 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 返回），终于 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 或解分配函数的调用。注意因为分配的对象没有[声明类型]({{< ref "/c/language/basic_concepts/object" >}})，首次访问该对象所用的左值表达式类型会成为其[有效类型]({{< ref "/c/language/basic_concepts/object" >}})。
 
 ​	在生存期外访问对象是未定义行为。
 
@@ -34,7 +34,7 @@ int main(void) {
 
 ## 临时生存期
 
-​	[非左值表达式](https://zh.cppreference.com/w/c/language/value_category)所指代的拥有数组成员的结构体和联合体对象（直接为其成员或为嵌套的结构体/联合体成员）拥有*临时生存期*。临时生存期始于求值指代该对象的表达式，终于下一个[序列点](https://zh.cppreference.com/w/c/language/eval_order)(C11 前)包含它的完整表达式或完整声明器结束(C11 起)。
+​	[非左值表达式]({{< ref "/c/language/expressions/value_category" >}})所指代的拥有数组成员的结构体和联合体对象（直接为其成员或为嵌套的结构体/联合体成员）拥有*临时生存期*。临时生存期始于求值指代该对象的表达式，终于下一个[序列点]({{< ref "/c/language/expressions/eval_order" >}})(C11 前)包含它的完整表达式或完整声明器结束(C11 起)。
 
 ​	任何修改临时生存期对象的尝试会导致未定义行为。
 

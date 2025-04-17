@@ -20,7 +20,7 @@ draft = false
 
 ## 解释
 
-​	仅可用于[属性声明](https://zh.cppreference.com/w/c/language/declarations)以创建*直落声明*（`[[fallthrough]];`）。
+​	仅可用于[属性声明]({{< ref "/c/language/declarations" >}})以创建*直落声明*（`[[fallthrough]];`）。
 
 ​	直落声明仅可用于 [`switch`](https://zh.cppreference.com/w/cpp/language/switch) 语句中，其中要遇到的下个块项（语句、声明或标号）是该 `switch` 语句的带 `case` 或 `default` 标号的语句。
 

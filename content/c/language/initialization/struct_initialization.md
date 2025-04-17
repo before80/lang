@@ -11,20 +11,20 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/struct_initialization](https://zh.cppreference.com/w/c/language/struct_initialization)
 
-​	[初始化](https://zh.cppreference.com/w/c/language/initialization)[结构体](https://zh.cppreference.com/w/c/language/struct)或[联合体](https://zh.cppreference.com/w/c/language/union)类型的对象时，初始化式必须是成员初始化式的非空、(C23 前)花括号环绕、逗号分隔的列表：
+​	[初始化]({{< ref "/c/language/initialization" >}})[结构体]({{< ref "/c/language/declarations/struct" >}})或[联合体]({{< ref "/c/language/declarations/union" >}})类型的对象时，初始化式必须是成员初始化式的非空、(C23 前)花括号环绕、逗号分隔的列表：
 
 | `=` `{` *表达式* `,` `...` `}`                | (1)  | (C99 前) |
 | --------------------------------------------- | ---- | -------- |
 | `=` `{` *指派符*(可选) *表达式* `,` `...` `}` | (2)  | (C99 起) |
 | `=` `{` `}`                                   | (3)  | (C23 起) |
 
-​	其中 *指派符* 是一序列（空白符分隔或相邻的）`.` *成员* 形式的单独成员指派符，和 `[` *索引* `]` 形式的[数组指派符](https://zh.cppreference.com/w/c/language/array_initialization)。
+​	其中 *指派符* 是一序列（空白符分隔或相邻的）`.` *成员* 形式的单独成员指派符，和 `[` *索引* `]` 形式的[数组指派符]({{< ref "/c/language/initialization/array_initialization" >}})。
 
-​	[隐式地初始化](https://zh.cppreference.com/w/c/language/initialization#.E9.9A.90.E5.BC.8F.E5.88.9D.E5.A7.8B.E5.8C.96)所有未显式初始化的成员均被[零初始化](https://zh.cppreference.com/w/c/language/initialization#.E9.9B.B6.E5.88.9D.E5.A7.8B.E5.8C.96)。
+​	[隐式地初始化]({{< ref "/c/language/initialization#.E9.9A.90.E5.BC.8F.E5.88.9D.E5.A7.8B.E5.8C.96" >}})所有未显式初始化的成员均被[零初始化]({{< ref "/c/language/initialization#.E9.9B.B6.E5.88.9D.E5.A7.8B.E5.8C.96" >}})。
 
 ## 解释
 
-​	初始化[联合体](https://zh.cppreference.com/w/c/language/union)时，初始化式列表必须只有一个成员，它初始化联合体的首个成员，除非使用指派初始化式(C99 起)。
+​	初始化[联合体]({{< ref "/c/language/declarations/union" >}})时，初始化式列表必须只有一个成员，它初始化联合体的首个成员，除非使用指派初始化式(C99 起)。
 
 ```c
 union { int x; char c[4]; }
@@ -32,7 +32,7 @@ union { int x; char c[4]; }
  u2 = { .c={'\1'} }; // 令 u2.c 活跃，拥有值 {'\1','\0','\0','\0'}
 ```
 
-​	初始化[结构体](https://zh.cppreference.com/w/c/language/struct)时，列表中的首个初始化式初始化首个被声明成员（除非指定了指派符）(C99 起)，而所有后继的无指派符(C99 起)初始化式，初始化先前表达式所初始化者之后的结构体成员。
+​	初始化[结构体]({{< ref "/c/language/declarations/struct" >}})时，列表中的首个初始化式初始化首个被声明成员（除非指定了指派符）(C99 起)，而所有后继的无指派符(C99 起)初始化式，初始化先前表达式所初始化者之后的结构体成员。
 
 ```c
 struct point {double x,y,z;} p = {1.2, 1.3}; // p.x=1.2, p.y=1.3, p.z=0.0
@@ -52,7 +52,7 @@ struct {int sec,min,hour,day,mon,year;} z
 
 ​	若结构体或联合体的成员是数组、结构体或联合体，则初始化式的花括号环绕列表中的对应初始化式，是对这些成员合法的任何初始化式，除了可以以下列方式省略其括号：
 
-​	若嵌套初始化式以左花括号开始，则直到其右花括号为止的整个嵌套初始化式，初始化对应的成员对象。每个左开花括号建立一个新的*当前对象*。当前对象的成员以其自然顺序初始化，除非使用指派符(C99 起)：数组以下标顺序、结构体成员以声明顺序、仅初始化任何联合体的首个被声明成员。[空初始化](https://zh.cppreference.com/w/c/language/initialization#.E7.A9.BA.E5.88.9D.E5.A7.8B.E5.8C.96)当前对象内未由闭花括号显式初始化的子对象。
+​	若嵌套初始化式以左花括号开始，则直到其右花括号为止的整个嵌套初始化式，初始化对应的成员对象。每个左开花括号建立一个新的*当前对象*。当前对象的成员以其自然顺序初始化，除非使用指派符(C99 起)：数组以下标顺序、结构体成员以声明顺序、仅初始化任何联合体的首个被声明成员。[空初始化]({{< ref "/c/language/initialization#.E7.A9.BA.E5.88.9D.E5.A7.8B.E5.8C.96" >}})当前对象内未由闭花括号显式初始化的子对象。
 
 ```c
 struct example {
@@ -161,7 +161,7 @@ struct {double x,y;} p = {1.0,
                           };
 ```
 
-​	C 中，初始化器的花括号列表不能为空（注意 C++ 允许空列表，并且注意 C 中[结构体](https://zh.cppreference.com/w/c/language/struct)不能为空）：(C23 前)
+​	C 中，初始化器的花括号列表不能为空（注意 C++ 允许空列表，并且注意 C 中[结构体]({{< ref "/c/language/declarations/struct" >}})不能为空）：(C23 前)
 
 ​	与 C++ 相同，C 中初始化式列表可为空：(C23 起)
 
@@ -172,15 +172,15 @@ struct {int n;} s = {}; // C23 前错误：初始化式列表不能为空
 struct {} s = {}; // 错误：结构体不能为空
 ```
 
-​	在初始化任何存储期的聚合体时，初始化式列表中的每个表达式必须都是[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)。(C99 前)
+​	在初始化任何存储期的聚合体时，初始化式列表中的每个表达式必须都是[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})。(C99 前)
 
-​	同所有其他初始化，在初始化静态或线程局域(C11 起)[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的聚合体时，初始化式列表中的每个表达式必须为[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)：(C99 起)
+​	同所有其他初始化，在初始化静态或线程局域(C11 起)[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的聚合体时，初始化式列表中的每个表达式必须为[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})：(C99 起)
 
 ```
 static struct {char* p} s = {malloc(1)}; // 错误
 ```
 
-​	任何初始化式中的子表达式[求值顺序](https://zh.cppreference.com/w/c/language/eval_order)为非确定顺序（但 C++11 起的 C++ 中不同）：(C99 起)
+​	任何初始化式中的子表达式[求值顺序]({{< ref "/c/language/expressions/eval_order" >}})为非确定顺序（但 C++11 起的 C++ 中不同）：(C99 起)
 
 ```c
 int n = 1;

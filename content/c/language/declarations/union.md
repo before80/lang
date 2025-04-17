@@ -13,7 +13,7 @@ draft = false
 
 ​	联合体是由一序列的成员所组成的类型，各成员的存储重叠（与结构体相反，结构体是由一序列的成员所构成的类型，成员的存储以顺序分配）。在任一时刻，最多能在联合体中存储其一个成员的值。
 
-​	联合体的[类型说明符](https://zh.cppreference.com/w/c/language/declarations)与 [`struct`](https://zh.cppreference.com/w/c/language/struct) 类型说明符相同，只是所用的关键词有别。
+​	联合体的[类型说明符]({{< ref "/c/language/declarations" >}})与 [`struct`]({{< ref "/c/language/declarations/struct" >}}) 类型说明符相同，只是所用的关键词有别。
 
 ## 语法
 
@@ -23,8 +23,8 @@ draft = false
 
 | *名字*           | -    | 所定义的联合体的名称                                         |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *结构体声明列表* | -    | 任意数量的变量声明、[位域](https://zh.cppreference.com/w/c/language/bit_field)声明和[静态断言](https://zh.cppreference.com/w/c/language/_Static_assert)声明。不允许不完整类型的成员和函数类型的成员。 |
-| *属性声明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到联合体类型，若这种形式不后随 `;`（即不是前置声明）则对于 (2) 不允许。 |
+| *结构体声明列表* | -    | 任意数量的变量声明、[位域]({{< ref "/c/language/declarations/bit_field" >}})声明和[静态断言]({{< ref "/c/language/declarations/_Static_assert" >}})声明。不允许不完整类型的成员和函数类型的成员。 |
+| *属性声明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到联合体类型，若这种形式不后随 `;`（即不是前置声明）则对于 (2) 不允许。 |
 
 ## 解释
 
@@ -55,11 +55,11 @@ v1.w.k = 5; // 合法
 
 ## 关键词
 
-[`union`](https://zh.cppreference.com/w/c/keyword/union)
+[`union`]({{< ref "/c/language/keyword/union" >}})
 
 ## 注解
 
-​	关于结构体和联合体初始化的规则，见[结构体初始化](https://zh.cppreference.com/w/c/language/struct_initialization)。
+​	关于结构体和联合体初始化的规则，见[结构体初始化]({{< ref "/c/language/initialization/struct_initialization" >}})。
 
 ## 示例
 

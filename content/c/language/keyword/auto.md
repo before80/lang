@@ -13,5 +13,5 @@ draft = false
 
 ## 用法
 
-- 无链接的[自动存储期类限定符](https://zh.cppreference.com/w/c/language/storage_duration)。
+- 无链接的[自动存储期类限定符]({{< ref "/c/language/declarations/storage_duration" >}})。
 - 类型推断 (C23 起)

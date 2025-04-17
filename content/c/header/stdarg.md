@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/stdarg](https://zh.cppreference.com/w/c/header/stdarg)
 
-​	此标头提供对[变参数](https://zh.cppreference.com/w/c/variadic)函数的支持。
+​	此标头提供对[变参数]({{< ref "/c/variadic" >}})函数的支持。
 
 ## 类型
 

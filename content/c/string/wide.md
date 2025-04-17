@@ -74,7 +74,7 @@ draft = false
 | [wcstoul (C95)<br />wcstoull (C95)<br />](https://zh.cppreference.com/w/c/string/wide/wcstoul) | 转换宽字符串为无符号整数 (函数)                              |
 | [wcstof (C99)<br />wcstod (C99)<br />wcstold (C95)<br />](https://zh.cppreference.com/w/c/string/wide/wcstof) | 转换宽字符串为浮点数 (函数)                                  |
 | 在标头 `<inttypes.h>` 定义                                 |                                                              |
-| [wcstoimax (C99)<br />wcstoumax (C99)<br />](https://zh.cppreference.com/w/c/string/wide/wcstoimax) | 转换宽字符串为 [intmax_t](https://zh.cppreference.com/w/c/types/integer) 或 [uintmax_t](https://zh.cppreference.com/w/c/types/integer) (函数) |
+| [wcstoimax (C99)<br />wcstoumax (C99)<br />](https://zh.cppreference.com/w/c/string/wide/wcstoimax) | 转换宽字符串为 [intmax_t]({{< ref "/c/types/integer" >}}) 或 [uintmax_t]({{< ref "/c/types/integer" >}}) (函数) |
 
 ### 字符串操作
 

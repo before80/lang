@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [复合类型的声明](https://zh.cppreference.com/w/c/language/struct)
+- [复合类型的声明]({{< ref "/c/language/declarations/struct" >}})

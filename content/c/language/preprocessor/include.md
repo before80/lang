@@ -35,7 +35,7 @@ draft = false
 | *q-字符序列*       | -    | 一个或更多 *q-字符* 的序列，出现以下任何字符导致未定义行为：<br />字符 `'`<br />字符 `"`<br />字符 `\` <br />字符序列 `//`<br />字符序列 `/*` |
 | *q-字符*           | -    | [源字符集](https://zh.cppreference.com/w/c/language/translation_phases#.E9.98.B6.E6.AE.B5_5)中除了换行和 `"` 的任意成员 |
 | *预处理记号序列*   | -    | 一个或更多[预处理记号](https://zh.cppreference.com/w/c/language/translation_phases#.E9.98.B6.E6.AE.B5_3)的序列 |
-| *字符串字面量*     | -    | [字符串字面量](https://zh.cppreference.com/w/c/language/string_literal) |
+| *字符串字面量*     | -    | [字符串字面量]({{< ref "/c/language/expressions/string_literal" >}}) |
 | *h-预处理记号序列* | -    | 一个或更多除了 > 外的[预处理记号](https://zh.cppreference.com/w/c/language/translation_phases#.E9.98.B6.E6.AE.B5_3)的序列 |
 
 ## 解释
@@ -48,7 +48,7 @@ draft = false
 
 ​	在找不到文件的情况下，程序为病式。
 
-可以在 [`#if`](https://zh.cppreference.com/w/c/preprocessor/conditional) 和 [`#elif`](https://zh.cppreference.com/w/c/preprocessor/conditional) 的表达式中展开 `__has_include`。它被 [`#ifdef`](https://zh.cppreference.com/w/c/preprocessor/conditional)、[` #ifndef`](https://zh.cppreference.com/w/c/preprocessor/conditional)、[` #elifdef`](https://zh.cppreference.com/w/c/preprocessor/conditional)、[` #elifndef`](https://zh.cppreference.com/w/c/preprocessor/conditional) 和 [`defined`](https://zh.cppreference.com/w/c/preprocessor/conditional) 当做已定义的宏，但不能用在别处。(C23 起)
+可以在 [`#if`]({{< ref "/c/language/preprocessor/conditional" >}}) 和 [`#elif`]({{< ref "/c/language/preprocessor/conditional" >}}) 的表达式中展开 `__has_include`。它被 [`#ifdef`]({{< ref "/c/language/preprocessor/conditional" >}})、[` #ifndef`]({{< ref "/c/language/preprocessor/conditional" >}})、[` #elifdef`]({{< ref "/c/language/preprocessor/conditional" >}})、[` #elifndef`]({{< ref "/c/language/preprocessor/conditional" >}}) 和 [`defined`]({{< ref "/c/language/preprocessor/conditional" >}}) 当做已定义的宏，但不能用在别处。(C23 起)
 
 ## 注解
 
@@ -77,6 +77,6 @@ draft = false
 
 ## 参阅
 
-| [c/header](https://zh.cppreference.com/w/c/header) C 标准库头文件列表 |
+| [c/header]({{< ref "/c/header" >}}) C 标准库头文件列表 |
 | ------------------------------------------------------------ |
 | 源文件包含的 [C++ 文档](https://zh.cppreference.com/w/cpp/preprocessor/include) |

@@ -13,7 +13,7 @@ draft = false
 
 ​	变参函数是能以不同数目实参调用的函数。
 
-​	只有有原型[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)可以有变长参数。它通过 `...` 形式的形参所指定，它必须出现在形参列表最后，并且跟随至少一个具名形参之后(C23 前)。省略号形参与前驱的形参必须由 `,` 分隔。
+​	只有有原型[函数声明]({{< ref "/c/language/functions/function_declaration" >}})可以有变长参数。它通过 `...` 形式的形参所指定，它必须出现在形参列表最后，并且跟随至少一个具名形参之后(C23 前)。省略号形参与前驱的形参必须由 `,` 分隔。
 
 ```c
 // 有原型声明
@@ -28,9 +28,9 @@ int printz(...); // C23 起与 C++ 中 OK
 // int printa(const char* fmt...);   // C 中错误：要求 ',' ；C++ 中 OK
 ```
 
-​	在[函数调用](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)中，每个属于变长实参列表一部分的实参会经历名为[默认实参提升](https://zh.cppreference.com/w/c/language/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87)的隐式转换。
+​	在[函数调用]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})中，每个属于变长实参列表一部分的实参会经历名为[默认实参提升]({{< ref "/c/language/expressions/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87" >}})的隐式转换。
 
-​	在函数体内使用变长实参时，这些实参的值必须用 [`<stdarg.h>` 库设施](https://zh.cppreference.com/w/c/variadic)访问：
+​	在函数体内使用变长实参时，这些实参的值必须用 [`<stdarg.h>` 库设施]({{< ref "/c/variadic" >}})访问：
 
 | 在标头 `<stdarg.h>` 定义                                     |                                                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -42,7 +42,7 @@ int printz(...); // C23 起与 C++ 中 OK
 
 ## 注解
 
-​	虽然旧式（无原型）[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)允许后继的函数调用使用任意参数，但不允许它们为变长参数（C89 起）。这种函数的定义必须指定固定数目的参数，并且不能使用 `stdarg.h` 中的宏。
+​	虽然旧式（无原型）[函数声明]({{< ref "/c/language/functions/function_declaration" >}})允许后继的函数调用使用任意参数，但不允许它们为变长参数（C89 起）。这种函数的定义必须指定固定数目的参数，并且不能使用 `stdarg.h` 中的宏。
 
 ```c
 // 旧式声明，C23 中移除

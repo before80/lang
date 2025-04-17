@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`const` 类型限定符](https://zh.cppreference.com/w/c/language/const)
+- [`const` 类型限定符]({{< ref "/c/language/declarations/const" >}})

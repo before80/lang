@@ -99,8 +99,8 @@ showlist(1, "x", int); // 展开成 puts("1, \"x\", int")
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | `__STDC_VERSION__`(C95)                                      | 展开成 `long` 类型的整数常量，其值随着 C 标准的每个版本递增：`199409L` (C95) <br />`199901L` (C99)<br />`201112L` (C11)<br />`201710L` (C17)<br />`202311L` (C23) (宏常量) |
 | `__STDC_HOSTED__`(C99)                                       | 若实现有宿主（在操作系统下运行），则展开成整数常量 1，若为自立的（不在操作系统中运行）则展开成 0 (宏常量) |
-| `__FILE__`                                                   | 展开成当前文件名，为字符串字面量，可用 [`#line`](https://zh.cppreference.com/w/c/preprocessor/line) 指令更改 (宏常量) |
-| `__LINE__`                                                   | 展开成源文件行号，为整数常量，可用 [`#line`](https://zh.cppreference.com/w/c/preprocessor/line) 指令更改 (宏常量) |
+| `__FILE__`                                                   | 展开成当前文件名，为字符串字面量，可用 [`#line`]({{< ref "/c/language/preprocessor/line" >}}) 指令更改 (宏常量) |
+| `__LINE__`                                                   | 展开成源文件行号，为整数常量，可用 [`#line`]({{< ref "/c/language/preprocessor/line" >}}) 指令更改 (宏常量) |
 | `__DATE__`                                                   | 展开成翻译的日期，格式为 "Mmm dd yyyy" 的字符串字面量。月份名如同以 [asctime](https://zh.cppreference.com/w/c/chrono/asctime) 生成，而若月之日期小于 `10` 则 "dd" 的首字符为空格 (宏常量) |
 | `__TIME__`                                                   | 展开成翻译的时间，格式为 "hh:mm:ss" 的字符串字面量，如同 [asctime](http://zh.cppreference.com/w/c/chrono/asctime)() 所生成 (宏常量) |
 | `__STDC_UTF_16__`(C23)                                       | 扩展为 1 以指出 `char16_t` 使用 UTF-16 编码 (宏常量)         |
@@ -116,12 +116,12 @@ showlist(1, "x", int); // 展开成 puts("1, \"x\", int")
 | `__STDC_UTF_16__`(C11)            | 若 `char16_t` 使用 UTF-16 则展开成 1 (宏常量)                |
 | `__STDC_UTF_32__`(C11)            | 若 `char32_t` 使用 UTF-32 则展开成 `1` (宏常量)              |
 | `__STDC_MB_MIGHT_NEQ_WC__`(C99)   | 若 `'x' == L'x'` 可能对基础字符集的成员为 false 则展开成 `1`，例如在基于 EBCDIC 的，`wchar_t` 使用 Unicode 的系统上 (宏常量) |
-| `__STDC_ANALYZABLE__`(C11)        | 若支持[可分析性](https://zh.cppreference.com/w/c/language/analyzability)则展开成 1 (宏常量) |
+| `__STDC_ANALYZABLE__`(C11)        | 若支持[可分析性]({{< ref "/c/language/misc/analyzability" >}})则展开成 1 (宏常量) |
 | `__STDC_LIB_EXT1__`(C11)          | 若支持[边界检查接口](https://zh.cppreference.com/w/c/error)则展开成整数常量 `201112L` (宏常量) |
-| `__STDC_NO_ATOMICS__`(C11)        | 若不支持[原子](https://zh.cppreference.com/w/c/language/atomic)类型和[原子操作库](https://zh.cppreference.com/w/c/thread#.E5.8E.9F.E5.AD.90.E6.93.8D.E4.BD.9C)则展开成 `1` (宏常量) |
-| `__STDC_NO_COMPLEX__`(C11)        | 若不支持[复数类型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E5.A4.8D.E6.B5.AE.E7.82.B9.E6.95.B0.E7.B1.BB.E5.9E.8B)和[复数运算库](https://zh.cppreference.com/w/c/numeric/complex)则展开成 `1` (宏常量) |
+| `__STDC_NO_ATOMICS__`(C11)        | 若不支持[原子]({{< ref "/c/language/declarations/atomic" >}})类型和[原子操作库](https://zh.cppreference.com/w/c/thread#.E5.8E.9F.E5.AD.90.E6.93.8D.E4.BD.9C)则展开成 `1` (宏常量) |
+| `__STDC_NO_COMPLEX__`(C11)        | 若不支持[复数类型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E5.A4.8D.E6.B5.AE.E7.82.B9.E6.95.B0.E7.B1.BB.E5.9E.8B" >}})和[复数运算库](https://zh.cppreference.com/w/c/numeric/complex)则展开成 `1` (宏常量) |
 | `__STDC_NO_THREADS__`(C11)        | 若不支持[多线程](https://zh.cppreference.com/w/c/thread)则展开成 `1` (宏常量) |
-| `__STDC_NO_VLA__`(C11)            | 若不支持自动存储期的(C23 起)[非常量长度数组](https://zh.cppreference.com/w/c/language/array#.E9.9D.9E.E5.B8.B8.E9.87.8F.E9.95.BF.E5.BA.A6.E6.95.B0.E7.BB.84)及可变修改类型(C23 前)则展开成 1 (宏常量) |
+| `__STDC_NO_VLA__`(C11)            | 若不支持自动存储期的(C23 起)[非常量长度数组]({{< ref "/c/language/declarations/array#.E9.9D.9E.E5.B8.B8.E9.87.8F.E9.95.BF.E5.BA.A6.E6.95.B0.E7.BB.84" >}})及可变修改类型(C23 前)则展开成 1 (宏常量) |
 | `__STDC_IEC_60559_BFP__`(C23)     | 若支持 IEC 60559 二进制浮点数算术则展开成 `202311L` (宏常量) |
 | `__STDC_IEC_60559_DFP__`(C23)     | 若支持 IEC 60559 十进制浮点数算术则展开成 `202311L` (宏常量) |
 | `__STDC_IEC_60559_COMPLEX__`(C23) | 若支持 IEC 60559 复数算术则展开成 `202311L` (宏常量)         |
@@ -129,7 +129,7 @@ showlist(1, "x", int); // 展开成 puts("1, \"x\", int")
 
 ​	这些宏的值（除了 `__FILE__` 和 `__LINE__`）在整个翻译单元中保持常量。尝试重定义或解除定义这些宏导致未定义行为。
 
-​	预定义变量 __func__（细节见[函数定义](https://zh.cppreference.com/w/c/language/function_definition#func)）不是预处理器宏，尽管有时与 `__FILE__` 及 `__LINE__` 一同使用它，例如通过 [assert](https://zh.cppreference.com/w/c/error/assert)。(C99 起)
+​	预定义变量 __func__（细节见[函数定义]({{< ref "/c/language/functions/function_definition#func" >}})）不是预处理器宏，尽管有时与 `__FILE__` 及 `__LINE__` 一同使用它，例如通过 [assert](https://zh.cppreference.com/w/c/error/assert)。(C99 起)
 
 ## 示例
 

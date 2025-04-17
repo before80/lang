@@ -46,7 +46,7 @@ draft = false
 
 ​	若 *lhs* 和 *rhs* 是任何[实数类型](https://zh.cppreference.com/w/c/language/types)的表达式，则
 
-- 进行[一般算术转换](https://zh.cppreference.com/w/c/language/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2)
+- 进行[一般算术转换]({{< ref "/c/language/expressions/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2" >}})
 - 以通常数学意义比较操作数转换后的值（但正零与负零比较相等，且任何涉及 NaN 的比较均返回零）
 
 > 注意
@@ -59,7 +59,7 @@ draft = false
 - 若两个指针指向同一对象，或都指向同一数组的尾后一位置，则它们比较相等
 - 若两个指针指向同一数组的不同元素，则指向有较大下标的元素的指针比较大。
 - 若一个指针指向数组元素，而另一指针指向同一数组的尾后一位置，则尾后一位置指针比较大于
-- 若两个指针指向同一[结构体](https://zh.cppreference.com/w/c/language/struct)的成员，则指向结构体声明中较后声明的成员的指针，比较大于指向较先声明的成员的指针。
+- 若两个指针指向同一[结构体]({{< ref "/c/language/declarations/struct" >}})的成员，则指向结构体声明中较后声明的成员的指针，比较大于指向较先声明的成员的指针。
 - 指向同一联合体成员的指针比较相等
 - 所有其他指针比较引起未定义行为
 
@@ -101,21 +101,21 @@ int main(void)
 
 lhs, rhs	-	下列表达式之一：
 
-- 都拥有任何[算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)（包括复数和虚数）
-- 均拥有 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 类型(C23 起)
-- 一个拥有 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 类型而另一个是空指针常量(C23 起)
+- 都拥有任何[算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})（包括复数和虚数）
+- 均拥有 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 类型(C23 起)
+- 一个拥有 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 类型而另一个是空指针常量(C23 起)
 
 - 都是指向[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)类型的对象或函数的指针，忽略所指向类型的限定符
 - 一个是指向对象的指针，而另一个是指向（可有限定的）void
-- 一个是指向对象或函数的指针，而另一个是如 [NULL](https://zh.cppreference.com/w/c/types/NULL) 或 nullptr(C23 起)的空指针常量
+- 一个是指向对象或函数的指针，而另一个是如 [NULL]({{< ref "/c/types/NULL" >}}) 或 nullptr(C23 起)的空指针常量
 
 ​	任何相等性运算符表达式的类型均为 int，当指定关系成立时其值（非左值）为 1，而当指定关系不成立时其值为 0。
 
-- 若两个运算数都拥有算术类型，则进行[一般算术转换](https://zh.cppreference.com/w/c/language/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2)，而以通常数学意义比较所得值（但正零和负零比较相等，而任何涉及 NaN 值的比较，包括与自身的相等，都返回零）。特别是若复数类型值的实部比较相等且虚部比较相等，则它们相等。
-- 两个 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 值或一个 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 与一个空指针常量比较相等 (C23 起)
+- 若两个运算数都拥有算术类型，则进行[一般算术转换]({{< ref "/c/language/expressions/conversion#.E4.B8.80.E8.88.AC.E7.AE.97.E6.9C.AF.E8.BD.AC.E6.8D.A2" >}})，而以通常数学意义比较所得值（但正零和负零比较相等，而任何涉及 NaN 值的比较，包括与自身的相等，都返回零）。特别是若复数类型值的实部比较相等且虚部比较相等，则它们相等。
+- 两个 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 值或一个 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 与一个空指针常量比较相等 (C23 起)
 
-- 若一个操作数为指针而另一空指针常量，则首先[转换](https://zh.cppreference.com/w/c/language/conversion)空指针常量为该指针的类型（给出空指针值），并以后述方式比较两个指针
-- 若一个操作数是指针而另一者为指向 void 的指针，则[转换](https://zh.cppreference.com/w/c/language/conversion)非 void 指针为指向 void 指针，并以后述方式比较两个指针
+- 若一个操作数为指针而另一空指针常量，则首先[转换]({{< ref "/c/language/expressions/conversion" >}})空指针常量为该指针的类型（给出空指针值），并以后述方式比较两个指针
+- 若一个操作数是指针而另一者为指向 void 的指针，则[转换]({{< ref "/c/language/expressions/conversion" >}})非 void 指针为指向 void 指针，并以后述方式比较两个指针
 - 若下列任一为真，则两个指针比较相等：
   - 它们都是其类型的空指针值
   - 它们都是指向相同对象或函数的指针
@@ -130,7 +130,7 @@ lhs, rhs	-	下列表达式之一：
 
 ​	不能自动比较结构体类型的对象，而通过 [memcmp](https://zh.cppreference.com/w/c/string/byte/memcmp) 比较它们不可靠，因为填充字节可拥有任何值。
 
-​	因为指针比较能用于指向 `void` 的指针，故 C 中可定义宏 [NULL](https://zh.cppreference.com/w/c/types/NULL) 为 (void*)0，不过 C++ 中这会非法，因为其中 `void` 指针不可隐式转换为有类型指针。
+​	因为指针比较能用于指向 `void` 的指针，故 C 中可定义宏 [NULL]({{< ref "/c/types/NULL" >}}) 为 (void*)0，不过 C++ 中这会非法，因为其中 `void` 指针不可隐式转换为有类型指针。
 
 ​	比较浮点值是否相等时应谨慎，因为许多运算的结果无法准确表示，而必须舍入。实践中，通常以允许最后位置相差一或多个单位的方式比较浮点数。
 

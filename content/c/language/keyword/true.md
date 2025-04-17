@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [预定义布尔常量](https://zh.cppreference.com/w/c/language/bool_constant)
+- [预定义布尔常量]({{< ref "/c/language/expressions/bool_constant" >}})

@@ -13,5 +13,5 @@ draft = false
 
 ## 用法
 
-- [`inline` 函数指定符](https://zh.cppreference.com/w/c/language/inline) (C99 起)
+- [`inline` 函数指定符]({{< ref "/c/language/functions/inline" >}}) (C99 起)
 

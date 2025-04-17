@@ -22,7 +22,7 @@ draft = false
 
 ​	`typedef /* 由实现定义 */ size_t;`	
 
-`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+`size_t` 是 [offsetof]({{< ref "/c/types/offsetof" >}})、[`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B" >}})。
 
 ​	`size_t` 的位宽不小于 16。(C99 起)
 
@@ -30,7 +30,7 @@ draft = false
 
 ​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
 
-​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX]({{< ref "/c/types/limits" >}}) 时，或若其依赖 32 位模算术时失败。
 
 ## 可能的实现
 

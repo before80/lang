@@ -21,10 +21,10 @@ draft = false
 
 ​	对于每个表达式或子表达式，编译器会进行两种求值（两者都是可选的）：
 
-- *值计算* ﻿（value computation）：计算表达式所返回的值。这可以涉及到确定对象身份（[左值求值](https://zh.cppreference.com/w/c/language/value_category)）或读取之前赋给对象的值（右值求值）
-- *副效应* ﻿（side effect）：访问（读或写）以 [`volatile`](https://zh.cppreference.com/w/c/language/volatile) 左值指代的对象、修改（写）对象、原子同步(C11 起)、修改文件、修改浮点环境（若支持）或调用进行上述操作的函数。
+- *值计算* ﻿（value computation）：计算表达式所返回的值。这可以涉及到确定对象身份（[左值求值]({{< ref "/c/language/expressions/value_category" >}})）或读取之前赋给对象的值（右值求值）
+- *副效应* ﻿（side effect）：访问（读或写）以 [`volatile`]({{< ref "/c/language/declarations/volatile" >}}) 左值指代的对象、修改（写）对象、原子同步(C11 起)、修改文件、修改浮点环境（若支持）或调用进行上述操作的函数。
 
-​	若表达式不产生副效应，且编译器能确定其值不被使用，则表达式[可以不求值](https://zh.cppreference.com/w/c/language/as_if)。
+​	若表达式不产生副效应，且编译器能确定其值不被使用，则表达式[可以不求值]({{< ref "/c/language/basic_concepts/as_if" >}})。
 
 ### 定序
 
@@ -42,7 +42,7 @@ draft = false
 1) 在所有函数参数和函数指代器的求值后，实际调用函数前，有一个序列点。
 2) 在下例二元运算符的第一（左）运算数求值后，第二（右）运算数求值前，有一个序列点：`&&`（逻辑与）、`||`（逻辑或），及 `,`（逗号）。
 3) 在条件运算符 `?:` 的第一（左）运算数求值后，第二或第三运算数（无论何者被求值）前，有一个序列点。
-4) 在完整表达式（非子表达式的表达式：典型的是以分号为结尾者或 `if/switch/while/do` 的[控制语句](https://zh.cppreference.com/w/c/language/statements)）的求值后，下个完整表达式前，有一个序列点。
+4) 在完整表达式（非子表达式的表达式：典型的是以分号为结尾者或 `if/switch/while/do` 的[控制语句]({{< ref "/c/language/statements" >}})）的求值后，下个完整表达式前，有一个序列点。
 5) 在完整声明器的结尾，有一个序列点。(C99 起)
 6) 在紧接库函数返回前，有一个序列点。(C99 起)
 7) 在格式化 I/O 中，关联到每个转换指定符的动作后，有一个序列点（特别是 [scanf](https://zh.cppreference.com/w/c/io/fscanf) 写入同一变量的不同域， [printf](https://zh.cppreference.com/w/c/io/fprintf) 读取并以多于一次使用 `%n` 修改同一变量是良构的）。(C99 起)
@@ -51,11 +51,11 @@ draft = false
 10) 直接赋值运算符与所有复合赋值运算符的副效应（修改左参数）后序于左右参数的值计算（但非其副效应）。(C11 起)
 11) 后自增和后自减运算符的值计算先序于其副效应。(C11 起)
 12) 既非先序于亦非后序于另一函数调用的函数调用是非确定顺序的（构成不同函数调用的 CPU 指令不可能交错，即使函数被内联）。(C11 起)
-13) 在[初始化器](https://zh.cppreference.com/w/c/language/initialization)列表表达式中，所有求值都是非确定顺序的14) 考虑到非确定顺序的函数调用，复合赋值运算符，及自增减运算符的前后缀形式都是单独求值。(C11 起)
+13) 在[初始化器]({{< ref "/c/language/initialization" >}})列表表达式中，所有求值都是非确定顺序的14) 考虑到非确定顺序的函数调用，复合赋值运算符，及自增减运算符的前后缀形式都是单独求值。(C11 起)
 
 ## 未定义行为
 
-1) 若对一个标量对象的副效应与另一个对同一标量对象的副效应相对无顺序，则[行为未定义](https://zh.cppreference.com/w/c/language/behavior#UB_.E4.B8.8E.E4.BC.98.E5.8C.96)。
+1) 若对一个标量对象的副效应与另一个对同一标量对象的副效应相对无顺序，则[行为未定义]({{< ref "/c/language/basic_concepts/behavior#UB_.E4.B8.8E.E4.BC.98.E5.8C.96" >}})。
 
 ```c
 i = ++i + i++; // 未定义行为
@@ -75,6 +75,6 @@ a[i] = i++; // 未定义行为
 
 ## 参阅
 
-[运算符优先级](https://zh.cppreference.com/w/c/language/operator_precedence)，定义自源代码表示构建表达式的方式。
+[运算符优先级]({{< ref "/c/language/expressions/operator_precedence" >}})，定义自源代码表示构建表达式的方式。
 
 **求值顺序**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/language/eval_order)**

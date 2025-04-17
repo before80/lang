@@ -51,7 +51,7 @@ long long llabs( long long n ); // (C99 起)
 
 **注解**
 
-​	在补码系统中，最小负值的绝对值处于对应整数范围外，例如对于 32 位补码类型 int，[INT_MIN](https://zh.cppreference.com/w/c/types/limits) 为 -2147483648，但其绝对值应有的结果是 2147483648，大于 [INT_MAX](https://zh.cppreference.com/w/c/types/limits)（其值为 2147483647）。
+​	在补码系统中，最小负值的绝对值处于对应整数范围外，例如对于 32 位补码类型 int，[INT_MIN]({{< ref "/c/types/limits" >}}) 为 -2147483648，但其绝对值应有的结果是 2147483648，大于 [INT_MAX]({{< ref "/c/types/limits" >}})（其值为 2147483647）。
 
 **示例**
 
@@ -258,7 +258,7 @@ uintmax_t strtoumax( const char* restrict nptr,
 
 ​	如果 `base` 是 0，那么自动检测数值进制：如果前缀是 `0`，那么底是八进制，如果前缀是 `0x` 或 `0X`，那么底是十六进制，否则底是十进制。
 
-​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减](https://zh.cppreference.com/w/c/language/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF)。
+​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减]({{< ref "/c/language/expressions/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF" >}})。
 
 ​	此函数设置 endptr 所指向的指针指向最后一个转译字符的后一字符。若 endptr 为空指针，则忽略它。
 
@@ -274,7 +274,7 @@ uintmax_t strtoumax( const char* restrict nptr,
 **返回值**
 
 - 若成功，则返回对应 `str` 内容的整数。
-- 若整数落在对应的返回类型范围外，则发生值域错误（设置 [errno](https://zh.cppreference.com/w/c/error/errno) 为 [ERANGE](https://zh.cppreference.com/w/c/error/errno_macros)），并返回 [INTMAX_MAX](https://zh.cppreference.com/w/c/types/integer)、[INTMAX_MIN](https://zh.cppreference.com/w/c/types/integer)、[UINTMAX_MAX](https://zh.cppreference.com/w/c/types/integer) 或 0 中的最接近者。
+- 若整数落在对应的返回类型范围外，则发生值域错误（设置 [errno](https://zh.cppreference.com/w/c/error/errno) 为 [ERANGE](https://zh.cppreference.com/w/c/error/errno_macros)），并返回 [INTMAX_MAX]({{< ref "/c/types/integer" >}})、[INTMAX_MIN]({{< ref "/c/types/integer" >}})、[UINTMAX_MAX]({{< ref "/c/types/integer" >}}) 或 0 中的最接近者。
 - 若无法进行转换，则返回 0。
 
 **示例**
@@ -359,7 +359,7 @@ uintmax_t wcstoumax( const wchar_t *restrict nptr,
 
 ​	如果 `base` 是 0，那么自动检测数值进制：如果前缀是 `0`，那么底是八进制，如果前缀是 `0x` 或 `0X`，那么底是十六进制，否则底是十进制。
 
-​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减](https://zh.cppreference.com/w/c/language/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF)，它对无符号整数应用回绕规则。
+​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减]({{< ref "/c/language/expressions/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF" >}})，它对无符号整数应用回绕规则。
 
 ​	函数将 `endptr` 所指向的指针设为指向最后转译的宽字符的后一宽字符。若 `endptr` 为空指针，则忽略它。
 
@@ -372,7 +372,7 @@ uintmax_t wcstoumax( const wchar_t *restrict nptr,
 
 **返回值**
 
-​	成功时返回对应于 `str` 内容的整数值。若转得的值落在对应类型之外，则出现值域错误，并返回 [INTMAX_MAX](https://zh.cppreference.com/w/c/types/integer)、[INTMAX_MIN](https://zh.cppreference.com/w/c/types/integer)、[UINTMAX_MAX](https://zh.cppreference.com/w/c/types/integer) 或 0 中的最接近者。若无法进行转换，则返回 0。
+​	成功时返回对应于 `str` 内容的整数值。若转得的值落在对应类型之外，则出现值域错误，并返回 [INTMAX_MAX]({{< ref "/c/types/integer" >}})、[INTMAX_MIN]({{< ref "/c/types/integer" >}})、[UINTMAX_MAX]({{< ref "/c/types/integer" >}}) 或 0 中的最接近者。若无法进行转换，则返回 0。
 
 **示例**
 

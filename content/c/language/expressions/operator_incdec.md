@@ -25,13 +25,13 @@ draft = false
 | ------------- |
 | `--` *表达式* |
 
-​	前缀和后缀自增或自减的操作数 *表达式* 必须为[整数类型](https://zh.cppreference.com/w/c/language/type)（包含 `_Bool` 和枚举）、实浮点数类型或指针类型的[可修改左值](https://zh.cppreference.com/w/c/language/value_category)。它可被 cvr 限定、无限定或为[原子的](https://zh.cppreference.com/w/c/language/atomic)。
+​	前缀和后缀自增或自减的操作数 *表达式* 必须为[整数类型]({{< ref "/c/language/basic_concepts/type" >}})（包含 `_Bool` 和枚举）、实浮点数类型或指针类型的[可修改左值]({{< ref "/c/language/expressions/value_category" >}})。它可被 cvr 限定、无限定或为[原子的]({{< ref "/c/language/declarations/atomic" >}})。
 
 ​	后缀自增和自减运算符的结果是 *表达式* 的值。
 
 ​	前缀自增运算符的结果是将值 `1` 加到 *表达式* 的值的结果：表达式 `++e` 等价于 `e += 1`。前缀自减运算符的结果从 *表达式* 减去值 `1` 的结果：表达式 `--e` 等价于 `e -= 1`。
 
-​	自增运算符发动向操作数加以相应类型的值 `1` 的副效应。自减运算符发动从操作数减去相应类型的值 `1` 的副效应。同其他副效应，这些操作在下个[序列点](https://zh.cppreference.com/w/c/language/eval_order)或那之前完成。
+​	自增运算符发动向操作数加以相应类型的值 `1` 的副效应。自减运算符发动从操作数减去相应类型的值 `1` 的副效应。同其他副效应，这些操作在下个[序列点]({{< ref "/c/language/expressions/eval_order" >}})或那之前完成。
 
 ```c
 int a = 1;
@@ -44,13 +44,13 @@ int c = ++a; // 存储 1+a （即 2）到 a
              // 此行后，c == 2 而 a == 2
 ```
 
-​	任何[原子对象](https://zh.cppreference.com/w/c/language/atomic)上的后缀自增或后缀自减运算符，是拥有 [memory_order_seq_cst](https://zh.cppreference.com/w/c/atomic/memory_order) 内存顺序的原子读改写操作。(C11 起)
+​	任何[原子对象]({{< ref "/c/language/declarations/atomic" >}})上的后缀自增或后缀自减运算符，是拥有 [memory_order_seq_cst](https://zh.cppreference.com/w/c/atomic/memory_order) 内存顺序的原子读改写操作。(C11 起)
 
-​	指针算术上的限制，还有应用于操作数的隐式转换见[算术运算符](https://zh.cppreference.com/w/c/language/operator_arithmetic)。
+​	指针算术上的限制，还有应用于操作数的隐式转换见[算术运算符]({{< ref "/c/language/expressions/operator_arithmetic" >}})。
 
 ## 注意
 
-​	因为涉及副效应，必须谨慎地使用自增和自减运算符，以避免违背[定序规则](https://zh.cppreference.com/w/c/language/eval_order)所致的未定义行为。
+​	因为涉及副效应，必须谨慎地使用自增和自减运算符，以避免违背[定序规则]({{< ref "/c/language/expressions/eval_order" >}})所致的未定义行为。
 
 ​	自增/自减运算符不对复数或虚数类型定义：加/减实数 1 的通常定义对虚数会无效，而使之对虚数加/减 `i` 但对复数加/减 `1`，会使得处理 `0+yi` 和 `yi` 的方式有别。
 

@@ -19,7 +19,7 @@ draft = false
 
 ### BITINT_MAXWIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -35,7 +35,7 @@ draft = false
 
 ### BOOL_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -51,7 +51,7 @@ draft = false
 
 ### BOOL_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -67,7 +67,7 @@ draft = false
 
 ### CHAR_BIT
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -83,7 +83,7 @@ draft = false
 
 ### CHAR_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -99,7 +99,7 @@ draft = false
 
 ### CHAR_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -115,7 +115,7 @@ draft = false
 
 ### CHAR_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -131,7 +131,7 @@ draft = false
 
 ### INT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -147,7 +147,7 @@ draft = false
 
 ### INT_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -163,7 +163,7 @@ draft = false
 
 ### INT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -179,7 +179,7 @@ draft = false
 
 ### LLONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -195,7 +195,7 @@ draft = false
 
 ### LLONG_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -211,7 +211,7 @@ draft = false
 
 ### LLONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -227,7 +227,7 @@ draft = false
 
 ### LONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -243,7 +243,7 @@ draft = false
 
 ### LONG_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -259,7 +259,7 @@ draft = false
 
 ### LONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -275,7 +275,7 @@ draft = false
 
 ### MB_LEN_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -291,7 +291,7 @@ draft = false
 
 ### SCHAR_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -307,7 +307,7 @@ draft = false
 
 ### SCHAR_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -323,7 +323,7 @@ draft = false
 
 ### SCHAR_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -339,7 +339,7 @@ draft = false
 
 ### SHRT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -355,7 +355,7 @@ draft = false
 
 ### SHRT_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -371,7 +371,7 @@ draft = false
 
 ### SHRT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -387,7 +387,7 @@ draft = false
 
 ### UCHAR_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -403,7 +403,7 @@ draft = false
 
 ### UCHAR_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -419,7 +419,7 @@ draft = false
 
 ### UINT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -435,7 +435,7 @@ draft = false
 
 ### UINT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -451,7 +451,7 @@ draft = false
 
 ### ULLONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -467,7 +467,7 @@ draft = false
 
 ### ULLONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -483,7 +483,7 @@ draft = false
 
 ### ULONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -499,7 +499,7 @@ draft = false
 
 ### ULONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -515,7 +515,7 @@ draft = false
 
 ### USHRT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 
@@ -531,7 +531,7 @@ draft = false
 
 ### USHRT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
+原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
 
 ```c
 

@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [原子类型指定符及限定符](https://zh.cppreference.com/w/c/language/atomic) (C11 起)
+- [原子类型指定符及限定符]({{< ref "/c/language/declarations/atomic" >}}) (C11 起)

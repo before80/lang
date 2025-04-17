@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`for` 循环](https://zh.cppreference.com/w/c/language/for)：用作该循环的声明
+- [`for` 循环]({{< ref "/c/language/statements/for" >}})：用作该循环的声明

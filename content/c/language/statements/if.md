@@ -21,11 +21,11 @@ draft = false
 | ------------------------------------------------------------ | ---- |
 | *属性说明符序列*(可选) `if (` *表达式* `)` *语句真* `else` *语句假* | (2)  |
 
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到 `if` 语句 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到 `if` 语句 |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *表达式*         | -    | 任何标量类型[表达式](https://zh.cppreference.com/w/c/language/expressions) |
-| *语句真*         | -    | 任何[语句](https://zh.cppreference.com/w/c/language/statements)（常为复合语句），若 *表达式* 比较不等于 0 则执行 |
-| *语句假*         | -    | 任何[语句](https://zh.cppreference.com/w/c/language/statements)（常为复合语句），若 *表达式* 比较等于 0 则执行 |
+| *表达式*         | -    | 任何标量类型[表达式]({{< ref "/c/language/expressions" >}}) |
+| *语句真*         | -    | 任何[语句]({{< ref "/c/language/statements" >}})（常为复合语句），若 *表达式* 比较不等于 0 则执行 |
+| *语句假*         | -    | 任何[语句]({{< ref "/c/language/statements" >}})（常为复合语句），若 *表达式* 比较等于 0 则执行 |
 
 ## 解释
 
@@ -62,11 +62,11 @@ if (i > 1)
        printf("%d > 1 and %d <= 2\n", i, j);
 ```
 
-​	若通过 [goto](https://zh.cppreference.com/w/c/language/goto) 进入 *语句真* ，则不执行 *语句假* 。
+​	若通过 [goto]({{< ref "/c/language/statements/goto" >}}) 进入 *语句真* ，则不执行 *语句假* 。
 
 ## 关键词
 
-[`if`](https://zh.cppreference.com/w/c/keyword/if), [`else`](https://zh.cppreference.com/w/c/keyword/else)
+[`if`]({{< ref "/c/language/keyword/if" >}}), [`else`]({{< ref "/c/language/keyword/else" >}})
 
 ## 示例
 

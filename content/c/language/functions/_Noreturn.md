@@ -24,13 +24,13 @@ draft = false
 
 ​	`_Noreturn` 说明符可以在同一函数声明中出现多于一次，行为与只出现一次相同。
 
-​	此说明符通常通过便利宏 [`noreturn`](https://zh.cppreference.com/w/c/types) 使用，该宏于头文件 `<stdnoreturn.h>` 提供。(C23 起)
+​	此说明符通常通过便利宏 [`noreturn`]({{< ref "/c/types" >}}) 使用，该宏于头文件 `<stdnoreturn.h>` 提供。(C23 起)
 
 ​	`_Noreturn` 函数说明符被弃用。应该用 `[[noreturn]]` 属性代替。宏 `noreturn` 亦被弃用。(C23 起)
 
 ## 关键词
 
-[`_Noreturn`](https://zh.cppreference.com/w/c/keyword/_Noreturn)
+[`_Noreturn`]({{< ref "/c/language/keyword/_Noreturn" >}})
 
 ## 标准库
 

@@ -13,23 +13,23 @@ draft = false
 
 ​	C 程序创建、销毁、访问并操作对象。
 
-​	C 中，一个对象是执行环境中[数据存储](https://zh.cppreference.com/w/c/language/memory_model)的一个区域，其内容可以表示*值*（值是对象的内容转译为特定[类型](https://zh.cppreference.com/w/c/language/types)时的含义）。
+​	C 中，一个对象是执行环境中[数据存储]({{< ref "/c/language/basic_concepts/memory_model" >}})的一个区域，其内容可以表示*值*（值是对象的内容转译为特定[类型](https://zh.cppreference.com/w/c/language/types)时的含义）。
 
 ​	每个对象拥有：
 
-- 大小（可由 [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 确定）
-- 对齐要求（可由 [`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof)(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 确定）(C11 起)
-- [存储期](https://zh.cppreference.com/w/c/language/storage_duration)（自动、静态、分配、线程局域）
-- [生存期](https://zh.cppreference.com/w/c/language/lifetime)（等于存储期或临时）
+- 大小（可由 [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 确定）
+- 对齐要求（可由 [`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}})(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 确定）(C11 起)
+- [存储期]({{< ref "/c/language/declarations/storage_duration" >}})（自动、静态、分配、线程局域）
+- [生存期]({{< ref "/c/language/basic_concepts/lifetime" >}})（等于存储期或临时）
 - 有效类型（见下）
 - 值（可以是不确定的）
-- 可选项，表示该对象的[标识符](https://zh.cppreference.com/w/c/language/identifier)
+- 可选项，表示该对象的[标识符]({{< ref "/c/language/basic_concepts/identifier" >}})
 
-​	对象由[声明](https://zh.cppreference.com/w/c/language/declarations)、[分配函数](https://zh.cppreference.com/w/c/memory)、[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)、[复合字面量](https://zh.cppreference.com/w/c/language/compound_literal)，及返回[拥有数组类型的结构体或联合体](https://zh.cppreference.com/w/c/language/lifetime)的非左值表达式创建。
+​	对象由[声明]({{< ref "/c/language/declarations" >}})、[分配函数]({{< ref "/c/memory" >}})、[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})、[复合字面量]({{< ref "/c/language/expressions/compound_literal" >}})，及返回[拥有数组类型的结构体或联合体]({{< ref "/c/language/basic_concepts/lifetime" >}})的非左值表达式创建。
 
 ## 对象表示
 
-​	除了[位域](https://zh.cppreference.com/w/c/language/bit_field)，每个对象都是由一个或更多字节组成的，每个字节由 [CHAR_BIT](https://zh.cppreference.com/w/c/types/limits) 位组成，而且每个对象可以用 [memcpy](https://zh.cppreference.com/w/c/string/byte/memcpy) 复制到 unsigned char[n] 类型的对象中，这里 `n` 是对象的大小。生成的数组内容被称为*对象表示*。
+​	除了[位域]({{< ref "/c/language/declarations/bit_field" >}})，每个对象都是由一个或更多字节组成的，每个字节由 [CHAR_BIT]({{< ref "/c/types/limits" >}}) 位组成，而且每个对象可以用 [memcpy](https://zh.cppreference.com/w/c/string/byte/memcpy) 复制到 unsigned char[n] 类型的对象中，这里 `n` 是对象的大小。生成的数组内容被称为*对象表示*。
 
 ​	若两对象拥有相同的对象表示，则它们比较相等（除了它们是浮点数 NaN 的情况）。逆命题非真：两个比较相等的对象可以拥有不同的对象表示，因为并非对象表示的每一位都需要参与其值。这些位可以用于填充以满足对齐要求，等同性检测，指示陷阱表示等。
 
@@ -37,17 +37,17 @@ draft = false
 
 ​	对于 `char`、`signed char`、`unsigned char` 类型的对象，对象表示的每一位都要求参与其值表示，而且每种可能的位模式都表示不同的值（不允许填充位、陷阱位或多重表示）。
 
-​	[整数类型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B4.E6.95.B0.E7.B1.BB.E5.9E.8B)（short、int、long、long long）对象占用多个字节时，这些字节的用法是实现定义的，不过二种有主导地位的实现是*大端 (big-endian)*（POWER、Sparc、Itanium）和*小端 (little-endian)*（x86、x86-64）：大端平台将最高位字节存储于整数所占据的存储区域的最低地址，小端平台将最低位字节存储于最低地址。细节见[端序](https://en.wikipedia.org/wiki/Endianness)。参阅下方示例。
+​	[整数类型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B4.E6.95.B0.E7.B1.BB.E5.9E.8B" >}})（short、int、long、long long）对象占用多个字节时，这些字节的用法是实现定义的，不过二种有主导地位的实现是*大端 (big-endian)*（POWER、Sparc、Itanium）和*小端 (little-endian)*（x86、x86-64）：大端平台将最高位字节存储于整数所占据的存储区域的最低地址，小端平台将最低位字节存储于最低地址。细节见[端序](https://en.wikipedia.org/wiki/Endianness)。参阅下方示例。
 
 ​	尽管大多数实现都不允许整数的陷阱表示、填充位或多重表示，也还存在例外；例如 Itanium 上的整数类型值[就可以是陷阱表示](https://web.archive.org/web/20170830125905/https://blogs.msdn.microsoft.com/oldnewthing/20040119-00/?p=41003)。
 
 ## 有效类型
 
-​	每个对象都拥有*有效类型*，它决定何种[左值](https://zh.cppreference.com/w/c/language/value_category)访问合法，何种违反严格别名使用规则。
+​	每个对象都拥有*有效类型*，它决定何种[左值]({{< ref "/c/language/expressions/value_category" >}})访问合法，何种违反严格别名使用规则。
 
-​	若对象是由[声明](https://zh.cppreference.com/w/c/language/declarations)创建的，则该对象的声明类型即是对象的*有效类型*。
+​	若对象是由[声明]({{< ref "/c/language/declarations" >}})创建的，则该对象的声明类型即是对象的*有效类型*。
 
-​	若对象由[分配函数](https://zh.cppreference.com/w/c/memory)（包含 [realloc](https://zh.cppreference.com/w/c/memory/realloc)）创建，则它没有声明类型。这种对象以下列方式获得有效类型：
+​	若对象由[分配函数]({{< ref "/c/memory" >}})（包含 [realloc](https://zh.cppreference.com/w/c/memory/realloc)）创建，则它没有声明类型。这种对象以下列方式获得有效类型：
 
 - 首次通过拥有异于字符类型的类型的左值写入该对象，无论何时该左值的类型都会成为该对象该次写入和所有后继读取的*有效类型*。
 - [memcpy](https://zh.cppreference.com/w/c/string/byte/memcpy) 或 [memmove](https://zh.cppreference.com/w/c/string/byte/memmove) 复制另一个对象到该对象，无论何时源对象的有效类型（若它有）都会成为该对象该次写入和所有后继读取的*有效类型*。
@@ -98,17 +98,17 @@ void f2(int *pi, struct S *ps, struct S s)
 
 > 注意 
 >
-> ​	[restrict 限定符](https://zh.cppreference.com/w/c/language/restrict)可用于指示二个指针不用作别名使用，即使规则允许它们如此。
+> ​	[restrict 限定符]({{< ref "/c/language/declarations/restrict" >}})可用于指示二个指针不用作别名使用，即使规则允许它们如此。
 
 > 注意
 >
-> ​	类型双关也可以通过[联合体](https://zh.cppreference.com/w/c/language/union)的非活跃成员进行。
+> ​	类型双关也可以通过[联合体]({{< ref "/c/language/declarations/union" >}})的非活跃成员进行。
 
 ## 对齐
 
-​	每个完整[对象类型](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB)拥有一个称作*对齐要求*的属性，它是一个 [size_t](https://zh.cppreference.com/w/c/types/size_t) 类型的整数值，表示此类型对象可以分配的相继地址之间的字节数。合法的对齐值是二的非负数次幂。
+​	每个完整[对象类型](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB)拥有一个称作*对齐要求*的属性，它是一个 [size_t]({{< ref "/c/types/size_t" >}}) 类型的整数值，表示此类型对象可以分配的相继地址之间的字节数。合法的对齐值是二的非负数次幂。
 
-​	类型的对齐要求可以通过 [`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof)(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 获得。(C11 起)
+​	类型的对齐要求可以通过 [`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}})(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 获得。(C11 起)
 
 ​	为了满足结构体所有对象的对齐要求，一些成员后面可能会插入填充位。
 
@@ -152,11 +152,11 @@ sizeof(struct X) = 8
 alignof(struct X) = 4
 ```
 
-​	每个对象类型将其对齐要求强加于该类型的每个对象。所有类型中，最严格（最大）的基础对齐是 [max_align_t](https://zh.cppreference.com/w/c/types/max_align_t) 的对齐。最弱（最小）的对齐是字符类型（char、signed char 及 unsigned char）的对齐，且等于 1。最严格（最大）的*基础对齐*是实现定义的，并等于 [max_align_t](https://zh.cppreference.com/w/c/types/max_align_t) 的对齐(C11 起)。
+​	每个对象类型将其对齐要求强加于该类型的每个对象。所有类型中，最严格（最大）的基础对齐是 [max_align_t]({{< ref "/c/types/max_align_t" >}}) 的对齐。最弱（最小）的对齐是字符类型（char、signed char 及 unsigned char）的对齐，且等于 1。最严格（最大）的*基础对齐*是实现定义的，并等于 [max_align_t]({{< ref "/c/types/max_align_t" >}}) 的对齐(C11 起)。
 
 ​	基础对齐对于所有类型的存储期的对象都得到支持。
 
-​	若用 [`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof)(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 令一个对象的对齐严格于（大于）[max_align_t](https://zh.cppreference.com/w/c/types/max_align_t)，则它拥有*扩展对齐要求*。成员拥有扩展对齐的结构体或联合体是*过对齐类型*。是否支持过对齐类型是实现定义的，而且对于每种[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的支持可以不同。若结构体或联合体 `S` 无任何过拥有对齐类型，或用指定扩展对齐的对齐说明符声明的成员，则 `S` 拥有基础对齐。每个[算术](https://zh.cppreference.com/w/c/language/arithmetic_types)或[指针](https://zh.cppreference.com/w/c/language/pointer)类型的[原子](https://zh.cppreference.com/w/c/language/atomic)版本均拥有基础对齐。(C11 起)
+​	若用 [`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}})(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 令一个对象的对齐严格于（大于）[max_align_t]({{< ref "/c/types/max_align_t" >}})，则它拥有*扩展对齐要求*。成员拥有扩展对齐的结构体或联合体是*过对齐类型*。是否支持过对齐类型是实现定义的，而且对于每种[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的支持可以不同。若结构体或联合体 `S` 无任何过拥有对齐类型，或用指定扩展对齐的对齐说明符声明的成员，则 `S` 拥有基础对齐。每个[算术]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})或[指针]({{< ref "/c/language/declarations/pointer" >}})类型的[原子]({{< ref "/c/language/declarations/atomic" >}})版本均拥有基础对齐。(C11 起)
 
 ## 缺陷报告
 

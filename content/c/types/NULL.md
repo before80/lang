@@ -23,11 +23,11 @@ draft = false
 
 ​	宏 `NULL` 是实现定义的空指针常量，可为
 
-- 值为 0 的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)
-- [转换为](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2) void* 的值为 0 的整数常量表达式
-- 预定义常量 [`nullptr`](https://zh.cppreference.com/w/c/language/nullptr) (C23 起)
+- 值为 0 的整数[常量表达式]({{< ref "/c/language/expressions/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})
+- [转换为]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}}) void* 的值为 0 的整数常量表达式
+- 预定义常量 [`nullptr`]({{< ref "/c/language/expressions/nullptr" >}}) (C23 起)
 
-​	空指针常量能[转换](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2)为任何指针类型；转换结果是该类型的空指针值。
+​	空指针常量能[转换]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}})为任何指针类型；转换结果是该类型的空指针值。
 
 ## 注解
 
@@ -80,6 +80,6 @@ ptr = 0xc001cafe
 
 ### 参阅
 
-| [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t)(C23) | 预定义空指针常量 [`nullptr`](https://zh.cppreference.com/w/c/language/nullptr) 的类型 (typedef) |
+| [nullptr_t]({{< ref "/c/types/nullptr_t" >}})(C23) | 预定义空指针常量 [`nullptr`]({{< ref "/c/language/expressions/nullptr" >}}) 的类型 (typedef) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **NULL** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/types/NULL)** |                                                              |

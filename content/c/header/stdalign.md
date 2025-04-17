@@ -11,13 +11,13 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/stdalign](https://zh.cppreference.com/w/c/header/stdalign)
 
-​	此标头是[类型支持](https://zh.cppreference.com/w/c/types)库的一部分。
+​	此标头是[类型支持]({{< ref "/c/types" >}})库的一部分。
 
 ## 宏
 
-| alignas (C11)<br /> | 便利宏，展开为关键词 [`<Aligna>`](https://zh.cppreference.com/w/c/keyword/_Alignas) (关键词宏) |
+| alignas (C11)<br /> | 便利宏，展开为关键词 [`<Aligna>`]({{< ref "/c/language/keyword/_Alignas" >}}) (关键词宏) |
 | ------------------- | ------------------------------------------------------------ |
-| alignof (C11)<br /> | 便利宏，展开为关键词 [`<Aligno>`](https://zh.cppreference.com/w/c/keyword/_Alignof) (关键词宏) |
+| alignof (C11)<br /> | 便利宏，展开为关键词 [`<Aligno>`]({{< ref "/c/language/keyword/_Alignof" >}}) (关键词宏) |
 
 ## 常量
 

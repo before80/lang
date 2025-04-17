@@ -15,11 +15,11 @@ draft = false
 | ------------------------------------ | ---- | -------- |
 | `typedef typeof(nullptr) nullptr_t;` |      | (C23 起) |
 
-​	`nullptr_t` 是预定义空指针常量 [`nullptr`](https://zh.cppreference.com/w/c/language/nullptr) 的类型。它是自身并非指针类型的单独类型。它能[隐式转换到](https://zh.cppreference.com/w/c/language/conversion)任何指针类型或 bool，而结果分别为该类型的空指针值或 false。除了 `nullptr_t` 自身，没有其他类型能转换或显式转型成 `nullptr_t`。
+​	`nullptr_t` 是预定义空指针常量 [`nullptr`]({{< ref "/c/language/expressions/nullptr" >}}) 的类型。它是自身并非指针类型的单独类型。它能[隐式转换到]({{< ref "/c/language/expressions/conversion" >}})任何指针类型或 bool，而结果分别为该类型的空指针值或 false。除了 `nullptr_t` 自身，没有其他类型能转换或显式转型成 `nullptr_t`。
 
 ​	`sizeof(nullptr_t)` 与 `alignof(nullptr_t)` 分别等于 `sizeof(void*)` 与 `alignof(void*)`。
 
-`nullptr_t` 仅有一个合法值，即 `nullptr`。`nullptr` 的对象表示与 `(void*)0` 的相同。若[左值转换](https://zh.cppreference.com/w/c/language/conversion#.E5.B7.A6.E5.80.BC.E8.BD.AC.E6.8D.A2)产生拥有不同对象表示的 `nullptr_t` 值，则行为未定义。
+`nullptr_t` 仅有一个合法值，即 `nullptr`。`nullptr` 的对象表示与 `(void*)0` 的相同。若[左值转换]({{< ref "/c/language/expressions/conversion#.E5.B7.A6.E5.80.BC.E8.BD.AC.E6.8D.A2" >}})产生拥有不同对象表示的 `nullptr_t` 值，则行为未定义。
 
 ## 示例
 
@@ -54,6 +54,6 @@ nullptr_t
 
 ## 参阅
 
-| [NULL](https://zh.cppreference.com/w/c/types/NULL)           | 实现定义的空指针常量 (宏常量) |
+| [NULL]({{< ref "/c/types/NULL" >}})           | 实现定义的空指针常量 (宏常量) |
 | ------------------------------------------------------------ | ----------------------------- |
 | **nullptr_t** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/types/nullptr_t)** |                               |

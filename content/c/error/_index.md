@@ -39,7 +39,7 @@ draft = false
 
 | 在标头 `<stddef.h>` 定义<br />在标头 `<stdio.h>` 定义<br />在标头 `<stdlib.h>` 定义<br />在标头 `<string.h>` 定义<br />在标头 `<time.h>` 定义<br />在标头 `<wchar.h>` 定义 |                                                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| rsize_t(C11)                                                 | 与 [size_t](https://zh.cppreference.com/w/c/types/size_t) 类型相同的 typedef，用于在运行时对其各参数进行范围检查的函数的自描述 (typedef) |
+| rsize_t(C11)                                                 | 与 [size_t]({{< ref "/c/types/size_t" >}}) 类型相同的 typedef，用于在运行时对其各参数进行范围检查的函数的自描述 (typedef) |
 
 | 在标头 `<stdint.h>` 定义 |                                                              |
 | ------------------------ | ------------------------------------------------------------ |
@@ -59,7 +59,7 @@ draft = false
 
 ## 注解
 
-​	自 C23 起， [`static_assert`](https://zh.cppreference.com/w/c/language/_Static_assert) 自身是关键词，可能亦为预定义宏，故 `<assert.h>` 不再提供它。
+​	自 C23 起， [`static_assert`]({{< ref "/c/language/declarations/_Static_assert" >}}) 自身是关键词，可能亦为预定义宏，故 `<assert.h>` 不再提供它。
 
 ## 参阅
 

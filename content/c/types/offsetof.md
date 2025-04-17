@@ -15,7 +15,7 @@ draft = false
 | ------------------------------------------------- | ---- | ---- |
 | `#define offsetof(type, member) /* 由实现定义 */` |      |      |
 
-​	宏 **offsetof** 展开成 [size_t](https://zh.cppreference.com/w/c/types/size_t) 类型的[整数常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)，其值为从指定类型对象起始到其指定子对象的偏移，若填充存在则包含之。
+​	宏 **offsetof** 展开成 [size_t]({{< ref "/c/types/size_t" >}}) 类型的[整数常量表达式]({{< ref "/c/language/expressions/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})，其值为从指定类型对象起始到其指定子对象的偏移，若填充存在则包含之。
 
 ​	给定拥有静态存储期的 `type` 类型对象 `o`，`&(o.member)` 应当为地址常量表达式并指向 `o` 的子对象。否则行为未定义。
 
@@ -66,6 +66,6 @@ the double is at offset 8
 
 ## 参阅
 
-| [size_t](https://zh.cppreference.com/w/c/types/size_t)       | [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 运算符返回的无符号整数类型 (typedef) |
+| [size_t]({{< ref "/c/types/size_t" >}})       | [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 运算符返回的无符号整数类型 (typedef) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **offsetof** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/types/offsetof)** |                                                              |

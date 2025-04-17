@@ -19,10 +19,10 @@ draft = false
 
 属性说明符序列(可选) `switch (` *表达式* `)` *语句*
 
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到 `switch` 语句 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到 `switch` 语句 |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *表达式*         | -    | 任何[整数类型](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB)（`char`、有符号或无符号整数，或枚举）的[表达式](https://zh.cppreference.com/w/c/language/expressions) |
-| *语句*           | -    | 任何[语句](https://zh.cppreference.com/w/c/language/statements)（典型为复合语句）。允许在 *语句* 中有 `case:` 和 `default:` 标号，而 `break;` 语句拥有特殊含义。 |
+| *表达式*         | -    | 任何[整数类型](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB)（`char`、有符号或无符号整数，或枚举）的[表达式]({{< ref "/c/language/expressions" >}}) |
+| *语句*           | -    | 任何[语句]({{< ref "/c/language/statements" >}})（典型为复合语句）。允许在 *语句* 中有 `case:` 和 `default:` 标号，而 `break;` 语句拥有特殊含义。 |
 
 | `case` *常量表达式* `:` *语句*                              | (1)  | (C23 前) |
 | ----------------------------------------------------------- | ---- | -------- |
@@ -30,13 +30,13 @@ draft = false
 | `default` `:` *语句*                                        | (2)  | (C23 前) |
 | *属性说明符序列*(可选) `default` `:` *语句*(可选)           | (2)  | (C23 起) |
 
-| *常量表达式*     | -    | 任何整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression) |
+| *常量表达式*     | -    | 任何整数[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}}) |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到标号 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到标号 |
 
 ## 解释
 
-​	switch 语句体可拥有任意数量的 `case:` 标号，只要所有 *常量表达式* 的值（在[转换](https://zh.cppreference.com/w/c/language/conversion)到 *表达式* 的[提升后类型](https://zh.cppreference.com/w/c/language/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87)后）各不相同。至多可以存在一个 `default:` 标号（尽管嵌套的 switch 语句可使用其自身的 `default:` 标号，或拥有常量等于外围 switch 所用的 `case:` 的标号）。
+​	switch 语句体可拥有任意数量的 `case:` 标号，只要所有 *常量表达式* 的值（在[转换]({{< ref "/c/language/expressions/conversion" >}})到 *表达式* 的[提升后类型]({{< ref "/c/language/expressions/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87" >}})后）各不相同。至多可以存在一个 `default:` 标号（尽管嵌套的 switch 语句可使用其自身的 `default:` 标号，或拥有常量等于外围 switch 所用的 `case:` 的标号）。
 
 ​	若 *表达式* 求值为等于一个 *常量表达式* 在转换到 *表达式* 的提升类型后的值，则转移控制到标号为该 *常量表达式* 的语句。
 
@@ -44,7 +44,7 @@ draft = false
 
 ​	若 *表达式* 求值为不匹配任何 `case:` 标号的值，且不存在 `default:` 标号，则不执行 switch 体的任何部分。
 
-​	在 *语句* 中的任何位置遇到 [break](https://zh.cppreference.com/w/c/language/break) 语句时，跳出语句体：
+​	在 *语句* 中的任何位置遇到 [break]({{< ref "/c/language/statements/break" >}}) 语句时，跳出语句体：
 
 ```c
 switch(1) {
@@ -62,7 +62,7 @@ switch(1) {
 }
 ```
 
-​	同所有选择和迭代语句，switch 语句建立[块作用域](https://zh.cppreference.com/w/c/language/scope)：任何 *表达式* 的标识符在 *语句* 后离开作用域。若 `case:` 或 `default:` 标号在 VLA 或另一拥有可变修改类型的标识符的作用域内，则整个 switch 语句都必须在其作用域内（换言之，VLA 必须在整个 switch 前或最后的标号后声明）：(C99 起)
+​	同所有选择和迭代语句，switch 语句建立[块作用域]({{< ref "/c/language/basic_concepts/scope" >}})：任何 *表达式* 的标识符在 *语句* 后离开作用域。若 `case:` 或 `default:` 标号在 VLA 或另一拥有可变修改类型的标识符的作用域内，则整个 switch 语句都必须在其作用域内（换言之，VLA 必须在整个 switch 前或最后的标号后声明）：(C99 起)
 
 ```c
 switch (expr)
@@ -80,7 +80,7 @@ switch (expr)
 
 ## 关键词
 
-​	[`switch`](https://zh.cppreference.com/w/c/keyword/switch), [`case`](https://zh.cppreference.com/w/c/keyword/case), [`default`](https://zh.cppreference.com/w/c/keyword/default)
+​	[`switch`]({{< ref "/c/language/keyword/switch" >}}), [`case`]({{< ref "/c/language/keyword/case" >}}), [`default`]({{< ref "/c/language/keyword/default" >}})
 
 ## 示例
 

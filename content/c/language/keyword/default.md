@@ -13,5 +13,5 @@ draft = false
 
 ## 用法
 
-- [`switch` 语句](https://zh.cppreference.com/w/c/language/switch)：用作缺省情况标签的声明
-- [泛型表达式](https://zh.cppreference.com/w/c/language/generic)：用作默认泛型关联的声明(C11 起)
+- [`switch` 语句]({{< ref "/c/language/statements/switch" >}})：用作缺省情况标签的声明
+- [泛型表达式]({{< ref "/c/language/expressions/generic" >}})：用作默认泛型关联的声明(C11 起)

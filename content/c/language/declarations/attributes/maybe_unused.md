@@ -22,12 +22,12 @@ draft = false
 
 ​	此属性能出现在下列实体的声明中：
 
-- [结构体](https://zh.cppreference.com/w/c/language/struct)/[联合体](https://zh.cppreference.com/w/c/language/union)： `struct [[maybe_unused]] S;` ，
-- [typedef 名](https://zh.cppreference.com/w/c/language/typedef)： `[[maybe_unused]] typedef S* PS;` ，
+- [结构体]({{< ref "/c/language/declarations/struct" >}})/[联合体]({{< ref "/c/language/declarations/union" >}})： `struct [[maybe_unused]] S;` ，
+- [typedef 名]({{< ref "/c/language/declarations/typedef" >}})： `[[maybe_unused]] typedef S* PS;` ，
 - 对象： `[[maybe_unused]] int x;` ，
 - 结构体/联合体成员： `union U { [[maybe_unused]] int n; };` ，
-- [函数](https://zh.cppreference.com/w/c/language/function_definition)： `[[maybe_unused]] void f(void);` ，
-- [枚举](https://zh.cppreference.com/w/c/language/enum)： `enum [[maybe_unused]] E {};` ，
+- [函数]({{< ref "/c/language/functions/function_definition" >}})： `[[maybe_unused]] void f(void);` ，
+- [枚举]({{< ref "/c/language/declarations/enum" >}})： `enum [[maybe_unused]] E {};` ，
 - 枚举项： `enum { A [[maybe_unused]], B [[maybe_unused]] = 42 };` 。
 
 ​	若编译器对未使用实体发布警告，则对任何声明为 `maybe_unused` 的实体抑制该警告。

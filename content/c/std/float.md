@@ -15,7 +15,7 @@ draft = false
 
 ### DBL_DECIMAL_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -31,7 +31,7 @@ draft = false
 
 ### DBL_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -47,7 +47,7 @@ draft = false
 
 ### DBL_EPSILON
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -63,7 +63,7 @@ draft = false
 
 ### DBL_HAS_SUBNORM <- 11+ 23 D
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -87,7 +87,7 @@ draft = false
 
 ### DBL_MANT_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -103,7 +103,7 @@ draft = false
 
 ### DBL_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -119,7 +119,7 @@ draft = false
 
 ### DBL_MAX_10_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -135,7 +135,7 @@ draft = false
 
 ### DBL_MAX_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -151,7 +151,7 @@ draft = false
 
 ### DBL_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -167,7 +167,7 @@ draft = false
 
 ### DBL_MIN_10_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -183,7 +183,7 @@ draft = false
 
 ### DBL_MIN_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -199,7 +199,7 @@ draft = false
 
 ### DBL_TRUE_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -215,7 +215,7 @@ draft = false
 
 ### DECIMAL_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -231,7 +231,7 @@ draft = false
 
 ### FLT_DECIMAL_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -247,7 +247,7 @@ draft = false
 
 ### FLT_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -263,7 +263,7 @@ draft = false
 
 ### FLT_EPSILON
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -279,7 +279,7 @@ draft = false
 
 ### FLT_EVAL_METHOD
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -295,7 +295,7 @@ draft = false
 
 ### FLT_HAS_SUBNORM <- 11+ 23 D
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -317,7 +317,7 @@ draft = false
 
 ### FLT_MANT_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -333,7 +333,7 @@ draft = false
 
 ### FLT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -349,7 +349,7 @@ draft = false
 
 ### FLT_MAX_10_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -365,7 +365,7 @@ draft = false
 
 ### FLT_MAX_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -381,7 +381,7 @@ draft = false
 
 ### FLT_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -397,7 +397,7 @@ draft = false
 
 ### FLT_MIN_10_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -413,7 +413,7 @@ draft = false
 
 ### FLT_MIN_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -429,7 +429,7 @@ draft = false
 
 ### FLT_RADIX
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -445,7 +445,7 @@ draft = false
 
 ### FLT_ROUNDS
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -461,7 +461,7 @@ draft = false
 
 ### FLT_TRUE_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -477,7 +477,7 @@ draft = false
 
 ### LDBL_DECIMAL_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -493,7 +493,7 @@ draft = false
 
 ### LDBL_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -509,7 +509,7 @@ draft = false
 
 ### LDBL_EPSILON
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -525,7 +525,7 @@ draft = false
 
 ### LDBL_HAS_SUBNORM <- 11+ 23 D
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -545,7 +545,7 @@ draft = false
 
 ### LDBL_MANT_DIG
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -561,7 +561,7 @@ draft = false
 
 ### LDBL_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -577,7 +577,7 @@ draft = false
 
 ### LDBL_MAX_10_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -593,7 +593,7 @@ draft = false
 
 ### LDBL_MAX_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -609,7 +609,7 @@ draft = false
 
 ### LDBL_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -625,7 +625,7 @@ draft = false
 
 ### LDBL_MIN_10_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -641,7 +641,7 @@ draft = false
 
 ### LDBL_MIN_EXP
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 
@@ -657,7 +657,7 @@ draft = false
 
 ### LDBL_TRUE_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
+原址：[https://zh.cppreference.com/w/c/header/float]({{< ref "/c/header/float" >}})
 
 ```c
 

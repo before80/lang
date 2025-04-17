@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`restrict` 类型限定符](https://zh.cppreference.com/w/c/language/restrict) (C99 起)
+- [`restrict` 类型限定符]({{< ref "/c/language/declarations/restrict" >}}) (C99 起)

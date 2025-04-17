@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`if` 语句](https://zh.cppreference.com/w/c/language/if)：用作替代分支的声明
+- [`if` 语句]({{< ref "/c/language/statements/if" >}})：用作替代分支的声明

@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/ctype](https://zh.cppreference.com/w/c/header/ctype)
 
-​	此标头是[空终结字节字符串](https://zh.cppreference.com/w/c/string/byte)库的一部分。
+​	此标头是[空终结字节字符串]({{< ref "/c/string/byte" >}})库的一部分。
 
 | Functions                                                    |                                   |
 | ------------------------------------------------------------ | --------------------------------- |

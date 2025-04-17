@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/stdbit](https://zh.cppreference.com/w/c/header/stdbit)
 
-​	此标头是[数值](https://zh.cppreference.com/w/c/numeric)库的一部分，特别是，它提供处理 C 对象的[字节序](https://zh.cppreference.com/w/c/header/stdbit#.E5.AE.8F.E5.B8.B8.E9.87.8F)和[字节与位表示](https://zh.cppreference.com/w/c/header/stdbit#.E5.87.BD.E6.95.B0)的宏和函数。
+​	此标头是[数值](https://zh.cppreference.com/w/c/numeric)库的一部分，特别是，它提供处理 C 对象的[字节序]({{< ref "/c/header/stdbit#.E5.AE.8F.E5.B8.B8.E9.87.8F" >}})和[字节与位表示]({{< ref "/c/header/stdbit#.E5.87.BD.E6.95.B0" >}})的宏和函数。
 
 ## 函数
 

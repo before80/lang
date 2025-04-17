@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`goto` 语句](https://zh.cppreference.com/w/c/language/goto)：用作该语句的声明
+- [`goto` 语句]({{< ref "/c/language/statements/goto" >}})：用作该语句的声明

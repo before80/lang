@@ -11,9 +11,9 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/scope](https://zh.cppreference.com/w/c/language/scope)
 
-​	C 程序中出现的每个[标识符](https://zh.cppreference.com/w/c/language/identifier)都仅在一些可能不连续的部分*可见*（即可使用），这些部分被称为其*作用域*。
+​	C 程序中出现的每个[标识符]({{< ref "/c/language/basic_concepts/identifier" >}})都仅在一些可能不连续的部分*可见*（即可使用），这些部分被称为其*作用域*。
 
-​	在作用域内，标识符仅若在不同[命名空间](https://zh.cppreference.com/w/c/language/name_space)中，才可以指代多于一个实体。
+​	在作用域内，标识符仅若在不同[命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})中，才可以指代多于一个实体。
 
 ​	C 拥有四种作用域：
 
@@ -24,7 +24,7 @@ draft = false
 
 ## 嵌套作用域
 
-若相同标识符所命名的两个不同实体在同一时刻都在作用域中，且它们属于同一[命名空间](https://zh.cppreference.com/w/c/language/name_space)，则作用域被嵌套（不允许其他形式的作用域重叠），而内层作用域中的声明隐藏外层作用域中的声明：
+若相同标识符所命名的两个不同实体在同一时刻都在作用域中，且它们属于同一[命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})，则作用域被嵌套（不允许其他形式的作用域重叠），而内层作用域中的声明隐藏外层作用域中的声明：
 
 ```
 // 此处的命名空间为通常标识符。
@@ -46,7 +46,7 @@ void g(int a);   // 名称 a 拥有函数原型作用域；隐藏文件作用域
 
 ## 块作用域
 
-任何在[复合语句](https://zh.cppreference.com/w/c/language/statements#.E5.A4.8D.E5.90.88.E8.AF.AD.E5.8F.A5)，包含函数体或出现于 [if](https://zh.cppreference.com/w/c/language/if)、[switch](https://zh.cppreference.com/w/c/language/switch)、[for](https://zh.cppreference.com/w/c/language/for)、[while](https://zh.cppreference.com/w/c/language/while) 或 [do-while](https://zh.cppreference.com/w/c/language/do) 语句中的任何表达式、声明或语句(C99 起)，或在[函数定义](https://zh.cppreference.com/w/c/language/function_definition)内的参数列表中声明的标识符的作用域，在声明点开始，在声明于其中的块或语句的结尾结束。
+任何在[复合语句]({{< ref "/c/language/statements#.E5.A4.8D.E5.90.88.E8.AF.AD.E5.8F.A5" >}})，包含函数体或出现于 [if]({{< ref "/c/language/statements/if" >}})、[switch]({{< ref "/c/language/statements/switch" >}})、[for]({{< ref "/c/language/statements/for" >}})、[while]({{< ref "/c/language/statements/while" >}}) 或 [do-while]({{< ref "/c/language/statements/do" >}}) 语句中的任何表达式、声明或语句(C99 起)，或在[函数定义]({{< ref "/c/language/functions/function_definition" >}})内的参数列表中声明的标识符的作用域，在声明点开始，在声明于其中的块或语句的结尾结束。
 
 ```c
 void f(int n)  // 函数参数 'n' 的作用域开始
@@ -74,7 +74,7 @@ int a = n; // 错误：名称 'n' 不在作用域中
 > }
 > ```
 
-​	块作用域变量默认[无链接](https://zh.cppreference.com/w/c/language/storage_duration)并拥有[自动存储期](https://zh.cppreference.com/w/c/language/storage_duration)。注意非 VLA 局部变量的存储期在进入块时开始，但在见到声明前，该变量不在作用域中且不能访问。
+​	块作用域变量默认[无链接]({{< ref "/c/language/declarations/storage_duration" >}})并拥有[自动存储期]({{< ref "/c/language/declarations/storage_duration" >}})。注意非 VLA 局部变量的存储期在进入块时开始，但在见到声明前，该变量不在作用域中且不能访问。
 
 ## 文件作用域
 
@@ -89,11 +89,11 @@ int main(void)
 }
 ```
 
-文件作用域的标识符默认拥有[外部链接](https://zh.cppreference.com/w/c/language/storage_duration)和[静态存储期](https://zh.cppreference.com/w/c/language/storage_duration)。
+文件作用域的标识符默认拥有[外部链接]({{< ref "/c/language/declarations/storage_duration" >}})和[静态存储期]({{< ref "/c/language/declarations/storage_duration" >}})。
 
 ## 函数作用域
 
-声明于函数内部的[标号（且只有标号）](https://zh.cppreference.com/w/c/language/statements#Labels)，在该函数中的所有位置（所有嵌套块中，其自身声明前后）都在作用域内。注意：任何语句前的冒号字符前的标识符，若不用于其他用途，则隐式声明一个标号。
+声明于函数内部的[标号（且只有标号）]({{< ref "/c/language/statements#Labels" >}})，在该函数中的所有位置（所有嵌套块中，其自身声明前后）都在作用域内。注意：任何语句前的冒号字符前的标识符，若不用于其他用途，则隐式声明一个标号。
 
 ```c
 void f()
@@ -113,7 +113,7 @@ void g()
 
 ## 函数原型作用域
 
-非函数定义的[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)的形参列表中引入的名称的作用域，在函数[声明器](https://zh.cppreference.com/w/c/language/declarations)的结尾结束。
+非函数定义的[函数声明]({{< ref "/c/language/functions/function_declaration" >}})的形参列表中引入的名称的作用域，在函数[声明器]({{< ref "/c/language/declarations" >}})的结尾结束。
 
 ```c
 int f(int n,
@@ -186,9 +186,9 @@ unsigned long factorial(unsigned long n)
 
 ​	C89 前，拥有外部链接的标识符在块中引入时，拥有文件作用域，因此不要求 C89 编译器诊断已离开作用域的 extern 标识符的使用（这种使用是未定义行为）。
 
-​	C 中，循环体内的局部变量，能隐藏声明于 [for](https://zh.cppreference.com/w/c/language/for) 循环的初始化子句中的变量（其作用域为嵌套的），但 C++ 中不能如此。
+​	C 中，循环体内的局部变量，能隐藏声明于 [for]({{< ref "/c/language/statements/for" >}}) 循环的初始化子句中的变量（其作用域为嵌套的），但 C++ 中不能如此。
 
-​	不同于 C++，C 无结构体作用域：声明于 struct/union/enum 声明内的名称在结构体声明所在的相同作用域（除了数据成员在其[成员命名空间](https://zh.cppreference.com/w/c/language/name_space)中）：
+​	不同于 C++，C 无结构体作用域：声明于 struct/union/enum 声明内的名称在结构体声明所在的相同作用域（除了数据成员在其[成员命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})中）：
 
 ```c
 struct foo {

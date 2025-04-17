@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`_Alignof` 运算符](https://zh.cppreference.com/w/c/language/_Alignof) (C11 起)
+- [`_Alignof` 运算符]({{< ref "/c/language/expressions/_Alignof" >}}) (C11 起)

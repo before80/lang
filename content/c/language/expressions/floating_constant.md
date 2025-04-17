@@ -16,7 +16,7 @@ math = true
 
 ## 语法
 
-​	浮点数常量是[非左值](https://zh.cppreference.com/w/c/language/value_category)表达式，拥有下列形式：
+​	浮点数常量是[非左值]({{< ref "/c/language/expressions/value_category" >}})表达式，拥有下列形式：
 
 *有效数字* *指数* ﻿(可选) *后缀* ﻿(可选)	
 
@@ -84,13 +84,13 @@ double y = .1; // 浮点数 0.1（整数部分可选）
 
 ​	所有拥有相同源码形式的浮点数常量都转换到有相同值的同一内部格式。有不同形式的浮点数常量，例如 `1.23` 与 `1.230`，不需要转换到同一内部格式和值。
 
-​	若 [FLT_EVAL_METHOD](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD) 指示，可以转换浮点数常量为大于其所指示类型的范围和精度。例如，常量 `0.1f` 可能在表达式中表现为 `0.1L`。若 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 为 2，则十六进制浮点数常量的求值结果，是浮点数常量所表示的正确舍入到目标类型的准确值。(C99 起)
+​	若 [FLT_EVAL_METHOD]({{< ref "/c/types/limits/FLT_EVAL_METHOD" >}}) 指示，可以转换浮点数常量为大于其所指示类型的范围和精度。例如，常量 `0.1f` 可能在表达式中表现为 `0.1L`。若 [FLT_RADIX]({{< ref "/c/types/limits" >}}) 为 2，则十六进制浮点数常量的求值结果，是浮点数常量所表示的正确舍入到目标类型的准确值。(C99 起)
 
 ​	拥有相同数值 `x`，但有不同量指数的十进制浮点数类型的浮点数常量，例如 `1230.dd`、 `1230.0dd` 及 `1.23e3dd`，拥有可区别的内部表示。十进制浮点数类型的浮点数常量的量指数 `q` 在可能时，以 \\(10^q\\) 表示位于 *有效数字* 最低位的位置的 1 的方式确定。若按以上方式确定的量指数 `q` 与系数 \\(c = x⋅10^{−q} \\)不能以浮点数常量的类型准确表示，则在类型的界限内按需增加 `q` ，并对应地减少 `c` ，进行需要的舍入。舍入可能导致零或无穷大。若在 `q` 抵达最大值后（可能为舍入后的） `c` 仍在容许范围外，则产生的浮点数常量拥有正无穷大值。(C23 起)
 
 ## 注解
 
-​	默认[舍入方向](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)和[精度](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD)在浮点数常量转换成内部表示时有效，而且不会引发[浮点数异常](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，即使 [`#pragma STDC FENV_ACCESS`](https://zh.cppreference.com/w/c/preprocessor/impl) 生效（对于字符串的执行时转换，可使用 [strtod](https://zh.cppreference.com/w/c/string/byte/strtof)）。注意它和浮点数类型的[算术常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)有别。
+​	默认[舍入方向](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)和[精度]({{< ref "/c/types/limits/FLT_EVAL_METHOD" >}})在浮点数常量转换成内部表示时有效，而且不会引发[浮点数异常](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，即使 [`#pragma STDC FENV_ACCESS`](https://zh.cppreference.com/w/c/preprocessor/impl) 生效（对于字符串的执行时转换，可使用 [strtod](https://zh.cppreference.com/w/c/string/byte/strtof)）。注意它和浮点数类型的[算术常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})有别。
 
 ​	浮点数常量中的字母是无关大小写的，除了在十进制浮点数类型的后缀中不能一同使用大写和小写(C23 起)： `0x1.ep+3` 与 `0X1.EP+3` 表示同一浮点数 `15.0`。
 
@@ -98,7 +98,7 @@ double y = .1; // 浮点数 0.1（整数部分可选）
 
 ​	不同于整数，不是每个浮点数都能以十进制或十六进制(C99 起)常量语法表示：宏 [`NAN`](https://zh.cppreference.com/w/c/numeric/math/NAN) 和 [`INFINITY`](https://zh.cppreference.com/w/c/numeric/math/INFINITY) 以及如 [nan](https://zh.cppreference.com/w/c/numeric/math/nan) 的函数提供生成这些特殊值的方式(C99 起)。注意 `0x1.FFFFFEp128f`，可能作为 IEEE float NaN 出现，实际上它在该格式中溢出到无穷大。
 
-​	没有负浮点数常量；如 `-1.2` 的表达式被视为[算术运算符](https://zh.cppreference.com/w/c/language/operator_arithmetic)一元负作用于浮点数常量 `1.2` 。注意可通过 `-0.0` 构造特殊值负零。
+​	没有负浮点数常量；如 `-1.2` 的表达式被视为[算术运算符]({{< ref "/c/language/expressions/operator_arithmetic" >}})一元负作用于浮点数常量 `1.2` 。注意可通过 `-0.0` 构造特殊值负零。
 
 ## 示例
 

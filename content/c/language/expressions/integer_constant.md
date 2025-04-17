@@ -15,7 +15,7 @@ draft = false
 
 ## 语法
 
-​	整数常量是拥有下列类型的[非左值](https://zh.cppreference.com/w/c/language/value_category)表达式
+​	整数常量是拥有下列类型的[非左值]({{< ref "/c/language/expressions/value_category" >}})表达式
 
 | *十进制常量* *整数后缀* ﻿(可选)   | (1)  |          |
 | -------------------------------- | ---- | -------- |
@@ -90,11 +90,11 @@ unsigned long long l4 = 184467'440737'0'95505'92LLU; // C23
 
 ​	整数常量中的字母无关大小写： `0xDeAdBaBeU` 和 `0XdeadBABEu` 表示同一个数（一个例外是 *long-long-suffix* ，必须是 `ll` 或 `LL` ，不能是 `lL` 或 `Ll` ）(C99 起)。
 
-​	没有负整数常量。如 -1 的表达式是将[一元负运算符](https://zh.cppreference.com/w/c/language/operator_arithmetic)应用到常量所表示的值。
+​	没有负整数常量。如 -1 的表达式是将[一元负运算符]({{< ref "/c/language/expressions/operator_arithmetic" >}})应用到常量所表示的值。
 
-​	当用于 [`#if`](https://zh.cppreference.com/w/c/preprocessor/conditional) 或 [`#elif`](https://zh.cppreference.com/w/c/preprocessor/conditional) 的控制表达式时，所有有符号整数常量都表现为如同拥有 [intmax_t](https://zh.cppreference.com/w/c/types/integer) 类型，且所有无符号整数常量都表现为如同有 [uintmax_t](https://zh.cppreference.com/w/c/types/integer) 类型。(C99 起)
+​	当用于 [`#if`]({{< ref "/c/language/preprocessor/conditional" >}}) 或 [`#elif`]({{< ref "/c/language/preprocessor/conditional" >}}) 的控制表达式时，所有有符号整数常量都表现为如同拥有 [intmax_t]({{< ref "/c/types/integer" >}}) 类型，且所有无符号整数常量都表现为如同有 [uintmax_t]({{< ref "/c/types/integer" >}}) 类型。(C99 起)
 
-​	整数常量可用于[整数常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)。
+​	整数常量可用于[整数常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})。
 
 ​	由于[最大吞噬](https://zh.cppreference.com/w/c/language/translation_phases#.E6.9C.80.E5.A4.A7.E5.90.9E.E5.99.AC)规则，以 `e` 和 `E` 结束的十六进制整数常量在后随运算符 `+` 或 `-` 时，源码中必须以空白符或括号将它们与运算符分隔：
 

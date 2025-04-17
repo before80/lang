@@ -189,7 +189,7 @@ called once
 (C11 起)
 ```
 
-​	展开成正的整数 [常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)，它定义 [thrd_exit](https://zh.cppreference.com/w/c/thread/thrd_exit) 将对线程局域存储指针调用析构器的最大次数。
+​	展开成正的整数 [常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})，它定义 [thrd_exit](https://zh.cppreference.com/w/c/thread/thrd_exit) 将对线程局域存储指针调用析构器的最大次数。
 
 ​	此常量等价于 POSIX 的 `PTHREAD_DESTRUCTOR_ITERATIONS`。
 
@@ -472,7 +472,7 @@ enum {
 #define thread_local _Thread_local // (C11 起) (C23 移除)
 ```
 
-​	便利宏，用于指定对象拥有 [线程局部存储期](https://zh.cppreference.com/w/c/language/storage_duration)。
+​	便利宏，用于指定对象拥有 [线程局部存储期]({{< ref "/c/language/declarations/storage_duration" >}})。
 
 **注解**
 
@@ -1029,7 +1029,7 @@ int thrd_create( thrd_t *thr, thrd_start_t func, void *arg ); // (C11 起)
 
 ​	类型 `thrd_start_t` 是 `int(*)(void*)` 的 `typedef`，有别于 POSIX 的等价版本 `void*(*)(void*)`。
 
-​	将所有所有线程特定存储值（见 [tss_create](https://zh.cppreference.com/w/c/thread/tss_create)）初始化为 [NULL](https://zh.cppreference.com/w/c/types/NULL)。
+​	将所有所有线程特定存储值（见 [tss_create](https://zh.cppreference.com/w/c/thread/tss_create)）初始化为 [NULL]({{< ref "/c/types/NULL" >}})。
 
 ​	从函数 `func` 返回等价于以等于 `func` 返回值的参数调用 [thrd_exit](https://zh.cppreference.com/w/c/thread/thrd_exit)。
 
@@ -1279,13 +1279,13 @@ int thrd_sleep( const struct timespec* duration,
 
 ​	阻塞当前线程的执行，*至少* 直至经过 `duration` 所指向的基于 TIME_UTC 的时长。
 
-​	若收到不忽略的信号（[signal](https://zh.cppreference.com/w/c/program/signal)），则可以较早地从休眠恢复。此情况下，若 `remaining` 非 [NULL](https://zh.cppreference.com/w/c/types/NULL)，则存储剩余时长到 `remaining` 所指向的对象中。
+​	若收到不忽略的信号（[signal](https://zh.cppreference.com/w/c/program/signal)），则可以较早地从休眠恢复。此情况下，若 `remaining` 非 [NULL]({{< ref "/c/types/NULL" >}})，则存储剩余时长到 `remaining` 所指向的对象中。
 
 **参数**
 
 | duration  | -    | 指向要休眠的时长的指针                                       |
 | --------- | ---- | ------------------------------------------------------------ |
-| remaining | -    | 指向要放置中断剩余时间的对象的指针。可为 [NULL](https://zh.cppreference.com/w/c/types/NULL)，此情况下忽略它 |
+| remaining | -    | 指向要放置中断剩余时间的对象的指针。可为 [NULL]({{< ref "/c/types/NULL" >}})，此情况下忽略它 |
 
 **返回值**
 
@@ -1474,7 +1474,7 @@ void *tss_get( tss_t tss_key );
 
 **返回值**
 
-​	成功时为值，失败时为 [NULL](https://zh.cppreference.com/w/c/types/NULL)。
+​	成功时为值，失败时为 [NULL]({{< ref "/c/types/NULL" >}})。
 
 **注意**
 

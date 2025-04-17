@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/_Alignas](https://zh.cppreference.com/w/c/language/_Alignas)
 
-​	出现于[声明](https://zh.cppreference.com/w/c/language/declarations)语法中，作为修改所声明对象的[对齐要求](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)的类型说明符。
+​	出现于[声明]({{< ref "/c/language/declarations" >}})语法中，作为修改所声明对象的[对齐要求]({{< ref "/c/language/basic_concepts/object#.E5.AF.B9.E9.BD.90" >}})的类型说明符。
 
 ## 语法
 
@@ -21,17 +21,17 @@ draft = false
 | `_Alignas` `(` *类型* `)`   | (3)  | (C11 起) |
 | `alignas` `(` *类型* `)`    | (4)  | (C23 起) |
 
-| *表达式* | -    | 任何值为合法[对齐](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)或零的[整数常量表达式](https://zh.cppreference.com/w/c/language/constant_expression) |
+| *表达式* | -    | 任何值为合法[对齐]({{< ref "/c/language/basic_concepts/object#.E5.AF.B9.E9.BD.90" >}})或零的[整数常量表达式]({{< ref "/c/language/expressions/constant_expression" >}}) |
 | -------- | ---- | ------------------------------------------------------------ |
 | *类型*   | -    | 任何[类型名称](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E5.90.8D) |
 
-​	关键词 `_Alignas` 亦用作便利宏 [`alignas`](https://zh.cppreference.com/w/c/types)，于头文件 `<stdalign.h>` 提供。(C23 前)
+​	关键词 `_Alignas` 亦用作便利宏 [`alignas`]({{< ref "/c/types" >}})，于头文件 `<stdalign.h>` 提供。(C23 前)
 
 ## 解释
 
-​	`_Alignas`(C23 前)`alignas`(C23 起) 说明符只能在声明不是[位域](https://zh.cppreference.com/w/c/language/bit_field)，且不拥有 [register](https://zh.cppreference.com/w/c/language/storage_duration) 存储类的对象时使用。它不能用于函数参数声明，亦不能用于 `typedef`。
+​	`_Alignas`(C23 前)`alignas`(C23 起) 说明符只能在声明不是[位域]({{< ref "/c/language/declarations/bit_field" >}})，且不拥有 [register]({{< ref "/c/language/declarations/storage_duration" >}}) 存储类的对象时使用。它不能用于函数参数声明，亦不能用于 `typedef`。
 
-​	用于声明时，设置被声明对象的[对齐要求](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)为：
+​	用于声明时，设置被声明对象的[对齐要求]({{< ref "/c/language/basic_concepts/object#.E5.AF.B9.E9.BD.90" >}})为：
 
 1,2) *表达式* ﻿的结果，除非它是零
 
@@ -43,7 +43,7 @@ draft = false
 
 ​	多个 `_Alignas`(C23 前)`alignas`(C23 起) 说明符出现于同一个声明中时，使用最严格者。
 
-​	`_Alignas`(C23 前)`alignas`(C23 起) 说明符只需要出现于对象[定义](https://zh.cppreference.com/w/c/language/declarations#.E5.AE.9A.E4.B9.89)中，但若有任何声明使用了 `_Alignas`(C23 前)`alignas`(C23 起)，则它所说明的对齐必须与其定义上的 `_Alignas`(C23 前)`alignas`(C23 起) 相同。若不同的翻译单元为同一对象说明不同对齐，则行为未定义。
+​	`_Alignas`(C23 前)`alignas`(C23 起) 说明符只需要出现于对象[定义]({{< ref "/c/language/declarations#.E5.AE.9A.E4.B9.89" >}})中，但若有任何声明使用了 `_Alignas`(C23 前)`alignas`(C23 起)，则它所说明的对齐必须与其定义上的 `_Alignas`(C23 前)`alignas`(C23 起) 相同。若不同的翻译单元为同一对象说明不同对齐，则行为未定义。
 
 ## 注解
 
@@ -51,7 +51,7 @@ draft = false
 
 ## 关键词
 
-[`alignas`](https://zh.cppreference.com/w/c/keyword/alignas), [`_Alignas`](https://zh.cppreference.com/w/c/keyword/_Alignas)
+[`alignas`]({{< ref "/c/language/keyword/alignas" >}}), [`_Alignas`]({{< ref "/c/language/keyword/_Alignas" >}})
 
 ## 示例
 
@@ -102,7 +102,7 @@ alignment of sse_t is 16
 
 ## 参阅
 
-| [max_align_t](https://zh.cppreference.com/w/c/types/max_align_t)(C11) | 对齐要求不小于任何其他标量类型的类型 (typedef) |
+| [max_align_t]({{< ref "/c/types/max_align_t" >}})(C11) | 对齐要求不小于任何其他标量类型的类型 (typedef) |
 | ------------------------------------------------------------ | ---------------------------------------------- |
-| [`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof)(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/_Alignof)(C23 起) | 查询对象的对齐要求 (运算符)                    |
+| [`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}})(C23 前)[`alignof`]({{< ref "/c/language/expressions/_Alignof" >}})(C23 起) | 查询对象的对齐要求 (运算符)                    |
 | **`alignas` 说明符**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/language/alignas)** |                                                |

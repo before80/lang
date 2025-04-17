@@ -37,11 +37,11 @@ draft = false
 
 #### `#if`, `#elif`
 
-​	*表达式* 是常量表达式，仅使用[常量](https://zh.cppreference.com/w/c/language/expressions#.E5.B8.B8.E9.87.8F.E5.8F.8A.E5.AD.97.E9.9D.A2.E9.87.8F)和用 [`#define`](https://zh.cppreference.com/w/c/preprocessor/replace) 指令定义的标识符。任何非字面量，未以 [`#define`](https://zh.cppreference.com/w/c/preprocessor/replace) 指令定义的标识符，均求值为 0，但 true 求值为 1(C23 起)。
+​	*表达式* 是常量表达式，仅使用[常量]({{< ref "/c/language/expressions#.E5.B8.B8.E9.87.8F.E5.8F.8A.E5.AD.97.E9.9D.A2.E9.87.8F" >}})和用 [`#define`]({{< ref "/c/language/preprocessor/replace" >}}) 指令定义的标识符。任何非字面量，未以 [`#define`]({{< ref "/c/language/preprocessor/replace" >}}) 指令定义的标识符，均求值为 0，但 true 求值为 1(C23 起)。
 
-​	表达式可以含有形式为 `defined` *标识符* 或 `defined (`*标识符*`)` 的一元运算符，若用 [`#define`](https://zh.cppreference.com/w/c/preprocessor/replace) 指令定义了该 *标识符*，则返回 1，否则返回 0。这种语境中，__has_include、__has_embed 和 __has_c_attribute 被当做如同它们是已定义宏的名字。(C23 起)若 *表达式* 求值为非零值，则包含该控制代码块并跳过其他。若所用的任何标识符不是常量，则用 0 替换它。
+​	表达式可以含有形式为 `defined` *标识符* 或 `defined (`*标识符*`)` 的一元运算符，若用 [`#define`]({{< ref "/c/language/preprocessor/replace" >}}) 指令定义了该 *标识符*，则返回 1，否则返回 0。这种语境中，__has_include、__has_embed 和 __has_c_attribute 被当做如同它们是已定义宏的名字。(C23 起)若 *表达式* 求值为非零值，则包含该控制代码块并跳过其他。若所用的任何标识符不是常量，则用 0 替换它。
 
-​	预处理器语境中，`__has_c_attribute` 表达式检测给定属性记号是否受支持及其受支持版本。见[属性测试](https://zh.cppreference.com/w/c/language/attributes#.E5.B1.9E.E6.80.A7.E6.B5.8B.E8.AF.95)。(C23 起)
+​	预处理器语境中，`__has_c_attribute` 表达式检测给定属性记号是否受支持及其受支持版本。见[属性测试]({{< ref "/c/language/declarations/attributes#.E5.B1.9E.E6.80.A7.E6.B5.8B.E8.AF.95" >}})。(C23 起)
 
 > 注
 >
@@ -49,7 +49,7 @@ draft = false
 
 ## 组合指令
 
-​	检查标识符是否[被定义为宏名](https://zh.cppreference.com/w/c/preprocessor/replace)。
+​	检查标识符是否[被定义为宏名]({{< ref "/c/language/preprocessor/replace" >}})。
 
 “`#ifdef` *标识符*”与“`#if defined` *标识符*”实质上等价。
 

@@ -130,7 +130,7 @@ draft = false
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [ldexp <br />ldexpf (C99)<br />ldexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ldexp) | 将数乘以 *2* 的幂 (函数)                                     |
 | [modf <br />modff (C99)<br />modfl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/modf) | 把一个数拆分成整数和小数部分 (函数)                          |
-| [scalbn (C99)<br />scalbnf (C99)<br />scalbnl (C99)<br />scalbln (C99)<br />scalblnf (C99)<br />scalblnl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/scalbn) | 高效计算一个数乘 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的幂 (函数) |
+| [scalbn (C99)<br />scalbnf (C99)<br />scalbnl (C99)<br />scalbln (C99)<br />scalblnf (C99)<br />scalblnl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/scalbn) | 高效计算一个数乘 [FLT_RADIX]({{< ref "/c/types/limits" >}}) 的幂 (函数) |
 | [ilogb (C99)<br />ilogbf (C99)<br />ilogbl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ilogb) | 提取给定数的指数（结果为整数） (函数)                        |
 | [logb (C99)<br />logbf (C99)<br />logbl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/logb) | 提取给定数的指数（结果为浮点数） (函数)                      |
 | [nextafter (C99)<br />nextafterf (C99)<br />nextafterl (C99)<br />nexttoward (C99)<br />nexttowardf (C99)<br />nexttowardl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/nextafter) | 确定到给定值方向的下一个可表示的浮点数 (函数)                |

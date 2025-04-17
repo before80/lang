@@ -52,7 +52,7 @@ L"Δx = %" PRId16 // 在阶段 4，PRId16 展开成 "d"
 
 ​	若两个字符串字面量拥有不同的编码前缀，则连接为非良构。(C23 起)
 
-​	其次，在[翻译阶段 7](https://zh.cppreference.com/w/c/language/translation_phases)，添加空终止字符到每个字符串字面量，然后每个字符串字面量初始化一个拥有静态[存储期](https://zh.cppreference.com/w/c/language/storage_duration)，长度刚好能容纳字符串字面量的内容加一个空终止符的无名数组。
+​	其次，在[翻译阶段 7](https://zh.cppreference.com/w/c/language/translation_phases)，添加空终止字符到每个字符串字面量，然后每个字符串字面量初始化一个拥有静态[存储期]({{< ref "/c/language/declarations/storage_duration" >}})，长度刚好能容纳字符串字面量的内容加一个空终止符的无名数组。
 
 ```c
 char* p = "\x12" "3"; // 创建 static char[3] 数组，保有 {'\x12', '3', '\0'} 
@@ -89,7 +89,7 @@ char* p = "abc\0def"; // strlen(p) == 3，但数组大小为 8
 char* p = "\xff""f"; // OK：字面量为 char[3]，保有 {'\xff', 'f', '\0'}
 ```
 
-​	字符串字面量可用于[初始化数组](https://zh.cppreference.com/w/c/language/array_initialization)，而若数组大小比字符串字面量大小少一，则忽略空终止符：
+​	字符串字面量可用于[初始化数组]({{< ref "/c/language/initialization/array_initialization" >}})，而若数组大小比字符串字面量大小少一，则忽略空终止符：
 
 ```c
 char a1[] = "abc"; // a1 为 char[4] ，保有 {'a', 'b', 'c', '\0'}

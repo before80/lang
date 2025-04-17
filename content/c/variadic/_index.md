@@ -13,7 +13,7 @@ draft = false
 
 ​	可变参数函数是使用可变数量实参的函数（例如 [printf](https://zh.cppreference.com/w/c/io/fprintf)）。
 
-​	可变参数函数使用在其最后一个参数后加省略号声明，例如 int [printf](http://zh.cppreference.com/w/c/io/fprintf)(const char* format, ...);。语法和自动实参转换的额外细节见[变长实参](https://zh.cppreference.com/w/c/language/variadic)。
+​	可变参数函数使用在其最后一个参数后加省略号声明，例如 int [printf](http://zh.cppreference.com/w/c/io/fprintf)(const char* format, ...);。语法和自动实参转换的额外细节见[变长实参]({{< ref "/c/language/functions/variadic" >}})。
 
 ​	从函数体内使用以下工具访问可变实参：
 

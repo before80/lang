@@ -22,20 +22,20 @@ draft = false
 
 ​	其中
 
-| *存储类说明符* | -    | (C23 起)[存储类说明符](https://zh.cppreference.com/w/c/language/storage_duration)的列表，只能包含 `constexpr`、`static`、`register` 或 [thread_local](http://zh.cppreference.com/w/c/thread/thread_local) |
+| *存储类说明符* | -    | (C23 起)[存储类说明符]({{< ref "/c/language/declarations/storage_duration" >}})的列表，只能包含 `constexpr`、`static`、`register` 或 [thread_local](http://zh.cppreference.com/w/c/thread/thread_local) |
 | -------------- | ---- | ------------------------------------------------------------ |
 | *类型*         | -    | 指定任何完整对象类型或未知大小的数组的[类型名](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E5.90.8D)，但不能是 VLA |
-| *初始化式列表* | -    | 适合类型为 *类型* 的对象进行[初始化](https://zh.cppreference.com/w/c/language/initialization)的初始化式的列表 |
+| *初始化式列表* | -    | 适合类型为 *类型* 的对象进行[初始化]({{< ref "/c/language/initialization" >}})的初始化式的列表 |
 
 ## 解释
 
-​	复合字面量表达式构造一个 *类型* 所指定类型的无名对象，并根据 *初始化式列表* 予以初始化。接受[指派初始化器](https://zh.cppreference.com/w/c/language/initialization)。
+​	复合字面量表达式构造一个 *类型* 所指定类型的无名对象，并根据 *初始化式列表* 予以初始化。接受[指派初始化器]({{< ref "/c/language/initialization" >}})。
 
-​	复合字面量的类型是 *类型*（除非 *类型* 是未知大小的数组；如在[数组初始化](https://zh.cppreference.com/w/c/language/array_initialization)中一般从 *初始化器列表* 推导出其大小）。
+​	复合字面量的类型是 *类型*（除非 *类型* 是未知大小的数组；如在[数组初始化]({{< ref "/c/language/initialization/array_initialization" >}})中一般从 *初始化器列表* 推导出其大小）。
 
-​	复合字面量的值类别是[左值](https://zh.cppreference.com/w/c/language/value_category)（能取其地址）。
+​	复合字面量的值类别是[左值]({{< ref "/c/language/expressions/value_category" >}})（能取其地址）。
 
-​	若复合字面量出现于文件作用域，则其求值所得的无名对象拥有静态[存储期](https://zh.cppreference.com/w/c/language/storage_duration)，若复合字面量出现于块作用域，则该对象拥有自动[存储期](https://zh.cppreference.com/w/c/language/storage_duration)（此情况下对象的[生存期](https://zh.cppreference.com/w/c/language/lifetime)结束于外围块的结尾）。(C23 前)
+​	若复合字面量出现于文件作用域，则其求值所得的无名对象拥有静态[存储期]({{< ref "/c/language/declarations/storage_duration" >}})，若复合字面量出现于块作用域，则该对象拥有自动[存储期]({{< ref "/c/language/declarations/storage_duration" >}})（此情况下对象的[生存期]({{< ref "/c/language/basic_concepts/lifetime" >}})结束于外围块的结尾）。(C23 前)
 
 ​	若复合字面量在函数体之外且在任何形参列表之外求值，则它与文件作用域关联；否则，它与其外围块相关联。存储类说明符序列（可能为空）、类型名和初始化式列表（如果有），依据这项关联，应当分别对于文件作用域或块作用域中的具有以下形式的虚构的对象定义而言是有效的说明符：(C23 起)
 
@@ -45,7 +45,7 @@ draft = false
 
 ## 注解
 
-​	`const` 限定的字符或宽字符数组类型的复合字面量，可能会与[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)共享存储。
+​	`const` 限定的字符或宽字符数组类型的复合字面量，可能会与[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})共享存储。
 
 ```c
 (const char []){"abc"} == "abc" // 可以为 1 或 0，未指定
@@ -79,7 +79,7 @@ again:
 
 ​	因为复合字面量是无名的，一个复合字面量不能在自己的初始化器中引用自身（一个具名结构体可以包含指向其自身的指针）。
 
-​	复合字面量的语法和[转型](https://zh.cppreference.com/w/c/language/cast)相似，其重要的区别是转型是非左值表达式，而复合字面量是左值。
+​	复合字面量的语法和[转型]({{< ref "/c/language/expressions/cast" >}})相似，其重要的区别是转型是非左值表达式，而复合字面量是左值。
 
 ## 示例
 

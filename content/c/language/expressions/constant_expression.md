@@ -15,64 +15,64 @@ draft = false
 
 ## 预处理器常量表达式
 
-​	[`#if` 或 `#elif`](https://zh.cppreference.com/w/c/preprocessor/conditional) 之后的表达式必须展开成
+​	[`#if` 或 `#elif`]({{< ref "/c/language/preprocessor/conditional" >}}) 之后的表达式必须展开成
 
-- [赋值](https://zh.cppreference.com/w/c/language/operator_assignment)、[自增、自减](https://zh.cppreference.com/w/c/language/operator_incdec)、[函数调用](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)或[逗号](https://zh.cppreference.com/w/c/language/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6)以外的，参数为预处理器常量表达式的[运算符](https://zh.cppreference.com/w/c/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6)
-- [整数常量](https://zh.cppreference.com/w/c/language/integer_constant)
-- [字符常量](https://zh.cppreference.com/w/c/language/character_constant)
+- [赋值]({{< ref "/c/language/expressions/operator_assignment" >}})、[自增、自减]({{< ref "/c/language/expressions/operator_incdec" >}})、[函数调用]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})或[逗号]({{< ref "/c/language/expressions/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6" >}})以外的，参数为预处理器常量表达式的[运算符]({{< ref "/c/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6" >}})
+- [整数常量]({{< ref "/c/language/expressions/integer_constant" >}})
+- [字符常量]({{< ref "/c/language/expressions/character_constant" >}})
 - 特殊预处理器运算符 `defined`
 
 ​	字符常量在 `#if` 表达式中求值时，可能以源字符集、执行字符集或某个其他实现定义字符集转译。
 
-​	`#if` 表达式中，对有符号类型以 [intmax_t](https://zh.cppreference.com/w/c/types/integer) 的语义，而对无符号类型以 [uintmax_t](https://zh.cppreference.com/w/c/types/integer) 的语义进行整数算术。(C99 起)
+​	`#if` 表达式中，对有符号类型以 [intmax_t]({{< ref "/c/types/integer" >}}) 的语义，而对无符号类型以 [uintmax_t]({{< ref "/c/types/integer" >}}) 的语义进行整数算术。(C99 起)
 
 ## 整数常量表达式
 
 ​	整数常量表达式是仅由下列内容组成的表达式
 
-- [赋值](https://zh.cppreference.com/w/c/language/operator_assignment)、[自增、自减](https://zh.cppreference.com/w/c/language/operator_incdec)、[函数调用](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)或[逗号](https://zh.cppreference.com/w/c/language/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6)以外的[运算符](https://zh.cppreference.com/w/c/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6)，但[转换](https://zh.cppreference.com/w/c/language/cast)运算符只能转换算术类型为整数类型，除非它们是 `sizeof` 、`_Alignof`(C11 起)(C23 前)、`alignof`(C23 起) 或 `typeof/typeof_unqual`(C23 起) 运算符的操作数的一部分。
-- [整数常量](https://zh.cppreference.com/w/c/language/integer_constant)
-- [枚举常量](https://zh.cppreference.com/w/c/language/enum)
-- [字符常量](https://zh.cppreference.com/w/c/language/character_constant)
-- [浮点数常量](https://zh.cppreference.com/w/c/language/floating_constant)，但仅当其作为向整数类型转换的直接操作数
-- `操作数非 VLA` 的(C99 起) [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 运算符
+- [赋值]({{< ref "/c/language/expressions/operator_assignment" >}})、[自增、自减]({{< ref "/c/language/expressions/operator_incdec" >}})、[函数调用]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})或[逗号]({{< ref "/c/language/expressions/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6" >}})以外的[运算符]({{< ref "/c/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6" >}})，但[转换]({{< ref "/c/language/expressions/cast" >}})运算符只能转换算术类型为整数类型，除非它们是 `sizeof` 、`_Alignof`(C11 起)(C23 前)、`alignof`(C23 起) 或 `typeof/typeof_unqual`(C23 起) 运算符的操作数的一部分。
+- [整数常量]({{< ref "/c/language/expressions/integer_constant" >}})
+- [枚举常量]({{< ref "/c/language/declarations/enum" >}})
+- [字符常量]({{< ref "/c/language/expressions/character_constant" >}})
+- [浮点数常量]({{< ref "/c/language/expressions/floating_constant" >}})，但仅当其作为向整数类型转换的直接操作数
+- `操作数非 VLA` 的(C99 起) [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 运算符
 - `_Alignof`(C23 前) `alignof`(C23 起) 运算符(C11 起)
 - 具名的以及复合字面量常量，其为整数类型，或为算术类型且是显式转换的直接操作数 (C23 起)
 
 ​	整数常量表达式在编译时求值。下列语境要求被称为*整数常量表达式* ﻿的表达式：
 
-- [位域](https://zh.cppreference.com/w/c/language/bit_field)的大小
-- [枚举常量](https://zh.cppreference.com/w/c/language/enum)的值
-- [switch 语句](https://zh.cppreference.com/w/c/language/switch)的 `case` 标号
+- [位域]({{< ref "/c/language/declarations/bit_field" >}})的大小
+- [枚举常量]({{< ref "/c/language/declarations/enum" >}})的值
+- [switch 语句]({{< ref "/c/language/statements/switch" >}})的 `case` 标号
 - `非 VLA` (C99 起)数组的大小
-- 整数到指针[隐式转换](https://zh.cppreference.com/w/c/language/conversion)。
-- [数组指派符](https://zh.cppreference.com/w/c/language/array_initialization)的索引 (C99 起)
-- [`_Static_assert`](https://zh.cppreference.com/w/c/language/_Static_assert) 的首参数[`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof)(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 的整数参数 (C11 起)
+- 整数到指针[隐式转换]({{< ref "/c/language/expressions/conversion" >}})。
+- [数组指派符]({{< ref "/c/language/initialization/array_initialization" >}})的索引 (C99 起)
+- [`_Static_assert`]({{< ref "/c/language/declarations/_Static_assert" >}}) 的首参数[`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}})(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 的整数参数 (C11 起)
 - 位精确整数类型（`_BitInt(N)`）的位数 `N`  (C23 起)
 
 ## 静态初始化式
 
-​	拥有静态和线程局域[存储期](https://zh.cppreference.com/w/c/language/storage_duration)或者以存储类说明符 constexpr 所声明(C23 起)的对象的[初始化式](https://zh.cppreference.com/w/c/language/initialization)中使用的表达式，必须是下列表达式之一
+​	拥有静态和线程局域[存储期]({{< ref "/c/language/declarations/storage_duration" >}})或者以存储类说明符 constexpr 所声明(C23 起)的对象的[初始化式]({{< ref "/c/language/initialization" >}})中使用的表达式，必须是下列表达式之一
 
 1) *算术常量表达式*，即由下列内容构成的任何算术类型表达式
-   - [赋值](https://zh.cppreference.com/w/c/language/operator_assignment)、[自增、自减](https://zh.cppreference.com/w/c/language/operator_incdec)、[函数调用](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)或[逗号](https://zh.cppreference.com/w/c/language/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6)以外的[运算符](https://zh.cppreference.com/w/c/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6)，但[转换](https://zh.cppreference.com/w/c/language/cast)运算符必须转换算术类型到其他算术类型，除非它们是 `sizeof` 、`_Alignof`(C11 起)(C23 前)、`alignof`(C23 起) 或 `typeof/typeof_unqual`(C23 起) 运算符的操作数的一部分
-   - [整数常量](https://zh.cppreference.com/w/c/language/integer_constant)
-   - [浮点数常量](https://zh.cppreference.com/w/c/language/floating_constant)
-   - [枚举常量](https://zh.cppreference.com/w/c/language/enum)
-   - [字符常量](https://zh.cppreference.com/w/c/language/character_constant)
-   - 操作数非 VLA 的 (C99 起)[`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 运算符
-   - [`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof)(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 运算符(C11 起)
+   - [赋值]({{< ref "/c/language/expressions/operator_assignment" >}})、[自增、自减]({{< ref "/c/language/expressions/operator_incdec" >}})、[函数调用]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})或[逗号]({{< ref "/c/language/expressions/operator_other#.E9.80.97.E5.8F.B7.E8.BF.90.E7.AE.97.E7.AC.A6" >}})以外的[运算符]({{< ref "/c/language/expressions#.E8.BF.90.E7.AE.97.E7.AC.A6" >}})，但[转换]({{< ref "/c/language/expressions/cast" >}})运算符必须转换算术类型到其他算术类型，除非它们是 `sizeof` 、`_Alignof`(C11 起)(C23 前)、`alignof`(C23 起) 或 `typeof/typeof_unqual`(C23 起) 运算符的操作数的一部分
+   - [整数常量]({{< ref "/c/language/expressions/integer_constant" >}})
+   - [浮点数常量]({{< ref "/c/language/expressions/floating_constant" >}})
+   - [枚举常量]({{< ref "/c/language/declarations/enum" >}})
+   - [字符常量]({{< ref "/c/language/expressions/character_constant" >}})
+   - 操作数非 VLA 的 (C99 起)[`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 运算符
+   - [`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}})(C23 前)[`alignof`](https://zh.cppreference.com/w/c/language/alignof)(C23 起) 运算符(C11 起)
    - 算术类型的具名的以及复合字面量常量 (C23 起)
 
 
 
-2) 空指针常量（比如 [NULL](https://zh.cppreference.com/w/c/types/NULL)）
+2) 空指针常量（比如 [NULL]({{< ref "/c/types/NULL" >}})）
 3) *地址常量表达式*，即
    - 空指针
-   - 指代静态[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的对象的[左值](https://zh.cppreference.com/w/c/language/value_category)，或函数指代器，通过下列方式之一转换为指针
+   - 指代静态[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的对象的[左值]({{< ref "/c/language/expressions/value_category" >}})，或函数指代器，通过下列方式之一转换为指针
      - 用一元取址运算符
      - 转换整数常量到指针
-     - 数组到指针或函数到指针[隐式转换](https://zh.cppreference.com/w/c/language/conversion)
+     - 数组到指针或函数到指针[隐式转换]({{< ref "/c/language/expressions/conversion" >}})
 
 4. 某完整对象类型的*地址常量表达式*加或减一个*整数常量表达式*
 
@@ -84,7 +84,7 @@ draft = false
 
 6. *复合字面量常量*，为 (C23 起)
 
-   - 带有存储类说明符 `constexpr` 的[复合字面量](https://zh.cppreference.com/w/c/language/compound_literal)
+   - 带有存储类说明符 `constexpr` 的[复合字面量]({{< ref "/c/language/expressions/compound_literal" >}})
 
    - （递归地）在结构体或联合体类型的复合字面量常量上应用成员访问运算符 `.` 的后缀表达式。
 

@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`nullptr` pointer literal](https://zh.cppreference.com/w/c/language/nullptr) (C23 起)
+- [`nullptr` pointer literal]({{< ref "/c/language/expressions/nullptr" >}}) (C23 起)

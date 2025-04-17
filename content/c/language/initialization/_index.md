@@ -11,9 +11,9 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/initialization](https://zh.cppreference.com/w/c/language/initialization)
 
-​	对象[声明](https://zh.cppreference.com/w/c/language/declarations)可以通过名为*初始化* ﻿的步骤提供其初始值。
+​	对象[声明]({{< ref "/c/language/declarations" >}})可以通过名为*初始化* ﻿的步骤提供其初始值。
 
-​	对于每个[声明符](https://zh.cppreference.com/w/c/language/declarations)，若不省略初始化式，则它可以是下列之一：
+​	对于每个[声明符]({{< ref "/c/language/declarations" >}})，若不省略初始化式，则它可以是下列之一：
 
 | `= 表达式`           | (1)  |          |
 | -------------------- | ---- | -------- |
@@ -28,11 +28,11 @@ draft = false
 | `{` `}`                 | (3)  | (C23 起) |
 | `指派符列表 = 初始化式` | (4)  | (C99 起) |
 
-​	其中*指派符列表* ﻿是形式为 `[ 常量表达式 ]` 的数组指派符的列表，或形式为 `.` *标识符* ﻿的结构体/联合体指派符的列表；见[数组初始化](https://zh.cppreference.com/w/c/language/array_initialization)和[结构体初始化](https://zh.cppreference.com/w/c/language/struct_initialization)。(C99 起)
+​	其中*指派符列表* ﻿是形式为 `[ 常量表达式 ]` 的数组指派符的列表，或形式为 `.` *标识符* ﻿的结构体/联合体指派符的列表；见[数组初始化]({{< ref "/c/language/initialization/array_initialization" >}})和[结构体初始化]({{< ref "/c/language/initialization/struct_initialization" >}})。(C99 起)
 
 > 注意 (C99 起)
 >
-> ​	除了初始化器，花括号环绕的*初始化器列表* ﻿亦可出现于[复合字面量](https://zh.cppreference.com/w/c/language/compound_literal)中，它是有下列形式的表达式：
+> ​	除了初始化器，花括号环绕的*初始化器列表* ﻿亦可出现于[复合字面量]({{< ref "/c/language/expressions/compound_literal" >}})中，它是有下列形式的表达式：
 >
 > `( 类型 ) { 初始化器列表 }`
 >
@@ -48,16 +48,16 @@ draft = false
 
 ​	若提供了初始化式，对于
 
-- 标量类型初始化，见[标量初始化](https://zh.cppreference.com/w/c/language/scalar_initialization)。
-- 数组类型初始化，见[数组初始化](https://zh.cppreference.com/w/c/language/array_initialization)。
-- 结构体及联合体类型初始化，见[结构体初始化](https://zh.cppreference.com/w/c/language/struct_initialization)。
+- 标量类型初始化，见[标量初始化]({{< ref "/c/language/initialization/scalar_initialization" >}})。
+- 数组类型初始化，见[数组初始化]({{< ref "/c/language/initialization/array_initialization" >}})。
+- 结构体及联合体类型初始化，见[结构体初始化]({{< ref "/c/language/initialization/struct_initialization" >}})。
 
 ### 隐式初始化
 
 ​	若未提供初始化式：
 
-- 拥有自动[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的对象将被初始化为不确定值（可能是[陷阱表示](https://zh.cppreference.com/w/c/language/object)）
-- 拥有静态及线程局域[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的对象被空初始化。
+- 拥有自动[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的对象将被初始化为不确定值（可能是[陷阱表示]({{< ref "/c/language/basic_concepts/object" >}})）
+- 拥有静态及线程局域[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的对象被空初始化。
 
 ### 空初始化
 
@@ -76,11 +76,11 @@ draft = false
 
 ## 注解
 
-​	在初始化静态或线程局域[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的对象时，每个初始化式中的*表达式* ﻿都必须是[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)或[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)。
+​	在初始化静态或线程局域[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的对象时，每个初始化式中的*表达式* ﻿都必须是[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})或[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})。
 
 ​	初始化式不能用于不完整类型的对象、VLA 及拥有链接的块作用域对象。
 
-​	函数形参的初值如同用从[函数调用](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)实参赋值，而非初始化一样建立。
+​	函数形参的初值如同用从[函数调用]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})实参赋值，而非初始化一样建立。
 
 ​	若将不确定值用作任何标准库调用的实参，则行为未定义。另外，任意牵涉到不确定值的表达式的值是不确定值（例如 int n;，n 可能与自身比较不相等，并且它在后续读取中的值可能出现更改）。
 

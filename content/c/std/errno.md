@@ -26,12 +26,7 @@ draft = false
 
 ```c
 #define EDOM   /* 由实现定义 */
-
 ```
-
-
-
-
 
 
 
@@ -42,12 +37,7 @@ draft = false
 
 ```c
 #define EILSEQ /* 由实现定义 */
-
 ```
-
-
-
-
 
 
 
@@ -61,7 +51,7 @@ draft = false
 
 ```
 
-​	每个定义于 [`<errno.h>`](https://zh.cppreference.com/w/c/header/errno) 的宏都展开成 int 类型的整数常量表达式，并且拥有独立的正整数值。ISO C 定义了下列常量。实现可以定义更多，只要以 'E' 开始，后随数字或大写字母即可。
+​	每个定义于 [`<errno.h>`]({{< ref "/c/header/errno" >}}) 的宏都展开成 int 类型的整数常量表达式，并且拥有独立的正整数值。ISO C 定义了下列常量。实现可以定义更多，只要以 'E' 开始，后随数字或大写字母即可。
 
 | 在标头 `<errno.h>` 定义 |                                 |
 | ----------------------- | ------------------------------- |
@@ -102,14 +92,7 @@ Numerical argument out of domain
  
 log(0.0)  = -inf
 Numerical result out of range
-
 ```
-
-
-
-
-
-
 
 
 
@@ -123,7 +106,7 @@ Numerical result out of range
 
 ```
 
-​	`errno` 是一个预处理器宏（见后述），展开成线程局域的(C11 起) int 类型可修改左值。一些标准库函数通过写入正整数到 `errno` 指定错误。通常，会将 `errno` 的值设置为错误码之一。错误码作为以字母 `E` 后随大写字母或数字开始的宏常量，列于 [``](https://zh.cppreference.com/w/c/header/errno)。
+​	`errno` 是一个预处理器宏（见后述），展开成线程局域的(C11 起) int 类型可修改左值。一些标准库函数通过写入正整数到 `errno` 指定错误。通常，会将 `errno` 的值设置为错误码之一。错误码作为以字母 `E` 后随大写字母或数字开始的宏常量，列于 [``]({{< ref "/c/header/errno" >}})。
 
 ​	`errno` 的值在程序启动时为 0 ，而且无论是否出现错误，都允许库函数将正整数写入 `errno` ，不过库函数决不会将 0 存储于 `errno`。
 

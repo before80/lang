@@ -28,12 +28,12 @@ draft = false
 
 ​	下列名字或实体的声明中允许使用这个属性：
 
-- [结构体](https://zh.cppreference.com/w/c/language/struct)/[联合体](https://zh.cppreference.com/w/c/language/union)：`struct [[deprecated]] S;`，
-- [typedef 名](https://zh.cppreference.com/w/c/language/typedef)：`[[deprecated]] typedef S* PS;`，
+- [结构体]({{< ref "/c/language/declarations/struct" >}})/[联合体]({{< ref "/c/language/declarations/union" >}})：`struct [[deprecated]] S;`，
+- [typedef 名]({{< ref "/c/language/declarations/typedef" >}})：`[[deprecated]] typedef S* PS;`，
 - 对象：`[[deprecated]] int x;`，
 - 结构体/联合体成员：`union U { [[deprecated]] int n; };`，
-- [函数](https://zh.cppreference.com/w/c/language/function_definition)：`[[deprecated]] void f(void);`，
-- [枚举](https://zh.cppreference.com/w/c/language/enum)：`enum [[deprecated]] E {};`，
+- [函数]({{< ref "/c/language/functions/function_definition" >}})：`[[deprecated]] void f(void);`，
+- [枚举]({{< ref "/c/language/declarations/enum" >}})：`enum [[deprecated]] E {};`，
 - 枚举项：`enum { A [[deprecated]], B [[deprecated]] = 42 };`。
 
 ​	声明时未弃用的名字可被重声明为 `deprecated`。声明为 `deprecated` 的名字不能通过不带此属性地重声明而变为未弃用。

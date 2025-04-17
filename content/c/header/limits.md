@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/limits](https://zh.cppreference.com/w/c/header/limits)
 
-​	此标头是[类型支持](https://zh.cppreference.com/w/c/types)库的一部分，特别是，它是 C [数值极限](https://zh.cppreference.com/w/c/types/limits#.E6.A0.B8.E5.BF.83.E8.AF.AD.E8.A8.80.E6.95.B4.E6.95.B0.E7.B1.BB.E5.9E.8B.E7.9A.84.E6.9E.81.E9.99.90)接口的一部分。
+​	此标头是[类型支持]({{< ref "/c/types" >}})库的一部分，特别是，它是 C [数值极限]({{< ref "/c/types/limits#.E6.A0.B8.E5.BF.83.E8.AF.AD.E8.A8.80.E6.95.B4.E6.95.B0.E7.B1.BB.E5.9E.8B.E7.9A.84.E6.9E.81.E9.99.90" >}})接口的一部分。
 
 ## 核心语言整数类型的极限
 

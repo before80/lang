@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/wctype](https://zh.cppreference.com/w/c/header/wctype)
 
-​	此标头是[宽字符分类与映射工具](https://zh.cppreference.com/w/c/string/wide)库的一部分。
+​	此标头是[宽字符分类与映射工具]({{< ref "/c/string/wide" >}})库的一部分。
 
 ## 函数
 

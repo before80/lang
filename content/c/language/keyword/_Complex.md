@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`_Complex` 类型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E5.A4.8D.E6.B5.AE.E7.82.B9.E7.B1.BB.E5.9E.8B)：用作该类型的声明 (C99 起)
+- [`_Complex` 类型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E5.A4.8D.E6.B5.AE.E7.82.B9.E7.B1.BB.E5.9E.8B" >}})：用作该类型的声明 (C99 起)

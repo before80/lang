@@ -11,9 +11,9 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/declarations](https://zh.cppreference.com/w/c/language/declarations)
 
-​	*声明* ﻿是一种引入一个或多个[标识符](https://zh.cppreference.com/w/c/language/identifier)到程序中，并指定其含义及属性的 C 语言构造。
+​	*声明* ﻿是一种引入一个或多个[标识符]({{< ref "/c/language/basic_concepts/identifier" >}})到程序中，并指定其含义及属性的 C 语言构造。
 
-​	声明可以出现在任何作用域中。每个声明以分号结束（类似[语句](https://zh.cppreference.com/w/c/language/statements)），并由两(C23 前)三(C23 起)个独立部分组成：
+​	声明可以出现在任何作用域中。每个声明以分号结束（类似[语句]({{< ref "/c/language/statements" >}})），并由两(C23 前)三(C23 起)个独立部分组成：
 
 | *说明符与限定符* *声明符与初始化器* ﻿(可选) `;`           | (1)  |          |
 | -------------------------------------------------------- | ---- | -------- |
@@ -26,19 +26,19 @@ draft = false
 
 - 类型说明符：
   - void
-  - [算术类型](https://zh.cppreference.com/w/c/language/arithmetic_types)名
-  - [原子类型](https://zh.cppreference.com/w/c/language/atomic)名
-  - 先前由 [typedef](https://zh.cppreference.com/w/c/language/typedef) 声明引入的名称
-  - [`struct`](https://zh.cppreference.com/w/c/language/struct)、[`union`](https://zh.cppreference.com/w/c/language/union) 或 [`enum`](https://zh.cppreference.com/w/c/language/enum) 说明符
+  - [算术类型]({{< ref "/c/language/basic_concepts/arithmetic_types" >}})名
+  - [原子类型]({{< ref "/c/language/declarations/atomic" >}})名
+  - 先前由 [typedef]({{< ref "/c/language/declarations/typedef" >}}) 声明引入的名称
+  - [`struct`]({{< ref "/c/language/declarations/struct" >}})、[`union`]({{< ref "/c/language/declarations/union" >}}) 或 [`enum`]({{< ref "/c/language/declarations/enum" >}}) 说明符
   - [typeof](https://zh.cppreference.com/w/c/language/typeof) 说明符 (C23 起)
-- 零或一个存储类说明符：[`typedef`](https://zh.cppreference.com/w/c/language/typedef)、[`constexpr`](https://zh.cppreference.com/w/c/language/constexpr)、[`auto`](https://zh.cppreference.com/w/c/language/auto)、[register、static、extern、`_Thread_local`](https://zh.cppreference.com/w/c/language/storage_duration)
-- 零或多个类型限定符：[`const`](https://zh.cppreference.com/w/c/language/const)、[`volatile`](https://zh.cppreference.com/w/c/language/volatile)、[`restrict`](https://zh.cppreference.com/w/c/language/restrict)、[_Atomic](https://zh.cppreference.com/w/c/language/atomic)
-- （只在声明函数时）零或多个函数说明符：[`inline`](https://zh.cppreference.com/w/c/language/inline)、[`_Noreturn`](https://zh.cppreference.com/w/c/language/_Noreturn)
-- 零或多个对齐说明符：[`_Alignas`](https://zh.cppreference.com/w/c/language/_Alignas)(C11 起)(C23 前)[`alignas`](https://zh.cppreference.com/w/c/language/alignas)(C23 起)
+- 零或一个存储类说明符：[`typedef`]({{< ref "/c/language/declarations/typedef" >}})、[`constexpr`](https://zh.cppreference.com/w/c/language/constexpr)、[`auto`](https://zh.cppreference.com/w/c/language/auto)、[register、static、extern、`_Thread_local`]({{< ref "/c/language/declarations/storage_duration" >}})
+- 零或多个类型限定符：[`const`]({{< ref "/c/language/declarations/const" >}})、[`volatile`]({{< ref "/c/language/declarations/volatile" >}})、[`restrict`]({{< ref "/c/language/declarations/restrict" >}})、[_Atomic]({{< ref "/c/language/declarations/atomic" >}})
+- （只在声明函数时）零或多个函数说明符：[`inline`]({{< ref "/c/language/functions/inline" >}})、[`_Noreturn`]({{< ref "/c/language/functions/_Noreturn" >}})
+- 零或多个对齐说明符：[`_Alignas`]({{< ref "/c/language/declarations/_Alignas" >}})(C11 起)(C23 前)[`alignas`](https://zh.cppreference.com/w/c/language/alignas)(C23 起)
 
-*声明符与初始化器*-*声明符* ﻿的逗号分隔列表（每个声明符提供附加类型信息及/或要声明的标识符）。声明符可伴随[初始化器](https://zh.cppreference.com/w/c/language/initialization)。[enum](https://zh.cppreference.com/w/c/language/enum)、[struct](https://zh.cppreference.com/w/c/language/struct) 和 [union](https://zh.cppreference.com/w/c/language/union) 声明可忽略*声明符* ﻿，这种情况下它们仅引入枚举常量和/或标签。
+*声明符与初始化器*-*声明符* ﻿的逗号分隔列表（每个声明符提供附加类型信息及/或要声明的标识符）。声明符可伴随[初始化器]({{< ref "/c/language/initialization" >}})。[enum]({{< ref "/c/language/declarations/enum" >}})、[struct]({{< ref "/c/language/declarations/struct" >}}) 和 [union]({{< ref "/c/language/declarations/union" >}}) 声明可忽略*声明符* ﻿，这种情况下它们仅引入枚举常量和/或标签。
 
-*属性说明符序列*-(C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到被声明的实体，或若单独出现则构成属性声明。
+*属性说明符序列*-(C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到被声明的实体，或若单独出现则构成属性声明。
 
 
 
@@ -61,7 +61,7 @@ enum COLOR {RED, GREEN, BLUE} c; // “enum COLOR {RED, GREEN, BLUE}”是类型
 
 ​	一个声明引入的每个标识符类型是通过*类型说明符* ﻿所指定的类型及其*声明符* ﻿所应用的类型修饰决定的。当使用 auto 说明符时，变量的类型也可以进行推断。(C23 起)
 
-​	[属性](https://zh.cppreference.com/w/c/language/attributes)(C23 起)可在*说明符与限定符* ﻿中出现，该情况下它们应用到前导的说明符所确定的类型。
+​	[属性]({{< ref "/c/language/declarations/attributes" >}})(C23 起)可在*说明符与限定符* ﻿中出现，该情况下它们应用到前导的说明符所确定的类型。
 
 ## 声明符
 
@@ -76,9 +76,9 @@ enum COLOR {RED, GREEN, BLUE} c; // “enum COLOR {RED, GREEN, BLUE}”是类型
 
 1) 此声明符引入的标识符。
 2) 任何可以放入括号中的声明符；引入指向数组或指向函数指针时要求这么做。
-3) [指针声明符](https://zh.cppreference.com/w/c/language/pointer)：声明 S * cvr D 声明 `D` 为 *cvr* 限定指针，指向 `S` 所确定的类型。
-4) [数组声明符](https://zh.cppreference.com/w/c/language/array)：声明 S D[N] 声明 `D` 为有 `N` 个 `S` 所确定类型对象的数组。*无指针声明符* ﻿是除未被括号包围的指针声明符以外的其他任何声明符。
-5) [函数声明符](https://zh.cppreference.com/w/c/language/function_declaration)：声明 S D(params) 声明 `D` 为接收参数 `params` 并返回 `S` 的函数。*无指针声明符* ﻿是除未被括号包围的指针声明符以外的其他任何声明符 。
+3) [指针声明符]({{< ref "/c/language/declarations/pointer" >}})：声明 S * cvr D 声明 `D` 为 *cvr* 限定指针，指向 `S` 所确定的类型。
+4) [数组声明符]({{< ref "/c/language/declarations/array" >}})：声明 S D[N] 声明 `D` 为有 `N` 个 `S` 所确定类型对象的数组。*无指针声明符* ﻿是除未被括号包围的指针声明符以外的其他任何声明符。
+5) [函数声明符]({{< ref "/c/language/functions/function_declaration" >}})：声明 S D(params) 声明 `D` 为接收参数 `params` 并返回 `S` 的函数。*无指针声明符* ﻿是除未被括号包围的指针声明符以外的其他任何声明符 。
 
 ​	此语法背后的原因，是当声明符所声明的标识符以与声明符相同的形式出现在表达式中时，它会拥有类型说明符序列所指定的类型。
 
@@ -122,31 +122,31 @@ int (*(*foo)(double))[3] = NULL;
 int x = (*(*foo)(1.2))[0];
 ```
 
-​	每个不属于其他声明符一部分的声明符结尾是一个[顺序点](https://zh.cppreference.com/w/c/language/eval_order)。
+​	每个不属于其他声明符一部分的声明符结尾是一个[顺序点]({{< ref "/c/language/expressions/eval_order" >}})。
 
-​	所有情况下，*属性说明符序列* ﻿均为可选的[属性](https://zh.cppreference.com/w/c/language/attributes)(C23 起)序列。立即出现在标识符后时，它应用到被声明的对象或函数。
+​	所有情况下，*属性说明符序列* ﻿均为可选的[属性]({{< ref "/c/language/declarations/attributes" >}})(C23 起)序列。立即出现在标识符后时，它应用到被声明的对象或函数。
 
 ## 定义
 
 ​	*定义*是一个提供所有关于其所声明标识符信息的声明。
 
-​	每个 [enum](https://zh.cppreference.com/w/c/language/enum) 或 [typedef](https://zh.cppreference.com/w/c/language/typedef) 声明都是定义。
+​	每个 [enum]({{< ref "/c/language/declarations/enum" >}}) 或 [typedef]({{< ref "/c/language/declarations/typedef" >}}) 声明都是定义。
 
-​	对于函数，包含函数体的声明即是[函数定义](https://zh.cppreference.com/w/c/language/function_definition)：
+​	对于函数，包含函数体的声明即是[函数定义]({{< ref "/c/language/functions/function_definition" >}})：
 
 ```c
 int foo(double); // 声明
 int foo(double x) { return x; } // 定义
 ```
 
-​	对于对象，分配其存储的声明（[自动或静态](https://zh.cppreference.com/w/c/language/storage_duration)，但、非 extern ）即是定义，而一个不分配存储的声明（[外部声明](https://zh.cppreference.com/w/c/language/extern)）不是。
+​	对于对象，分配其存储的声明（[自动或静态]({{< ref "/c/language/declarations/storage_duration" >}})，但、非 extern ）即是定义，而一个不分配存储的声明（[外部声明]({{< ref "/c/language/declarations/extern" >}})）不是。
 
 ```c
 extern int n; // 声明
 int n = 10; // 定义
 ```
 
-​	对于[结构体](https://zh.cppreference.com/w/c/language/struct)和[联合体](https://zh.cppreference.com/w/c/language/union)，指定其成员列表的声明是定义：
+​	对于[结构体]({{< ref "/c/language/declarations/struct" >}})和[联合体]({{< ref "/c/language/declarations/union" >}})，指定其成员列表的声明是定义：
 
 ```c
 struct X; // 声明
@@ -155,9 +155,9 @@ struct X { int n; }; // 定义
 
 ## 重声明
 
-​	若另一个同一标识符的声明在同一[作用域](https://zh.cppreference.com/w/c/language/scope)的较早部分出现，则声明不可再引入同一标识符，除非
+​	若另一个同一标识符的声明在同一[作用域]({{< ref "/c/language/basic_concepts/scope" >}})的较早部分出现，则声明不可再引入同一标识符，除非
 
-- [有链接](https://zh.cppreference.com/w/c/language/storage_duration)对象（外部或内部）的声明可以重复：
+- [有链接]({{< ref "/c/language/declarations/storage_duration" >}})对象（外部或内部）的声明可以重复：
 
 ```c
 extern int x;
@@ -169,14 +169,14 @@ static int n = 10; // OK
 static int n; // OK
 ```
 
-- 非 VLA [typedef](https://zh.cppreference.com/w/c/language/typedef) 可以任意重复，只要它指名同一类型：
+- 非 VLA [typedef]({{< ref "/c/language/declarations/typedef" >}}) 可以任意重复，只要它指名同一类型：
 
 ```c
 typedef int int_t;
 typedef int int_t; // OK
 ```
 
-- [struct](https://zh.cppreference.com/w/c/language/struct) 和 [union](https://zh.cppreference.com/w/c/language/union) 声明可以重复：
+- [struct]({{< ref "/c/language/declarations/struct" >}}) 和 [union]({{< ref "/c/language/declarations/union" >}}) 声明可以重复：
 
 ```c
 struct X;
@@ -188,15 +188,15 @@ struct X;
 
 ## 注解
 
-​	C89 中，任何[复合语句](https://zh.cppreference.com/w/c/language/statements#.E5.A4.8D.E5.90.88.E8.AF.AD.E5.8F.A5)（块作用域）中的声明必须出现在块的开头，在任何[语句](https://zh.cppreference.com/w/c/language/statements)之前。而且，C89 中返回 int 的函数可以隐式地用[函数调用运算符](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)声明，且使用旧式[函数定义](https://zh.cppreference.com/w/c/language/function_definition)时，int 类型的函数参数不必声明。(C99 前)
+​	C89 中，任何[复合语句]({{< ref "/c/language/statements#.E5.A4.8D.E5.90.88.E8.AF.AD.E5.8F.A5" >}})（块作用域）中的声明必须出现在块的开头，在任何[语句]({{< ref "/c/language/statements" >}})之前。而且，C89 中返回 int 的函数可以隐式地用[函数调用运算符]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})声明，且使用旧式[函数定义]({{< ref "/c/language/functions/function_definition" >}})时，int 类型的函数参数不必声明。(C99 前)
 
 ​	禁止空声明符；简单声明必须拥有至少一个声明符，或声明至少一个 `struct/union/enum` 标签，或引入至少一个枚举常量。
 
-​	若声明符的任一部分是[非常量长度数组](https://zh.cppreference.com/w/c/language/array)（VLA）声明符，则整个声明符的类型被称作“可变修改类型”。根据可变修改类型定义的类型同样是可变修改的（VM）。任何可变修改类型声明只允许出现在[块作用域](https://zh.cppreference.com/w/c/language/scope)或函数原型作用域，而且不能是任何结构体或联合体的成员。尽管 VLA 只能拥有自动或分配[存储期](https://zh.cppreference.com/w/c/language/storage_duration)，一个 VM 类型，例如指向 VLA 的指针也可以有静态存储。关于 VM 类型有其他使用限制，见 [goto](https://zh.cppreference.com/w/c/language/goto)、[switch](https://zh.cppreference.com/w/c/language/switch)、[longjmp](https://zh.cppreference.com/w/c/program/longjmp)。(C99 起)
+​	若声明符的任一部分是[非常量长度数组]({{< ref "/c/language/declarations/array" >}})（VLA）声明符，则整个声明符的类型被称作“可变修改类型”。根据可变修改类型定义的类型同样是可变修改的（VM）。任何可变修改类型声明只允许出现在[块作用域]({{< ref "/c/language/basic_concepts/scope" >}})或函数原型作用域，而且不能是任何结构体或联合体的成员。尽管 VLA 只能拥有自动或分配[存储期]({{< ref "/c/language/declarations/storage_duration" >}})，一个 VM 类型，例如指向 VLA 的指针也可以有静态存储。关于 VM 类型有其他使用限制，见 [goto]({{< ref "/c/language/statements/goto" >}})、[switch]({{< ref "/c/language/statements/switch" >}})、[longjmp](https://zh.cppreference.com/w/c/program/longjmp)。(C99 起)
 
-​	[_Static_assert](https://zh.cppreference.com/w/c/language/_Static_assert) 从 C 文法的视角来看，被认为是声明（故它们可以出现在任何声明能出现的地方），但它们不会引入任何新的标识符，且不遵循声明语法。(C11 起)
+​	[_Static_assert]({{< ref "/c/language/declarations/_Static_assert" >}}) 从 C 文法的视角来看，被认为是声明（故它们可以出现在任何声明能出现的地方），但它们不会引入任何新的标识符，且不遵循声明语法。(C11 起)
 
-​	[属性](https://zh.cppreference.com/w/c/language/attributes)声明亦被认为是声明（故它们可以出现在任何声明能出现的地方），但它们不会引入任何新的标识符。单个无*属性说明符序列* ﻿的 `;` 不是属性声明，而是语句。
+​	[属性]({{< ref "/c/language/declarations/attributes" >}})声明亦被认为是声明（故它们可以出现在任何声明能出现的地方），但它们不会引入任何新的标识符。单个无*属性说明符序列* ﻿的 `;` 不是属性声明，而是语句。
 
 ## 参阅
 

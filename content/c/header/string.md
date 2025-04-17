@@ -11,16 +11,16 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/string](https://zh.cppreference.com/w/c/header/string)
 
-​	此标题提供了用于处理[空终止字节字符串](https://zh.cppreference.com/w/c/string/byte)的函数。
+​	此标题提供了用于处理[空终止字节字符串]({{< ref "/c/string/byte" >}})的函数。
 
 ## 宏
 
-| [NULL<br />](https://zh.cppreference.com/w/c/types/NULL) | 实现定义的空指针常量 (宏常量) |
+| [NULL<br />]({{< ref "/c/types/NULL" >}}) | 实现定义的空指针常量 (宏常量) |
 | -------------------------------------------------------- | ----------------------------- |
 
 ## 类型
 
-| [size_t<br />](https://zh.cppreference.com/w/c/types/size_t) | [`<izeo>`](https://zh.cppreference.com/w/c/language/sizeof) 运算符返回的无符号整数类型 (typedef) |
+| [size_t<br />]({{< ref "/c/types/size_t" >}}) | [`<izeo>`]({{< ref "/c/language/expressions/sizeof" >}}) 运算符返回的无符号整数类型 (typedef) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 ## 函数

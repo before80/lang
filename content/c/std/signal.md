@@ -124,12 +124,7 @@ int main(void)
 Sending signal 15
 Received signal 15
 Exit main()
-
 ```
-
-
-
-
 
 
 
@@ -140,12 +135,7 @@ Exit main()
 
 ```c
 #define SIG_DFL /* 由实现定义 */
-
 ```
-
-
-
-
 
 
 
@@ -208,12 +198,7 @@ int main(void)
 
 ```txt
 Exit main()
-
 ```
-
-
-
-
 
 
 
@@ -224,14 +209,7 @@ Exit main()
 
 ```c
 #define SIGTERM /* 由实现定义 */
-
 ```
-
-
-
-
-
-
 
 
 
@@ -242,14 +220,7 @@ Exit main()
 
 ```c
 #define SIGSEGV /* 由实现定义 */
-
 ```
-
-
-
-
-
-
 
 
 
@@ -260,14 +231,7 @@ Exit main()
 
 ```c
 #define SIGINT /* 由实现定义 */
-
 ```
-
-
-
-
-
-
 
 
 
@@ -278,14 +242,7 @@ Exit main()
 
 ```c
 #define SIGILL /* 由实现定义 */
-
 ```
-
-
-
-
-
-
 
 
 
@@ -296,14 +253,7 @@ Exit main()
 
 ```c
 #define SIGABRT /* 由实现定义 */
-
 ```
-
-
-
-
-
-
 
 
 
@@ -388,12 +338,7 @@ int main(void)
 Sending signal 15
 Received signal 15
 Exit main()
-
 ```
-
-
-
-
 
 
 
@@ -439,7 +384,7 @@ void (*signal( int sig, void (*handler) (int))) (int);
   - 来自 [``](https://zh.cppreference.com/w/c/thread#.E5.8E.9F.E5.AD.90.E6.93.8D.E4.BD.9C) 的原子函数，若原子参数为免锁
   - [atomic_is_lock_free](https://zh.cppreference.com/w/c/atomic/atomic_is_lock_free)（以任何类型的原子实参）
 
-- 除了赋值给静态 volatile [sig_atomic_t](http://zh.cppreference.com/w/c/program/sig_atomic_t) 对象外，信号处理函数使用任何拥有静态或线程局域(C11 起)[存储期](https://zh.cppreference.com/w/c/language/storage_duration)，且非免锁[原子](https://zh.cppreference.com/w/c/language/atomic)的(C11 起)对象。
+- 除了赋值给静态 volatile [sig_atomic_t](http://zh.cppreference.com/w/c/program/sig_atomic_t) 对象外，信号处理函数使用任何拥有静态或线程局域(C11 起)[存储期]({{< ref "/c/language/declarations/storage_duration" >}})，且非免锁[原子]({{< ref "/c/language/declarations/atomic" >}})的(C11 起)对象。
 
 进入信号处理函数时，浮点环境状态和所有对象的值是未指定的，除了
 

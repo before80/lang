@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`_Alignas`](https://zh.cppreference.com/w/c/language/_Alignas) 对齐指定符。 (C11 起)
+- [`_Alignas`]({{< ref "/c/language/declarations/_Alignas" >}}) 对齐指定符。 (C11 起)

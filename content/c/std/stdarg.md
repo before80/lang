@@ -55,7 +55,7 @@ T va_arg( va_list ap, T );
 
 ​	调用 `va_arg` 前，必须调用 va_start 或 va_copy 以初始化 `ap`，中间不能有 va_end 调用。每次调用 `va_arg` 宏都会修改 ap，令它指向下一个可变实参。
 
-​	若 `ap` 中的下个实参（提升后）与 `T` 的类型不[兼容](https://zh.cppreference.com/w/c/language/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)，则行为未定义，除非：
+​	若 `ap` 中的下个实参（提升后）与 `T` 的类型不[兼容]({{< ref "/c/language/basic_concepts/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B" >}})，则行为未定义，除非：
 
 - 一个类型是有符号整数类型，另一类型是对应的无符号整数类型，而且值可以被两类型一同表示；或
 - 一个类型是指向 `void` 的指针，而另一个是指向字符类型的指针。
@@ -106,12 +106,7 @@ int main(void)
 
 ```txt
 0.920258
-
 ```
-
-
-
-
 
 
 
@@ -182,12 +177,7 @@ int main(void)
 
 ```txt
 0.920258
-
 ```
-
-
-
-
 
 
 
@@ -300,9 +290,7 @@ int main(void)
 ```txt
 150
 150
-
 ```
-
 
 
 

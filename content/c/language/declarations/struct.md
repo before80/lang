@@ -13,7 +13,7 @@ draft = false
 
 ​	结构体是一种由一序列的成员组成的类型，成员的存储以顺序分配于内存中（与联合体相反，联合体是由一个序列的成员组成的类型，成员存储在内存中重叠）。
 
-​	结构体的[类型说明符](https://zh.cppreference.com/w/c/language/declarations)与[联合体（`union`）](https://zh.cppreference.com/w/c/language/union)类型说明符相同，只是所用的关键词有别。
+​	结构体的[类型说明符]({{< ref "/c/language/declarations" >}})与[联合体（`union`）]({{< ref "/c/language/declarations/union" >}})类型说明符相同，只是所用的关键词有别。
 
 ## 语法
 
@@ -26,8 +26,8 @@ draft = false
 
 | *名字*           | -    | 正在定义的结构体名称                                         |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *结构体声明列表* | -    | 任意数量的变量声明、[位域](https://zh.cppreference.com/w/c/language/bit_field)声明和[静态断言](https://zh.cppreference.com/w/c/language/static_assert)声明。不允许不完整类型的成员和函数类型的成员（除了下面描述的柔性数组成员） |
-| *属性说明符序列* | -    | (C23)[属性](https://zh.cppreference.com/w/c/language/attributes)的可选列表，应用到结构体类型 |
+| *结构体声明列表* | -    | 任意数量的变量声明、[位域]({{< ref "/c/language/declarations/bit_field" >}})声明和[静态断言](https://zh.cppreference.com/w/c/language/static_assert)声明。不允许不完整类型的成员和函数类型的成员（除了下面描述的柔性数组成员） |
+| *属性说明符序列* | -    | (C23)[属性]({{< ref "/c/language/declarations/attributes" >}})的可选列表，应用到结构体类型 |
 
 ## 解释
 
@@ -93,7 +93,7 @@ struct x { struct y *p; /* ... */ };
 struct y { struct x *q; /* ... */ };
 ```
 
-​	注意，亦可只用在另一声明中使用 struct 标签引入新的结构体名，但若先前声明的拥有同名的结构体存在于标签[命名空间](https://zh.cppreference.com/w/c/language/name_space)中，则标签会指代该名称
+​	注意，亦可只用在另一声明中使用 struct 标签引入新的结构体名，但若先前声明的拥有同名的结构体存在于标签[命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})中，则标签会指代该名称
 
 ```c
 struct s* p = NULL; // 标签命名一个位置结构体，声明它
@@ -110,15 +110,15 @@ void g(void)
 
 ## 关键词
 
-[`struct`](https://zh.cppreference.com/w/c/keyword/struct)
+[`struct`]({{< ref "/c/language/keyword/struct" >}})
 
 ## 注解
 
-​	涉及结构体初始化式的规则，见[结构体初始化](https://zh.cppreference.com/w/c/language/struct_initialization)。
+​	涉及结构体初始化式的规则，见[结构体初始化]({{< ref "/c/language/initialization/struct_initialization" >}})。
 
 ​	因为不允许不完整类型的成员，而且结构体类型在其定义结束前不完整，故结构体不能拥有其自身类型的成员。指向其自身类型的指针成员是允许的，而且这通常用于实现链表或树的节点。
 
-​	因为结构体声明不建立[作用域](https://zh.cppreference.com/w/c/language/scope)，故在*结构体声明列表* ﻿中引入的嵌套类型、枚举及枚举项会在定义结构体的外围作用域可见。
+​	因为结构体声明不建立[作用域]({{< ref "/c/language/basic_concepts/scope" >}})，故在*结构体声明列表* ﻿中引入的嵌套类型、枚举及枚举项会在定义结构体的外围作用域可见。
 
 ## 示例
 
@@ -196,8 +196,8 @@ Size of struct B = 16
 
 ## 参阅
 
-- [结构体及联合体成员访问](https://zh.cppreference.com/w/c/language/operator_member_access)
-- [位域](https://zh.cppreference.com/w/c/language/bit_field)
-- [结构体初始化](https://zh.cppreference.com/w/c/language/struct_initialization)
+- [结构体及联合体成员访问]({{< ref "/c/language/expressions/operator_member_access" >}})
+- [位域]({{< ref "/c/language/declarations/bit_field" >}})
+- [结构体初始化]({{< ref "/c/language/initialization/struct_initialization" >}})
 
 类声明的 [C++ 文档](https://zh.cppreference.com/w/cpp/language/class)

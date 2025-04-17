@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [联合体类型的声明](https://zh.cppreference.com/w/c/language/union)
+- [联合体类型的声明]({{< ref "/c/language/declarations/union" >}})

@@ -15,10 +15,10 @@ draft = false
 
 ​	这些特性是可选地提供的：
 
-- 若编译器定义宏常量 `__STDC_NO_THREADS__`，则不提供头文件 [`<threads.h>`](https://zh.cppreference.com/w/c/header/threads) 及所有在其中提供的名称；
-- 若编译器定义宏常量 `__STDC_NO_ATOMICS__`，则不提供头文件 [`<stdatomic.h>`](https://zh.cppreference.com/w/c/header/stdatomic) 及所有在其中提供的名称。
+- 若编译器定义宏常量 `__STDC_NO_THREADS__`，则不提供头文件 [`<threads.h>`]({{< ref "/c/header/threads" >}}) 及所有在其中提供的名称；
+- 若编译器定义宏常量 `__STDC_NO_ATOMICS__`，则不提供头文件 [`<stdatomic.h>`]({{< ref "/c/header/stdatomic" >}}) 及所有在其中提供的名称。
 
-​	另见 [`_Atomic` 类型说明符和限定符](https://zh.cppreference.com/w/c/language/atomic)。
+​	另见 [`_Atomic` 类型说明符和限定符]({{< ref "/c/language/declarations/atomic" >}})。
 
 ## 线程
 
@@ -171,12 +171,12 @@ draft = false
 ​	在 C 标准的未来修订中：
 
 - 以 `cnd_`、`mtx_`、`thrd_` 或 `tss_` 带一个小写字母开始的函数名、类型名与枚举常量可能添加到 `<threads.h>` 头文件中的声明；
-- 以 `ATOMIC_` 带一个大写字母开始的宏名可能添加到 [`<stdatomic.h>`](https://zh.cppreference.com/w/c/header/stdatomic) 头文件中的宏定义；
-- 以 `atomic_` 或 `memory_` 带一个小写字母开始的 typedef 名可能添加到 [`<stdatomic.h>`](https://zh.cppreference.com/w/c/header/stdatomic) 头文件中的声明；
-- 以 `memory_order_` 带一个小写字母开始的枚举常量可能添加到 [`<stdatomic.h>`](https://zh.cppreference.com/w/c/header/stdatomic) 头文件中的 [memory_order](https://zh.cppreference.com/w/c/atomic/memory_order) 类型的定义；
-- 以 `atomic_` 带一个小写字母开始的函数名可能添加到 [`<stdatomic.h>`](https://zh.cppreference.com/w/c/header/stdatomic) 头文件。
+- 以 `ATOMIC_` 带一个大写字母开始的宏名可能添加到 [`<stdatomic.h>`]({{< ref "/c/header/stdatomic" >}}) 头文件中的宏定义；
+- 以 `atomic_` 或 `memory_` 带一个小写字母开始的 typedef 名可能添加到 [`<stdatomic.h>`]({{< ref "/c/header/stdatomic" >}}) 头文件中的声明；
+- 以 `memory_order_` 带一个小写字母开始的枚举常量可能添加到 [`<stdatomic.h>`]({{< ref "/c/header/stdatomic" >}}) 头文件中的 [memory_order](https://zh.cppreference.com/w/c/atomic/memory_order) 类型的定义；
+- 以 `atomic_` 带一个小写字母开始的函数名可能添加到 [`<stdatomic.h>`]({{< ref "/c/header/stdatomic" >}}) 头文件。
 
-​	为函数名保留的表示符始终潜在地(C23 起)对作为带外部链接的标识符的使用保留，而此处列出的其他标识符在包含 [`<stdatomic.h>`](https://zh.cppreference.com/w/c/header/stdatomic) 时潜在地(C23 起)被保留。
+​	为函数名保留的表示符始终潜在地(C23 起)对作为带外部链接的标识符的使用保留，而此处列出的其他标识符在包含 [`<stdatomic.h>`]({{< ref "/c/header/stdatomic" >}}) 时潜在地(C23 起)被保留。
 
 ​	声明、定义或 #undef 这种标识符导致未定义行为，若标准或实现提供它(C23 起)。可移植的程序不应使用这些标识符。
 

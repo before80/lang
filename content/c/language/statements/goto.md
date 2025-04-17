@@ -19,13 +19,13 @@ draft = false
 
 ​	*属性说明符序列*(可选) `goto` *标号* `;`
 
-| *标号*           | -    | `goto` 语句的目标[标号](https://zh.cppreference.com/w/c/language/statements#.E6.A0.87.E5.8F.B7) |
+| *标号*           | -    | `goto` 语句的目标[标号]({{< ref "/c/language/statements#.E6.A0.87.E5.8F.B7" >}}) |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到 `goto` 语句 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到 `goto` 语句 |
 
 ## 解释
 
-​	`goto` 语句导致无条件跳转（控制的转移）到前附具名 *标号* （必须与 goto 语句出现于同一函数中）的语句，除非此跳转会进入[非常量长度数组（VLA）](https://zh.cppreference.com/w/c/language/array)或另一[可变修改（VM）类型](https://zh.cppreference.com/w/c/language/declarations)的作用域(C99 起)。
+​	`goto` 语句导致无条件跳转（控制的转移）到前附具名 *标号* （必须与 goto 语句出现于同一函数中）的语句，除非此跳转会进入[非常量长度数组（VLA）]({{< ref "/c/language/declarations/array" >}})或另一[可变修改（VM）类型]({{< ref "/c/language/declarations" >}})的作用域(C99 起)。
 
 ​	*标号* 是一个后随冒号（`:`）和一条语句(C23 前)的标识符。标号是仅有的拥有*函数作用域*的标识符：能在其所出现于的函数中的任何位置使用它们（在 goto 语句中）。任何语句前可以有多个标号。
 
@@ -57,7 +57,7 @@ label:;
 
 ## 关键词
 
-​	[`goto`](https://zh.cppreference.com/w/c/keyword/goto)
+​	[`goto`]({{< ref "/c/language/keyword/goto" >}})
 
 ## 注解
 

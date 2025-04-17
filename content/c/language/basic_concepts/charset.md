@@ -80,7 +80,7 @@ draft = false
 
 ## 字面量编码
 
-​	*字面量编码* 是实现定义的，从执行字符集的字符到[字符常量](https://zh.cppreference.com/w/c/language/character_constant)或没有编码前缀的[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)的值，的映射。 它支持从基本执行字符集值到实现定义编码的映射。它或许包含多字节字符序列。
+​	*字面量编码* 是实现定义的，从执行字符集的字符到[字符常量]({{< ref "/c/language/expressions/character_constant" >}})或没有编码前缀的[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})的值，的映射。 它支持从基本执行字符集值到实现定义编码的映射。它或许包含多字节字符序列。
 
 > ​	下列字符虽然不属于基本执行字符集，但是需要在普通字符常量或普通字符字面值中编码为单个字节。(C23 起)
 >
@@ -100,6 +100,6 @@ draft = false
 
 ## 参阅
 
-[ASCII 码表](https://zh.cppreference.com/w/c/language/ascii)
+[ASCII 码表]({{< ref "/c/language/basic_concepts/ascii" >}})
 
 字符集与编码的 [C++ 文档](https://zh.cppreference.com/w/cpp/language/charset)

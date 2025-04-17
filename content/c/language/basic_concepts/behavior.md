@@ -11,17 +11,17 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/behavior](https://zh.cppreference.com/w/c/language/behavior)
 
-​	C 语言标准精确指定了 C 语言程序的[可观察行为](https://zh.cppreference.com/w/c/language/as_if)，除了下列分类之一：
+​	C 语言标准精确指定了 C 语言程序的[可观察行为]({{< ref "/c/language/basic_concepts/as_if" >}})，除了下列分类之一：
 
-- *未定义行为* - 程序的该行为没有限制。未定义行为的例子是越过数组边界的访问、有符号整数溢出、空指针解引用、在表达式中[超过一次](https://zh.cppreference.com/w/c/language/eval_order)修改标量而其中无顺序点、通过不同类型的指针访问对象，等等。编译器不要求诊断未定义行为（尽管多数简单情形是得到诊断的），且编译后的程序不要求做任何有意义的事。
+- *未定义行为* - 程序的该行为没有限制。未定义行为的例子是越过数组边界的访问、有符号整数溢出、空指针解引用、在表达式中[超过一次]({{< ref "/c/language/expressions/eval_order" >}})修改标量而其中无顺序点、通过不同类型的指针访问对象，等等。编译器不要求诊断未定义行为（尽管多数简单情形是得到诊断的），且编译后的程序不要求做任何有意义的事。
 
-- *未指定行为* - 容许二种或多种行为，且不要求实现规范每种行为。例如，[求值顺序](https://zh.cppreference.com/w/c/language/eval_order)、同样的[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)是否有别，等。每个未指定行为导致一组合法结果之一，并且可以在同一程序中重复时产生不同结果。
+- *未指定行为* - 容许二种或多种行为，且不要求实现规范每种行为。例如，[求值顺序]({{< ref "/c/language/expressions/eval_order" >}})、同样的[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})是否有别，等。每个未指定行为导致一组合法结果之一，并且可以在同一程序中重复时产生不同结果。
 
 - *实现定义行为* - 在未指定行为之上，实现规范了如何选择。例如，字节中的位数，或有符号整数右移是算术还是逻辑。
 
 - *本地环境限定行为* - 依赖于[当前选择的本地环境](https://zh.cppreference.com/w/c/locale/setlocale)的实现定义行为。例如， [islower](https://zh.cppreference.com/w/c/string/byte/islower) 对任何 26 个小写拉丁字母外的字符是否返回 true。
 
-（注意：[严格遵从](https://zh.cppreference.com/w/c/language/conformance)的程序不依赖任何未指定、未定义或实现定义行为）
+（注意：[严格遵从]({{< ref "/c/language/misc/conformance" >}})的程序不依赖任何未指定、未定义或实现定义行为）
 
 ​	要求编译器对违背任何 C 语法规则或语义约束的任何程序发布诊断消息（错误或警告），即使其行为被指定为未定义或实现定义，或者编译器可提供语言扩展以允许此种程序被接受。另外，不要求对未定义行为诊断。
 

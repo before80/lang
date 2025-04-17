@@ -34,11 +34,11 @@ draft = false
 
 | 在标头 `<stdint.h>` 定义   |                                                              |
 | ---------------------------- | ------------------------------------------------------------ |
-| PTRDIFF_WIDTH (C23)<br />    | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) 类型对象的位数 (宏常量) |
-| PTRDIFF_MIN (C99)<br />      | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) 的最小值 (宏常量) |
-| PTRDIFF_MAX (C99)<br />      | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) 的最大值 (宏常量) |
-| SIZE_WIDTH (C23)<br />       | [size_t](https://zh.cppreference.com/w/c/types/size_t) 类型对象的位数 (宏常量) |
-| SIZE_MAX (C99)<br />         | [size_t](https://zh.cppreference.com/w/c/types/size_t) 的最大值 (宏常量) |
+| PTRDIFF_WIDTH (C23)<br />    | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) 类型对象的位数 (宏常量) |
+| PTRDIFF_MIN (C99)<br />      | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) 的最小值 (宏常量) |
+| PTRDIFF_MAX (C99)<br />      | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) 的最大值 (宏常量) |
+| SIZE_WIDTH (C23)<br />       | [size_t]({{< ref "/c/types/size_t" >}}) 类型对象的位数 (宏常量) |
+| SIZE_MAX (C99)<br />         | [size_t]({{< ref "/c/types/size_t" >}}) 的最大值 (宏常量) |
 | SIG_ATOMIC_WIDTH (C23)<br /> | [sig_atomic_t](https://zh.cppreference.com/w/c/program/sig_atomic_t) 类型对象的位数 (宏常量) |
 | SIG_ATOMIC_MIN (C99)<br />   | [sig_atomic_t](https://zh.cppreference.com/w/c/program/sig_atomic_t) 的最小值 (宏常量) |
 | SIG_ATOMIC_MAX (C99)<br />   | [sig_atomic_t](https://zh.cppreference.com/w/c/program/sig_atomic_t) 的最大值 (宏常量) |
@@ -53,7 +53,7 @@ draft = false
 
 ### 注解
 
-​	这些常量，除了 `CHAR_BIT` 和 `MB_LEN_MAX`，都要求其类型匹配[整型提升](https://zh.cppreference.com/w/c/language/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87)的结果，一如应用于它们所描述的类型的对象：`CHAR_MAX` 可能拥有类型 int 或 unsigned int，但决非 `char`。同样地 `USHRT_MAX` 可能不拥有无符号类型：其类型可能是 `int`。
+​	这些常量，除了 `CHAR_BIT` 和 `MB_LEN_MAX`，都要求其类型匹配[整型提升]({{< ref "/c/language/expressions/conversion#.E6.95.B4.E6.95.B0.E6.8F.90.E5.8D.87" >}})的结果，一如应用于它们所描述的类型的对象：`CHAR_MAX` 可能拥有类型 int 或 unsigned int，但决非 `char`。同样地 `USHRT_MAX` 可能不拥有无符号类型：其类型可能是 `int`。
 
 ​	自立实现可能缺少 typedef 名 [sig_atomic_t](https://zh.cppreference.com/w/c/program/sig_atomic_t) 和/或 `wint_t`，此情况下相应地缺少宏 `SIG_ATOMIC_*` 和/或 `WINT_*`。
 
@@ -159,8 +159,8 @@ WINT_MAX       = 4294967295
 | FLT_MIN_10_EXP<br />DBL_MIN_10_EXP<br />LDBL_MIN_10_EXP<br /> | 分别为对应 float、double 和 long double 的最小负整数，使得 10 的该数次幂为正规的 (宏常量) |
 | FLT_MAX_EXP<br />DBL_MAX_EXP<br />LDBL_MAX_EXP<br />         | 分别为能够使 `FLT_RADIX` 的该数减一次幂为可表示的有限的 float、double 与 long double 的最大正整数 (宏常量) |
 | FLT_MAX_10_EXP<br />DBL_MAX_10_EXP<br />LDBL_MAX_10_EXP<br /> | 分别为能够使 10 的该数次幂为可表示的有限的 float、double 与 long double 的最大正整数 (宏常量) |
-| [FLT_ROUNDS<br />](https://zh.cppreference.com/w/c/types/limits/FLT_ROUNDS) | 浮点数算术的舍入模式，等于 float_round_style (宏常量)        |
-| [FLT_EVAL_METHOD (C99)<br />](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD) | 指定所有算术运算以什么精度执行 (宏常量)                      |
+| [FLT_ROUNDS<br />]({{< ref "/c/types/limits/FLT_ROUNDS" >}}) | 浮点数算术的舍入模式，等于 float_round_style (宏常量)        |
+| [FLT_EVAL_METHOD (C99)<br />]({{< ref "/c/types/limits/FLT_EVAL_METHOD" >}}) | 指定所有算术运算以什么精度执行 (宏常量)                      |
 | FLT_HAS_SUBNORM (C11)<br />DBL_HAS_SUBNORM (C11)<br />LDBL_HAS_SUBNORM (C23 弃用)<br /> | 类型是否支持非正规（subnormal，[denormal](https://en.wikipedia.org/wiki/Denormal_number)）数：<br />`-1` 为不确定，<br />`0` 为不支持，<br />`1` 为支持 (宏常量) |
 
 

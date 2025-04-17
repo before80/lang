@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/array_initialization](https://zh.cppreference.com/w/c/language/array_initialization)
 
-​	[初始化](https://zh.cppreference.com/w/c/language/initialization)[数组](https://zh.cppreference.com/w/c/language/array)类型的对象时，初始化器必须是一个[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)（可选地在花括号中），或是一个花括号环绕的被初始化数组成员列表：
+​	[初始化]({{< ref "/c/language/initialization" >}})[数组]({{< ref "/c/language/declarations/array" >}})类型的对象时，初始化器必须是一个[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})（可选地在花括号中），或是一个花括号环绕的被初始化数组成员列表：
 
 | `=` *字符串字面量*                            | (1)  |          |
 | --------------------------------------------- | ---- | -------- |
@@ -25,11 +25,11 @@ draft = false
 
 ​	可初始化已知大小的数组和未知大小的数组，但不可初始化 VLA(C99 起)(C23 前)。只能空初始化 VLA。(C23 起)
 
-​	任何未被显式初始化的数组元素均被[空初始化](https://zh.cppreference.com/w/c/language/initialization#.E7.A9.BA.E5.88.9D.E5.A7.8B.E5.8C.96)。
+​	任何未被显式初始化的数组元素均被[空初始化]({{< ref "/c/language/initialization#.E7.A9.BA.E5.88.9D.E5.A7.8B.E5.8C.96" >}})。
 
 ## 从字符串初始化
 
-​	[字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)（可选地在花括号中）可以用作匹配数组类型的初始化器：
+​	[字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})（可选地在花括号中）可以用作匹配数组类型的初始化器：
 
 - 通常字符串字面量及 UTF-8 字符串字面量(C11 起)可用于初始化任何字符类型（`char`、`signed char`、`unsigned char`）的数组。
 - L 前缀的宽字符串字面量可用于初始化任何与 `wchar_t` 兼容（忽略 cv 限定）的类型的数组。
@@ -124,7 +124,7 @@ int y[4][3] = {[0][0]=1, [1][1]=1, [2][0]=1};  // 0 行初始化为 {1, 0, 0}
 
 ### 注解
 
-​	数组初始化器中的子表达式[求值顺序](https://zh.cppreference.com/w/c/language/eval_order)在 C 中是不定序的（但在从 C++11 开始的 C++ 中不是）：
+​	数组初始化器中的子表达式[求值顺序]({{< ref "/c/language/expressions/eval_order" >}})在 C 中是不定序的（但在从 C++11 开始的 C++ 中不是）：
 
 ```c
 int n = 1;
@@ -144,7 +144,7 @@ int a[3] = {0}; // C 与 C++ 中均为清零块作用域数组的合法途径
 int a[3] = {}; // C++ 中合法的清零块作用域数组的途径； C23 起合法
 ```
 
-​	与所有其他[初始化](https://zh.cppreference.com/w/c/language/initialization)一样，在初始化静态或线程局域[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的数组时，初始化器列表中的每个表达式都必须是[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)：
+​	与所有其他[初始化]({{< ref "/c/language/initialization" >}})一样，在初始化静态或线程局域[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的数组时，初始化器列表中的每个表达式都必须是[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})：
 
 ```c
 static char* p[2] = {malloc(1), malloc(2)}; // 错误

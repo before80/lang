@@ -11,11 +11,11 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/stdbool](https://zh.cppreference.com/w/c/header/stdbool)
 
-​	此标头提供用于[布尔类型](https://zh.cppreference.com/w/c/types)的宏。
+​	此标头提供用于[布尔类型]({{< ref "/c/types" >}})的宏。
 
 ## 宏
 
-| bool (C99)<br /> | 便利宏，展开为 [`<Boo>`](https://zh.cppreference.com/w/c/language/arithmetic_types#.E5.B8.83.E5.B0.94.E7.B1.BB.E5.9E.8B) (关键词宏) |
+| bool (C99)<br /> | 便利宏，展开为 [`<Boo>`]({{< ref "/c/language/basic_concepts/arithmetic_types#.E5.B8.83.E5.B0.94.E7.B1.BB.E5.9E.8B" >}}) (关键词宏) |
 | ---------------- | ------------------------------------------------------------ |
 
 ## 宏常量

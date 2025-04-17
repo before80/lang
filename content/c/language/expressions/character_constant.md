@@ -50,9 +50,9 @@ draft = false
 
 ​	C++ 中，可编码的普通字符字面量的类型为 char 而非 int。
 
-​	不同于[整数常量](https://zh.cppreference.com/w/c/language/integer_constant)，若 `char` 有符号，则字符常量可以有负值：这种实现中 `'\xFF'` 是值为 `-1` 的 int。
+​	不同于[整数常量]({{< ref "/c/language/expressions/integer_constant" >}})，若 `char` 有符号，则字符常量可以有负值：这种实现中 `'\xFF'` 是值为 `-1` 的 int。
 
-​	当用在 [`#if`](https://zh.cppreference.com/w/c/preprocessor/conditional) 或 [`#elif`](https://zh.cppreference.com/w/c/preprocessor/conditional) 的控制表达式中时，可能按照源字符集、执行字符集或其他实现定义的字符集转译字符常量。
+​	当用在 [`#if`]({{< ref "/c/language/preprocessor/conditional" >}}) 或 [`#elif`]({{< ref "/c/language/preprocessor/conditional" >}}) 的控制表达式中时，可能按照源字符集、执行字符集或其他实现定义的字符集转译字符常量。
 
 ​	16/32 位多字符常量未得到广泛支持并于 C23 中被移除。一些常见实现（如 clang）完全不接受它们。
 

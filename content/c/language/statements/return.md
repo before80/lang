@@ -21,14 +21,14 @@ draft = false
 
 | *表达式*         | -    | 用于初始化函数返回值的表达式                                 |
 | ---------------- | ---- | ------------------------------------------------------------ |
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到 `return` 语句 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到 `return` 语句 |
 
 ## 解释
 
 1) 求值 *表达式*，终止当前函数，并返回 *表达式* 的结果给调用方（该返回值成为函数调用表达式的值）。仅对函数返回类型非 void 的情形合法。
 2) 终止当前函数。仅对函数返回类型为 void 的情形合法。
 
-​	若 *表达式* 的类型与函数的返回类型不同，则如同赋值给该函数返回类型的对象一般对其值进行[转换](https://zh.cppreference.com/w/c/language/conversion)，但容许对象表示间有所重叠：
+​	若 *表达式* 的类型与函数的返回类型不同，则如同赋值给该函数返回类型的对象一般对其值进行[转换]({{< ref "/c/language/expressions/conversion" >}})，但容许对象表示间有所重叠：
 
 ```c
 struct s { double i; } f(void); // 函数返回 struct s
@@ -45,15 +45,15 @@ int main(void)
 }
 ```
 
-​	若返回类型是实浮点类型，则结果可能拥有比新类型所隐含者[更大的范围和精度](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD)的表示。
+​	若返回类型是实浮点类型，则结果可能拥有比新类型所隐含者[更大的范围和精度]({{< ref "/c/types/limits/FLT_EVAL_METHOD" >}})的表示。
 
-​	抵达返回 void 的函数的末尾等价于 return;。若函数结果用于表达式，则抵达任何其他返回值的函数的结尾为未定义行为（允许舍弃这种返回值）。对于 `main`，见 [`main` 函数](https://zh.cppreference.com/w/c/language/main_function)。
+​	抵达返回 void 的函数的末尾等价于 return;。若函数结果用于表达式，则抵达任何其他返回值的函数的结尾为未定义行为（允许舍弃这种返回值）。对于 `main`，见 [`main` 函数]({{< ref "/c/language/basic_concepts/main_function" >}})。
 
-​	在[不返回函数](https://zh.cppreference.com/w/c/language/_Noreturn)中执行 `return` 语句是未定义行为。(C11 起)
+​	在[不返回函数]({{< ref "/c/language/functions/_Noreturn" >}})中执行 `return` 语句是未定义行为。(C11 起)
 
 ## 关键词
 
-[`return`](https://zh.cppreference.com/w/c/keyword/return)
+[`return`]({{< ref "/c/language/keyword/return" >}})
 
 ## 示例
 

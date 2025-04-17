@@ -18,11 +18,11 @@ draft = false
 
 ## 解释
 
-​	关键词 `nullptr` 代表预定义的空指针常量。它是 [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t) 类型的[非左值](https://zh.cppreference.com/w/c/language/value_category#.E9.9D.9E.E5.B7.A6.E5.80.BC.E5.AF.B9.E8.B1.A1.E8.A1.A8.E8.BE.BE.E5.BC.8F)。nullptr 能[转换](https://zh.cppreference.com/w/c/language/conversion)到指针类型或 bool，结果分别为该类型的空指针值或 false。
+​	关键词 `nullptr` 代表预定义的空指针常量。它是 [nullptr_t]({{< ref "/c/types/nullptr_t" >}}) 类型的[非左值]({{< ref "/c/language/expressions/value_category#.E9.9D.9E.E5.B7.A6.E5.80.BC.E5.AF.B9.E8.B1.A1.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})。nullptr 能[转换]({{< ref "/c/language/expressions/conversion" >}})到指针类型或 bool，结果分别为该类型的空指针值或 false。
 
 ## 关键词
 
-[`nullptr`](https://zh.cppreference.com/w/c/keyword/nullptr)
+[`nullptr`]({{< ref "/c/language/keyword/nullptr" >}})
 
 ## 示例
 
@@ -81,7 +81,7 @@ void*
 
 ## 参阅
 
-| [NULL](https://zh.cppreference.com/w/c/types/NULL)           | 实现定义的空指针常量 (宏常量)               |
+| [NULL]({{< ref "/c/types/NULL" >}})           | 实现定义的空指针常量 (宏常量)               |
 | ------------------------------------------------------------ | ------------------------------------------- |
-| [nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t)(C23) | 预定义空指针常量 `nullptr` 的类型 (typedef) |
+| [nullptr_t]({{< ref "/c/types/nullptr_t" >}})(C23) | 预定义空指针常量 `nullptr` 的类型 (typedef) |
 | nullptr 的 [C++ 文档](https://zh.cppreference.com/w/cpp/language/nullptr) |                                             |

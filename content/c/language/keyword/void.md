@@ -14,4 +14,4 @@ draft = false
 ## 用法
 
 - [`void` 类型](https://zh.cppreference.com/w/c/language/types)：用作不完整类型的声明
-- [`void`](https://zh.cppreference.com/w/c/language/function_declaration) ：用于无参数或无返回值的函数
+- [`void`]({{< ref "/c/language/functions/function_declaration" >}}) ：用于无参数或无返回值的函数

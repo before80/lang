@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`typedef` 声明](https://zh.cppreference.com/w/c/language/typedef)
+- [`typedef` 声明]({{< ref "/c/language/declarations/typedef" >}})

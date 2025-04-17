@@ -23,25 +23,25 @@ draft = false
 
 ​	[浮点数环境](https://zh.cppreference.com/w/c/numeric/fenv)
 
-​	头文件 [`<fenv.h>`](https://zh.cppreference.com/w/c/header/fenv) 定义[与浮点数异常状态（例如溢出和除以零）有关的标志和函数](https://zh.cppreference.com/w/c/numeric/fenv)。
+​	头文件 [`<fenv.h>`]({{< ref "/c/header/fenv" >}}) 定义[与浮点数异常状态（例如溢出和除以零）有关的标志和函数](https://zh.cppreference.com/w/c/numeric/fenv)。
 
 伪随机数生成
 
 [伪随机数生成](https://zh.cppreference.com/w/c/numeric/random)
 
-​	头文件 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 亦包含经由 [srand](https://zh.cppreference.com/w/c/numeric/random/srand) 和 [rand](https://zh.cppreference.com/w/c/numeric/random/rand) 进行的 C 风格随机数生成。
+​	头文件 [`<stdlib.h>`]({{< ref "/c/header/stdlib" >}}) 亦包含经由 [srand](https://zh.cppreference.com/w/c/numeric/random/srand) 和 [rand](https://zh.cppreference.com/w/c/numeric/random/rand) 进行的 C 风格随机数生成。
 
 ## 复数算术
 
 ​	[复数算术](https://zh.cppreference.com/w/c/numeric/complex)
 
-​	头文件 [`<complex.h>`](https://zh.cppreference.com/w/c/header/complex) 提供作用于[复数](https://zh.cppreference.com/w/c/numeric/complex)的类型和函数。
+​	头文件 [`<complex.h>`]({{< ref "/c/header/complex" >}}) 提供作用于[复数](https://zh.cppreference.com/w/c/numeric/complex)的类型和函数。
 
 ## 泛型数学
 
 ​	[泛型数学](https://zh.cppreference.com/w/c/numeric/tgmath)
 
-​	头文件 [`<tgmath.h>`](https://zh.cppreference.com/w/c/header/tgmath) 为函数提供某些名为 XXX 的宏：
+​	头文件 [`<tgmath.h>`]({{< ref "/c/header/tgmath" >}}) 为函数提供某些名为 XXX 的宏：
 
 - 实函数：
   - float 变体 `XXXf`
@@ -57,7 +57,7 @@ draft = false
 
 ​	[位操纵](https://zh.cppreference.com/w/c/numeric/bit_manip) (C23 起)
 
-​	头文件 [`<stdbit.h>`](https://zh.cppreference.com/w/c/header/stdbit) 提供作用于[字节序](https://zh.cppreference.com/w/c/numeric/bit_manip#.E5.AE.8F)和 C 对象的[字节与位表示](https://zh.cppreference.com/w/c/numeric/bit_manip#.E5.87.BD.E6.95.B0)的宏和函数。
+​	头文件 [`<stdbit.h>`]({{< ref "/c/header/stdbit" >}}) 提供作用于[字节序](https://zh.cppreference.com/w/c/numeric/bit_manip#.E5.AE.8F)和 C 对象的[字节与位表示](https://zh.cppreference.com/w/c/numeric/bit_manip#.E5.87.BD.E6.95.B0)的宏和函数。
 
 ​	
 

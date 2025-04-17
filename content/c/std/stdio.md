@@ -125,7 +125,7 @@ typedef /* 见描述 */ rsize_t;
 
 ### size_t
 
-原址：[https://zh.cppreference.com/w/c/types/size_t](https://zh.cppreference.com/w/c/types/size_t)
+原址：[https://zh.cppreference.com/w/c/types/size_t]({{< ref "/c/types/size_t" >}})
 
 ```c
 typedef /* 由实现定义 */ size_t;
@@ -139,7 +139,7 @@ typedef /* 由实现定义 */ size_t;
 在标头 <wchar.h> 定义 (C95 起)
 ```
 
-​	`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+​	`size_t` 是 [offsetof]({{< ref "/c/types/offsetof" >}})、[`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B" >}})。
 
 ​	`size_t` 的位宽不小于 16。(C99 起)
 
@@ -147,7 +147,7 @@ typedef /* 由实现定义 */ size_t;
 
 ​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
 
-​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX]({{< ref "/c/types/limits" >}}) 时，或若其依赖 32 位模算术时失败。
 
 **可能的实现**
 
@@ -255,7 +255,7 @@ SIZE_MAX = 18446744073709551615
 
 ### NULL
 
-原址：[https://zh.cppreference.com/w/c/types/NULL](https://zh.cppreference.com/w/c/types/NULL)
+原址：[https://zh.cppreference.com/w/c/types/NULL]({{< ref "/c/types/NULL" >}})
 
 ```c
 #define NULL /* 由实现定义 */
@@ -263,11 +263,11 @@ SIZE_MAX = 18446744073709551615
 
 ​	宏 `NULL` 是实现定义的空指针常量，可为
 
-- 值为 0 的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)
-- [转换为](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2) void* 的值为 0 的整数常量表达式
-- 预定义常量 [`<ullpt>`](https://zh.cppreference.com/w/c/language/nullptr)(C23 起)
+- 值为 0 的整数[常量表达式]({{< ref "/c/language/expressions/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})
+- [转换为]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}}) void* 的值为 0 的整数常量表达式
+- 预定义常量 [`<ullpt>`]({{< ref "/c/language/expressions/nullptr" >}})(C23 起)
 
-​	空指针常量能[转换](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2)为任何指针类型；转换结果是该类型的空指针值。
+​	空指针常量能[转换]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}})为任何指针类型；转换结果是该类型的空指针值。
 
 **注解**
 
@@ -422,13 +422,13 @@ ptr = 0xc001cafe
 
 ### size_t
 
-原址：[https://zh.cppreference.com/w/c/types/size_t](https://zh.cppreference.com/w/c/types/size_t)
+原址：[https://zh.cppreference.com/w/c/types/size_t]({{< ref "/c/types/size_t" >}})
 
 ```c
 typedef /* 由实现定义 */ size_t;
 ```
 
-​	`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`<izeo>`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+​	`size_t` 是 [offsetof]({{< ref "/c/types/offsetof" >}})、[`<izeo>`]({{< ref "/c/language/expressions/sizeof" >}}) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B" >}})。
 
 ​	`size_t` 的位宽不小于 16。(C99 起)
 
@@ -436,7 +436,7 @@ typedef /* 由实现定义 */ size_t;
 
 ​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
 
-​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX]({{< ref "/c/types/limits" >}}) 时，或若其依赖 32 位模算术时失败。
 
 **可能的实现**
 
@@ -882,7 +882,7 @@ errno_t fopen_s( FILE *restrict *restrict streamptr,
 
 
 
-​	同所有边界检查函数，`fopen_s`，仅若实现定义 __STDC_LIB_EXT1__ 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 __STDC_WANT_LIB_EXT1__ 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`fopen_s`，仅若实现定义 __STDC_LIB_EXT1__ 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 __STDC_WANT_LIB_EXT1__ 为整数常量 1 才保证可用。
 
 **参数**
 
@@ -988,7 +988,7 @@ errno_t fopen_s( FILE *restrict *restrict streamptr,
 
 
 
-​	同所有边界检查函数，`fopen_s`，仅若实现定义 __STDC_LIB_EXT1__ 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 __STDC_WANT_LIB_EXT1__ 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`fopen_s`，仅若实现定义 __STDC_LIB_EXT1__ 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 __STDC_WANT_LIB_EXT1__ 为整数常量 1 才保证可用。
 
 **参数**
 
@@ -1238,7 +1238,7 @@ int fputs( const char* restrict str, FILE* restrict stream ); // (C99 起)
 
 ​	相关函数 [puts](https://zh.cppreference.com/w/c/io/puts) 后附新换行符到输出，而 `fputs` 写入不修改的字符串。
 
-​	不同的实现返回不同的非负数：一些返回最后写入的字符，一些返回写入的字符数（或若字符串长于 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 则为该值），一些简单地非负常量，例如零。
+​	不同的实现返回不同的非负数：一些返回最后写入的字符，一些返回写入的字符数（或若字符串长于 [INT_MAX]({{< ref "/c/types/limits" >}}) 则为该值），一些简单地非负常量，例如零。
 
 **示例**
 
@@ -1396,7 +1396,7 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 
 - 可选，任何其他可检测错误，例如未知转换指示符
 
-  同所有边界检查函数，`scanf_s`、`fscanf_s` 与 `sscanf_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+  同所有边界检查函数，`scanf_s`、`fscanf_s` 与 `sscanf_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -1454,7 +1454,7 @@ int sscanf_s(const char *restrict buffer, const char *restrict format, ...); // 
 
 ​	转换指示符 s 与 [ 始终在匹配字符之后存储一个空字符。目标数组的大小必须至少比指定字段宽度大一。未指定目标数组大小时，对 `%s` 或 `%[` 的使用，与 [gets](https://zh.cppreference.com/w/c/io/gets) 同样不安全。	
 
-​	[定宽整数类型](https://zh.cppreference.com/w/c/types/integer)（[int8_t](https://zh.cppreference.com/w/c/types/integer) 等）的正确的转换指示在标头 [<inttypes.h>](https://zh.cppreference.com/w/c/types/integer) 定义（虽然 [`<CNdMA>`](https://zh.cppreference.com/w/c/types/integer)、[`<CNuMA>`](https://zh.cppreference.com/w/c/types/integer) 等就是 `%jd`、`%ju` 等的别名）。	在每个转换指示符后有一个[序列点](https://zh.cppreference.com/w/c/language/eval_order)；这允许存储多个字段到同一“池”变量中。	
+​	[定宽整数类型]({{< ref "/c/types/integer" >}})（[int8_t]({{< ref "/c/types/integer" >}}) 等）的正确的转换指示在标头 [<inttypes.h>]({{< ref "/c/types/integer" >}}) 定义（虽然 [`<CNdMA>`]({{< ref "/c/types/integer" >}})、[`<CNuMA>`]({{< ref "/c/types/integer" >}}) 等就是 `%jd`、`%ju` 等的别名）。	在每个转换指示符后有一个[序列点]({{< ref "/c/language/expressions/eval_order" >}})；这允许存储多个字段到同一“池”变量中。	
 
 ​	在分析以无数字指数为结尾的不完整浮点数，如以转换指示符 `%f` 分析 `"100er"` 时，消耗序列 `"100e"` （可能为合法浮点数的最长前缀），并导致匹配错误（被消耗序列不能转换成浮点数），而留下 `"r"`。某些既存实现不遵守此规则并回滚，通过消耗 `"100"` 而留下 `"er"`，例如 [glibc 漏洞 1765](https://sourceware.org/bugzilla/show_bug.cgi?id=1765)。	如果转换指示非法，那么行为未定义。
 
@@ -2054,7 +2054,7 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 
 - （仅对于 `sprintf_s` ）存储于 buffer 的字符串（包括尾随空字符）长度将超出 bufsz
 
-  同所有边界检查函数，`printf_s`、`fprintf_s`、`sprintf_s` 与 `snprintf_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+  同所有边界检查函数，`printf_s`、`fprintf_s`、`sprintf_s` 与 `snprintf_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -2065,7 +2065,7 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 | buffer | -    | 指向要写入的字符串的指针                                     |
 | bufsz  | -    | 最多会写入 bufsz - 1 个字符，再加空终止符                    |
 | format | -    | 指向指定数据转换方式的空终止多字节字符串的指针               |
-| ...    | -    | 指定要打印数据的参数。若任何[默认实参提升](https://zh.cppreference.com/w/c/language/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87)后的参数不拥有对应转换说明所期待的类型（期待类型是提升后的类型或者提升后类型的兼容类型），或若参数数量少于 format 的要求，则行为未定义。若有多于 format 要求的参数，则求值并忽略多出的参数。 |
+| ...    | -    | 指定要打印数据的参数。若任何[默认实参提升]({{< ref "/c/language/expressions/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87" >}})后的参数不拥有对应转换说明所期待的类型（期待类型是提升后的类型或者提升后类型的兼容类型），或若参数数量少于 format 的要求，则行为未定义。若有多于 format 要求的参数，则求值并忽略多出的参数。 |
 
 ​	**格式**字符串由普通多字节字符（除了 `%`）和转换指示构成，前者被不改动地复制到输出流。每个转换指示均拥有下列格式：
 
@@ -2098,20 +2098,20 @@ int snprintf_s( char* restrict buffer, rsize_t bufsz,
 |             `%`              | 写入字面的 `%`。完整的转换指示必须是 `%%`。  |     不适用     |     不适用     |    不适用    |    不适用     |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
 |             `c`              | 写入**单个字符**。实参首先被转换成 unsigned char。如果使用 **l** 修饰符，那么实参首先被转换成字符串，如同通过以 wchar_t[2] 实参使用 **%ls**。 |     不适用     |     不适用     |     int      |    wint_t     |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
 |             `s`              | 写入**字符串**。实参必须是指向字符数组首元素的指针。*精度* ﻿指定写入最大的字符数。如果没有指定*精度*，那么写每个字节直到而不含首个空终止符。如果使用 **l** 指示符，那么实参必须是指向 wchar_t 数组首元素的指针，数组会被转换成 char 数组，如同通过以零初始化转换状态调用 [wcrtomb](https://zh.cppreference.com/w/c/string/multibyte/wcrtomb)。 |     不适用     |     不适用     |    char*     |   wchar_t*    |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
-|           `d` `i`            | 转换**有符号整数**为十进制表示 *[-]dddd*。*精度* ﻿指定出现的最小数位数。默认精度是 1。如果被转换的值和精度都是 0，那么转换结果无字符。对于 `z` 修饰符，期望的实参类型是 [size_t](https://zh.cppreference.com/w/c/types/size_t) 的有符号版本。 |  signed char   |     short      |     int      |     long      |     long long      | [intmax_t](https://zh.cppreference.com/w/c/types/integer)  |                           ※                            | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) | 不适用      |
-|             `o`              | 转换**无符号整数**为八进制表示 *oooo*。*精度* ﻿指定出现数字的最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。在*替用实现* ﻿中精度按需增加，以写入一个前导零。在此情况下如果被转换值和精度都是 0，那么写入单个 0。 | unsigned char  | unsigned short | unsigned int | unsigned long | unsigned long long | [uintmax_t](https://zh.cppreference.com/w/c/types/integer) | [size_t](https://zh.cppreference.com/w/c/types/size_t) | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) 的无符号版本 | 不适用      |
+|           `d` `i`            | 转换**有符号整数**为十进制表示 *[-]dddd*。*精度* ﻿指定出现的最小数位数。默认精度是 1。如果被转换的值和精度都是 0，那么转换结果无字符。对于 `z` 修饰符，期望的实参类型是 [size_t]({{< ref "/c/types/size_t" >}}) 的有符号版本。 |  signed char   |     short      |     int      |     long      |     long long      | [intmax_t]({{< ref "/c/types/integer" >}})  |                           ※                            | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) | 不适用      |
+|             `o`              | 转换**无符号整数**为八进制表示 *oooo*。*精度* ﻿指定出现数字的最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。在*替用实现* ﻿中精度按需增加，以写入一个前导零。在此情况下如果被转换值和精度都是 0，那么写入单个 0。 | unsigned char  | unsigned short | unsigned int | unsigned long | unsigned long long | [uintmax_t]({{< ref "/c/types/integer" >}}) | [size_t]({{< ref "/c/types/size_t" >}}) | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) 的无符号版本 | 不适用      |
 |           `x` `X`            | 转换**无符号整数**为十六进制表示 *hhhh*。`x` 转换使用字母 `abcdef`。`X` 转换使用 `ABCDEF`。*精度*指定出现数位的最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。在*替用实现中* ﻿如果被转换值非零，那么结果有 `0x` 或 `0X` 前缀。 |     不适用     |                |              |               |                    |                                                            |                                                        |                                                              |             |
 |             `u`              | 转换**无符号整数**为十进制表示 *dddd*。*精度* ﻿指定出现的数位最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。 |     不适用     |                |              |               |                    |                                                            |                                                        |                                                              |             |
 |        `f` `F` (C99)         | 转换**浮点数**为 *[-]ddd.ddd* 样式的十进制记法。*精度* ﻿指定小数点字符后出现的确切数位数。默认精度是 6。在*替用实现* ﻿中即使没有小数点后数位也写小数点。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/fprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |    double    | double (C99)  |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | long double |
 |           `e` `E`            | 转换**浮点数**为十进制指数记法。`e` 转换样式使用 *[-]d.ddd* ﻿`e`*±dd*。`E` 转换样式使用 *[-]d.ddd* ﻿`E`*±dd*。指数至少含两个数位，仅当需要时才使用更多数位。如果值是 0，那么指数也是 0。*精度* ﻿指定小数点字符后出现数位的最小个数。默认精度是 6。在*替用实现* ﻿中即使没有小数点后数位也写小数点。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/fprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |    不适用    |    不适用     |       不适用       |                           不适用                           |                                                        |                                                              |             |
 | `a` `A`​	(C99) | 转换**浮点数**为十六进制指数记法。`a` 转换样式使用 *[-]* ﻿`0x`*h.hhh* ﻿`p`*±d*。`A` 转换样式使用 *[-]* ﻿`0X`*h.hhh* ﻿`P`*±d*。如果参数是正规化的浮点数，那么首个十六进制数位非 `0`。如果值是 0，那么指数也是 0。*精度*指定小数点字符后出现数位的最小个数。默认精度足以精确表示该值。在*替用实现*中即使没有小数点后数位也写小数点。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/fprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |    不适用    |    不适用     |       不适用       |                           不适用                           |                                                        |                                                              |             |
 |           `g` `G`            | 转换**浮点数**为十进制小数或十进制指数记法，依赖于值和*精度*。`g` 转换样式将进行带样式 `e` 或 `f` 的转换。`G` 转换样式将进行带样式 `E` 或 `f`(C99 前)`F`(C99 起) 的转换。令 `P` 等于精度，如果它非零，那么精度在未指定时是 6，如果精度是 0 那么等于 1。然后，如果带样式 `E` 的转换会有指数 `X`，那么：如果 *P > X ≥ −4*，那么转换带 `f` 或 `F`(C99 起) 风格，及精度 *P − 1 − X*。否则，转换带 `e` 或 `E` 风格，及精度 *P − 1*。除非要求*替用表示*，否则末尾零会被移除，且在不留下小数部分时小数点也会被移除。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/fprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |    不适用    |    不适用     |       不适用       |                           不适用                           |                                                        |                                                              |             |
-|             `n`              | 返回对函数的此调用迄今为止**写入的字符数**。结果被*写入* ﻿到实参所指向的值。该指示不可含有任何*标签*、*域宽* ﻿或*精度*。对于 `z` 修饰符，实参类型是 S*，其中 `S` 是 [size_t](http://zh.cppreference.com/w/c/types/size_t) 的有符号版本。 |  signed char*  |     short*     |     int*     |     long*     |     long long*     | [intmax_t](https://zh.cppreference.com/w/c/types/integer)* |                           ※                            | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t)* | 不适用      |
+|             `n`              | 返回对函数的此调用迄今为止**写入的字符数**。结果被*写入* ﻿到实参所指向的值。该指示不可含有任何*标签*、*域宽* ﻿或*精度*。对于 `z` 修饰符，实参类型是 S*，其中 `S` 是 [size_t](http://zh.cppreference.com/w/c/types/size_t) 的有符号版本。 |  signed char*  |     short*     |     int*     |     long*     |     long long*     | [intmax_t]({{< ref "/c/types/integer" >}})* |                           ※                            | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}})* | 不适用      |
 |             `p`              |          写入定义了**指针**的由实现定义的字符序列。          |     不适用     |     不适用     |    void*     |    不适用     |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
 
 **注解**
 
-​	浮点数转换函数转换无穷大为 `inf` 或 `infinity`。由实现定义使用其中哪一个。​	非数转换成 `nan` 或 `nan(char_sequence)`。由实现定义使用其中哪一个。​	转换 `F`、`E`、`G`、`A` 替代上面输出 `INF`、`INFINITY`、`NAN`。​	用于打印 char、unsigned char、signed char、short 和 unsigned short 的转换指示符实际期待[默认实参提升](https://zh.cppreference.com/w/c/language/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87)后的类型，但在打印前会转换到 char、unsigned char、signed char、short 和 unsigned short。直接向函数传递这些类型的值是安全的，因为在调用变参数函数时会发生提升。​	定宽字符类型（[int8_t](https://zh.cppreference.com/w/c/types/integer) 等）的正确转换指示在标头 [`<inttypes.h>`](https://zh.cppreference.com/w/c/header/inttypes) 定义（尽管 [PRIdMAX](https://zh.cppreference.com/w/c/types/integer)、[PRIuMAX](https://zh.cppreference.com/w/c/types/integer) 等就是 `%jd`、`%ju` 等的别名）。​	内存写入转换指示符 `%n` 是安全漏洞的常见目标，这里格式字符串依赖用户输入，而有边界检查的 `printf_s` 系列函数不支持此转换指示符(C11 起)。​	在每个转换指示符的行动后有一个[序列点](https://zh.cppreference.com/w/c/language/eval_order)；这允许于同一变量多次存入 `%n` 的结果，并在同一此调用中打印出先前以 `%n` 存储的值。​	如果转换指示非法，那么行为未定义。
+​	浮点数转换函数转换无穷大为 `inf` 或 `infinity`。由实现定义使用其中哪一个。​	非数转换成 `nan` 或 `nan(char_sequence)`。由实现定义使用其中哪一个。​	转换 `F`、`E`、`G`、`A` 替代上面输出 `INF`、`INFINITY`、`NAN`。​	用于打印 char、unsigned char、signed char、short 和 unsigned short 的转换指示符实际期待[默认实参提升]({{< ref "/c/language/expressions/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87" >}})后的类型，但在打印前会转换到 char、unsigned char、signed char、short 和 unsigned short。直接向函数传递这些类型的值是安全的，因为在调用变参数函数时会发生提升。​	定宽字符类型（[int8_t]({{< ref "/c/types/integer" >}}) 等）的正确转换指示在标头 [`<inttypes.h>`]({{< ref "/c/header/inttypes" >}}) 定义（尽管 [PRIdMAX]({{< ref "/c/types/integer" >}})、[PRIuMAX]({{< ref "/c/types/integer" >}}) 等就是 `%jd`、`%ju` 等的别名）。​	内存写入转换指示符 `%n` 是安全漏洞的常见目标，这里格式字符串依赖用户输入，而有边界检查的 `printf_s` 系列函数不支持此转换指示符(C11 起)。​	在每个转换指示符的行动后有一个[序列点]({{< ref "/c/language/expressions/eval_order" >}})；这允许于同一变量多次存入 `%n` 的结果，并在同一此调用中打印出先前以 `%n` 存储的值。​	如果转换指示非法，那么行为未定义。
 
 **返回值**
 
@@ -2360,7 +2360,7 @@ int puts( const char *str );
 
 ​	`puts` 函数后附一个换行字符到输出，而 [fputs](https://zh.cppreference.com/w/c/io/fputs) 不这么做。
 
-​	不同的实现返回不同的非负数：一些返回最后写入的字符，一些返回写入的字符数（或若字符串长于 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 则返回它），一些简单地返回非负常量。
+​	不同的实现返回不同的非负数：一些返回最后写入的字符，一些返回写入的字符数（或若字符串长于 [INT_MAX]({{< ref "/c/types/limits" >}}) 则返回它），一些简单地返回非负常量。
 
 ​	在重定向 [stdout](https://zh.cppreference.com/w/c/io) 到文件时，导致 `puts` 失败的典型原因是用尽了文件系统的空间。
 
@@ -3037,7 +3037,7 @@ errno_t tmpfile_s( FILE* restrict* restrict streamptr ); // (2)	(C11 起)
 
 2）同 (1)，但至少可以打开 TMP_MAX_S 个文件（此极限可能与 `tmpnam_s` 共享），而若 streamptr 为空指针，则调用当前安装的[制约处理](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)函数。
 
-​	同所有边界检查函数，`tmpfile_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`tmpfile_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -3112,7 +3112,7 @@ errno_t tmpfile_s( FILE* restrict* restrict streamptr ); // (2)	(C11 起)
 
 2）同 (1)，但至少可以打开 TMP_MAX_S 个文件（此极限可能与 `tmpnam_s` 共享），而若 streamptr 为空指针，则调用当前安装的[制约处理](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)函数。
 
-​	同所有边界检查函数，`tmpfile_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`tmpfile_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -3195,7 +3195,7 @@ errno_t tmpnam_s(char *filename_s, rsize_t maxsize); // (2)	(C11 起)
    - maxsize 大于 RSIZE_MAX
    - maxsize 小于生成文件名字符串的长度
 
-   同所有边界检查函数，`tmpnam_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+   同所有边界检查函数，`tmpnam_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -3285,7 +3285,7 @@ errno_t tmpnam_s(char *filename_s, rsize_t maxsize); // (2)	(C11 起)
    - maxsize 大于 RSIZE_MAX
    - maxsize 小于生成文件名字符串的长度
 
-   同所有边界检查函数，`tmpnam_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+   同所有边界检查函数，`tmpnam_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -3500,7 +3500,7 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 - 任何一个字符串及字符转换说明符中出现编码错误
 - （仅对于 `vsprintf_s`）存储于 buffer 的字符串（包括尾随空字符）长度将超出 bufsz
 
-​	同所有边界检查函数，`vprintf_s`、`vfprintf_s`、`vsprintf_s` 与 `vsnprintf_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`vprintf_s`、`vfprintf_s`、`vsprintf_s` 与 `vsnprintf_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 **参数**
 
@@ -3540,15 +3540,15 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 |         `%`         |         写入字面的 `%`。完整的转换指示必须是 `%%`。          |     不适用     |     不适用     |     不适用     |     不适用     |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
 |         `c`         | 写入**单个字符**。实参首先被转换成 unsigned char。如果使用 **l** 修饰符，那么实参首先被转换成字符串，如同通过以 wchar_t[2] 实参使用 **%ls**。 |     不适用     |     不适用     |      int       |     wint_t     |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
 |         `s`         | 写入**字符串**。实参必须是指向字符数组首元素的指针。*精度* ﻿指定写入最大的字符数。如果没有指定*精度*，那么写每个字节直到而不含首个空终止符。如果使用 **l** 指示符，那么实参必须是指向 wchar_t 数组首元素的指针，数组会被转换成 char 数组，如同通过以零初始化转换状态调用 [wcrtomb](https://zh.cppreference.com/w/c/string/multibyte/wcrtomb)。 |     不适用     |     不适用     |     char*      |    wchar_t*    |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
-|    `d` <br />`i`    | 转换**有符号整数**为十进制表示 *[-]dddd*。*精度* ﻿指定出现的最小数位数。默认精度是 1。如果被转换的值和精度都是 0，那么转换结果无字符。对于 `z` 修饰符，期望的实参类型是 [size_t](https://zh.cppreference.com/w/c/types/size_t) 的有符号版本。 |  signed char   |     short      |      int       |      long      |     long long      | [intmax_t](https://zh.cppreference.com/w/c/types/integer)  |                           ※                            | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) | 不适用      |
-|         `o`         | 转换**无符号整数**为八进制表示 *oooo*。*精度* ﻿指定出现数字的最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。在*替用实现* ﻿中精度按需增加，以写入一个前导零。在此情况下如果被转换值和精度都是 0，那么写入单个 0。 | unsigned char  | unsigned short |  unsigned int  | unsigned long  | unsigned long long | [uintmax_t](https://zh.cppreference.com/w/c/types/integer) | [size_t](https://zh.cppreference.com/w/c/types/size_t) | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t) 的无符号版本 | 不适用      |
+|    `d` <br />`i`    | 转换**有符号整数**为十进制表示 *[-]dddd*。*精度* ﻿指定出现的最小数位数。默认精度是 1。如果被转换的值和精度都是 0，那么转换结果无字符。对于 `z` 修饰符，期望的实参类型是 [size_t]({{< ref "/c/types/size_t" >}}) 的有符号版本。 |  signed char   |     short      |      int       |      long      |     long long      | [intmax_t]({{< ref "/c/types/integer" >}})  |                           ※                            | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) | 不适用      |
+|         `o`         | 转换**无符号整数**为八进制表示 *oooo*。*精度* ﻿指定出现数字的最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。在*替用实现* ﻿中精度按需增加，以写入一个前导零。在此情况下如果被转换值和精度都是 0，那么写入单个 0。 | unsigned char  | unsigned short |  unsigned int  | unsigned long  | unsigned long long | [uintmax_t]({{< ref "/c/types/integer" >}}) | [size_t]({{< ref "/c/types/size_t" >}}) | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}}) 的无符号版本 | 不适用      |
 |    `x` <br />`X`    | 转换**无符号整数**为十六进制表示 *hhhh*。`x` 转换使用字母 `abcdef`。`X` 转换使用 `ABCDEF`。*精度*指定出现数位的最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。在*替用实现中* ﻿如果被转换值非零，那么结果有 `0x` 或 `0X` 前缀。 |     不适用     |                |                |                |                    |                                                            |                                                        |                                                              |             |
 |         `u`         | 转换**无符号整数**为十进制表示 *dddd*。*精度* ﻿指定出现的数位最小个数。默认精度是 1。如果被转换值和精度都是 0，那么转换结果无字符。 |     不适用     |                |                |                |                    |                                                            |                                                        |                                                              |             |
 | `f`<br /> `F` (C99) | 转换**浮点数**为 *[-]ddd.ddd* 样式的十进制记法。*精度* ﻿指定小数点字符后出现的确切数位数。默认精度是 6。在*替用实现* ﻿中即使没有小数点后数位也写小数点。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/vfprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |     double     |  double (C99)  |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | long double |
 |    `e` <br />`E`    | 转换**浮点数**为十进制指数记法。`e` 转换样式使用 *[-]d.ddd* ﻿`e`*±dd*。`E` 转换样式使用 *[-]d.ddd* ﻿`E`*±dd*。指数至少含两个数位，仅当需要时才使用更多数位。如果值是 0，那么指数也是 0。*精度* ﻿指定小数点字符后出现数位的最小个数。默认精度是 6。在*替用实现* ﻿中即使没有小数点后数位也写小数点。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/vfprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |     不适用     |     不适用     |       不适用       |                           不适用                           |                                                        |                                                              |             |
 | `a` <br />`A`(C99)  | 转换**浮点数**为十六进制指数记法。`a` 转换样式使用 *[-]* ﻿`0x`*h.hhh* ﻿`p`*±d*。`A` 转换样式使用 *[-]* ﻿`0X`*h.hhh* ﻿`P`*±d*。如果参数是正规化的浮点数，那么首个十六进制数位非 `0`。如果值是 0，那么指数也是 0。*精度*指定小数点字符后出现数位的最小个数。默认精度足以精确表示该值。在*替用实现*中即使没有小数点后数位也写小数点。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/vfprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |     不适用     |     不适用     |       不适用       |                           不适用                           |                                                        |                                                              |             |
 |    `g` <br />`G`    | 转换**浮点数**为十进制小数或十进制指数记法，依赖于值和*精度*。`g` 转换样式将进行带样式 `e` 或 `f` 的转换。`G` 转换样式将进行带样式 `E` 或 `f`(C99 前)`F`(C99 起) 的转换。令 `P` 等于精度，如果它非零，那么精度在未指定时是 6，如果精度是 0 那么等于 1。然后，如果带样式 `E` 的转换会有指数 `X`，那么：如果 *P > X ≥ −4*，那么转换带 `f` 或 `F`(C99 起) 风格，及精度 *P − 1 − X*。否则，转换带 `e` 或 `E` 风格，及精度 *P − 1*。除非要求*替用表示*，否则末尾零会被移除，且在不留下小数部分时小数点也会被移除。无穷大和非数的转换样式见[注解](https://zh.cppreference.com/w/c/io/vfprintf#.E6.B3.A8.E8.A7.A3)。 |     不适用     |     不适用     |     不适用     |     不适用     |       不适用       |                           不适用                           |                                                        |                                                              |             |
-|         `n`         | 返回对函数的此调用迄今为止**写入的字符数**。结果被*写入* ﻿到实参所指向的值。该指示不可含有任何*标签*、*域宽* ﻿或*精度*。对于 `z` 修饰符，实参类型是 `S*`，其中 `S` 是 [size_t](http://zh.cppreference.com/w/c/types/size_t) 的有符号版本。 |  signed char*  |     short*     |      int*      |     long*      |     long long*     | [intmax_t](https://zh.cppreference.com/w/c/types/integer)* |                           ※                            | [ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t)* | 不适用      |
+|         `n`         | 返回对函数的此调用迄今为止**写入的字符数**。结果被*写入* ﻿到实参所指向的值。该指示不可含有任何*标签*、*域宽* ﻿或*精度*。对于 `z` 修饰符，实参类型是 `S*`，其中 `S` 是 [size_t](http://zh.cppreference.com/w/c/types/size_t) 的有符号版本。 |  signed char*  |     short*     |      int*      |     long*      |     long long*     | [intmax_t]({{< ref "/c/types/integer" >}})* |                           ※                            | [ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}})* | 不适用      |
 |         `p`         |          写入定义了**指针**的由实现定义的字符序列。          |     不适用     |     不适用     |     void*      |     不适用     |       不适用       |                           不适用                           |                         不适用                         |                            不适用                            | 不适用      |
 |                     |                                                              |                |                |                |                |                    |                                                            |                                                        |                                                              |             |
 |                     |                                                              |                |                |                |                |                    |                                                            |                                                        |                                                              |             |
@@ -3557,13 +3557,13 @@ int vsnprintf_s( char *restrict buffer, rsize_t bufsz,
 
 ​	浮点数转换函数转换无穷大为 `inf` 或 `infinity`。由实现定义使用其中哪一个。非数转换成 `nan` 或 `nan(char_sequence)`。由实现定义使用其中哪一个。
 
-​	转换 `F`、`E`、`G`、`A` 替代上面输出 `INF`、`INFINITY`、`NAN`。用于打印 char、unsigned char、signed char、short 和 unsigned short 的转换指示符实际期待[默认实参提升](https://zh.cppreference.com/w/c/language/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87)后的类型，但在打印前会转换到 char、unsigned char、signed char、short 和 unsigned short。直接向函数传递这些类型的值是安全的，因为在调用变参数函数时会发生提升。
+​	转换 `F`、`E`、`G`、`A` 替代上面输出 `INF`、`INFINITY`、`NAN`。用于打印 char、unsigned char、signed char、short 和 unsigned short 的转换指示符实际期待[默认实参提升]({{< ref "/c/language/expressions/conversion#.E9.BB.98.E8.AE.A4.E5.AE.9E.E5.8F.82.E6.8F.90.E5.8D.87" >}})后的类型，但在打印前会转换到 char、unsigned char、signed char、short 和 unsigned short。直接向函数传递这些类型的值是安全的，因为在调用变参数函数时会发生提升。
 
-​	定宽字符类型（[int8_t](https://zh.cppreference.com/w/c/types/integer) 等）的正确转换指示在标头 [`<inttypes.h>`](https://zh.cppreference.com/w/c/header/inttypes) 定义（尽管 [PRIdMAX](https://zh.cppreference.com/w/c/types/integer)、[PRIuMAX](https://zh.cppreference.com/w/c/types/integer) 等就是 `%jd`、`%ju` 等的别名）。
+​	定宽字符类型（[int8_t]({{< ref "/c/types/integer" >}}) 等）的正确转换指示在标头 [`<inttypes.h>`]({{< ref "/c/header/inttypes" >}}) 定义（尽管 [PRIdMAX]({{< ref "/c/types/integer" >}})、[PRIuMAX]({{< ref "/c/types/integer" >}}) 等就是 `%jd`、`%ju` 等的别名）。
 
 ​	内存写入转换指示符 `%n` 是安全漏洞的常见目标，这里格式字符串依赖用户输入，而有边界检查的 `printf_s` 系列函数不支持此转换指示符(C11 起)。
 
-​	在每个转换指示符的行动后有一个[序列点](https://zh.cppreference.com/w/c/language/eval_order)；这允许于同一变量多次存入 `%n` 的结果，并在同一此调用中打印出先前以 `%n` 存储的值。如果转换指示非法，那么行为未定义。
+​	在每个转换指示符的行动后有一个[序列点]({{< ref "/c/language/expressions/eval_order" >}})；这允许于同一变量多次存入 `%n` 的结果，并在同一此调用中打印出先前以 `%n` 存储的值。如果转换指示非法，那么行为未定义。
 
 
 
@@ -3698,7 +3698,7 @@ int vsscanf_s( const char *restrict buffer, const char *restrict format,
 -  %c 、 %s 或 %[ 本会写入的字符数，加上空终止字符，要超过提供给这些转换指示符的第二个（rsize_t）参数
 - 可选，任何其他可检测错误，例如未知转换指示符
 
-​	同所有边界检查函数，`vscanf_s`、`vfscanf_s` 与 `vsscanf_s`，仅若实现定义 __STDC_LIB_EXT1__ 且用户在包含 [`<stdio.h>`](https://zh.cppreference.com/w/c/header/stdio) 前定义 __STDC_WANT_LIB_EXT1__ 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`vscanf_s`、`vfscanf_s` 与 `vsscanf_s`，仅若实现定义 __STDC_LIB_EXT1__ 且用户在包含 [`<stdio.h>`]({{< ref "/c/header/stdio" >}}) 前定义 __STDC_WANT_LIB_EXT1__ 为整数常量 1 才保证可用。
 
 
 
@@ -3752,9 +3752,9 @@ int vsscanf_s( const char *restrict buffer, const char *restrict format,
 
 ​	转换指示符 s 与 [ 始终在匹配字符之后存储一个空字符。目标数组的大小必须至少比指定字段宽度大一。未指定目标数组大小时，对 %s 或 %[ 的使用，与 [gets](https://zh.cppreference.com/w/c/io/gets) 同样不安全。
 
-​	[定宽整数类型](https://zh.cppreference.com/w/c/types/integer)（[int8_t](https://zh.cppreference.com/w/c/types/integer) 等）的正确的转换指示在标头 [<inttypes.h>](https://zh.cppreference.com/w/c/types/integer) 定义（虽然 [`<CNdMA>`](https://zh.cppreference.com/w/c/types/integer)、[`<CNuMA>`](https://zh.cppreference.com/w/c/types/integer) 等就是 %jd、%ju 等的别名）。
+​	[定宽整数类型]({{< ref "/c/types/integer" >}})（[int8_t]({{< ref "/c/types/integer" >}}) 等）的正确的转换指示在标头 [<inttypes.h>]({{< ref "/c/types/integer" >}}) 定义（虽然 [`<CNdMA>`]({{< ref "/c/types/integer" >}})、[`<CNuMA>`]({{< ref "/c/types/integer" >}}) 等就是 %jd、%ju 等的别名）。
 
-​	在每个转换指示符后有一个[序列点](https://zh.cppreference.com/w/c/language/eval_order)；这允许存储多个字段到同一“池”变量中。
+​	在每个转换指示符后有一个[序列点]({{< ref "/c/language/expressions/eval_order" >}})；这允许存储多个字段到同一“池”变量中。
 
 ​	在分析以无数字指数为结尾的不完整浮点数，如以转换指示符 %f 分析 "100er" 时，消耗序列 "100e" （可能为合法浮点数的最长前缀），并导致匹配错误（被消耗序列不能转换成浮点数），而留下 "r"。某些既存实现不遵守此规则并回滚，通过消耗 "100" 而留下 "er"，例如 [glibc 漏洞 1765](https://sourceware.org/bugzilla/show_bug.cgi?id=1765)。
 

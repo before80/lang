@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`break` 语句](https://zh.cppreference.com/w/c/language/break)：用作该语句的声明
+- [`break` 语句]({{< ref "/c/language/statements/break" >}})：用作该语句的声明

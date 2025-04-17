@@ -13,7 +13,7 @@ draft = false
 
 ​	*`typedef` 声明* ﻿提供一种声明标识符为类型别名的方式，以用于替换可能复杂的[类型名](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B.E5.90.8D)。
 
-​	关键词 typedef 在[声明](https://zh.cppreference.com/w/c/language/declarations)中处于[存储类说明符](https://zh.cppreference.com/w/c/language/storage_duration)的文法位置，只是它对存储和链接无影响：
+​	关键词 typedef 在[声明]({{< ref "/c/language/declarations" >}})中处于[存储类说明符]({{< ref "/c/language/declarations/storage_duration" >}})的文法位置，只是它对存储和链接无影响：
 
 ```c
 typedef int int_t; // 声明 int_t 为类型 int 之别名
@@ -24,9 +24,9 @@ typedef char char_t, *char_p, (*fp)(void); // 声明 char_t 为类型 char 之�
 
 ## 解释
 
-​	若一个[声明](https://zh.cppreference.com/w/c/language/declarations)以 typedef 为存储类说明符，则其中每个声明符都会定义一个标识符为说明类型的别名。因为一个声明中仅允许一个存储类说明符，`typedef` 声明不能为 [`static` 或 `extern`](https://zh.cppreference.com/w/c/language/storage_duration)。
+​	若一个[声明]({{< ref "/c/language/declarations" >}})以 typedef 为存储类说明符，则其中每个声明符都会定义一个标识符为说明类型的别名。因为一个声明中仅允许一个存储类说明符，`typedef` 声明不能为 [`static` 或 `extern`]({{< ref "/c/language/declarations/storage_duration" >}})。
 
-​	`typedef` 声明不引入另一种类型，它只会建立既存类型的同义词，故而 typedef 名与其所别名引用的类型[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)。`typedef` 名与如枚举项、变量或函数这样的通常标识符共享[命名空间](https://zh.cppreference.com/w/c/language/name_space)。
+​	`typedef` 声明不引入另一种类型，它只会建立既存类型的同义词，故而 typedef 名与其所别名引用的类型[兼容](https://zh.cppreference.com/w/c/language/types#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)。`typedef` 名与如枚举项、变量或函数这样的通常标识符共享[命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})。
 
 ​	对 VLA 的 `typedef` 只能出现在块作用域内。与数组自身的声明不同，数组长度会在每次控制流经过 `typedef` 声明时求值：(C99 起)
 
@@ -53,7 +53,7 @@ typedef int A[]; // A 是 int[]
 A a = {1, 2}, b = {3,4,5}; // a 的类型是 int[2]，b 的类型是 int[3]
 ```
 
-`typedef` 声明通常用于将名称从标签[命名空间](https://zh.cppreference.com/w/c/language/name_space)注入到通常命名空间：
+`typedef` 声明通常用于将名称从标签[命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})注入到通常命名空间：
 
 ```c
 typedef struct tnode tnode; // 通常命名空间的 tnode
@@ -96,7 +96,7 @@ typedef long    wchar_t;
 
 ## 关键词
 
-[`typedef`](https://zh.cppreference.com/w/c/keyword/typedef)
+[`typedef`]({{< ref "/c/language/keyword/typedef" >}})
 
 ## 参阅
 

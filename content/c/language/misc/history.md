@@ -41,14 +41,14 @@ draft = false
   - [44 个小更改](https://open-std.org/JTC1/SC22/WG14/www/docs/tc1.htm)
 
 - 1995：**C95**（ISO/IEC 9899:1990/Amd.1:1995）（[在线商店](http://infostore.saiglobal.com/store/Details.aspx?DocN=isoc000767513)）
-  1. 极大扩充了宽和多字节字符支持（[`<wctype.h>`](https://zh.cppreference.com/w/c/header/wctype)、[`<wchar.h>`](https://zh.cppreference.com/w/c/header/wchar)、对流 I/O 的添加和更改等）
-  2. 双标符、[`<iso646.h>`](https://zh.cppreference.com/w/c/header/iso646)
+  1. 极大扩充了宽和多字节字符支持（[`<wctype.h>`]({{< ref "/c/header/wctype" >}})、[`<wchar.h>`]({{< ref "/c/header/wchar" >}})、对流 I/O 的添加和更改等）
+  2. 双标符、[`<iso646.h>`]({{< ref "/c/header/iso646" >}})
 
 - 1996：技术勘误 2（ISO/IEC 9899:1990/Cor.2:1996）
   - [24 个小更改](https://open-std.org/JTC1/SC22/WG14/www/docs/tc2.htm)
 
 - 1999：**C99**（ISO/IEC 9899:1999）
-  1. 新特性：`bool`、`long long`、[`<stdint.h>`](https://zh.cppreference.com/w/c/header/stdint)、[`<inttypes.h>`](https://zh.cppreference.com/w/c/header/inttypes)、`restrict`、复合字面量、变长度数组、灵活数组成员、指派初始化器、[`<fenv.h>`](https://zh.cppreference.com/w/c/header/fenv)、变参数宏、复数、`__func__`、十六进制浮点格式（`%a`）、{lc|lconv}} 的货币格式化、[isblank](https://zh.cppreference.com/w/c/string/byte/isblank)、窄与宽字符串字面量的连接、枚举的尾逗号、类函数宏的空实参、`STDC_*` 语用、`va_copy`、[tmpnam](https://zh.cppreference.com/w/c/io/tmpnam) 的空返回、[setvbuf](https://zh.cppreference.com/w/c/io/setvbuf) 中的空指针、[printf](https://zh.cppreference.com/w/c/io/fprintf) 的 `hh` 与 `ll` 长度指定符、[snprintf](https://zh.cppreference.com/w/c/io/fprintf)、[_Exit](https://zh.cppreference.com/w/c/program/_Exit)、[`<tgmath.h>`](https://zh.cppreference.com/w/c/header/tgmath)、仿 POSIX [strftime](https://zh.cppreference.com/w/c/chrono/strftime) 说明符
+  1. 新特性：`bool`、`long long`、[`<stdint.h>`]({{< ref "/c/header/stdint" >}})、[`<inttypes.h>`]({{< ref "/c/header/inttypes" >}})、`restrict`、复合字面量、变长度数组、灵活数组成员、指派初始化器、[`<fenv.h>`]({{< ref "/c/header/fenv" >}})、变参数宏、复数、`__func__`、十六进制浮点格式（`%a`）、{lc|lconv}} 的货币格式化、[isblank](https://zh.cppreference.com/w/c/string/byte/isblank)、窄与宽字符串字面量的连接、枚举的尾逗号、类函数宏的空实参、`STDC_*` 语用、`va_copy`、[tmpnam](https://zh.cppreference.com/w/c/io/tmpnam) 的空返回、[setvbuf](https://zh.cppreference.com/w/c/io/setvbuf) 中的空指针、[printf](https://zh.cppreference.com/w/c/io/fprintf) 的 `hh` 与 `ll` 长度指定符、[snprintf](https://zh.cppreference.com/w/c/io/fprintf)、[_Exit](https://zh.cppreference.com/w/c/program/_Exit)、[`<tgmath.h>`]({{< ref "/c/header/tgmath" >}})、仿 POSIX [strftime](https://zh.cppreference.com/w/c/chrono/strftime) 说明符
   2. 来自 C++：`inline`、混合声明与代码、`for` 循环的初始化子句中的声明、`//` 注释、源代码中的通用字符名
   3. 移除隐式函数声明和隐式 `int`
 
@@ -66,10 +66,10 @@ draft = false
 - 2009：特殊数学函数 TR（ISO/IEC TR 24747:2009）（[ISO 商店](http://www.iso.org/iso/catalogue_detail.htm?csnumber=38857)）（[2006-08-02 草案](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1182.pdf)）
 - 2010：动态分配函数 TR（ISO/IEC TR 24731-2:2010）（[ISO 商店](http://www.iso.org/iso/catalogue_detail.htm?csnumber=51678)）（[2007-08-15 草案](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1248.pdf)）
 - 2011：**C11**（ISO/IEC 9899:2011）（[ISO 商店](http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=57853)）（[ANSI 商店](http://webstore.ansi.org/RecordDetail.aspx?sku=INCITS%2fISO%2fIEC+9899-2012#.UGCvLIHyaHM)）（[2011-04-12 草案](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf)）
-  1. 具线程的内存模型、[`<stdatomic.h>`](https://zh.cppreference.com/w/c/header/stdatomic)、[`<threads.h>`](https://zh.cppreference.com/w/c/header/threads)、泛型函数、`alignas/alignof`、 `noreturn`、`static_assert`、可分析性扩展、对复数和虚数类型的扩展、匿名结构体与联合体、独占文件打开模式、 [quick_exit](https://zh.cppreference.com/w/c/program/quick_exit)
+  1. 具线程的内存模型、[`<stdatomic.h>`]({{< ref "/c/header/stdatomic" >}})、[`<threads.h>`]({{< ref "/c/header/threads" >}})、泛型函数、`alignas/alignof`、 `noreturn`、`static_assert`、可分析性扩展、对复数和虚数类型的扩展、匿名结构体与联合体、独占文件打开模式、 [quick_exit](https://zh.cppreference.com/w/c/program/quick_exit)
   2. 移除 [gets](https://zh.cppreference.com/w/c/io/gets)
   3. 来自边界检查接口 TR：边界检查接口
-  4. 来自 Unicode TR：`char16_t`、`char32_t`，及 [`<uchar.h>`](https://zh.cppreference.com/w/c/header/uchar)
+  4. 来自 Unicode TR：`char16_t`、`char32_t`，及 [`<uchar.h>`]({{< ref "/c/header/uchar" >}})
 
 - 2012：技术勘误 1（ISO/IEC 9899:2011/Cor 1:2012）（[ISO 商店](http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=61717)）
   - 修正 [DR 411](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2244.htm#dr_411)

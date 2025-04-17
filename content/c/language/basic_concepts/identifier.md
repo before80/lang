@@ -26,23 +26,23 @@ draft = false
 
 ​	标识符能指代下列类型的实体：
 
-- [对象](https://zh.cppreference.com/w/c/language/object)
-- [函数](https://zh.cppreference.com/w/c/language/functions)
-- 标签（[struct](https://zh.cppreference.com/w/c/language/struct)、[union](https://zh.cppreference.com/w/c/language/union) 或[枚举](https://zh.cppreference.com/w/c/language/enum)）
+- [对象]({{< ref "/c/language/basic_concepts/object" >}})
+- [函数]({{< ref "/c/language/functions" >}})
+- 标签（[struct]({{< ref "/c/language/declarations/struct" >}})、[union]({{< ref "/c/language/declarations/union" >}}) 或[枚举]({{< ref "/c/language/declarations/enum" >}})）
 - 结构体或联合体成员
 - 枚举常量
-- [typedef](https://zh.cppreference.com/w/c/language/typedef) 名
-- [标号](https://zh.cppreference.com/w/c/language/statements#.E6.A0.87.E5.8F.B7)名
-- [宏](https://zh.cppreference.com/w/c/preprocessor/replace)名
-- [宏形参](https://zh.cppreference.com/w/c/preprocessor/replace)名
+- [typedef]({{< ref "/c/language/declarations/typedef" >}}) 名
+- [标号]({{< ref "/c/language/statements#.E6.A0.87.E5.8F.B7" >}})名
+- [宏]({{< ref "/c/language/preprocessor/replace" >}})名
+- [宏形参]({{< ref "/c/language/preprocessor/replace" >}})名
 
-​	宏名或宏形参名以外的每个标识符都拥有[作用域](https://zh.cppreference.com/w/c/language/scope)，属于一个[命名空间](https://zh.cppreference.com/w/c/language/name_space)，并且可以拥有[链接](https://zh.cppreference.com/w/c/language/storage_duration)。相同的标识符可以在程序的相异点指代相异实体，或若实体在不同的命名空间中，则可在相同点指代相异实体。
+​	宏名或宏形参名以外的每个标识符都拥有[作用域]({{< ref "/c/language/basic_concepts/scope" >}})，属于一个[命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})，并且可以拥有[链接]({{< ref "/c/language/declarations/storage_duration" >}})。相同的标识符可以在程序的相异点指代相异实体，或若实体在不同的命名空间中，则可在相同点指代相异实体。
 
 ## 保留标识符
 
 ​	下列标识符被*保留*，而且不可在程序中声明（这么做会引起未定义行为）：
 
-1. 作为[关键词](https://zh.cppreference.com/w/c/keyword)的标识符不能用于其他目的。具体而言，不允许 `#define` 或 `#undef` 等同于关键词的标识符。
+1. 作为[关键词]({{< ref "/c/language/keyword" >}})的标识符不能用于其他目的。具体而言，不允许 `#define` 或 `#undef` 等同于关键词的标识符。
 2. 所有以一个下划线开始的外部标识符。
 3. 所有以一个下划线后随一个大写字母或另一下划线开始的标识符（这些保留标识符允许库使用大量幕后的非外部宏及函数）。
 4. 标准库所定义的所有外部标识符（在有宿主环境中）。这表示不允许用户提供的外部名称匹配任何库名称，即使是声明等同于库函数的函数也不允许。
@@ -57,11 +57,11 @@ draft = false
 
 ### 库中的保留与潜在保留标识符
 
-​	标准库保留其所提供的每个标识符。拥有[外部链接](https://zh.cppreference.com/w/c/language/storage_duration)的保留标识符（例如每个标准函数的名字）受到保留，无关乎包含哪个头文件。其他保留标识符在包含任何其所关联的头文件时被保留。
+​	标准库保留其所提供的每个标识符。拥有[外部链接]({{< ref "/c/language/declarations/storage_duration" >}})的保留标识符（例如每个标准函数的名字）受到保留，无关乎包含哪个头文件。其他保留标识符在包含任何其所关联的头文件时被保留。
 
 > ​	潜在保留的标识符有意为实现和未来标准版本保留。若潜在保留的标识符为实现所提供，则它变为保留标识符。
 >
-> ​	仅允许实现提供作为函数名保留的潜在保留标识符的[外部定义](https://zh.cppreference.com/w/c/language/extern)。(C23 起)
+> ​	仅允许实现提供作为函数名保留的潜在保留标识符的[外部定义]({{< ref "/c/language/declarations/extern" >}})。(C23 起)
 >
 > ​	实现不提供的潜在保留标识符不被保留。能声明或定义它们而无未定义行为。然而，这种用法是不可移植的。
 
@@ -70,10 +70,10 @@ draft = false
 - 函数名，全部为潜在保留(C23 起)
 
   - [`<complex.h>`](https://zh.cppreference.com/w/c/numeric/complex) 中，`cerf`、`cerfc`、`cexp2`、`cexpm1`、`clog10`、`clog1p`、`clog2`、`clgamma`、`ctgamma`、`csinpi`、`ccospi`、`ctanpi`、`casinpi`、`cacospi`、`catanpi`、`ccompoundn`、`cpown`、`cpowr`、`crootn`、`crsqrt`、`cexp10m1`、`cexp10`、`cexp2m1`、`clog10p1`、`clog2p1`、`clogp1`(C23 起) 及其 -f 和 -l 后缀变体 (C99 起)
-  - [`<ctype.h>`](https://zh.cppreference.com/w/c/string/byte) 和 [`<wctype.h>`](https://zh.cppreference.com/w/c/string/wide)(C95 起) 中，以 `is` 或 `to` 后随一个小写字母开始的名字
-  - [`<stdlib.h>`](https://zh.cppreference.com/w/c/string/byte) 和 [`<inttypes.h>`](https://zh.cppreference.com/w/c/types/integer)(C23 起) 中，以 `str` 或 `wcs`(C23 起) 后随一个小写字母开始的名字
+  - [`<ctype.h>`]({{< ref "/c/string/byte" >}}) 和 [`<wctype.h>`]({{< ref "/c/string/wide" >}})(C95 起) 中，以 `is` 或 `to` 后随一个小写字母开始的名字
+  - [`<stdlib.h>`]({{< ref "/c/string/byte" >}}) 和 [`<inttypes.h>`]({{< ref "/c/types/integer" >}})(C23 起) 中，以 `str` 或 `wcs`(C23 起) 后随一个小写字母开始的名字
   - [`<math.h>`](https://zh.cppreference.com/w/c/numeric/math) 中，以 `cr_` 开始的名字 (C23 起)
-  - [`<wchar.h>`](https://zh.cppreference.com/w/c/string/wide) 中，以 `wcs` 后随一个小写字母开始的名字 (C95 起)
+  - [`<wchar.h>`]({{< ref "/c/string/wide" >}}) 中，以 `wcs` 后随一个小写字母开始的名字 (C95 起)
   - [`<stdatomic.h>`](https://zh.cppreference.com/w/c/thread) 中，以 `atomic_` 后随一个小写字母开始的名字 (C11 起)
   - [`<threads.h>`](https://zh.cppreference.com/w/c/thread) 中，以 `cnd_`、`mtx_`、`thrd_` 或 `tss_` 后随一个小写字母开始的名字 (C11 起)
 
@@ -81,7 +81,7 @@ draft = false
 
 - typedef 名，全部为潜在保留(C23 起)
 
-  - [`<stdint.h>`](https://zh.cppreference.com/w/c/types/integer) 中，以 `int` 或 `uint` 开始并以 `_t` 结束的名字 (C99 起)
+  - [`<stdint.h>`]({{< ref "/c/types/integer" >}}) 中，以 `int` 或 `uint` 开始并以 `_t` 结束的名字 (C99 起)
   - [`<stdatomic.h>`](https://zh.cppreference.com/w/c/thread) 中，以 `atomic_` 或 `memory_` 后随一个小写字母开始的名字 (C11 起)
   - [`<threads.h>`](https://zh.cppreference.com/w/c/thread) 中，以 `cnd_`、`mtx_`、`thrd_` 或 `tss_` 后随一个小写字母开始的名字 (C11 起)
 
@@ -89,9 +89,9 @@ draft = false
 
   - [`<errno.h>`](https://zh.cppreference.com/w/c/error/errno_macros) 中，以 `E` 后随一个数字或大写字母开始的名字
   - [`<fenv.h>`](https://zh.cppreference.com/w/c/numeric/fenv) 中，以 `FE_` 后随一个大写字母开始的名字 (C99 起)
-  - [`<float.h>`](https://zh.cppreference.com/w/c/types/limits) 中，以 `DBL_`、`DEC32_`、`DEC64_`、`DEC128_`、`DEC_`、`FLT_` 或 `LDBL_` 后随一个大写字母开始的名字；这些标识符为潜在保留 (C23 起)
-  - [`<stdint.h>`](https://zh.cppreference.com/w/c/types/integer) 中，以 `INT` 或 `UINT` 开始并以 `_MAX`、`_MIN`、`_WIDTH`(C23 起) 或 `_C` 结束的名字；这些标识符为潜在保留(C23 起) (C99 起)
-  - [`<inttypes.h>`](https://zh.cppreference.com/w/c/types/integer) 中，以 `PRI` 或 `SCN` 后随一个小写字母或字母 `X` 开始的名字；这些标识符为潜在保留(C23 起) (C99 起)
+  - [`<float.h>`]({{< ref "/c/types/limits" >}}) 中，以 `DBL_`、`DEC32_`、`DEC64_`、`DEC128_`、`DEC_`、`FLT_` 或 `LDBL_` 后随一个大写字母开始的名字；这些标识符为潜在保留 (C23 起)
+  - [`<stdint.h>`]({{< ref "/c/types/integer" >}}) 中，以 `INT` 或 `UINT` 开始并以 `_MAX`、`_MIN`、`_WIDTH`(C23 起) 或 `_C` 结束的名字；这些标识符为潜在保留(C23 起) (C99 起)
+  - [`<inttypes.h>`]({{< ref "/c/types/integer" >}}) 中，以 `PRI` 或 `SCN` 后随一个小写字母或字母 `X` 开始的名字；这些标识符为潜在保留(C23 起) (C99 起)
   - [`<locale.h>`](https://zh.cppreference.com/w/c/locale/LC_categories) 中，以 `LC_` 后随一个大写字母开始的名字
   - [`<math.h>`](https://zh.cppreference.com/w/c/numeric/math) 中，以 `FP_` 后随一个大写字母开始的名字 (C23 起)
   - [`<math.h>`](https://zh.cppreference.com/w/c/numeric/math) 中，以 `MATH_` 后随一个大写字母开始的名字；这些标识符为潜在保留 (C23 起)
@@ -111,7 +111,7 @@ draft = false
 
 ## 翻译限制
 
-​	尽管标识符长度上无特定的限制，一些早期编译器还是在标识符中的有效起始字符数上有限制，而链接器在带[外部链接](https://zh.cppreference.com/w/c/language/storage_duration)的名称上加上了更严格的限制。C 要求任何服从标准的实现支持下列极限：
+​	尽管标识符长度上无特定的限制，一些早期编译器还是在标识符中的有效起始字符数上有限制，而链接器在带[外部链接]({{< ref "/c/language/declarations/storage_duration" >}})的名称上加上了更严格的限制。C 要求任何服从标准的实现支持下列极限：
 
 - 内部标识符或宏名中 31 个有效起始字符(C99 前)
 

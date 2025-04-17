@@ -17,7 +17,7 @@ draft = false
 
 | [`<math.h>`](https://zh.cppreference.com/w/c/header/math)  |
 | ------------------------------------------------------------ |
-| [`<complex.h>`](https://zh.cppreference.com/w/c/header/complex) |
+| [`<complex.h>`]({{< ref "/c/header/complex" >}}) |
 
 > 本节未完成 
 >

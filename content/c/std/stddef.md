@@ -24,7 +24,7 @@ draft = false
 
 ### max_align_t
 
-原址：[https://zh.cppreference.com/w/c/types/max_align_t](https://zh.cppreference.com/w/c/types/max_align_t)
+原址：[https://zh.cppreference.com/w/c/types/max_align_t]({{< ref "/c/types/max_align_t" >}})
 
 ```c
 typedef /* 由实现定义 */ max_align_t; // (C11 起)
@@ -72,17 +72,17 @@ max_align_t 的对齐是 16 (0x10)
 
 ### nullptr_t <- 23+
 
-原址：[https://zh.cppreference.com/w/c/types/nullptr_t](https://zh.cppreference.com/w/c/types/nullptr_t)
+原址：[https://zh.cppreference.com/w/c/types/nullptr_t]({{< ref "/c/types/nullptr_t" >}})
 
 ```c
 typedef typeof(nullptr) nullptr_t; // (C23 起)
 ```
 
-​	`nullptr_t` 是预定义空指针常量 [`<ullpt>`](https://zh.cppreference.com/w/c/language/nullptr) 的类型。它是自身并非指针类型的单独类型。它能[隐式转换到](https://zh.cppreference.com/w/c/language/conversion)任何指针类型或 bool，而结果分别为该类型的空指针值或 false。除了 `nullptr_t` 自身，没有其他类型能转换或显式转型成 `nullptr_t`。
+​	`nullptr_t` 是预定义空指针常量 [`<ullpt>`]({{< ref "/c/language/expressions/nullptr" >}}) 的类型。它是自身并非指针类型的单独类型。它能[隐式转换到]({{< ref "/c/language/expressions/conversion" >}})任何指针类型或 bool，而结果分别为该类型的空指针值或 false。除了 `nullptr_t` 自身，没有其他类型能转换或显式转型成 `nullptr_t`。
 
 ​	`sizeof(nullptr_t)` 与 `alignof(nullptr_t)` 分别等于 `sizeof(void*)` 与 `alignof(void*)`。
 
-​	`nullptr_t` 仅有一个合法值，即 `nullptr`。`nullptr` 的对象表示与 (void*)0 的相同。若[左值转换](https://zh.cppreference.com/w/c/language/conversion#.E5.B7.A6.E5.80.BC.E8.BD.AC.E6.8D.A2)产生拥有不同对象表示的 `nullptr_t` 值，则行为未定义。
+​	`nullptr_t` 仅有一个合法值，即 `nullptr`。`nullptr` 的对象表示与 (void*)0 的相同。若[左值转换]({{< ref "/c/language/expressions/conversion#.E5.B7.A6.E5.80.BC.E8.BD.AC.E6.8D.A2" >}})产生拥有不同对象表示的 `nullptr_t` 值，则行为未定义。
 
 **示例**
 
@@ -122,13 +122,13 @@ nullptr_t
 
 ### ptrdiff_t
 
-原址：[https://zh.cppreference.com/w/c/types/ptrdiff_t](https://zh.cppreference.com/w/c/types/ptrdiff_t)
+原址：[https://zh.cppreference.com/w/c/types/ptrdiff_t]({{< ref "/c/types/ptrdiff_t" >}})
 
 ```c
 typedef /* 由实现定义 */ ptrdiff_t;
 ```
 
-​	`ptrdiff_t` 是[二个指针相减](https://zh.cppreference.com/w/c/language/operator_arithmetic#.E6.8C.87.E9.92.88.E7.AE.97.E6.9C.AF)结果所拥有的有符号整数类型。
+​	`ptrdiff_t` 是[二个指针相减]({{< ref "/c/language/expressions/operator_arithmetic#.E6.8C.87.E9.92.88.E7.AE.97.E6.9C.AF" >}})结果所拥有的有符号整数类型。
 
 ​	`ptrdiff_t` 的位宽不小于 17。(C99 起) (C23 前)
 
@@ -136,13 +136,13 @@ typedef /* 由实现定义 */ ptrdiff_t;
 
 **注解**
 
-​	若可能出现负值，则使用 `ptrdiff_t` 进行指针算术和数组索引。使用其他类型（如 int）的程序，可能会在譬如在 64 位系统上，当下标超过 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若依赖 32 位模算术时失败。
+​	若可能出现负值，则使用 `ptrdiff_t` 进行指针算术和数组索引。使用其他类型（如 int）的程序，可能会在譬如在 64 位系统上，当下标超过 [INT_MAX]({{< ref "/c/types/limits" >}}) 时，或若依赖 32 位模算术时失败。
 
 ​	只有指向同一数组中的元素（包括指向数组尾后一个位置）的指针可以相减。
 
-​	若数组足够大（大于 [PTRDIFF_MAX](https://zh.cppreference.com/w/c/types/limits) 个元素，但等于或小于 [SIZE_MAX](https://zh.cppreference.com/w/c/types/limits) 个字节），则两个指针间的距离可能无法以 **ptrdiff_t** 表示，这两个指针相减的结果未定义。
+​	若数组足够大（大于 [PTRDIFF_MAX]({{< ref "/c/types/limits" >}}) 个元素，但等于或小于 [SIZE_MAX]({{< ref "/c/types/limits" >}}) 个字节），则两个指针间的距离可能无法以 **ptrdiff_t** 表示，这两个指针相减的结果未定义。
 
-​	对于短于 [PTRDIFF_MAX](https://zh.cppreference.com/w/c/types/limits) 的 char 数组，`ptrdiff_t` 表现为 [size_t](https://zh.cppreference.com/w/c/types/size_t) 的有符号对应类型：它能存储任何类型的数组大小，而且在大多数平台上是 `intptr_t` 的同义词。
+​	对于短于 [PTRDIFF_MAX]({{< ref "/c/types/limits" >}}) 的 char 数组，`ptrdiff_t` 表现为 [size_t]({{< ref "/c/types/size_t" >}}) 的有符号对应类型：它能存储任何类型的数组大小，而且在大多数平台上是 `intptr_t` 的同义词。
 
 **可能的实现**
 
@@ -183,13 +183,13 @@ p2-p1 = 5
 
 ### rsize_t
 
-原址：[https://zh.cppreference.com/w/c/types/size_t](https://zh.cppreference.com/w/c/types/size_t)
+原址：[https://zh.cppreference.com/w/c/types/size_t]({{< ref "/c/types/size_t" >}})
 
 ```c
 typedef /* 由实现定义 */ size_t;
 ```
 
-​	`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`<izeo>`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+​	`size_t` 是 [offsetof]({{< ref "/c/types/offsetof" >}})、[`<izeo>`]({{< ref "/c/language/expressions/sizeof" >}}) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B" >}})。
 
 ​	`size_t` 的位宽不小于 16。(C99 起)
 
@@ -197,7 +197,7 @@ typedef /* 由实现定义 */ size_t;
 
 ​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
 
-​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX]({{< ref "/c/types/limits" >}}) 时，或若其依赖 32 位模算术时失败。
 
 **可能的实现**
 
@@ -241,13 +241,13 @@ SIZE_MAX = 18446744073709551615
 
 ### size_t
 
-原址：[https://zh.cppreference.com/w/c/types/size_t](https://zh.cppreference.com/w/c/types/size_t)
+原址：[https://zh.cppreference.com/w/c/types/size_t]({{< ref "/c/types/size_t" >}})
 
 ```c
 typedef /* 由实现定义 */ size_t;
 ```
 
-​	`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`<izeo>`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+​	`size_t` 是 [offsetof]({{< ref "/c/types/offsetof" >}})、[`<izeo>`]({{< ref "/c/language/expressions/sizeof" >}}) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B" >}})。
 
 ​	`size_t` 的位宽不小于 16。(C99 起)
 
@@ -255,7 +255,7 @@ typedef /* 由实现定义 */ size_t;
 
 ​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
 
-​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX]({{< ref "/c/types/limits" >}}) 时，或若其依赖 32 位模算术时失败。
 
 **可能的实现**
 
@@ -315,7 +315,7 @@ SIZE_MAX = 18446744073709551615
 
 ### NULL
 
-原址：[https://zh.cppreference.com/w/c/types/NULL](https://zh.cppreference.com/w/c/types/NULL)
+原址：[https://zh.cppreference.com/w/c/types/NULL]({{< ref "/c/types/NULL" >}})
 
 ```c
 #define NULL /* 由实现定义 */
@@ -323,11 +323,11 @@ SIZE_MAX = 18446744073709551615
 
 ​	宏 `NULL` 是实现定义的空指针常量，可为
 
-- 值为 0 的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)
-- [转换为](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2) void* 的值为 0 的整数常量表达式
-- 预定义常量 [`<ullpt>`](https://zh.cppreference.com/w/c/language/nullptr)(C23 起)
+- 值为 0 的整数[常量表达式]({{< ref "/c/language/expressions/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})
+- [转换为]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}}) void* 的值为 0 的整数常量表达式
+- 预定义常量 [`<ullpt>`]({{< ref "/c/language/expressions/nullptr" >}})(C23 起)
 
-​	空指针常量能[转换](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2)为任何指针类型；转换结果是该类型的空指针值。
+​	空指针常量能[转换]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}})为任何指针类型；转换结果是该类型的空指针值。
 
 **注解**
 
@@ -379,13 +379,13 @@ ptr = 0xc001cafe
 
 ### offsetof
 
-原址：[https://zh.cppreference.com/w/c/types/offsetof](https://zh.cppreference.com/w/c/types/offsetof)
+原址：[https://zh.cppreference.com/w/c/types/offsetof]({{< ref "/c/types/offsetof" >}})
 
 ```c
 #define offsetof(type, member) /* 由实现定义 */
 ```
 
-​	宏 **offsetof** 展开成 [size_t](https://zh.cppreference.com/w/c/types/size_t) 类型的[整数常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)，其值为从指定类型对象起始到其指定子对象的偏移，若填充存在则包含之。
+​	宏 **offsetof** 展开成 [size_t]({{< ref "/c/types/size_t" >}}) 类型的[整数常量表达式]({{< ref "/c/language/expressions/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})，其值为从指定类型对象起始到其指定子对象的偏移，若填充存在则包含之。
 
 ​	给定拥有静态存储期的 `type` 类型对象 `o`，`&(o.member)` 应当为地址常量表达式并指向 `o` 的子对象。否则行为未定义。
 
@@ -453,7 +453,7 @@ the double is at offset 8
 #define unreachable() /* 见下文 */ (C23 起)
 ```
 
-​	仿函数宏 `unreachable` 展开成 void 表达式。执行 unreachable() 导致[未定义行为](https://zh.cppreference.com/w/c/language/behavior)。
+​	仿函数宏 `unreachable` 展开成 void 表达式。执行 unreachable() 导致[未定义行为]({{< ref "/c/language/basic_concepts/behavior" >}})。
 
 ​	实现可以用此宏优化掉不可能的代码分支（常于优化构建中），或使之进入陷阱以免后续执行（常于调试构建中）。
 

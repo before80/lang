@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`switch` 语句](https://zh.cppreference.com/w/c/language/switch)：用作该语句的声明
+- [`switch` 语句]({{< ref "/c/language/statements/switch" >}})：用作该语句的声明

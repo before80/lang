@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/uchar](https://zh.cppreference.com/w/c/header/uchar)
 
-​	此标头是[空终结多字节字符串](https://zh.cppreference.com/w/c/string/multibyte)库的一部分。
+​	此标头是[空终结多字节字符串]({{< ref "/c/string/multibyte" >}})库的一部分。
 
 ## 函数
 

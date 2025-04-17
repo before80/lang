@@ -41,13 +41,13 @@ typedef void (*constraint_handler_t)( const char *restrict msg,
 
 ### size_t
 
-原址：[https://zh.cppreference.com/w/c/types/size_t](https://zh.cppreference.com/w/c/types/size_t)
+原址：[https://zh.cppreference.com/w/c/types/size_t]({{< ref "/c/types/size_t" >}})
 
 ```c
 typedef /* 由实现定义 */ size_t;
 ```
 
-​	`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`<izeo>`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+​	`size_t` 是 [offsetof]({{< ref "/c/types/offsetof" >}})、[`<izeo>`]({{< ref "/c/language/expressions/sizeof" >}}) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B" >}})。
 
 ​	`size_t` 的位宽不小于 16。(C99 起)
 
@@ -55,7 +55,7 @@ typedef /* 由实现定义 */ size_t;
 
 ​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
 
-​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX]({{< ref "/c/types/limits" >}}) 时，或若其依赖 32 位模算术时失败。
 
 **可能的实现**
 
@@ -122,7 +122,7 @@ SIZE_MAX = 18446744073709551615
 #define EXIT_FAILURE /* 由实现定义 */
 ```
 
-​	`EXIT_SUCCESS` 和 `EXIT_FAILURE` 宏展开成能用作 [exit](https://zh.cppreference.com/w/c/program/exit) 的实参的整数常量表达式（从而作为从 [`main` 函数](https://zh.cppreference.com/w/c/language/main_function) 返回的值），并指示程序执行状态。
+​	`EXIT_SUCCESS` 和 `EXIT_FAILURE` 宏展开成能用作 [exit](https://zh.cppreference.com/w/c/program/exit) 的实参的整数常量表达式（从而作为从 [`main` 函数]({{< ref "/c/language/basic_concepts/main_function" >}}) 返回的值），并指示程序执行状态。
 
 | 常量           | 说明         |
 | -------------- | ------------ |
@@ -167,7 +167,7 @@ fopen() failed in file main.cpp at line # 9
 
 ### NULL
 
-原址：[https://zh.cppreference.com/w/c/types/NULL](https://zh.cppreference.com/w/c/types/NULL)
+原址：[https://zh.cppreference.com/w/c/types/NULL]({{< ref "/c/types/NULL" >}})
 
 ```c
 #define NULL /* 由实现定义 */
@@ -175,13 +175,13 @@ fopen() failed in file main.cpp at line # 9
 
 ​	宏 `NULL` 是实现定义的空指针常量，可为
 
-- 值为 0 的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)
-- [转换为](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2) void* 的值为 0 的整数常量表达式
+- 值为 0 的整数[常量表达式]({{< ref "/c/language/expressions/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})
+- [转换为]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}}) void* 的值为 0 的整数常量表达式
 
-| 预定义常量 [`<ullpt>`](https://zh.cppreference.com/w/c/language/nullptr) | (C23 起) |
+| 预定义常量 [`<ullpt>`]({{< ref "/c/language/expressions/nullptr" >}}) | (C23 起) |
 | ------------------------------------------------------------ | -------- |
 
-​	空指针常量能[转换](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2)为任何指针类型；转换结果是该类型的空指针值。
+​	空指针常量能[转换]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}})为任何指针类型；转换结果是该类型的空指针值。
 
 **注解**
 
@@ -452,7 +452,7 @@ long long llabs( long long n ); // (C99 起)
 
 **注解**
 
-​	在补码系统中，最小负值的绝对值处于对应整数范围外，例如对于 32 位补码类型 int，[INT_MIN](https://zh.cppreference.com/w/c/types/limits) 为 -2147483648，但其绝对值应有的结果是 2147483648，大于 [INT_MAX](https://zh.cppreference.com/w/c/types/limits)（其值为 2147483647）。
+​	在补码系统中，最小负值的绝对值处于对应整数范围外，例如对于 32 位补码类型 int，[INT_MIN]({{< ref "/c/types/limits" >}}) 为 -2147483648，但其绝对值应有的结果是 2147483648，大于 [INT_MAX]({{< ref "/c/types/limits" >}})（其值为 2147483647）。
 
 **示例**
 
@@ -510,7 +510,7 @@ void *aligned_alloc( size_t alignment, size_t size ); // (C11 起)
 
 **注解**
 
-​	传递不是 `alignment` 整数倍的 `size`，或传递实现不支持的 `alignment`，会令函数失败并返回空指针（出版时的 C11 指定此为未定义行为，这已经为 [DR460](https://open-std.org/JTC1/SC22/WG14/www/docs/summary.htm#dr_460) 所更正）。[N2072](https://open-std.org/JTC1/SC22/WG14/www/docs/n2072.htm) 提议移除大小限制，使之能在限制性的对齐边界分配小对象（类似 [`alignas`](https://zh.cppreference.com/w/c/language/_Alignas)）。
+​	传递不是 `alignment` 整数倍的 `size`，或传递实现不支持的 `alignment`，会令函数失败并返回空指针（出版时的 C11 指定此为未定义行为，这已经为 [DR460](https://open-std.org/JTC1/SC22/WG14/www/docs/summary.htm#dr_460) 所更正）。[N2072](https://open-std.org/JTC1/SC22/WG14/www/docs/n2072.htm) 提议移除大小限制，使之能在限制性的对齐边界分配小对象（类似 [`alignas`]({{< ref "/c/language/declarations/_Alignas" >}})）。
 
 ​	作为“实现支持”要求的例子，POSIX 函数 [`posix_memalign`](https://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_memalign.html) 接受任何是二的幂且为 `sizeof(void*)` 倍数的 `alignment`，而基于 POSIX 的 `aligned_alloc` 实现继承了此项要求。
 
@@ -885,7 +885,7 @@ void* bsearch_s( const void *key, const void *ptr, rsize_t count, rsize_t size,
 
 - `key` 、 `ptr` 或 `comp` 是空指针（除非 `count` 为零）
 
-  同所有边界检查函数，`bsearch_s`（及对应的泛型宏）(C23 起)，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+  同所有边界检查函数，`bsearch_s`（及对应的泛型宏）(C23 起)，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`]({{< ref "/c/header/stdlib" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -1025,7 +1025,7 @@ void* calloc( size_t num, size_t size );
 
 ​	为 `num` 个 `size` 大小的对象的数组分配内存，并将分配存储中的所有字节初始化为零。
 
-​	若分配成功，会返回指向分配内存块最低位（首位）字节的指针，它为任何具有 [基础对齐](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90) 的对象类型适当地对齐。
+​	若分配成功，会返回指向分配内存块最低位（首位）字节的指针，它为任何具有 [基础对齐]({{< ref "/c/language/basic_concepts/object#.E5.AF.B9.E9.BD.90" >}}) 的对象类型适当地对齐。
 
 ​	若 `size` 为零，则行为是实现定义的（可返回空指针，或返回不可用于访问存储的非空指针）。
 
@@ -1278,7 +1278,7 @@ _Noreturn void exit( int exit_code ); // (C11 起) (C23 前)
 
 ​	若在调用由 [atexit](https://zh.cppreference.com/w/c/program/atexit) 注册的函数期间，以 [longjmp](https://zh.cppreference.com/w/c/program/longjmp) 退出该函数，则行为未定义。
 
-​	从 [`main` 函数](https://zh.cppreference.com/w/c/language/main_function) 返回时，无论是通过 `return` 语句还是抵达函数尾，都会将 return 语句的实参（或若使用隐式返回，则为 0）作为 `exit_code` 传递并执行 `exit()`。
+​	从 [`main` 函数]({{< ref "/c/language/basic_concepts/main_function" >}}) 返回时，无论是通过 `return` 语句还是抵达函数尾，都会将 return 语句的实参（或若使用隐式返回，则为 0）作为 `exit_code` 传递并执行 `exit()`。
 
 **参数**
 
@@ -1548,7 +1548,7 @@ errno_t getenv_s( size_t *restrict len, char *restrict value,
 - `valuesz` 大于 RSIZE_MAX
 - `value` 是空指针且 `valuesz` 非零
 
-​	同所有边界检查函数，`getenv_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 `1` 才保证可用。
+​	同所有边界检查函数，`getenv_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`]({{< ref "/c/header/stdlib" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 `1` 才保证可用。
 
 **参数**
 
@@ -1565,7 +1565,7 @@ errno_t getenv_s( size_t *restrict len, char *restrict value,
 
 **注解**
 
-​	POSIX 系统上，亦可通过全局变量 `environ` 访问 [环境变量](http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08)，它于 `<unistd.h>` 中声明为 `extern char **environ;`，并可通过可选的 [`main` 函数](https://zh.cppreference.com/w/c/language/main_function) 第三参数 `envp` 访问。
+​	POSIX 系统上，亦可通过全局变量 `environ` 访问 [环境变量](http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08)，它于 `<unistd.h>` 中声明为 `extern char **environ;`，并可通过可选的 [`main` 函数]({{< ref "/c/language/basic_concepts/main_function" >}}) 第三参数 `envp` 访问。
 
 ​	以空指针为 `value`，以零为 `valuesz` 调用 `getenv_s`，可用于确定保有整个结果所需的缓冲区大小。
 
@@ -1767,9 +1767,9 @@ void* malloc( size_t size );
 
 ​	分配 `size` 字节的未初始化内存。
 
-​	若分配成功，则返回为任何拥有[基础对齐](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90)的对象类型对齐的指针。
+​	若分配成功，则返回为任何拥有[基础对齐]({{< ref "/c/language/basic_concepts/object#.E5.AF.B9.E9.BD.90" >}})的对象类型对齐的指针。
 
-​	若 `size` 为零，则 `malloc` 的行为实现是其实现（生成）时定义的。例如可返回空指针。亦可返回非空指针；但不应当[解引用](https://zh.cppreference.com/w/c/language/operator_member_access)这种指针，而且应将它传递给 [free](https://zh.cppreference.com/w/c/memory/free) 以避免内存泄漏。
+​	若 `size` 为零，则 `malloc` 的行为实现是其实现（生成）时定义的。例如可返回空指针。亦可返回非空指针；但不应当[解引用]({{< ref "/c/language/expressions/operator_member_access" >}})这种指针，而且应将它传递给 [free](https://zh.cppreference.com/w/c/memory/free) 以避免内存泄漏。
 
 ​	`malloc` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。
 
@@ -1947,7 +1947,7 @@ errno_t mbstowcs_s(size_t *restrict retval, wchar_t *restrict dst,
   - `dstsz` 非零（除非 `dst` 为空）
   - `src` 数组中的前 `dstsz` 个多字节中无空字符且 `len` 大于 `dstsz`（除非 `dst` 为空）
 
-​	同所有边界检查函数，`mbstowcs_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`mbstowcs_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`]({{< ref "/c/header/stdlib" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -2106,7 +2106,7 @@ size_t memalignment( const void *p ); // (C23 起)
 
 ​	如果返回值大于或等于 alignof(T)，则类型 `T` 的对齐要求为该指针所满足。
 
-​	[独立实现](https://zh.cppreference.com/w/c/language/conformance) 需要提供 `memalignment`。
+​	[独立实现]({{< ref "/c/language/misc/conformance" >}}) 需要提供 `memalignment`。
 
 **参数**
 
@@ -2123,7 +2123,7 @@ size_t memalignment( const void *p ); // (C23 起)
 
 - 空指针转型为整数 0，
 - 指针值直接转型为虚拟地址的数值，且
-- [size_t](https://zh.cppreference.com/w/c/types/size_t) 与 [uintptr_t](https://zh.cppreference.com/w/c/types/integer) 相同
+- [size_t]({{< ref "/c/types/size_t" >}}) 与 [uintptr_t]({{< ref "/c/types/integer" >}}) 相同
 
 的常见平台上，此函数能被实现为 return ([size_t](http://zh.cppreference.com/w/c/types/size_t))p & -([size_t](http://zh.cppreference.com/w/c/types/size_t))p;。
 
@@ -2160,9 +2160,9 @@ void* malloc( size_t size );
 
 ​	分配 `size` 字节的未初始化内存。
 
-​	若分配成功，则返回为任何拥有 [基础对齐](https://zh.cppreference.com/w/c/language/object#.E5.AF.B9.E9.BD.90) 的对象类型对齐的指针。
+​	若分配成功，则返回为任何拥有 [基础对齐]({{< ref "/c/language/basic_concepts/object#.E5.AF.B9.E9.BD.90" >}}) 的对象类型对齐的指针。
 
-​	若 `size` 为零，则 `malloc` 的行为实现是其实现（生成）时定义的。例如可返回空指针。亦可返回非空指针；但不应当 [解引用](https://zh.cppreference.com/w/c/language/operator_member_access) 这种指针，而且应将它传递给 [free](https://zh.cppreference.com/w/c/memory/free) 以避免内存泄漏。
+​	若 `size` 为零，则 `malloc` 的行为实现是其实现（生成）时定义的。例如可返回空指针。亦可返回非空指针；但不应当 [解引用]({{< ref "/c/language/expressions/operator_member_access" >}}) 这种指针，而且应将它传递给 [free](https://zh.cppreference.com/w/c/memory/free) 以避免内存泄漏。
 
 ​	`malloc` 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。解分配一块内存区域的先前 [free](https://zh.cppreference.com/w/c/memory/free)、 `free_sized` 及 `free_aligned_sized`(C23 起) 或 [realloc](https://zh.cppreference.com/w/c/memory/realloc) 调用 *同步于* 分配同一块或部分相同的内存区域的 `malloc` 调用。此同步出现于任何通过解分配函数所作的内存访问之后，和任何 `malloc` 所作出的内存访问之前。所有操作每块特定内存区域的分配和解分配函数拥有单独全序。(C11 起)
 
@@ -2471,7 +2471,7 @@ b) 分配一个大小为 `new_size` 字节的新内存块，并复制大小等�
 
 ​	若无足够内存，则不释放旧内存块，并返回空指针。
 
-​	若 ptr 为 [NULL](https://zh.cppreference.com/w/c/types/NULL)，则行为与调用 [malloc](http://zh.cppreference.com/w/c/memory/malloc)(new_size) 相同。
+​	若 ptr 为 [NULL]({{< ref "/c/types/NULL" >}})，则行为与调用 [malloc](http://zh.cppreference.com/w/c/memory/malloc)(new_size) 相同。
 
 ​	否则，
 
@@ -2592,7 +2592,7 @@ typedef void (*constraint_handler_t)( const char *restrict msg,
 
 ​	同所有边界检查函数， `set_constraint_handler_s, constraint_handler_t` 仅若实现定义了 `__STDC_LIB_EXT1__` ，且用户在包含 `<stdlib.h>` 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
-​	与所有带边界检查的函数一样，仅当实现定义了 `__STDC_LIB_EXT1__` 并且用户在包含 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 之前将 `__STDC_WANT_LIB_EXT1__` 定义为整数常量 1 时，`set_constraint_handler_s` 和 `constraint_handler_t` 才保证可用。
+​	与所有带边界检查的函数一样，仅当实现定义了 `__STDC_LIB_EXT1__` 并且用户在包含 [`<stdlib.h>`]({{< ref "/c/header/stdlib" >}}) 之前将 `__STDC_WANT_LIB_EXT1__` 定义为整数常量 1 时，`set_constraint_handler_s` 和 `constraint_handler_t` 才保证可用。
 
 **参数**
 
@@ -3072,7 +3072,7 @@ long long strtoll( const char* restrict str, char** restrict str_end, int base )
 
 ​	如果 `base` 是 0，那么自动检测数值进制：如果前缀是 `0`，那么底是八进制，如果前缀是 `0x` 或 `0X`，那么底是十六进制，否则底是十进制。
 
-​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减](https://zh.cppreference.com/w/c/language/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF)。
+​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减]({{< ref "/c/language/expressions/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF" >}})。
 
 ​	函数设置 str_end 所指向的指针指向最后被转换字符的后一字符。若 str_end 为空指针，则忽略它。
 
@@ -3088,7 +3088,7 @@ long long strtoll( const char* restrict str, char** restrict str_end, int base )
 **返回值**
 
 - 若成功，则返回对应 str 内容的整数。
-- 若被转换值落在对应返回类型的范围外，则发生值域错误（设 [errno](https://zh.cppreference.com/w/c/error/errno) 为 [ERANGE](https://zh.cppreference.com/w/c/error/errno_macros)）并返回 [LONG_MAX](https://zh.cppreference.com/w/c/types/limits)、[LONG_MIN](https://zh.cppreference.com/w/c/types/limits)、[LLONG_MAX](https://zh.cppreference.com/w/c/types/limits) 或 [LLONG_MIN](https://zh.cppreference.com/w/c/types/limits)。
+- 若被转换值落在对应返回类型的范围外，则发生值域错误（设 [errno](https://zh.cppreference.com/w/c/error/errno) 为 [ERANGE](https://zh.cppreference.com/w/c/error/errno_macros)）并返回 [LONG_MAX]({{< ref "/c/types/limits" >}})、[LONG_MIN]({{< ref "/c/types/limits" >}})、[LLONG_MAX]({{< ref "/c/types/limits" >}}) 或 [LLONG_MIN]({{< ref "/c/types/limits" >}})。
 - 若无法进行转换，则返回 0。
 
 **示例**
@@ -3235,7 +3235,7 @@ unsigned long long strtoull( const char* restrict str, char** restrict str_end,
 
 ​	如果 `base` 是 0，那么自动检测数值进制：如果前缀是 `0`，那么底是八进制，如果前缀是 `0x` 或 `0X`，那么底是十六进制，否则底是十进制。
 
-​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减](https://zh.cppreference.com/w/c/language/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF)，它对无符号整数应用回绕规则。
+​	如果符号是输入序列的一部分，那么对从数字序列计算得来的数字值取反，如同用结果类型的[一元减]({{< ref "/c/language/expressions/operator_arithmetic#.E4.B8.80.E5.85.83.E7.AE.97.E6.9C.AF" >}})，它对无符号整数应用回绕规则。
 
 ​	函数设置 str_end 所指向的指针指向最后一个被转换字符的后一字符。若 str_end 为空指针，则忽略它。
 
@@ -3248,7 +3248,7 @@ unsigned long long strtoull( const char* restrict str, char** restrict str_end,
 
 **返回值**
 
-​	成功时为对应 str 内容的整数。若被转换值落在对应返回类型的范围外，则发生值域错误（[errno](https://zh.cppreference.com/w/c/error/errno) 被设为 `ERANGE`）并返回 [ULONG_MAX](https://zh.cppreference.com/w/c/types/limits) 或 [ULLONG_MAX](https://zh.cppreference.com/w/c/types/limits)。若无转换可进行，则返回 0。
+​	成功时为对应 str 内容的整数。若被转换值落在对应返回类型的范围外，则发生值域错误（[errno](https://zh.cppreference.com/w/c/error/errno) 被设为 `ERANGE`）并返回 [ULONG_MAX]({{< ref "/c/types/limits" >}}) 或 [ULLONG_MAX]({{< ref "/c/types/limits" >}})。若无转换可进行，则返回 0。
 
 **示例**
 
@@ -3412,7 +3412,7 @@ errno_t wcstombs_s( size_t *restrict retval, char *restrict dst, rsize_t dstsz,
   - `dstsz` 非零（除非 `dst` 为空）
   - `len` 大于 `dstsz` 且直到抵达 `dstsz` 时，转换未于 `src` 数组遇到空字符或编码错误（除非 `dst` 为空）
 
-​	同所有边界检查函数，`wcstombs_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`wcstombs_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`]({{< ref "/c/header/stdlib" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 
 
@@ -3536,7 +3536,7 @@ errno_t wctomb_s(int *restrict status, char *restrict s, rsize_t ssz, wchar_t wc
 - `ssz` 大于 RSIZE_MAX（除非 `s` 为空）
 - `s` 为空指针但 `ssz` 非零
 
-​	同所有边界检查函数，`wctomb_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`](https://zh.cppreference.com/w/c/header/stdlib) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
+​	同所有边界检查函数，`wctomb_s`，仅若实现定义 `__STDC_LIB_EXT1__` 且用户在包含 [`<stdlib.h>`]({{< ref "/c/header/stdlib" >}}) 前定义 `__STDC_WANT_LIB_EXT1__` 为整数常量 1 才保证可用。
 
 **注意**
 

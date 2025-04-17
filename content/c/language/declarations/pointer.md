@@ -15,14 +15,14 @@ draft = false
 
 ## 语法
 
-​	在指针声明的[声明文法](https://zh.cppreference.com/w/c/language/declarations)中，*类型说明符* ﻿序列代表所指向的类型（可以是函数或对象类型，可以是不完整类型），而*声明符* ﻿的形式为：
+​	在指针声明的[声明文法]({{< ref "/c/language/declarations" >}})中，*类型说明符* ﻿序列代表所指向的类型（可以是函数或对象类型，可以是不完整类型），而*声明符* ﻿的形式为：
 
 `*` *属性说明符序列* ﻿(可选) *限定符序列* ﻿(可选) *声明符*
 
 其中 *声明符* 可以是命名所声明指针的标识符，包括另一个指针声明符（这指示一个指向指针的指针）：
 
 ```c
-float *p, pp; // p 是指向 float 的指针
+float *p, **pp; // p 是指向 float 的指针
                 // pp 是指向指向 float 指针的指针
 int (*fp)(int); // fp 是指向类型 int(int) 为函数的指针
 ```
@@ -42,15 +42,15 @@ int * const cp = &n; // cp 是一个指向非 const 的 int 的 const 指针
 int * const * pcp = &cp; // 指向指向非 const 的 int 的 const 指针的非 const 指针
 ```
 
-​	*属性说明符序列* ﻿(C23)为[属性](https://zh.cppreference.com/w/c/language/attributes)的可选列表，应用到被声明的指针。
+​	*属性说明符序列* ﻿(C23)为[属性]({{< ref "/c/language/declarations/attributes" >}})的可选列表，应用到被声明的指针。
 
 ## 解释
 
-​	指针用于间接使用，这是种普遍存在的编程技巧；它们可以用于实现按引用传递语义，访问有动态[存储期](https://zh.cppreference.com/w/c/language/storage_duration)的对象，实现“可选”类型（使用空指针值），结构体间的聚合关系，回调（使用指向函数指针），泛型接口（使用指向 void 的指针）以及其他更多。
+​	指针用于间接使用，这是种普遍存在的编程技巧；它们可以用于实现按引用传递语义，访问有动态[存储期]({{< ref "/c/language/declarations/storage_duration" >}})的对象，实现“可选”类型（使用空指针值），结构体间的聚合关系，回调（使用指向函数指针），泛型接口（使用指向 void 的指针）以及其他更多。
 
 ### 指向对象的指针
 
-​	指向对象的指针可以通过应用于对象类型（可以不完整）表达式的[取值运算符](https://zh.cppreference.com/w/c/language/operator_member_access)初始化：
+​	指向对象的指针可以通过应用于对象类型（可以不完整）表达式的[取值运算符]({{< ref "/c/language/expressions/operator_member_access" >}})初始化：
 
 ```
 int n;
@@ -64,7 +64,7 @@ struct S { int n; } s = {1}
 int* sp = &s.n; // 指向作为 s 成员的 int 的指针
 ```
 
-​	指针可以出现作[间接运算符](https://zh.cppreference.com/w/c/language/operator_member_access#.E8.A7.A3.E5.BC.95.E7.94.A8)（一元 `*`）的操作数，它返回标识所指向对象的[左值](https://zh.cppreference.com/w/c/language/value_category)：
+​	指针可以出现作[间接运算符]({{< ref "/c/language/expressions/operator_member_access#.E8.A7.A3.E5.BC.95.E7.94.A8" >}})（一元 `*`）的操作数，它返回标识所指向对象的[左值]({{< ref "/c/language/expressions/value_category" >}})：
 
 ```
 int n;
@@ -73,9 +73,9 @@ int* p = &n; // 指针 p 指向 n
 printf("%d\n", *p); // 左值到右值转换从 n 读取值
 ```
 
-​	指向[结构体](https://zh.cppreference.com/w/c/language/struct)和[联合体](https://zh.cppreference.com/w/c/language/union)类型的对象的指针亦可作为[经由指针的成员访问](https://zh.cppreference.com/w/c/language/operator_member_access)运算符 `->` 的左操作数出现。
+​	指向[结构体]({{< ref "/c/language/declarations/struct" >}})和[联合体]({{< ref "/c/language/declarations/union" >}})类型的对象的指针亦可作为[经由指针的成员访问]({{< ref "/c/language/expressions/operator_member_access" >}})运算符 `->` 的左操作数出现。
 
-​	因为[数组到指针](https://zh.cppreference.com/w/c/language/array)隐式转换，指向数组首元素的指针可通过数组类型表达式初始化：
+​	因为[数组到指针]({{< ref "/c/language/declarations/array" >}})隐式转换，指向数组首元素的指针可通过数组类型表达式初始化：
 
 ```
 int a[2];
@@ -85,15 +85,15 @@ int b[3][3];
 int (*row)[3] = b; // 指向 b[0]
 ```
 
-​	有一些[加法、减法](https://zh.cppreference.com/w/c/language/operator_arithmetic)、[复合赋值](https://zh.cppreference.com/w/c/language/operator_assignment)、[自增和自减](https://zh.cppreference.com/w/c/language/operator_incdec)运算符对指向数组元素的指针有定义。
+​	有一些[加法、减法]({{< ref "/c/language/expressions/operator_arithmetic" >}})、[复合赋值]({{< ref "/c/language/expressions/operator_assignment" >}})、[自增和自减]({{< ref "/c/language/expressions/operator_incdec" >}})运算符对指向数组元素的指针有定义。
 
-​	[比较运算符](https://zh.cppreference.com/w/c/language/operator_comparison)在一些情况下对指向对象的指针有定义：两个表示相同地址的指针比较相等，两个空指针值比较相等，比较指向同一数组的元素的指针以两个元素的数组下标进行比较，以及指向结构体成员的指针以这些成员的声明顺序进行比较。
+​	[比较运算符]({{< ref "/c/language/expressions/operator_comparison" >}})在一些情况下对指向对象的指针有定义：两个表示相同地址的指针比较相等，两个空指针值比较相等，比较指向同一数组的元素的指针以两个元素的数组下标进行比较，以及指向结构体成员的指针以这些成员的声明顺序进行比较。
 
 ​	许多实现亦提供对任意来源指针的[严格全序](https://en.wikipedia.org/wiki/Total_order#Strict_total_order)，例如若它们实现在连续（“平直”）的虚拟地址空间上。
 
 ### 指向函数的指针
 
-​	指向函数的指针可由函数地址初始化。因为[函数到指针](https://zh.cppreference.com/w/c/language/conversion)转换，取址运算符是可选的：
+​	指向函数的指针可由函数地址初始化。因为[函数到指针]({{< ref "/c/language/expressions/conversion" >}})转换，取址运算符是可选的：
 
 ```c
 void f(int);
@@ -103,7 +103,7 @@ void (*pf2)(int) = f; // 与 &f 相同
 
 ​	不同于函数，指向函数的指针是对象，从而能存储在数组中，被复制、赋值，作为参数传递给其他函数等等。
 
-​	指向函数的指针可以用作[函数调用运算符](https://zh.cppreference.com/w/c/language/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8)的左操作数；这会调用所指向的函数：
+​	指向函数的指针可以用作[函数调用运算符]({{< ref "/c/language/expressions/operator_other#.E5.87.BD.E6.95.B0.E8.B0.83.E7.94.A8" >}})的左操作数；这会调用所指向的函数：
 
 ```c
 #include <stdio.h>
@@ -130,9 +130,9 @@ int (*p)() = f;    // 指针 p 指向 f
 p();    // 直接通过指针调用 f
 ```
 
-​	[相等性比较运算符](https://zh.cppreference.com/w/c/language/operator_comparison)定义于指向函数的指针（若指向相同函数则它们比较相等）。
+​	[相等性比较运算符]({{< ref "/c/language/expressions/operator_comparison" >}})定义于指向函数的指针（若指向相同函数则它们比较相等）。
 
-​	因为[函数类型的兼容性](https://zh.cppreference.com/w/c/language/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)忽略函数形参的顶层限定符，指向仅在形参的顶层限定符有区别的函数指针是可互换的：
+​	因为[函数类型的兼容性]({{< ref "/c/language/basic_concepts/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B" >}})忽略函数形参的顶层限定符，指向仅在形参的顶层限定符有区别的函数指针是可互换的：
 
 ```c
 int f(int), fc(const int);
@@ -143,7 +143,7 @@ pc = p;                   // OK
 
 ### 指向 void 指针
 
-​	指向任意类型对象的指针能[隐式转换](https://zh.cppreference.com/w/c/language/conversion)成指向 void 的指针（可选地有 [const](https://zh.cppreference.com/w/c/language/const) 或 [volatile](https://zh.cppreference.com/w/c/language/volatile) 限定），反之亦然：
+​	指向任意类型对象的指针能[隐式转换]({{< ref "/c/language/expressions/conversion" >}})成指向 void 的指针（可选地有 [const]({{< ref "/c/language/declarations/const" >}}) 或 [volatile]({{< ref "/c/language/declarations/volatile" >}}) 限定），反之亦然：
 
 ```c
 int n=1, *p=&n;
@@ -158,23 +158,23 @@ printf("%d\n", *p2); // 打印 1
 
 ​	每种类型的指针都有含有一个该类型的特殊的值，称为*空指针值*。值为空的指针不指向对象或函数（解引用空指针是未定义行为），而且与所有相同类型的且值以为*空* ﻿的指针比较相等。
 
-​	为将指针初始化为空值，或将空值赋给已存在的指针，可以使用空指针常量（[NULL](https://zh.cppreference.com/w/c/types/NULL)，或其他任何拥有值零的整数常量）。[静态初始化](https://zh.cppreference.com/w/c/language/initialization)亦将指针初始化到它们的空值。
+​	为将指针初始化为空值，或将空值赋给已存在的指针，可以使用空指针常量（[NULL]({{< ref "/c/types/NULL" >}})，或其他任何拥有值零的整数常量）。[静态初始化]({{< ref "/c/language/initialization" >}})亦将指针初始化到它们的空值。
 
 ​	空指针可以指示对象不存在，或可用于指示其他种类的错误条件。通常，接收指针实参的函数几乎总是需要检查该值是否为空，并对该情况特殊处理（例如，[free](https://zh.cppreference.com/w/c/memory/free) 在传递空指针时不做任何事）。
 
 ### 注解
 
-​	尽管任何指向对象的指针[能被转换](https://zh.cppreference.com/w/c/language/cast)成指向其他类型对象的指针，解引用指向类型异于对象声明类型的指针几乎总是未定义行为。细节见[严格别名使用](https://zh.cppreference.com/w/c/language/object#.E4.B8.A5.E6.A0.BC.E5.88.AB.E5.90.8D.E4.BD.BF.E7.94.A8)。
+​	尽管任何指向对象的指针[能被转换]({{< ref "/c/language/expressions/cast" >}})成指向其他类型对象的指针，解引用指向类型异于对象声明类型的指针几乎总是未定义行为。细节见[严格别名使用]({{< ref "/c/language/basic_concepts/object#.E4.B8.A5.E6.A0.BC.E5.88.AB.E5.90.8D.E4.BD.BF.E7.94.A8" >}})。
 
-​	可以指示函数，通过不会有别名使用的指针访问对象。细节见 [`restrict`](https://zh.cppreference.com/w/c/language/restrict)。(C99 起)
+​	可以指示函数，通过不会有别名使用的指针访问对象。细节见 [`restrict`]({{< ref "/c/language/declarations/restrict" >}})。(C99 起)
 
-​	数组类型的左值表达式，在大多数语境中使用时，会经历[隐式转换](https://zh.cppreference.com/w/c/language/conversion)到指向数组首元素的指针。细节见[数组到指针转换](https://zh.cppreference.com/w/c/language/array#.E6.95.B0.E7.BB.84.E5.88.B0.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2)。
+​	数组类型的左值表达式，在大多数语境中使用时，会经历[隐式转换]({{< ref "/c/language/expressions/conversion" >}})到指向数组首元素的指针。细节见[数组到指针转换]({{< ref "/c/language/declarations/array#.E6.95.B0.E7.BB.84.E5.88.B0.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}})。
 
 ```c
 char *str = "abc"; // "abc" 是 char[4] 类型的数组，str 是指向 'a' 的指针
 ```
 
-指向 char 的指针通常[用于表示字符串](https://zh.cppreference.com/w/c/string/byte)。为表示合法的字节字符串，指针必须指向作为 char 数组元素的 char，而且在大于或等于指针所引用元素的下标的某个下标处，必须有零值的 char。
+指向 char 的指针通常[用于表示字符串]({{< ref "/c/string/byte" >}})。为表示合法的字节字符串，指针必须指向作为 char 数组元素的 char，而且在大于或等于指针所引用元素的下标的某个下标处，必须有零值的 char。
 
 ## 参阅
 

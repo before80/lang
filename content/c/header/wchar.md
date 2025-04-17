@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/wchar](https://zh.cppreference.com/w/c/header/wchar)
 
-​	此标头是[空终止宽字符串](https://zh.cppreference.com/w/c/string/wide)库的一部分。
+​	此标头是[空终止宽字符串]({{< ref "/c/string/wide" >}})库的一部分。
 
 ## 函数
 

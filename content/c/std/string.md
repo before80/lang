@@ -20,13 +20,13 @@ draft = false
 
 ### size_t
 
-原址：[https://zh.cppreference.com/w/c/types/size_t](https://zh.cppreference.com/w/c/types/size_t)
+原址：[https://zh.cppreference.com/w/c/types/size_t]({{< ref "/c/types/size_t" >}})
 
 ```c
 typedef /* 由实现定义 */ size_t;
 ```
 
-​	`size_t` 是 [offsetof](https://zh.cppreference.com/w/c/types/offsetof)、[`<izeo>`](https://zh.cppreference.com/w/c/language/sizeof) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型](https://zh.cppreference.com/w/c/language/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B)。
+​	`size_t` 是 [offsetof]({{< ref "/c/types/offsetof" >}})、[`<izeo>`]({{< ref "/c/language/expressions/sizeof" >}}) 和 `_Alignof`(C23 前)`alignof`(C23 起) 的结果的无符号整数类型，定义取决于[数据模型]({{< ref "/c/language/basic_concepts/arithmetic_types#.E6.95.B0.E6.8D.AE.E6.A8.A1.E5.9E.8B" >}})。
 
 ​	`size_t` 的位宽不小于 16。(C99 起)
 
@@ -34,7 +34,7 @@ typedef /* 由实现定义 */ size_t;
 
 ​	`size_t` 能存储理论上可行的任何类型（包括数组）对象的最大大小。
 
-​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX](https://zh.cppreference.com/w/c/types/limits) 时，或若其依赖 32 位模算术时失败。
+​	`size_t` 通常用于数组下标和循环计数。将如 unsigned int 的其他类型用作数组下标的的程序，可能譬如在 64 位系统上，当下标超过 [UINT_MAX]({{< ref "/c/types/limits" >}}) 时，或若其依赖 32 位模算术时失败。
 
 **可能的实现**
 
@@ -84,7 +84,7 @@ SIZE_MAX = 18446744073709551615
 
 ### NULL
 
-原址：[https://zh.cppreference.com/w/c/types/NULL](https://zh.cppreference.com/w/c/types/NULL)
+原址：[https://zh.cppreference.com/w/c/types/NULL]({{< ref "/c/types/NULL" >}})
 
 ```c
 #define NULL /* 由实现定义 */
@@ -92,11 +92,11 @@ SIZE_MAX = 18446744073709551615
 
 ​	宏 `NULL` 是实现定义的空指针常量，可为
 
-- 值为 0 的整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F)
-- [转换为](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2) void* 的值为 0 的整数常量表达式
-- 预定义常量 [`<ullpt>`](https://zh.cppreference.com/w/c/language/nullptr)(C23 起)
+- 值为 0 的整数[常量表达式]({{< ref "/c/language/expressions/constant_expression#.E6.95.B4.E6.95.B0.E5.B8.B8.E9.87.8F.E8.A1.A8.E8.BE.BE.E5.BC.8F" >}})
+- [转换为]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}}) void* 的值为 0 的整数常量表达式
+- 预定义常量 [`<ullpt>`]({{< ref "/c/language/expressions/nullptr" >}})(C23 起)
 
-​	空指针常量能[转换](https://zh.cppreference.com/w/c/language/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2)为任何指针类型；转换结果是该类型的空指针值。
+​	空指针常量能[转换]({{< ref "/c/language/expressions/conversion#.E6.8C.87.E9.92.88.E8.BD.AC.E6.8D.A2" >}})为任何指针类型；转换结果是该类型的空指针值。
 
 **注解**
 

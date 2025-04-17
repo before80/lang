@@ -15,7 +15,7 @@ draft = false
 
 ## 语法
 
-​	枚举类型在[声明文法](https://zh.cppreference.com/w/c/language/declarations)中以跟随的*枚举说明符* ﻿作为*类型说明符* ﻿声明：
+​	枚举类型在[声明文法]({{< ref "/c/language/declarations" >}})中以跟随的*枚举说明符* ﻿作为*类型说明符* ﻿声明：
 
 | `enum` *属性声明符序列* ﻿(可选) *标识符* ﻿(可选) `{` *枚举项列表* `}` | (1)  |          |
 | ------------------------------------------------------------ | ---- | -------- |
@@ -34,10 +34,10 @@ draft = false
 
 | *标识符*, *枚举常量* | -    | 由此声明引入的标识符                                         |
 | -------------------- | ---- | ------------------------------------------------------------ |
-| *常量表达式*         | -    | [整数常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)，其值可以以 int 类型的值表示。(C23 前)若枚举具有固定底层类型，则其可以表示为*类型* ﻿的值(C23 起) |
-| *属性声明符序列*     | -    | (C23)可选的[属性列表](https://zh.cppreference.com/w/c/language/attributes)，若出现在 `enum` 后则应用到整个枚举，若出现在*枚举常量* ﻿ 后则应用到*枚举项* |
+| *常量表达式*         | -    | [整数常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})，其值可以以 int 类型的值表示。(C23 前)若枚举具有固定底层类型，则其可以表示为*类型* ﻿的值(C23 起) |
+| *属性声明符序列*     | -    | (C23)可选的[属性列表]({{< ref "/c/language/declarations/attributes" >}})，若出现在 `enum` 后则应用到整个枚举，若出现在*枚举常量* ﻿ 后则应用到*枚举项* |
 
-​	与[结构体](https://zh.cppreference.com/w/c/language/struct)或[联合体](https://zh.cppreference.com/w/c/language/union)一样，引入枚举类型和一或多个枚举常量的声明亦可声明一或多个该类型的对象，或从该类型派生的类型的对象。
+​	与[结构体]({{< ref "/c/language/declarations/struct" >}})或[联合体]({{< ref "/c/language/declarations/union" >}})一样，引入枚举类型和一或多个枚举常量的声明亦可声明一或多个该类型的对象，或从该类型派生的类型的对象。
 
 ```c
 enum color_t {RED, GREEN, BLUE} c = RED, *cp = &c;
@@ -49,7 +49,7 @@ enum color_t {RED, GREEN, BLUE} c = RED, *cp = &c;
 
 ## 解释
 
-​	每个出现于枚举说明符体中的*枚举常量* ﻿会成为 int 类型的(C23 前)[整数常量](https://zh.cppreference.com/w/c/language/constant_expression)，并处于包围它的作用域中，而且在凡要求整数常量处可用（例如，作为 case 标号或非 VLA 数组大小）。
+​	每个出现于枚举说明符体中的*枚举常量* ﻿会成为 int 类型的(C23 前)[整数常量]({{< ref "/c/language/expressions/constant_expression" >}})，并处于包围它的作用域中，而且在凡要求整数常量处可用（例如，作为 case 标号或非 VLA 数组大小）。
 
 在处理枚举项列表中的每个枚举常量过程中，枚举常量的类型应当为：(C23 起)
 
@@ -87,7 +87,7 @@ enum Foo { A, B, C = 10, D, E = 1, F, G = F + C};
 // A=0, B=1, C=10, D=11, E=1, F=2, G=12
 ```
 
-​	若使用*标识符* ﻿，则其自身成为标签[命名空间](https://zh.cppreference.com/w/c/language/name_space)中枚举类型的名称，且需要使用关键词 `enum` （除非 `typedef` 到通常命名空间）。
+​	若使用*标识符* ﻿，则其自身成为标签[命名空间]({{< ref "/c/language/basic_concepts/name_space" >}})中枚举类型的名称，且需要使用关键词 `enum` （除非 `typedef` 到通常命名空间）。
 
 ```c
 enum color { RED, GREEN, BLUE };
@@ -106,7 +106,7 @@ color_t x = GREEN; // OK
 
 ​	所有枚举均有底层类型。可以通过用 *enum-类型说明符* 显式指定底层类型，并作为其固定底层类型。如果未显示指定，则其底层类型为枚举的兼容类型，它为有符号或无符号的整数类型或 `char`。(C23 起)
 
-​	枚举类型是整数类型，从而可以用于任何其他整数类型能用之处，包括[隐式转换](https://zh.cppreference.com/w/c/language/conversion)和[算术运算符](https://zh.cppreference.com/w/c/language/operator_arithmetic)。
+​	枚举类型是整数类型，从而可以用于任何其他整数类型能用之处，包括[隐式转换]({{< ref "/c/language/expressions/conversion" >}})和[算术运算符]({{< ref "/c/language/expressions/operator_arithmetic" >}})。
 
 ```c
 enum { ONE = 1, TWO } e;
@@ -118,7 +118,7 @@ e = e + 1; // e 现在是 TWO
 
 ## 注解
 
-​	不同于 [struct](https://zh.cppreference.com/w/c/language/struct) 或 [union](https://zh.cppreference.com/w/c/language/union) ， C 中没有 enum 的前置声明：
+​	不同于 [struct]({{< ref "/c/language/declarations/struct" >}}) 或 [union]({{< ref "/c/language/declarations/union" >}}) ， C 中没有 enum 的前置声明：
 
 ```
 enum Color; // 错误：C 中无 enum 的前置声明
@@ -146,7 +146,7 @@ constexpr int TEN = 10;
 struct S { int x : TEN; }; // 也 OK
 ```
 
-​	另外，由于 C 中[结构体](https://zh.cppreference.com/w/c/language/struct)或[联合体](https://zh.cppreference.com/w/c/language/union)不建立其作用域，可以在前者的成员说明中引入枚举类型及其枚举常量，而之后其作用域与前者相同。
+​	另外，由于 C 中[结构体]({{< ref "/c/language/declarations/struct" >}})或[联合体]({{< ref "/c/language/declarations/union" >}})不建立其作用域，可以在前者的成员说明中引入枚举类型及其枚举常量，而之后其作用域与前者相同。
 
 ```c
 struct Element

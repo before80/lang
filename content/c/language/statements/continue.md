@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/continue](https://zh.cppreference.com/w/c/language/continue)
 
-​	导致跳过整个 [for](https://zh.cppreference.com/w/c/language/for)、 [while](https://zh.cppreference.com/w/c/language/while) 或 [do-while](https://zh.cppreference.com/w/c/language/do) 循环体的剩余部分。
+​	导致跳过整个 [for]({{< ref "/c/language/statements/for" >}})、 [while]({{< ref "/c/language/statements/while" >}}) 或 [do-while]({{< ref "/c/language/statements/do" >}}) 循环体的剩余部分。
 
 ​	在使用条件语句忽略循环剩余部分显得笨拙时使用。
 
@@ -19,14 +19,14 @@ draft = false
 
 ​	*属性说明符序列*(可选) `continue` `;`
 
-| *属性说明符序列* | -    | (C23)可选的[属性](https://zh.cppreference.com/w/c/language/attributes)列表，应用到 `continue` 语句 |
+| *属性说明符序列* | -    | (C23)可选的[属性]({{< ref "/c/language/declarations/attributes" >}})列表，应用到 `continue` 语句 |
 | ---------------- | ---- | ------------------------------------------------------------ |
 
 ## 解释
 
-​	`continue` 语句导致如同用 [goto](https://zh.cppreference.com/w/c/language/goto) 跳转到循环体的结尾（它仅能出现在 [for](https://zh.cppreference.com/w/c/language/for)、 [while](https://zh.cppreference.com/w/c/language/while) 及 [do-while](https://zh.cppreference.com/w/c/language/do) 的循环体内）。
+​	`continue` 语句导致如同用 [goto]({{< ref "/c/language/statements/goto" >}}) 跳转到循环体的结尾（它仅能出现在 [for]({{< ref "/c/language/statements/for" >}})、 [while]({{< ref "/c/language/statements/while" >}}) 及 [do-while]({{< ref "/c/language/statements/do" >}}) 的循环体内）。
 
-​	对于 [while](https://zh.cppreference.com/w/c/language/while) 循环，它表现为
+​	对于 [while]({{< ref "/c/language/statements/while" >}}) 循环，它表现为
 
 ```c
 while (/* ... */) {
@@ -37,7 +37,7 @@ while (/* ... */) {
 }
 ```
 
-​	对于 [do-while](https://zh.cppreference.com/w/c/language/do) 循环，它表现为：
+​	对于 [do-while]({{< ref "/c/language/statements/do" >}}) 循环，它表现为：
 
 ```c
 do {
@@ -48,7 +48,7 @@ do {
 } while (/* ... */);
 ```
 
-​	对于 [for](https://zh.cppreference.com/w/c/language/for) 循环，它表现为：
+​	对于 [for]({{< ref "/c/language/statements/for" >}}) 循环，它表现为：
 
 ```c
 for (/* ... */) {
@@ -61,7 +61,7 @@ for (/* ... */) {
 
 ## 关键词
 
-[`continue`](https://zh.cppreference.com/w/c/keyword/continue)
+[`continue`]({{< ref "/c/language/keyword/continue" >}})
 
 ## 示例
 

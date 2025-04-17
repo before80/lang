@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`do-while` 循环](https://zh.cppreference.com/w/c/language/do)：用作该循环的声明
+- [`do-while` 循环]({{< ref "/c/language/statements/do" >}})：用作该循环的声明

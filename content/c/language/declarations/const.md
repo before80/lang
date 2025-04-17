@@ -11,9 +11,9 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/const](https://zh.cppreference.com/w/c/language/const)
 
-​	C [类型系统](https://zh.cppreference.com/w/c/language/type)中每一个独立的类型，都有该类型的几个*限定*版本，对应 `const`、[`volatile`](https://zh.cppreference.com/w/c/language/volatile) 及对于指向对象指针的 [`restrict`](https://zh.cppreference.com/w/c/language/restrict) 限定符中的一个、两个或全部三个。此页面描述 `const` 限定符的效果。
+​	C [类型系统]({{< ref "/c/language/basic_concepts/type" >}})中每一个独立的类型，都有该类型的几个*限定*版本，对应 `const`、[`volatile`]({{< ref "/c/language/declarations/volatile" >}}) 及对于指向对象指针的 [`restrict`]({{< ref "/c/language/declarations/restrict" >}}) 限定符中的一个、两个或全部三个。此页面描述 `const` 限定符的效果。
 
-​	编译器可以把[声明](https://zh.cppreference.com/w/c/language/declarations)为带 const 限定类型的对象放到只读内存中，并且若程序从来不获取该 const 对象的地址，则可能完全不存储它。
+​	编译器可以把[声明]({{< ref "/c/language/declarations" >}})为带 const 限定类型的对象放到只读内存中，并且若程序从来不获取该 const 对象的地址，则可能完全不存储它。
 
 ​	对类型被 const 限定的对象的任何修改尝试都导致未定义行为。
 
@@ -23,7 +23,7 @@ int* p = (int*)&n;
 *p = 2; // 未定义行为
 ```
 
-​	`const` 语义仅适用于[左值](https://zh.cppreference.com/w/c/language/value_category)表达式；只要在不要求左值的语境中使用 const 左值表达式，就会丢失其 `const` 限定符（注意不丢失 `volatile` 限定符，若它存在）。
+​	`const` 语义仅适用于[左值]({{< ref "/c/language/expressions/value_category" >}})表达式；只要在不要求左值的语境中使用 const 左值表达式，就会丢失其 `const` 限定符（注意不丢失 `volatile` 限定符，若它存在）。
 
 ​	指代 const 限定类型对象的左值表达式，和指代拥有至少一个 const 限定类型成员（包含为聚合体或联合体所递归含有的成员）的结构体或联合体的左值表达式，不是*可修改左值*。具体而言，它们不可赋值：
 
@@ -48,7 +48,7 @@ const struct s cs;
 // cs.i 和 cs.ci 的类型都是 const int
 ```
 
-​	若以 const 类型限定符声明数组类型（通过使用 [typedef](https://zh.cppreference.com/w/c/language/typedef)），则数组类型无 const 限定，但其元素类型有。(C23 前)
+​	若以 const 类型限定符声明数组类型（通过使用 [typedef]({{< ref "/c/language/declarations/typedef" >}})），则数组类型无 const 限定，但其元素类型有。(C23 前)
 
 ​	始终认为数组类型与其元素类型同等地拥有 const 限定。(C23 起)
 
@@ -61,7 +61,7 @@ void *unqual_ptr = a; // C23 前 OK ； C23 起错误
 // 注： clang 即使在 C89-C17 模式也应用 C++/C23 中的规则
 ```
 
-​	若以 const 类型限定符声明函数类型（通过使用 [typedef](https://zh.cppreference.com/w/c/language/typedef)），则行为未定义。
+​	若以 const 类型限定符声明函数类型（通过使用 [typedef]({{< ref "/c/language/declarations/typedef" >}})），则行为未定义。
 
 ​	函数声明中，关键词 `const` 可出现在用于声明函数形参的数组类型的方括号内。它限定数组类型所变换到的指针类型。以下两条声明声明相同函数：(C99 起)
 
@@ -100,11 +100,11 @@ p = (int*)cp; // OK：转型
 
 ## 关键词
 
-[`const`](https://zh.cppreference.com/w/c/keyword/const)
+[`const`]({{< ref "/c/language/keyword/const" >}})
 
 ## 注解
 
-​	C 从 C++ 接纳了 *const* 限定符，但不同于 C++，C 中 const 限定类型的表达式不是[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)；它们不可用作 [case](https://zh.cppreference.com/w/c/language/switch) 标号，或用于初始化[静态](https://zh.cppreference.com/w/c/language/storage_duration)和[线程](https://zh.cppreference.com/w/c/language/storage_duration)存储期对象，用作[枚举项](https://zh.cppreference.com/w/c/language/enum)，或[位域](https://zh.cppreference.com/w/c/language/bit_field)大小。以之为[数组](https://zh.cppreference.com/w/c/language/array)大小时，产生的数组为 VLA。
+​	C 从 C++ 接纳了 *const* 限定符，但不同于 C++，C 中 const 限定类型的表达式不是[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})；它们不可用作 [case]({{< ref "/c/language/statements/switch" >}}) 标号，或用于初始化[静态]({{< ref "/c/language/declarations/storage_duration" >}})和[线程]({{< ref "/c/language/declarations/storage_duration" >}})存储期对象，用作[枚举项]({{< ref "/c/language/declarations/enum" >}})，或[位域]({{< ref "/c/language/declarations/bit_field" >}})大小。以之为[数组]({{< ref "/c/language/declarations/array" >}})大小时，产生的数组为 VLA。
 
 ## 参阅
 

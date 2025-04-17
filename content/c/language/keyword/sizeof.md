@@ -13,4 +13,4 @@ draft = false
 
 ## 用法
 
-- [`sizeof` 运算符](https://zh.cppreference.com/w/c/language/sizeof)
+- [`sizeof` 运算符]({{< ref "/c/language/expressions/sizeof" >}})

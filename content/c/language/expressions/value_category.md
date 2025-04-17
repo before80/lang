@@ -11,30 +11,30 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/language/value_category](https://zh.cppreference.com/w/c/language/value_category)
 
-​	C 中每个[表达式](https://zh.cppreference.com/w/c/language/expressions)（带有实参的运算符、函数调用、常量、变量名等）以两个独立属性刻画：[类型](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B)和[值类别](https://zh.cppreference.com/w/c/language/expressions#.E7.BB.BC.E8.BF.B0)。
+​	C 中每个[表达式]({{< ref "/c/language/expressions" >}})（带有实参的运算符、函数调用、常量、变量名等）以两个独立属性刻画：[类型](https://zh.cppreference.com/w/c/language/types#.E7.B1.BB.E5.9E.8B)和[值类别]({{< ref "/c/language/expressions#.E7.BB.BC.E8.BF.B0" >}})。
 
 ​	每个表达式属于三个值类别之一：左值、非左值对象（右值）以及函数指代器。
 
 ## 左值表达式
 
-​	左值表达式是除类型 void 之外的任何[对象类型](https://zh.cppreference.com/w/c/language/type#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB)，且隐含地指代一个[对象](https://zh.cppreference.com/w/c/language/object)的表达式（当左值在求值时不实际指代一个对象时，行为未定义）。换言之，左值表达式求值得到*对象标识* ﻿。此值类别的名称（“左值”）是历史性的，并反映了 CPL 中，左值表达式作为赋值运算符的左运算数。
+​	左值表达式是除类型 void 之外的任何[对象类型]({{< ref "/c/language/basic_concepts/type#.E7.B1.BB.E5.9E.8B.E7.BB.84.E5.88.AB" >}})，且隐含地指代一个[对象]({{< ref "/c/language/basic_concepts/object" >}})的表达式（当左值在求值时不实际指代一个对象时，行为未定义）。换言之，左值表达式求值得到*对象标识* ﻿。此值类别的名称（“左值”）是历史性的，并反映了 CPL 中，左值表达式作为赋值运算符的左运算数。
 
 ​	左值表达式可用于下列*左值语境* ﻿：
 
-- 作为[取址运算符](https://zh.cppreference.com/w/c/language/operator_member_access)的操作数（除了指代[位域](https://zh.cppreference.com/w/c/language/bit_field)或声明为 [register](https://zh.cppreference.com/w/c/language/storage_duration) 的左值）。
-- 作为前/后[自增减运算符](https://zh.cppreference.com/w/c/language/operator_incdec)的操作数。
-- 作为[成员访问](https://zh.cppreference.com/w/c/language/operator_member_access)（点）运算符的左操作数。
-- 作为[赋值及复合赋值](https://zh.cppreference.com/w/c/language/operator_assignment)运算符的左操作数。
+- 作为[取址运算符]({{< ref "/c/language/expressions/operator_member_access" >}})的操作数（除了指代[位域]({{< ref "/c/language/declarations/bit_field" >}})或声明为 [register]({{< ref "/c/language/declarations/storage_duration" >}}) 的左值）。
+- 作为前/后[自增减运算符]({{< ref "/c/language/expressions/operator_incdec" >}})的操作数。
+- 作为[成员访问]({{< ref "/c/language/expressions/operator_member_access" >}})（点）运算符的左操作数。
+- 作为[赋值及复合赋值]({{< ref "/c/language/expressions/operator_assignment" >}})运算符的左操作数。
 
-​	若将左值表达式用于除 [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof)、[`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof) 或上述的运算符之外的语境，则任何完整类型的非数组左值会经历[左值转换](https://zh.cppreference.com/w/c/language/conversion)，这模仿的是从对象位置到其值的内存加载。同样地，在用于除 `sizeof`、`_Alignof`、取址运算符或从字符串字面量初始化数组之外的语境时，数组左值会经历[数组到指针转换](https://zh.cppreference.com/w/c/language/conversion)。
+​	若将左值表达式用于除 [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}})、[`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}}) 或上述的运算符之外的语境，则任何完整类型的非数组左值会经历[左值转换]({{< ref "/c/language/expressions/conversion" >}})，这模仿的是从对象位置到其值的内存加载。同样地，在用于除 `sizeof`、`_Alignof`、取址运算符或从字符串字面量初始化数组之外的语境时，数组左值会经历[数组到指针转换]({{< ref "/c/language/expressions/conversion" >}})。
 
-​	[`const`](https://zh.cppreference.com/w/c/language/const)/[`volatile`](https://zh.cppreference.com/w/c/language/volatile)/[`restrict`](https://zh.cppreference.com/w/c/language/restrict) 限定符和[原子](https://zh.cppreference.com/w/c/language/atomic)类型的语义仅应用于左值（左值转换将剥除限定符并移除原子属性）。
+​	[`const`]({{< ref "/c/language/declarations/const" >}})/[`volatile`]({{< ref "/c/language/declarations/volatile" >}})/[`restrict`]({{< ref "/c/language/declarations/restrict" >}}) 限定符和[原子]({{< ref "/c/language/declarations/atomic" >}})类型的语义仅应用于左值（左值转换将剥除限定符并移除原子属性）。
 
 ​	下列表达式是左值：
 
 - 标识符，含具名函数形参，只要声明它们为指代对象（而非函数或枚举常量）
-- [字符串字面量](https://zh.cppreference.com/w/c/language/string_literal)
-- (C99) [复合字面量](https://zh.cppreference.com/w/c/language/compound_literal)
+- [字符串字面量]({{< ref "/c/language/expressions/string_literal" >}})
+- (C99) [复合字面量]({{< ref "/c/language/expressions/compound_literal" >}})
 - 括号表达式，若其无括号版本是左值
 - 成员访问（点）运算符的结果，若其左参数是左值
 - 通过指针访问成员（`->`）运算符的结果
@@ -43,7 +43,7 @@ draft = false
 
 ### 可修改左值表达式
 
-​	一个*可修改左值*是任何完整的非数组类型的、非 [const](https://zh.cppreference.com/w/c/language/const) 限定的左值表达式，而且若它是结构体/联合体，则递归地没有任何成员为 [const](https://zh.cppreference.com/w/c/language/const) 限定。
+​	一个*可修改左值*是任何完整的非数组类型的、非 [const]({{< ref "/c/language/declarations/const" >}}) 限定的左值表达式，而且若它是结构体/联合体，则递归地没有任何成员为 [const]({{< ref "/c/language/declarations/const" >}}) 限定。
 
 ​	只有可修改左值表达式可用作自增减运算符的实参，赋值和复合赋值运算符的左实参。
 
@@ -71,11 +71,11 @@ draft = false
 
 > 注意
 >
-> ​	拥有一个数组类型成员（可以是嵌套的）的结构体/联合体右值实际上指代一个拥有[临时生存期](https://zh.cppreference.com/w/c/language/lifetime)的对象。此对象可通过由索引数组元素组成的左值表达式，或解引用该数组的数组到指针转换所得的指针来访问。(C99 起)
+> ​	拥有一个数组类型成员（可以是嵌套的）的结构体/联合体右值实际上指代一个拥有[临时生存期]({{< ref "/c/language/basic_concepts/lifetime" >}})的对象。此对象可通过由索引数组元素组成的左值表达式，或解引用该数组的数组到指针转换所得的指针来访问。(C99 起)
 
 ## 函数指代符表达式
 
-​	函数指代符（由[函数声明](https://zh.cppreference.com/w/c/language/function_declaration)引入的标识符）是函数类型的表达式。当在异于取址运算符、 [`sizeof`](https://zh.cppreference.com/w/c/language/sizeof) 及 [`_Alignof`](https://zh.cppreference.com/w/c/language/_Alignof)（后两者在作用于函数时生成编译错误）的语境中时，函数指代符始终转换成指向函数的非左值指针。注意函数调用运算符是对指向函数指针，而非对函数指代符自身定义的。
+​	函数指代符（由[函数声明]({{< ref "/c/language/functions/function_declaration" >}})引入的标识符）是函数类型的表达式。当在异于取址运算符、 [`sizeof`]({{< ref "/c/language/expressions/sizeof" >}}) 及 [`_Alignof`]({{< ref "/c/language/expressions/_Alignof" >}})（后两者在作用于函数时生成编译错误）的语境中时，函数指代符始终转换成指向函数的非左值指针。注意函数调用运算符是对指向函数指针，而非对函数指代符自身定义的。
 
 ## 参阅
 

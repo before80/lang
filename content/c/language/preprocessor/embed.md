@@ -35,27 +35,27 @@ draft = false
 | *q-字符序列*         | -    | 一个或更多 *q-字符* 的序列，出现以下任何字符导致未定义行为：<br />字符 `'`<br />字符 `\` <br />字符序列 `//` <br />字符序列 `*/` |
 | *q-字符*             | -    | [源字符集](https://zh.cppreference.com/w/c/language/translation_phases#.E9.98.B6.E6.AE.B5_5)中除了换行和 `"` 的任意成员 |
 | *预处理记号序列*     | -    | 一个或更多[预处理记号](https://zh.cppreference.com/w/c/language/translation_phases#.E9.98.B6.E6.AE.B5_3)的序列 |
-| *字符串字面量*       | -    | [字符串字面量](https://zh.cppreference.com/w/c/language/string_literal) |
+| *字符串字面量*       | -    | [字符串字面量]({{< ref "/c/language/expressions/string_literal" >}}) |
 | *h-预处理记号序列*   | -    | 一个或更多除了 > 外的[预处理记号](https://zh.cppreference.com/w/c/language/translation_phases#.E9.98.B6.E6.AE.B5_3)的序列 |
 | *嵌入参数序列*       | -    | 一个或多个 *预处理参数* 的序列。注意，不同于 *属性列表*，这个序列并非逗号分隔。 |
-| *预处理参数*         | -    | *属性记号*（见 [属性](https://zh.cppreference.com/w/c/language/attributes)），但由预处理记号而非记号组成。 |
-| *预处理平衡记号序列* | -    | *平衡记号序列*（见 [属性](https://zh.cppreference.com/w/c/language/attributes)），但由预处理记号而非记号组成。 |
+| *预处理参数*         | -    | *属性记号*（见 [属性]({{< ref "/c/language/declarations/attributes" >}})），但由预处理记号而非记号组成。 |
+| *预处理平衡记号序列* | -    | *平衡记号序列*（见 [属性]({{< ref "/c/language/declarations/attributes" >}})），但由预处理记号而非记号组成。 |
 
 ## 解释
 
 1) 以由实现定义的方式搜索由 *h-字符序列* 所标定的资源。
-2) 以由实现定义的方式搜索由 *q-字符序列* 所标定的资源。对于 (1,2)，各实现通常使用与该实现用于[源文件包含](https://zh.cppreference.com/w/c/preprocessor/include)相似但不同的一组由实现定义的搜索路径。出现于标准中一个示例中的语言构造 `__has_embed(__FILE__ ...` 说明，至少在 (2) 的情况中，当前文件所在的目录预期会被搜索。
+2) 以由实现定义的方式搜索由 *q-字符序列* 所标定的资源。对于 (1,2)，各实现通常使用与该实现用于[源文件包含]({{< ref "/c/language/preprocessor/include" >}})相似但不同的一组由实现定义的搜索路径。出现于标准中一个示例中的语言构造 `__has_embed(__FILE__ ...` 说明，至少在 (2) 的情况中，当前文件所在的目录预期会被搜索。
 3) 指令中处于 `embed` 之后的各预处理记号，与普通文本一样处理（亦即，当前被定义为宏的各个标识符均被替换为其预处理记号替换列表）。经全部替换后所得的指令应当与之前两个形式之一相匹配。预处理记号对 `<` 和 `>` 或者一对 `"` 字符之间的预处理记号序列，将其合并为一个头文件名预处理记号的方法是由实现定义的。
 4) 对由 *h-字符序列* 或 *q-字符序列* 所标定的资源进行的搜索，如同该预处理记号序列是 (3) 中的 *预处理记号序列* 一样进行，但不进行进一步的宏展开。如果这条指令无法满足 #embed 指令的语法规定，则程序非良构。如果资源搜索成功，该资源非空，且所有参数均受支持，则 __has__embed 表达式求值为 `__STDC_EMBED_FOUND__`，如果该资源为空且所有参数均受支持，则为 `__STDC_EMBED_EMPTY__` ，而如果搜索失败或有任一参数不受实现支持，则为 `__STDC_EMBED_NOT_FOUND__`。
 5) 仅当 (4) 无法匹配时才考虑这种形式，这种情况下各预处理记号按普通文本一样处理。
 
 ​	若未能找到资源或有参数之一不受实现支持，则程序非良构。
 
-​	`__has_embed` 可在 [`#if`](https://zh.cppreference.com/w/c/preprocessor/conditional) 和 [`#elif`](https://zh.cppreference.com/w/c/preprocessor/conditional) 的表达式中展开。它被 [`#ifdef`](https://zh.cppreference.com/w/c/preprocessor/conditional)、[` #ifndef`](https://zh.cppreference.com/w/c/preprocessor/conditional)、[` #elifdef`](https://zh.cppreference.com/w/c/preprocessor/conditional)、[` #elifndef`](https://zh.cppreference.com/w/c/preprocessor/conditional) 和 [`defined`](https://zh.cppreference.com/w/c/preprocessor/conditional) 当做已定义宏，但不能用在别处。
+​	`__has_embed` 可在 [`#if`]({{< ref "/c/language/preprocessor/conditional" >}}) 和 [`#elif`]({{< ref "/c/language/preprocessor/conditional" >}}) 的表达式中展开。它被 [`#ifdef`]({{< ref "/c/language/preprocessor/conditional" >}})、[` #ifndef`]({{< ref "/c/language/preprocessor/conditional" >}})、[` #elifdef`]({{< ref "/c/language/preprocessor/conditional" >}})、[` #elifndef`]({{< ref "/c/language/preprocessor/conditional" >}}) 和 [`defined`]({{< ref "/c/language/preprocessor/conditional" >}}) 当做已定义宏，但不能用在别处。
 
 ​	资源具有*实现的资源宽度*，它是由实现定义的所定位资源的位大小。其*资源宽度*，为由实现定义的资源宽度，除非由 `limit` 参数所修改。若资源宽度为 0，则认为该资源为空。*嵌入元素宽度* 等于 [CHAR_BIT](http://zh.cppreference.com/w/c/types/limits)，除非由某个由实现定义的参数所修改。资源宽度必须可被嵌入元素宽度整除。
 
-​	`#embed` 指令展开为上述由整数[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)构成的列表。列表中每个整数常量表达式的记号组，与列表中前一个整数常量表达式的记号组之间，以逗号分隔。这个序列不会以逗号开头或结束。若整数常量表达式的列表为空，则记号序列为空。该指令被替换为其展开，并根据给出的某些特定嵌入参数，带有额外的或者替换的记号序列。
+​	`#embed` 指令展开为上述由整数[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})构成的列表。列表中每个整数常量表达式的记号组，与列表中前一个整数常量表达式的记号组之间，以逗号分隔。这个序列不会以逗号开头或结束。若整数常量表达式的列表为空，则记号序列为空。该指令被替换为其展开，并根据给出的某些特定嵌入参数，带有额外的或者替换的记号序列。
 
 ​	扩展序列中的各整数常量表达式的值，由该资源的数据以实现定义的映射所决定。各个整数常量表达式的取值范围为 \\([0, 2^{嵌入元素宽度})\\)。如果：
 
@@ -76,7 +76,7 @@ draft = false
 | ----------------------------- | ---- |
 | `__limit__(` *常量表达式* `)` | (2)  |
 
-​	嵌入参数 `limit` 在嵌入参数序列中最多可出现一次。它必须带有实参，必须为整数（预处理器）[常量表达式](https://zh.cppreference.com/w/c/language/constant_expression)，求值为非负数，且不包含记号 defined。资源宽度被设为该整数常量表达式与嵌入元素宽度的乘积和实现的资源宽度的最小值。
+​	嵌入参数 `limit` 在嵌入参数序列中最多可出现一次。它必须带有实参，必须为整数（预处理器）[常量表达式]({{< ref "/c/language/expressions/constant_expression" >}})，求值为非负数，且不包含记号 defined。资源宽度被设为该整数常量表达式与嵌入元素宽度的乘积和实现的资源宽度的最小值。
 
 ### suffix
 

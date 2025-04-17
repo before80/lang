@@ -70,7 +70,7 @@ draft = false
 
 ​	对于标准属性，它将展开成该属性被添加到工作草案中时的年份和月份（见下表），特定于厂商的属性则以某个非零整数常量确定。
 
-​	在 [`#if`](https://zh.cppreference.com/w/c/preprocessor/conditional) 与 [`#elif`](https://zh.cppreference.com/w/c/preprocessor/conditional) 的表达式中可以展开 `__has_c_attribute`。 [`#ifdef`](https://zh.cppreference.com/w/c/preprocessor/conditional)、[` #ifndef`](https://zh.cppreference.com/w/c/preprocessor/conditional) 和 [`defined`](https://zh.cppreference.com/w/c/preprocessor/conditional) 把它当做已定义的宏处理，但不能在别处使用它。
+​	在 [`#if`]({{< ref "/c/language/preprocessor/conditional" >}}) 与 [`#elif`]({{< ref "/c/language/preprocessor/conditional" >}}) 的表达式中可以展开 `__has_c_attribute`。 [`#ifdef`]({{< ref "/c/language/preprocessor/conditional" >}})、[` #ifndef`]({{< ref "/c/language/preprocessor/conditional" >}}) 和 [`defined`]({{< ref "/c/language/preprocessor/conditional" >}}) 把它当做已定义的宏处理，但不能在别处使用它。
 
 |       *属性记号*       |              属性              |   值    | 标准  |
 | :--------------------: | :----------------------------: | :-----: | :---: |

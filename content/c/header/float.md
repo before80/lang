@@ -11,7 +11,7 @@ draft = false
 
 > 原文：[https://zh.cppreference.com/w/c/header/float](https://zh.cppreference.com/w/c/header/float)
 
-​	此标头是[类型支持](https://zh.cppreference.com/w/c/types)库的一部分，特别是其[数值极限](https://zh.cppreference.com/w/c/types/limits)接口。
+​	此标头是[类型支持]({{< ref "/c/types" >}})库的一部分，特别是其[数值极限]({{< ref "/c/types/limits" >}})接口。
 
 ## 宏
 
@@ -29,8 +29,8 @@ draft = false
 | FLT_MIN_10_EXP   DBL_MIN_10_EXP   LDBL_MIN_10_EXP            | 分别为对于 float、double 和 long double 的最小负整数，使得 10 的该整数次方是该类型的正规值 (宏常量) |
 | FLT_MAX_EXP   DBL_MAX_EXP   LDBL_MAX_EXP                     | 分别为对于 float、double 和 long double 的最大正整数，使得 `FLT_RADIX` 的该整数减一次方是该类型的可表示有穷值 (宏常量) |
 | FLT_MAX_10_EXP   DBL_MAX_10_EXP   LDBL_MAX_10_EXP            | 分别为对于 float、double 和 long double 的最大正整数，使得 10 的该整数次方是该类型的可表示有穷值 (宏常量) |
-| [FLT_ROUNDS   ](https://zh.cppreference.com/w/c/types/limits/FLT_ROUNDS) | 浮点数算术的舍入模式 (宏常量)                                |
-| [FLT_EVAL_METHOD   ](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD)(C99) | 指定所有算术运算以什么精度执行 (宏常量)                      |
+| [FLT_ROUNDS   ]({{< ref "/c/types/limits/FLT_ROUNDS" >}}) | 浮点数算术的舍入模式 (宏常量)                                |
+| [FLT_EVAL_METHOD   ]({{< ref "/c/types/limits/FLT_EVAL_METHOD" >}})(C99) | 指定所有算术运算以什么精度执行 (宏常量)                      |
 | FLT_HAS_SUBNORM   DBL_HAS_SUBNORM   LDBL_HAS_SUBNORM   (C11)   (C23 弃用) | 类型是否支持[非正规](https://en.wikipedia.org/wiki/Denormal_number)）数值：<br /> `-1` – 不确定, `0` – 不支持, `1` – 支持 (宏常量) |
 
 > 本节未完成 

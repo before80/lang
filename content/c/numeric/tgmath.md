@@ -11,13 +11,13 @@ draft = false
 
 > 原文[https://zh.cppreference.com/w/c/numeric/tgmath](https://zh.cppreference.com/w/c/numeric/tgmath)
 
-​	头文件 [`<tgmath.h>`](https://zh.cppreference.com/w/c/header/tgmath) 包含头文件 [`<math.h>`](https://zh.cppreference.com/w/c/header/math) 及 [`<complex.h>`](https://zh.cppreference.com/w/c/header/complex)，并定义了几种[泛型宏](https://zh.cppreference.com/w/c/language/generic)。这些宏会根据实参类型决定要调用的实际函数。
+​	头文件 [`<tgmath.h>`]({{< ref "/c/header/tgmath" >}}) 包含头文件 [`<math.h>`](https://zh.cppreference.com/w/c/header/math) 及 [`<complex.h>`]({{< ref "/c/header/complex" >}})，并定义了几种[泛型宏]({{< ref "/c/language/expressions/generic" >}})。这些宏会根据实参类型决定要调用的实际函数。
 
 ​	对于每个宏，在 [`<math.h>`](https://zh.cppreference.com/w/c/header/math) 无后缀版函数中，所对应的实数类型为 double 的形参，即是所谓的*泛型形参*。（例如，[pow](https://zh.cppreference.com/w/c/numeric/math/pow) 的两个形参都是泛型形参，但 [scalbn](https://zh.cppreference.com/w/c/numeric/math/scalbn) 只有第一个形参是泛型形参）
 
-​	如下所述，使用 [`<tgmath.h>`](https://zh.cppreference.com/w/c/header/tgmath) 宏时，传递给泛型形参的实参类型，会决定宏所选择的函数。若实参的类型与所选函数的形参类型不[兼容](https://zh.cppreference.com/w/c/language/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)，则行为未定义。（例如，若将复数实参传入实数限定的 [`<tgmath.h>`](https://zh.cppreference.com/w/c/header/tgmath) 宏： float [complex](http://zh.cppreference.com/w/c/numeric/complex/complex) fc; [ceil](http://zh.cppreference.com/w/c/numeric/math/ceil)(fc) 或 double [complex](http://zh.cppreference.com/w/c/numeric/complex/complex) dc; double d; [fmax](http://zh.cppreference.com/w/c/numeric/math/fmax)(dc, d) 就是未定义行为的例子）
+​	如下所述，使用 [`<tgmath.h>`]({{< ref "/c/header/tgmath" >}}) 宏时，传递给泛型形参的实参类型，会决定宏所选择的函数。若实参的类型与所选函数的形参类型不[兼容]({{< ref "/c/language/basic_concepts/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B" >}})，则行为未定义。（例如，若将复数实参传入实数限定的 [`<tgmath.h>`]({{< ref "/c/header/tgmath" >}}) 宏： float [complex](http://zh.cppreference.com/w/c/numeric/complex/complex) fc; [ceil](http://zh.cppreference.com/w/c/numeric/math/ceil)(fc) 或 double [complex](http://zh.cppreference.com/w/c/numeric/complex/complex) dc; double d; [fmax](http://zh.cppreference.com/w/c/numeric/math/fmax)(dc, d) 就是未定义行为的例子）
 
-​	注意：泛型宏在 C99 中曾以实现定义行为实现，但 C11 关键词 [_Generic](https://zh.cppreference.com/w/c/keyword/_Generic) 使得以可移植方式实现这些宏成为可能。
+​	注意：泛型宏在 C99 中曾以实现定义行为实现，但 C11 关键词 [_Generic]({{< ref "/c/language/keyword/_Generic" >}}) 使得以可移植方式实现这些宏成为可能。
 
 ## 复数/实数泛型宏
 
