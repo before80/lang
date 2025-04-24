@@ -1,9 +1,10 @@
+
 +++
-title = "<fenv.h>"
-date = 2025-04-16T17:37:26+08:00
-weight = 1
+title = "<fenv.h> (C99)"
+date = 2025-04-24T19:22:48+08:00
+weight = 40
 type = "docs"
-description = ""
+description = "浮点数环境"
 isCJKLanguage = true
 draft = false
 
@@ -11,31 +12,147 @@ draft = false
 
 ## 类型
 
+
+
+
+## 枚举
+
+
+
+
 ## 宏
+
+
 
 ### FE_ALL_EXCEPT
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
 
+作用：浮点数异常   (宏常量)
+
+备注：
 ```c
+// 在标头 <fenv.h> 定义
+#define FE_DIVBYZERO    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INEXACT      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INVALID      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_OVERFLOW     /* 由实现定义的二的幂 */// (C99 起)
+#define FE_UNDERFLOW    /* 由实现定义的二的幂 */// (C99 起)
 #define FE_ALL_EXCEPT  FE_DIVBYZERO | FE_INEXACT | \
-                       FE_INVALID | FE_OVERFLOW |  \
-                       FE_UNDERFLOW // (C99 起)
+
+                       FE_UNDERFLOW// (C99 起)
 ```
 
-​	所有受支持浮点数异常的逐位或
+​	所有这些宏常量（除了 **FE_ALL_EXCEPT**）都展开成二的不同次幂的整数常量表达式，唯一地鉴别所有受支持浮点数异常。每个宏仅若受支持才得到定义。
 
-​	参见：[FE_DIVBYZERO](#FE_DIVBYZERO)
+​	宏常量 **FE_ALL_EXCEPT** 展开成所有其他 `FE_*` 的逐位或，且始终有定义，若实现不支持浮点数异常，则为零。
+
+| 常量            | 解释                                           |
+| --------------- | ---------------------------------------------- |
+| `FE_DIVBYZERO`  | 出现于之前浮点数运算的极点错误                 |
+| `FE_INEXACT`    | 不准确结果：必须舍入以存储之前浮点数运算的结果 |
+| `FE_INVALID`    | 出现于之前浮点数运算的定义域错误               |
+| `FE_OVERFLOW`   | 之前浮点数运算的结果过大而无法表示             |
+| `FE_UNDERFLOW`  | 之前浮点数运算的结果为有精度损失的非正规值     |
+| `FE_ALL_EXCEPT` | 所有受支持浮点数异常的逐位或                   |
+
+​	实现可于 `<fenv.h>` 定义附加宏常量以鉴别附加浮点数异常。所有这种常量都以 `FE_` 后随至少一个大写字母开始。
+
+​	更多细节见 [`<ath_errhandlin>`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling)。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+void show_fe_exceptions(void)
+{
+    printf("exceptions raised:");
+    if(fetestexcept(FE_DIVBYZERO)) printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))   printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))   printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))  printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW)) printf(" FE_UNDERFLOW");
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("\n");
+}
+ 
+int main(void)
+{
+    printf("MATH_ERREXCEPT is %s\n",
+           math_errhandling & MATH_ERREXCEPT ? "set" : "not set");
+ 
+    printf("0.0/0.0 = %f\n", 0.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/0.0 = %f\n", 1.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/10.0 = %f\n", 1.0/10.0);
+    show_fe_exceptions();
+ 
+    printf("sqrt(-1) = %f\n", sqrt(-1));
+    show_fe_exceptions();
+ 
+    printf("DBL_MAX*2.0 = %f\n", DBL_MAX*2.0);
+    show_fe_exceptions();
+ 
+    printf("nextafter(DBL_MIN/pow(2.0,52),0.0) = %.1f\n",
+                      nextafter(DBL_MIN/pow(2.0,52),0.0));
+    show_fe_exceptions();
+}
+```
+
+​	可能的输出：
+
+```txt
+MATH_ERREXCEPT is set
+0.0/0.0 = nan
+exceptions raised: FE_INVALID
+1.0/0.0 = inf
+exceptions raised: FE_DIVBYZERO
+1.0/10.0 = 0.100000
+exceptions raised: FE_INEXACT
+sqrt(-1) = -nan
+exceptions raised: FE_INVALID
+DBL_MAX*2.0 = inf
+exceptions raised: FE_INEXACT FE_OVERFLOW
+nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
+exceptions raised: FE_INEXACT FE_UNDERFLOW
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/6 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/5 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [math_errhandling (C99)<br />MATH_ERRNO (C99)<br />MATH_ERREXCEPT (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) | 定义用于常用数学函数的错误处理机制 (宏常量) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| **浮点数异常宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_exceptions)** |                                             |
+
+
+
 
 
 ### FE_DEC_DOWNWARD
 
 原址：
 
-```c
-// 仅当实现定义了 __STDC_IEC_60559_DFP__：
-#define FE_DEC_DOWNWARD            /* 由实现定义 */
-```
+作用：
+
+备注：
+
 
 
 
@@ -44,10 +161,10 @@ draft = false
 
 原址：
 
-```c
-// 仅当实现定义了 __STDC_IEC_60559_DFP__：
-#define FE_DEC_TOWARDZERO          /* 由实现定义 */
-```
+作用：
+
+备注：
+
 
 
 
@@ -56,10 +173,10 @@ draft = false
 
 原址：
 
-```c
-// 仅当实现定义了 __STDC_IEC_60559_DFP__：
-#define FE_DEC_TONEARESTFROMZERO   /* 由实现定义 */
-```
+作用：
+
+备注：
+
 
 
 
@@ -68,10 +185,10 @@ draft = false
 
 原址：
 
-```c
-// 仅当实现定义了 __STDC_IEC_60559_DFP__：
-#define FE_DEC_TOWARDZERO          /* 由实现定义 */
-```
+作用：
+
+备注：
+
 
 
 
@@ -80,10 +197,10 @@ draft = false
 
 原址：
 
-```c
-// 仅当实现定义了 __STDC_IEC_60559_DFP__：
-#define FE_DEC_UPWARD              /* 由实现定义 */
-```
+作用：
+
+备注：
+
 
 
 
@@ -92,17 +209,19 @@ draft = false
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV)
 
+作用：默认浮点数环境  (宏常量)
+
+备注：
 ```c
-#define FE_DFL_ENV  /* 由实现定义 */ // (C99 起)
+// 在标头 <fenv.h> 定义
+#define FE_DFL_ENV  /* 由实现定义 */// (C99 起)
 ```
 
-​	宏常量 **`FE_DFL_ENV`** 展开成 `const fenv_t*` 类型表达式，指向默认浮点数环境，即在程序启动时加载的浮点数环境的完整副本。
+​	宏常量 **FE_DFL_ENV** 展开成 `const fenv_t*` 类型表达式，指向默认浮点数环境，即在程序启动时加载的浮点数环境的完整副本。
 
 ​	实现可以支持以 `FE_` 后随大写字母开始，且拥有 `const fenv_t*` 类型的附加宏。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -174,13 +293,35 @@ current exceptions raised:  none
 current rounding method:    FE_TONEAREST
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/9 Floating-point environment <fenv.h> （第 208 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/8 Floating-point environment <fenv.h> （第 188-189 页）
+
+**参阅**
+
+| [fegetenv (C99)<br />fesetenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feenv) | 保存或恢复当前浮点数环境，包括异常的标志和数字的舍弃模式 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [feupdateenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv) | 恢复之前保存的浮点数环境，并引发之前已经引发过的异常，使其存在于当前内存环境中 (函数) |
+| **FE_DFL_ENV** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_DFL_ENV)** |                                                              |
+
+
+
+
 
 ### FE_DFL_MODE
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -189,11 +330,20 @@ current rounding method:    FE_TONEAREST
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
 
-```c
-#define FE_DIVBYZERO    /* 由实现定义的二的幂 */ // (C99 起)
-```
+作用：浮点数异常   (宏常量)
 
-​	出现于之前浮点数运算的极点错误
+备注：
+```c
+// 在标头 <fenv.h> 定义
+#define FE_DIVBYZERO    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INEXACT      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INVALID      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_OVERFLOW     /* 由实现定义的二的幂 */// (C99 起)
+#define FE_UNDERFLOW    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_ALL_EXCEPT  FE_DIVBYZERO | FE_INEXACT | \
+
+                       FE_UNDERFLOW// (C99 起)
+```
 
 ​	所有这些宏常量（除了 **FE_ALL_EXCEPT**）都展开成二的不同次幂的整数常量表达式，唯一地鉴别所有受支持浮点数异常。每个宏仅若受支持才得到定义。
 
@@ -213,8 +363,6 @@ current rounding method:    FE_TONEAREST
 ​	更多细节见 [`<ath_errhandlin>`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling)。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -279,13 +427,39 @@ nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
 exceptions raised: FE_INEXACT FE_UNDERFLOW
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/6 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/5 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [math_errhandling (C99)<br />MATH_ERRNO (C99)<br />MATH_ERREXCEPT (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) | 定义用于常用数学函数的错误处理机制 (宏常量) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| **浮点数异常宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_exceptions)** |                                             |
+
+
+
+
 
 ### FE_DOWNWARD
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_round](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)
 
+作用：浮点数舍入方向  (宏常量)
+
+备注：
 ```c
-#define FE_DOWNWARD     /* 由实现定义 */ // (C99 起)
+// 在标头 <fenv.h> 定义
+#define FE_DOWNWARD     /* 由实现定义 */// (C99 起)
+#define FE_TONEAREST    /* 由实现定义 */// (C99 起)
+#define FE_TOWARDZERO   /* 由实现定义 */// (C99 起)
+#define FE_UPWARD       /* 由实现定义 */// (C99 起)
 ```
 
 ​	每个这种宏常量都展开成非负常量表达式，可被 [fesetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 或 [fegetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 用于指示受支持的浮点数舍入模式之一。实现可于 `<fenv.h>` 定义另外的舍入模式常量，它应以 `FE_` 后随至少一个大写字母开始。每个宏仅若受支持才得到定义。
@@ -349,7 +523,515 @@ lrint(2.1); // 2 或 3
 
 **示例**
 
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <fenv.h>
+#include <math.h>
+int main()
+{
+#pragma STDC FENV_ACCESS ON
+    fesetround(FE_DOWNWARD);
+    puts("rounding down: ");
+    printf("           pi = %.22f\n", acosf(-1));
+    printf("strtof(\"1.1\") = %.22f\n", strtof("1.1", NULL));
+    printf("    rint(2.1) = %.22f\n\n", rintf(2.1));
+    fesetround(FE_UPWARD);
+    puts("rounding up: ");
+    printf("           pi = %.22f\n", acosf(-1));
+    printf("strtof(\"1.1\") = %.22f\n", strtof("1.1", NULL));
+    printf("    rint(2.1) = %.22f\n", rintf(2.1));
+}
+```
 
+​	输出：
+
+```txt
+rounding down: 
+           pi = 3.1415925025939941406250
+strtof("1.1") = 1.0999999046325683593750
+    rint(2.1) = 2.0000000000000000000000
+ 
+rounding up: 
+           pi = 3.1415927410125732421875
+strtof("1.1") = 1.1000000238418579101563
+    rint(2.1) = 3.0000000000000000000000
+```
+
+**引用**
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.6/8 Floating-point environment <fenv.h> （第 151 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/8 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/7 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数) |
+| ------------------------------------------------------------ | ------------------------------- |
+| **浮点数舍入宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_round)** |                                 |
+
+
+
+
+
+### FE_INEXACT
+
+原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
+
+作用：浮点数异常   (宏常量)
+
+备注：
+```c
+// 在标头 <fenv.h> 定义
+#define FE_DIVBYZERO    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INEXACT      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INVALID      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_OVERFLOW     /* 由实现定义的二的幂 */// (C99 起)
+#define FE_UNDERFLOW    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_ALL_EXCEPT  FE_DIVBYZERO | FE_INEXACT | \
+
+                       FE_UNDERFLOW// (C99 起)
+```
+
+​	所有这些宏常量（除了 **FE_ALL_EXCEPT**）都展开成二的不同次幂的整数常量表达式，唯一地鉴别所有受支持浮点数异常。每个宏仅若受支持才得到定义。
+
+​	宏常量 **FE_ALL_EXCEPT** 展开成所有其他 `FE_*` 的逐位或，且始终有定义，若实现不支持浮点数异常，则为零。
+
+| 常量            | 解释                                           |
+| --------------- | ---------------------------------------------- |
+| `FE_DIVBYZERO`  | 出现于之前浮点数运算的极点错误                 |
+| `FE_INEXACT`    | 不准确结果：必须舍入以存储之前浮点数运算的结果 |
+| `FE_INVALID`    | 出现于之前浮点数运算的定义域错误               |
+| `FE_OVERFLOW`   | 之前浮点数运算的结果过大而无法表示             |
+| `FE_UNDERFLOW`  | 之前浮点数运算的结果为有精度损失的非正规值     |
+| `FE_ALL_EXCEPT` | 所有受支持浮点数异常的逐位或                   |
+
+​	实现可于 `<fenv.h>` 定义附加宏常量以鉴别附加浮点数异常。所有这种常量都以 `FE_` 后随至少一个大写字母开始。
+
+​	更多细节见 [`<ath_errhandlin>`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling)。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+void show_fe_exceptions(void)
+{
+    printf("exceptions raised:");
+    if(fetestexcept(FE_DIVBYZERO)) printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))   printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))   printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))  printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW)) printf(" FE_UNDERFLOW");
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("\n");
+}
+ 
+int main(void)
+{
+    printf("MATH_ERREXCEPT is %s\n",
+           math_errhandling & MATH_ERREXCEPT ? "set" : "not set");
+ 
+    printf("0.0/0.0 = %f\n", 0.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/0.0 = %f\n", 1.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/10.0 = %f\n", 1.0/10.0);
+    show_fe_exceptions();
+ 
+    printf("sqrt(-1) = %f\n", sqrt(-1));
+    show_fe_exceptions();
+ 
+    printf("DBL_MAX*2.0 = %f\n", DBL_MAX*2.0);
+    show_fe_exceptions();
+ 
+    printf("nextafter(DBL_MIN/pow(2.0,52),0.0) = %.1f\n",
+                      nextafter(DBL_MIN/pow(2.0,52),0.0));
+    show_fe_exceptions();
+}
+```
+
+​	可能的输出：
+
+```txt
+MATH_ERREXCEPT is set
+0.0/0.0 = nan
+exceptions raised: FE_INVALID
+1.0/0.0 = inf
+exceptions raised: FE_DIVBYZERO
+1.0/10.0 = 0.100000
+exceptions raised: FE_INEXACT
+sqrt(-1) = -nan
+exceptions raised: FE_INVALID
+DBL_MAX*2.0 = inf
+exceptions raised: FE_INEXACT FE_OVERFLOW
+nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
+exceptions raised: FE_INEXACT FE_UNDERFLOW
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/6 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/5 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [math_errhandling (C99)<br />MATH_ERRNO (C99)<br />MATH_ERREXCEPT (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) | 定义用于常用数学函数的错误处理机制 (宏常量) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| **浮点数异常宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_exceptions)** |                                             |
+
+
+
+
+
+### FE_INVALID
+
+原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
+
+作用：浮点数异常   (宏常量)
+
+备注：
+```c
+// 在标头 <fenv.h> 定义
+#define FE_DIVBYZERO    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INEXACT      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INVALID      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_OVERFLOW     /* 由实现定义的二的幂 */// (C99 起)
+#define FE_UNDERFLOW    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_ALL_EXCEPT  FE_DIVBYZERO | FE_INEXACT | \
+
+                       FE_UNDERFLOW// (C99 起)
+```
+
+​	所有这些宏常量（除了 **FE_ALL_EXCEPT**）都展开成二的不同次幂的整数常量表达式，唯一地鉴别所有受支持浮点数异常。每个宏仅若受支持才得到定义。
+
+​	宏常量 **FE_ALL_EXCEPT** 展开成所有其他 `FE_*` 的逐位或，且始终有定义，若实现不支持浮点数异常，则为零。
+
+| 常量            | 解释                                           |
+| --------------- | ---------------------------------------------- |
+| `FE_DIVBYZERO`  | 出现于之前浮点数运算的极点错误                 |
+| `FE_INEXACT`    | 不准确结果：必须舍入以存储之前浮点数运算的结果 |
+| `FE_INVALID`    | 出现于之前浮点数运算的定义域错误               |
+| `FE_OVERFLOW`   | 之前浮点数运算的结果过大而无法表示             |
+| `FE_UNDERFLOW`  | 之前浮点数运算的结果为有精度损失的非正规值     |
+| `FE_ALL_EXCEPT` | 所有受支持浮点数异常的逐位或                   |
+
+​	实现可于 `<fenv.h>` 定义附加宏常量以鉴别附加浮点数异常。所有这种常量都以 `FE_` 后随至少一个大写字母开始。
+
+​	更多细节见 [`<ath_errhandlin>`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling)。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+void show_fe_exceptions(void)
+{
+    printf("exceptions raised:");
+    if(fetestexcept(FE_DIVBYZERO)) printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))   printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))   printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))  printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW)) printf(" FE_UNDERFLOW");
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("\n");
+}
+ 
+int main(void)
+{
+    printf("MATH_ERREXCEPT is %s\n",
+           math_errhandling & MATH_ERREXCEPT ? "set" : "not set");
+ 
+    printf("0.0/0.0 = %f\n", 0.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/0.0 = %f\n", 1.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/10.0 = %f\n", 1.0/10.0);
+    show_fe_exceptions();
+ 
+    printf("sqrt(-1) = %f\n", sqrt(-1));
+    show_fe_exceptions();
+ 
+    printf("DBL_MAX*2.0 = %f\n", DBL_MAX*2.0);
+    show_fe_exceptions();
+ 
+    printf("nextafter(DBL_MIN/pow(2.0,52),0.0) = %.1f\n",
+                      nextafter(DBL_MIN/pow(2.0,52),0.0));
+    show_fe_exceptions();
+}
+```
+
+​	可能的输出：
+
+```txt
+MATH_ERREXCEPT is set
+0.0/0.0 = nan
+exceptions raised: FE_INVALID
+1.0/0.0 = inf
+exceptions raised: FE_DIVBYZERO
+1.0/10.0 = 0.100000
+exceptions raised: FE_INEXACT
+sqrt(-1) = -nan
+exceptions raised: FE_INVALID
+DBL_MAX*2.0 = inf
+exceptions raised: FE_INEXACT FE_OVERFLOW
+nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
+exceptions raised: FE_INEXACT FE_UNDERFLOW
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/6 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/5 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [math_errhandling (C99)<br />MATH_ERRNO (C99)<br />MATH_ERREXCEPT (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) | 定义用于常用数学函数的错误处理机制 (宏常量) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| **浮点数异常宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_exceptions)** |                                             |
+
+
+
+
+
+### FE_OVERFLOW
+
+原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
+
+作用：浮点数异常   (宏常量)
+
+备注：
+```c
+// 在标头 <fenv.h> 定义
+#define FE_DIVBYZERO    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INEXACT      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INVALID      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_OVERFLOW     /* 由实现定义的二的幂 */// (C99 起)
+#define FE_UNDERFLOW    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_ALL_EXCEPT  FE_DIVBYZERO | FE_INEXACT | \
+
+                       FE_UNDERFLOW// (C99 起)
+```
+
+​	所有这些宏常量（除了 **FE_ALL_EXCEPT**）都展开成二的不同次幂的整数常量表达式，唯一地鉴别所有受支持浮点数异常。每个宏仅若受支持才得到定义。
+
+​	宏常量 **FE_ALL_EXCEPT** 展开成所有其他 `FE_*` 的逐位或，且始终有定义，若实现不支持浮点数异常，则为零。
+
+| 常量            | 解释                                           |
+| --------------- | ---------------------------------------------- |
+| `FE_DIVBYZERO`  | 出现于之前浮点数运算的极点错误                 |
+| `FE_INEXACT`    | 不准确结果：必须舍入以存储之前浮点数运算的结果 |
+| `FE_INVALID`    | 出现于之前浮点数运算的定义域错误               |
+| `FE_OVERFLOW`   | 之前浮点数运算的结果过大而无法表示             |
+| `FE_UNDERFLOW`  | 之前浮点数运算的结果为有精度损失的非正规值     |
+| `FE_ALL_EXCEPT` | 所有受支持浮点数异常的逐位或                   |
+
+​	实现可于 `<fenv.h>` 定义附加宏常量以鉴别附加浮点数异常。所有这种常量都以 `FE_` 后随至少一个大写字母开始。
+
+​	更多细节见 [`<ath_errhandlin>`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling)。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+void show_fe_exceptions(void)
+{
+    printf("exceptions raised:");
+    if(fetestexcept(FE_DIVBYZERO)) printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))   printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))   printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))  printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW)) printf(" FE_UNDERFLOW");
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("\n");
+}
+ 
+int main(void)
+{
+    printf("MATH_ERREXCEPT is %s\n",
+           math_errhandling & MATH_ERREXCEPT ? "set" : "not set");
+ 
+    printf("0.0/0.0 = %f\n", 0.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/0.0 = %f\n", 1.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/10.0 = %f\n", 1.0/10.0);
+    show_fe_exceptions();
+ 
+    printf("sqrt(-1) = %f\n", sqrt(-1));
+    show_fe_exceptions();
+ 
+    printf("DBL_MAX*2.0 = %f\n", DBL_MAX*2.0);
+    show_fe_exceptions();
+ 
+    printf("nextafter(DBL_MIN/pow(2.0,52),0.0) = %.1f\n",
+                      nextafter(DBL_MIN/pow(2.0,52),0.0));
+    show_fe_exceptions();
+}
+```
+
+​	可能的输出：
+
+```txt
+MATH_ERREXCEPT is set
+0.0/0.0 = nan
+exceptions raised: FE_INVALID
+1.0/0.0 = inf
+exceptions raised: FE_DIVBYZERO
+1.0/10.0 = 0.100000
+exceptions raised: FE_INEXACT
+sqrt(-1) = -nan
+exceptions raised: FE_INVALID
+DBL_MAX*2.0 = inf
+exceptions raised: FE_INEXACT FE_OVERFLOW
+nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
+exceptions raised: FE_INEXACT FE_UNDERFLOW
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/6 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/5 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [math_errhandling (C99)<br />MATH_ERRNO (C99)<br />MATH_ERREXCEPT (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) | 定义用于常用数学函数的错误处理机制 (宏常量) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| **浮点数异常宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_exceptions)** |                                             |
+
+
+
+
+
+### FE_SNANS_ALWAYS_SIGNAL
+
+原址：
+
+作用：
+
+备注：
+
+
+
+
+
+### FE_TONEAREST
+
+原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_round](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)
+
+作用：浮点数舍入方向  (宏常量)
+
+备注：
+```c
+// 在标头 <fenv.h> 定义
+#define FE_DOWNWARD     /* 由实现定义 */// (C99 起)
+#define FE_TONEAREST    /* 由实现定义 */// (C99 起)
+#define FE_TOWARDZERO   /* 由实现定义 */// (C99 起)
+#define FE_UPWARD       /* 由实现定义 */// (C99 起)
+```
+
+​	每个这种宏常量都展开成非负常量表达式，可被 [fesetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 或 [fegetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 用于指示受支持的浮点数舍入模式之一。实现可于 `<fenv.h>` 定义另外的舍入模式常量，它应以 `FE_` 后随至少一个大写字母开始。每个宏仅若受支持才得到定义。
+
+| 常量            | 解释                 |
+| --------------- | -------------------- |
+| `FE_DOWNWARD`   | 向负无穷大舍入       |
+| `FE_TONEAREST`  | 向最接近可表示值舍入 |
+| `FE_TOWARDZERO` | 向零舍入             |
+| `FE_UPWARD`     | 向正无穷大舍入       |
+
+​	实现可支持另外的舍入模式。
+
+​	当前舍入模式影响下列结果：
+
+- 常量表达式以外的浮点数算术运算符结果
+
+```c
+double x = 1;
+x/10; // 0.09999999999999999167332731531132594682276248931884765625
+   // 或 0.1000000000000000055511151231257827021181583404541015625
+```
+
+- 标准库[数学函数](https://zh.cppreference.com/w/c/numeric/math)的返回值
+
+```
+sqrt(2); // 1.41421356237309492343001693370752036571502685546875
+      // 或 1.4142135623730951454746218587388284504413604736328125
+```
+
+- 浮点数到浮点数的隐式转换及转换类型
+
+```c
+double d = 1 + DBL_EPSILON;
+float f = d; //  1.00000000000000000000000
+           // 或 1.00000011920928955078125
+```
+
+- 字符串转换，如 [strtod](https://zh.cppreference.com/w/c/string/byte/strtof) 或 [printf](https://zh.cppreference.com/w/c/io/fprintf)
+
+```
+strtof("0.1", NULL); // 0.0999999940395355224609375
+                  // 或 0.100000001490116119384765625
+```
+
+- 库舍入函数 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint)、[rint](https://zh.cppreference.com/w/c/numeric/math/rint)、[lrint](https://zh.cppreference.com/w/c/numeric/math/rint)
+
+```
+lrint(2.1); // 2 或 3
+```
+
+​	当前舍入模式**不**影响：
+
+- 浮点数到整数的隐式转换或转型（始终向零）
+- 编译时执行的常量表达式中浮点数算术运算符的结果（始终向最接近）
+- 库函数 [round](https://zh.cppreference.com/w/c/numeric/math/round)、[lround](https://zh.cppreference.com/w/c/numeric/math/round)、[llround](https://zh.cppreference.com/w/c/numeric/math/round)、[ceil](https://zh.cppreference.com/w/c/numeric/math/ceil)、[floor](https://zh.cppreference.com/w/c/numeric/math/floor)、[trunc](https://zh.cppreference.com/w/c/numeric/math/trunc)
+
+​	同任何[浮点数环境](https://zh.cppreference.com/w/c/numeric/fenv)功能一样，仅当设置了 `#pragma STDC FENV_ACCESS ON` 才保证舍入。
+
+​	不支持此语用的编译器可能提供它们自己的方式来支持当前舍入模式。例如 Clang 和 GCC 的选项 `-frounding-math` 就用于禁用可能改变对舍入敏感的代码的优化。
+
+**示例**
 
 ```c
 #include <stdio.h>
@@ -386,74 +1068,38 @@ strtof("1.1") = 1.1000000238418579101563
     rint(2.1) = 3.0000000000000000000000
 ```
 
+**引用**
 
-### FE_INEXACT
+- C17 标准（ISO/IEC 9899:2018）：
 
-原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
+  - 7.6/8 Floating-point environment <fenv.h> （第 151 页）
 
-```c
-#define FE_INEXACT      /* 由实现定义的二的幂 */ // (C99 起)
-```
+- C11 标准（ISO/IEC 9899:2011）：
 
-​	不准确结果：必须舍入以存储之前浮点数运算的结果
+  - 7.6/8 Floating-point environment <fenv.h> （第 207 页）
 
-​	参见：[FE_DIVBYZERO](#FE_DIVBYZERO)
+- C99 标准（ISO/IEC 9899:1999）：
 
+  - 7.6/7 Floating-point environment <fenv.h> （第 188 页）
 
-### FE_INVALID
+**参阅**
 
-原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
-
-```c
-#define FE_INVALID      /* 由实现定义的二的幂 */ // (C99 起)
-```
-
-​	出现于之前浮点数运算的定义域错误
-
-​	参见：[FE_DIVBYZERO](#FE_DIVBYZERO)
-
-
-### FE_OVERFLOW
-
-原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
-
-```c
-#define FE_OVERFLOW     /* 由实现定义的二的幂 */ // (C99 起)
-```
-
-​	之前浮点数运算的结果过大而无法表示
-
-​	参见：[FE_DIVBYZERO](#FE_DIVBYZERO)
-
-
-### FE_SNANS_ALWAYS_SIGNAL
-
-原址：
-
-```c
-#define FE_SNANS_ALWAYS_SIGNAL /* 由实现定义 */
-```
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数) |
+| ------------------------------------------------------------ | ------------------------------- |
+| **浮点数舍入宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_round)** |                                 |
 
 
 
-
-### FE_TONEAREST
-
-原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_round](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)
-
-```c
-#define FE_TONEAREST    /* 由实现定义 */ // (C99 起)
-```
-
-​	参见：[FE_DOWNWARD](#FE_DOWNWARD)
 
 
 ### FE_TONEARESTFROMZERO
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -462,44 +1108,401 @@ strtof("1.1") = 1.1000000238418579101563
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_round](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)
 
+作用：浮点数舍入方向  (宏常量)
+
+备注：
 ```c
-#define FE_TOWARDZERO   /* 由实现定义 */ // (C99 起)
+// 在标头 <fenv.h> 定义
+#define FE_DOWNWARD     /* 由实现定义 */// (C99 起)
+#define FE_TONEAREST    /* 由实现定义 */// (C99 起)
+#define FE_TOWARDZERO   /* 由实现定义 */// (C99 起)
+#define FE_UPWARD       /* 由实现定义 */// (C99 起)
 ```
 
-​	参见：[FE_DOWNWARD](#FE_DOWNWARD)
+​	每个这种宏常量都展开成非负常量表达式，可被 [fesetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 或 [fegetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 用于指示受支持的浮点数舍入模式之一。实现可于 `<fenv.h>` 定义另外的舍入模式常量，它应以 `FE_` 后随至少一个大写字母开始。每个宏仅若受支持才得到定义。
+
+| 常量            | 解释                 |
+| --------------- | -------------------- |
+| `FE_DOWNWARD`   | 向负无穷大舍入       |
+| `FE_TONEAREST`  | 向最接近可表示值舍入 |
+| `FE_TOWARDZERO` | 向零舍入             |
+| `FE_UPWARD`     | 向正无穷大舍入       |
+
+​	实现可支持另外的舍入模式。
+
+​	当前舍入模式影响下列结果：
+
+- 常量表达式以外的浮点数算术运算符结果
+
+```c
+double x = 1;
+x/10; // 0.09999999999999999167332731531132594682276248931884765625
+   // 或 0.1000000000000000055511151231257827021181583404541015625
+```
+
+- 标准库[数学函数](https://zh.cppreference.com/w/c/numeric/math)的返回值
+
+```
+sqrt(2); // 1.41421356237309492343001693370752036571502685546875
+      // 或 1.4142135623730951454746218587388284504413604736328125
+```
+
+- 浮点数到浮点数的隐式转换及转换类型
+
+```c
+double d = 1 + DBL_EPSILON;
+float f = d; //  1.00000000000000000000000
+           // 或 1.00000011920928955078125
+```
+
+- 字符串转换，如 [strtod](https://zh.cppreference.com/w/c/string/byte/strtof) 或 [printf](https://zh.cppreference.com/w/c/io/fprintf)
+
+```
+strtof("0.1", NULL); // 0.0999999940395355224609375
+                  // 或 0.100000001490116119384765625
+```
+
+- 库舍入函数 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint)、[rint](https://zh.cppreference.com/w/c/numeric/math/rint)、[lrint](https://zh.cppreference.com/w/c/numeric/math/rint)
+
+```
+lrint(2.1); // 2 或 3
+```
+
+​	当前舍入模式**不**影响：
+
+- 浮点数到整数的隐式转换或转型（始终向零）
+- 编译时执行的常量表达式中浮点数算术运算符的结果（始终向最接近）
+- 库函数 [round](https://zh.cppreference.com/w/c/numeric/math/round)、[lround](https://zh.cppreference.com/w/c/numeric/math/round)、[llround](https://zh.cppreference.com/w/c/numeric/math/round)、[ceil](https://zh.cppreference.com/w/c/numeric/math/ceil)、[floor](https://zh.cppreference.com/w/c/numeric/math/floor)、[trunc](https://zh.cppreference.com/w/c/numeric/math/trunc)
+
+​	同任何[浮点数环境](https://zh.cppreference.com/w/c/numeric/fenv)功能一样，仅当设置了 `#pragma STDC FENV_ACCESS ON` 才保证舍入。
+
+​	不支持此语用的编译器可能提供它们自己的方式来支持当前舍入模式。例如 Clang 和 GCC 的选项 `-frounding-math` 就用于禁用可能改变对舍入敏感的代码的优化。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <fenv.h>
+#include <math.h>
+int main()
+{
+#pragma STDC FENV_ACCESS ON
+    fesetround(FE_DOWNWARD);
+    puts("rounding down: ");
+    printf("           pi = %.22f\n", acosf(-1));
+    printf("strtof(\"1.1\") = %.22f\n", strtof("1.1", NULL));
+    printf("    rint(2.1) = %.22f\n\n", rintf(2.1));
+    fesetround(FE_UPWARD);
+    puts("rounding up: ");
+    printf("           pi = %.22f\n", acosf(-1));
+    printf("strtof(\"1.1\") = %.22f\n", strtof("1.1", NULL));
+    printf("    rint(2.1) = %.22f\n", rintf(2.1));
+}
+```
+
+​	输出：
+
+```txt
+rounding down: 
+           pi = 3.1415925025939941406250
+strtof("1.1") = 1.0999999046325683593750
+    rint(2.1) = 2.0000000000000000000000
+ 
+rounding up: 
+           pi = 3.1415927410125732421875
+strtof("1.1") = 1.1000000238418579101563
+    rint(2.1) = 3.0000000000000000000000
+```
+
+**引用**
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.6/8 Floating-point environment <fenv.h> （第 151 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/8 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/7 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数) |
+| ------------------------------------------------------------ | ------------------------------- |
+| **浮点数舍入宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_round)** |                                 |
+
+
+
 
 
 ### FE_UNDERFLOW
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
 
+作用：浮点数异常   (宏常量)
+
+备注：
 ```c
-#define FE_UNDERFLOW    /* 由实现定义的二的幂 */ // (C99 起)
+// 在标头 <fenv.h> 定义
+#define FE_DIVBYZERO    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INEXACT      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_INVALID      /* 由实现定义的二的幂 */// (C99 起)
+#define FE_OVERFLOW     /* 由实现定义的二的幂 */// (C99 起)
+#define FE_UNDERFLOW    /* 由实现定义的二的幂 */// (C99 起)
+#define FE_ALL_EXCEPT  FE_DIVBYZERO | FE_INEXACT | \
+
+                       FE_UNDERFLOW// (C99 起)
 ```
 
-​	之前浮点数运算的结果为有精度损失的非正规值
+​	所有这些宏常量（除了 **FE_ALL_EXCEPT**）都展开成二的不同次幂的整数常量表达式，唯一地鉴别所有受支持浮点数异常。每个宏仅若受支持才得到定义。
 
-​	参见：[FE_DIVBYZERO](#FE_DIVBYZERO)
+​	宏常量 **FE_ALL_EXCEPT** 展开成所有其他 `FE_*` 的逐位或，且始终有定义，若实现不支持浮点数异常，则为零。
+
+| 常量            | 解释                                           |
+| --------------- | ---------------------------------------------- |
+| `FE_DIVBYZERO`  | 出现于之前浮点数运算的极点错误                 |
+| `FE_INEXACT`    | 不准确结果：必须舍入以存储之前浮点数运算的结果 |
+| `FE_INVALID`    | 出现于之前浮点数运算的定义域错误               |
+| `FE_OVERFLOW`   | 之前浮点数运算的结果过大而无法表示             |
+| `FE_UNDERFLOW`  | 之前浮点数运算的结果为有精度损失的非正规值     |
+| `FE_ALL_EXCEPT` | 所有受支持浮点数异常的逐位或                   |
+
+​	实现可于 `<fenv.h>` 定义附加宏常量以鉴别附加浮点数异常。所有这种常量都以 `FE_` 后随至少一个大写字母开始。
+
+​	更多细节见 [`<ath_errhandlin>`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling)。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+void show_fe_exceptions(void)
+{
+    printf("exceptions raised:");
+    if(fetestexcept(FE_DIVBYZERO)) printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))   printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))   printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))  printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW)) printf(" FE_UNDERFLOW");
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("\n");
+}
+ 
+int main(void)
+{
+    printf("MATH_ERREXCEPT is %s\n",
+           math_errhandling & MATH_ERREXCEPT ? "set" : "not set");
+ 
+    printf("0.0/0.0 = %f\n", 0.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/0.0 = %f\n", 1.0/0.0);
+    show_fe_exceptions();
+ 
+    printf("1.0/10.0 = %f\n", 1.0/10.0);
+    show_fe_exceptions();
+ 
+    printf("sqrt(-1) = %f\n", sqrt(-1));
+    show_fe_exceptions();
+ 
+    printf("DBL_MAX*2.0 = %f\n", DBL_MAX*2.0);
+    show_fe_exceptions();
+ 
+    printf("nextafter(DBL_MIN/pow(2.0,52),0.0) = %.1f\n",
+                      nextafter(DBL_MIN/pow(2.0,52),0.0));
+    show_fe_exceptions();
+}
+```
+
+​	可能的输出：
+
+```txt
+MATH_ERREXCEPT is set
+0.0/0.0 = nan
+exceptions raised: FE_INVALID
+1.0/0.0 = inf
+exceptions raised: FE_DIVBYZERO
+1.0/10.0 = 0.100000
+exceptions raised: FE_INEXACT
+sqrt(-1) = -nan
+exceptions raised: FE_INVALID
+DBL_MAX*2.0 = inf
+exceptions raised: FE_INEXACT FE_OVERFLOW
+nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
+exceptions raised: FE_INEXACT FE_UNDERFLOW
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/6 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/5 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [math_errhandling (C99)<br />MATH_ERRNO (C99)<br />MATH_ERREXCEPT (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) | 定义用于常用数学函数的错误处理机制 (宏常量) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| **浮点数异常宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_exceptions)** |                                             |
+
+
+
 
 
 ### FE_UPWARD
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/FE_round](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)
 
+作用：浮点数舍入方向  (宏常量)
+
+备注：
 ```c
-#define FE_UPWARD       /* 由实现定义 */ // (C99 起)
+// 在标头 <fenv.h> 定义
+#define FE_DOWNWARD     /* 由实现定义 */// (C99 起)
+#define FE_TONEAREST    /* 由实现定义 */// (C99 起)
+#define FE_TOWARDZERO   /* 由实现定义 */// (C99 起)
+#define FE_UPWARD       /* 由实现定义 */// (C99 起)
 ```
 
-​	参见：[FE_DOWNWARD](#FE_DOWNWARD)
+​	每个这种宏常量都展开成非负常量表达式，可被 [fesetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 或 [fegetround](https://zh.cppreference.com/w/c/numeric/fenv/feround) 用于指示受支持的浮点数舍入模式之一。实现可于 `<fenv.h>` 定义另外的舍入模式常量，它应以 `FE_` 后随至少一个大写字母开始。每个宏仅若受支持才得到定义。
+
+| 常量            | 解释                 |
+| --------------- | -------------------- |
+| `FE_DOWNWARD`   | 向负无穷大舍入       |
+| `FE_TONEAREST`  | 向最接近可表示值舍入 |
+| `FE_TOWARDZERO` | 向零舍入             |
+| `FE_UPWARD`     | 向正无穷大舍入       |
+
+​	实现可支持另外的舍入模式。
+
+​	当前舍入模式影响下列结果：
+
+- 常量表达式以外的浮点数算术运算符结果
+
+```c
+double x = 1;
+x/10; // 0.09999999999999999167332731531132594682276248931884765625
+   // 或 0.1000000000000000055511151231257827021181583404541015625
+```
+
+- 标准库[数学函数](https://zh.cppreference.com/w/c/numeric/math)的返回值
+
+```
+sqrt(2); // 1.41421356237309492343001693370752036571502685546875
+      // 或 1.4142135623730951454746218587388284504413604736328125
+```
+
+- 浮点数到浮点数的隐式转换及转换类型
+
+```c
+double d = 1 + DBL_EPSILON;
+float f = d; //  1.00000000000000000000000
+           // 或 1.00000011920928955078125
+```
+
+- 字符串转换，如 [strtod](https://zh.cppreference.com/w/c/string/byte/strtof) 或 [printf](https://zh.cppreference.com/w/c/io/fprintf)
+
+```
+strtof("0.1", NULL); // 0.0999999940395355224609375
+                  // 或 0.100000001490116119384765625
+```
+
+- 库舍入函数 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint)、[rint](https://zh.cppreference.com/w/c/numeric/math/rint)、[lrint](https://zh.cppreference.com/w/c/numeric/math/rint)
+
+```
+lrint(2.1); // 2 或 3
+```
+
+​	当前舍入模式**不**影响：
+
+- 浮点数到整数的隐式转换或转型（始终向零）
+- 编译时执行的常量表达式中浮点数算术运算符的结果（始终向最接近）
+- 库函数 [round](https://zh.cppreference.com/w/c/numeric/math/round)、[lround](https://zh.cppreference.com/w/c/numeric/math/round)、[llround](https://zh.cppreference.com/w/c/numeric/math/round)、[ceil](https://zh.cppreference.com/w/c/numeric/math/ceil)、[floor](https://zh.cppreference.com/w/c/numeric/math/floor)、[trunc](https://zh.cppreference.com/w/c/numeric/math/trunc)
+
+​	同任何[浮点数环境](https://zh.cppreference.com/w/c/numeric/fenv)功能一样，仅当设置了 `#pragma STDC FENV_ACCESS ON` 才保证舍入。
+
+​	不支持此语用的编译器可能提供它们自己的方式来支持当前舍入模式。例如 Clang 和 GCC 的选项 `-frounding-math` 就用于禁用可能改变对舍入敏感的代码的优化。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <fenv.h>
+#include <math.h>
+int main()
+{
+#pragma STDC FENV_ACCESS ON
+    fesetround(FE_DOWNWARD);
+    puts("rounding down: ");
+    printf("           pi = %.22f\n", acosf(-1));
+    printf("strtof(\"1.1\") = %.22f\n", strtof("1.1", NULL));
+    printf("    rint(2.1) = %.22f\n\n", rintf(2.1));
+    fesetround(FE_UPWARD);
+    puts("rounding up: ");
+    printf("           pi = %.22f\n", acosf(-1));
+    printf("strtof(\"1.1\") = %.22f\n", strtof("1.1", NULL));
+    printf("    rint(2.1) = %.22f\n", rintf(2.1));
+}
+```
+
+​	输出：
+
+```txt
+rounding down: 
+           pi = 3.1415925025939941406250
+strtof("1.1") = 1.0999999046325683593750
+    rint(2.1) = 2.0000000000000000000000
+ 
+rounding up: 
+           pi = 3.1415927410125732421875
+strtof("1.1") = 1.1000000238418579101563
+    rint(2.1) = 3.0000000000000000000000
+```
+
+**引用**
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.6/8 Floating-point environment <fenv.h> （第 151 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6/8 Floating-point environment <fenv.h> （第 207 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6/7 Floating-point environment <fenv.h> （第 188 页）
+
+**参阅**
+
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数) |
+| ------------------------------------------------------------ | ------------------------------- |
+| **浮点数舍入宏**的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/FE_round)** |                                 |
+
+
+
 
 
 ### __STDC_VERSION_FENV_H__
 
 原址：
 
-```c
-#define __STDC_VERSION_FENV_H__ 202311L
-```
+作用：
+
+备注：
+
 
 
 
@@ -508,8 +1511,10 @@ strtof("1.1") = 1.1000000238418579101563
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -518,8 +1523,10 @@ strtof("1.1") = 1.1000000238418579101563
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -528,19 +1535,27 @@ strtof("1.1") = 1.1000000238418579101563
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
+
 
 
 
 
 ## 函数
+
+
+
 ### fe_dec_getround
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -549,8 +1564,10 @@ strtof("1.1") = 1.1000000238418579101563
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -559,8 +1576,12 @@ strtof("1.1") = 1.1000000238418579101563
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feclearexcept](https://zh.cppreference.com/w/c/numeric/fenv/feclearexcept)
 
+作用：清除指定的浮点数异常状态标志  (函数)
+
+备注：
 ```c
-int feclearexcept( int excepts ); // (C99 起)
+// 在标头 <fenv.h> 定义
+int feclearexcept( int excepts );// (C99 起)
 ```
 
 ​	尝试清除列于位掩码实参 `excepts` 的浮点数异常，该实参值为[浮点数异常宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)的逐位或。
@@ -569,14 +1590,13 @@ int feclearexcept( int excepts ); // (C99 起)
 
 | excepts | -    | 列出欲清除的异常标志的位掩码 |
 | ------- | ---- | ---------------------------- |
+|         |      |                              |
 
 **返回值**
 
-​	若成功清除所有指明的异常，或若 `excepts` 为零则返回 0。错误时返回非零。
+​	若成功清除所有指明的异常，或若 `excepts` 为零则返回 `0`。错误时返回非零。
 
 **示例**
-
-
 
 ```c
 #include <fenv.h>
@@ -630,6 +1650,23 @@ hypot(3.000000, 4.000000) = 5.000000
 hypot(8.988466e+307, 8.988466e+307) = 1.271161e+308
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.2.1 The feclearexcept function （第 209 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.2.1 The feclearexcept function （第 190 页）
+
+**参阅**
+
+| [fetestexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/fetestexcept) | 确认设置了哪些浮点数异常状态标志 (函数) |
+| ------------------------------------------------------------ | --------------------------------------- |
+| **feclearexcept** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feclearexcept)** |                                         |
+
+
 
 
 
@@ -637,9 +1674,13 @@ hypot(8.988466e+307, 8.988466e+307) = 1.271161e+308
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feenv](https://zh.cppreference.com/w/c/numeric/fenv/feenv)
 
+作用：保存或恢复当前浮点数环境，包括异常的标志和数字的舍弃模式   (函数)
+
+备注：
 ```c
-int fegetenv( fenv_t* envp ); // (1)	(C99 起)
-int fesetenv( const fenv_t* envp ); // (2)	(C99 起)
+// 在标头 <fenv.h> 定义
+int fegetenv( fenv_t* envp );// (1)(C99 起)
+int fesetenv( const fenv_t* envp );// (2)(C99 起)
 ```
 
 ​	1) 试图存储浮点数环境的状态于 `envp` 所指向的对象。
@@ -648,16 +1689,15 @@ int fesetenv( const fenv_t* envp ); // (2)	(C99 起)
 
 **参数**
 
-| envp | -    | 指向 fenv_t 类型对象的指针，该对象保有浮点数环境的状态 |
-| ---- | ---- | ------------------------------------------------------ |
+| envp | -    | 指向 `fenv_t` 类型对象的指针，该对象保有浮点数环境的状态 |
+| ---- | ---- | -------------------------------------------------------- |
+|      |      |                                                          |
 
 **返回值**
 
-​	成功时返回 0，否则返回非零。
+​	成功时返回 `0`，否则返回非零。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -753,35 +1793,62 @@ current exceptions raised: FE_INEXACT
 current rounding method:   FE_TONEAREST
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.4.1 The fegetenv function （第 213 页）
+
+  - 7.6.4.3 The fesetenv function （第 214 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.4.1 The fegetenv function （第 194 页）
+
+  - 7.6.4.3 The fesetenv function （第 195 页）
+
+**参阅**
+
+| [feholdexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) | 保存当前环境的异常状态标志，再清除所有异常状态标志，并忽略所有未来错误 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [feupdateenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv) | 恢复之前保存的浮点数环境，并引发之前已经引发过的异常，使其存在于当前内存环境中 (函数) |
+| [FE_DFL_ENV (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV) | 默认浮点数环境 (宏常量)                                      |
+| **fegetenv, fesetenv** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feenv)** |                                                              |
+
+
+
+
 
 ### fegetexceptflag
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag](https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag)
 
+作用：将指定的浮点数异常状态标志从指定的浮点数环境获取，再设置到指定浮点数环境的操作。  (函数)
+
+备注：
 ```c
-int fegetexceptflag( fexcept_t* flagp, int excepts ); // (1)	(C99 起)
-int fesetexceptflag( const fexcept_t* flagp, int excepts ); // (2)	(C99 起)
+// 在标头 <fenv.h> 定义
+int fegetexceptflag( fexcept_t* flagp, int excepts );// (1)(C99 起)
+int fesetexceptflag( const fexcept_t* flagp, int excepts );// (2)(C99 起)
 ```
 
-​	1） 试图获得列于位掩码实参 `excepts` 的浮点数异常标志的完整内容，它是[浮点数异常宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)的逐位或。
+​	1) 试图获得列于位掩码实参 `excepts` 的浮点数异常标志的完整内容，它是[浮点数异常宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)的逐位或。
 
-​	2）试图从 `flagp` 复制列于 `excepts` 的浮点数异常标志到浮点数环境。不引发任何异常，只修改标志。
+​	2) 试图从 `flagp` 复制列于 `excepts` 的浮点数异常标志到浮点数环境。不引发任何异常，只修改标志。
 
 ​	浮点数异常标志的完整内容不必是指示是否引发或清除异常的布尔值。例如，它可以是结构体，包含布尔状态和触发了异常的代码地址。这些函数获得所有这种内容，并以实现定义格式于 `flagp` 获得/存储它。
 
 **参数**
 
-| flagp   | -    | 指向将要存储或读取标志位置的 fexcept_t 对象的指针 |
-| ------- | ---- | ------------------------------------------------- |
-| excepts | -    | 列出要获取/设置的异常的位掩码                     |
+| flagp   | -    | 指向将要存储或读取标志位置的 `fexcept_t` 对象的指针 |
+| ------- | ---- | --------------------------------------------------- |
+| excepts | -    | 列出要获取/设置的异常的位掩码                       |
 
 **返回值**
 
-​	成功时返回 0，否则返回非零。
+​	成功时返回 `0`，否则返回非零。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -833,6 +1900,25 @@ current exceptions raised: FE_INEXACT FE_OVERFLOW
 current exceptions raised: FE_INVALID
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.2.2 The fegetexceptflag function （第 210 页）
+
+  - 7.6.2.4 The fesetexceptflag function （第 211 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.2.2 The fegetexceptflag function （第 191 页）
+
+  - 7.6.2.4 The fesetexceptflag function （第 192 页）
+
+**参阅**
+
+**fegetexceptflag, fesetexceptflag** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feexceptflag)**
+
+
 
 
 
@@ -840,8 +1926,10 @@ current exceptions raised: FE_INVALID
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -850,33 +1938,36 @@ current exceptions raised: FE_INVALID
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feround](https://zh.cppreference.com/w/c/numeric/fenv/feround)
 
+作用：获得或设置数字的舍入方向   (函数)
+
+备注：
 ```c
-int fesetround( int round ); // (1)	(C99 起)
-int fegetround(void); // (2)	(C99 起)
+// 在标头 <fenv.h> 定义
+int fesetround( int round );// (1)(C99 起)
+int fegetround(void);// (2)(C99 起)
 ```
 
-1）试图建立等于实参 [round](http://zh.cppreference.com/w/c/numeric/math/round) 的浮点数舍入方向，期待实参为[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)之一。
+1） 试图建立等于实参 `[round](http://zh.cppreference.com/w/c/numeric/math/round)` 的浮点数舍入方向，期待实参为[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)之一。
 
-2）返回对应当前舍入方向的[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)。
+2） 返回对应当前舍入方向的[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)。
 
 **参数**
 
 | round | -    | 舍入方向，[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)之一 |
 | ----- | ---- | ------------------------------------------------------------ |
+|       |      |                                                              |
 
 **返回值**
 
-​	1) 成功时为 0，否则为非零。
+​	1) 成功时为 `0`，否则为非零。
 
 ​	2) 描述当前舍入方向的[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，或若不能确定方向则为负值
 
 **注意**
 
-​	当前舍入方向反映最近的 `fesetround` 的效果，亦能以 [FLT_ROUNDS]({{< ref "/c/types/limits/FLT_ROUNDS" >}}) 查询。
+​	当前舍入方向反映最近的 `fesetround` 的效果，亦能以 [FLT_ROUNDS](https://zh.cppreference.com/w/c/types/limits/FLT_ROUNDS) 查询。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -934,13 +2025,41 @@ current rounding method:  FE_DOWNWARD
 current rounding method:  FE_TONEAREST
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.3.1 The fegetround function （第 212 页）
+
+  - 7.6.3.2 The fesetround function （第 212-213 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.3.1 The fegetround function （第 193 页）
+
+  - 7.6.3.2 The fesetround function （第 193-194 页）
+
+**参阅**
+
+| [nearbyint (C99)<br />nearbyintf (C99)<br />nearbyintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/nearbyint) | 用当前舍入模式取整到整数 (函数)                         |
+| ------------------------------------------------------------ | ------------------------------------------------------- |
+| [rint (C99)<br />rintf (C99)<br />rintl (C99)<br />lrint (C99)<br />lrintf (C99)<br />lrintl (C99)<br />llrint (C99)<br />llrintf (C99)<br />llrintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/rint) | 使用当前舍入模式取整到整数，若结果有误则产生异常 (函数) |
+| **fegetround, fesetround** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feround)** |                                                         |
+
+
+
+
 
 ### feholdexcept
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept)
 
+作用：保存当前环境的异常状态标志，再清除所有异常状态标志，并忽略所有未来错误  (函数)
+
+备注：
 ```c
-int feholdexcept( fenv_t* envp ); // (C99 起)
+// 在标头 <fenv.h> 定义
+int feholdexcept( fenv_t* envp );// (C99 起)
 ```
 
 ​	首先，保存当前浮点数环境到 `envp` 所指向的对象（类似 [fegetenv](https://zh.cppreference.com/w/c/numeric/fenv/feenv)），然后清除所有浮点数状态标志，再安装不停止模式：未来的浮点数异常将不中断执行（不会陷落），直至以 [feupdateenv](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv) 或 [fesetenv](https://zh.cppreference.com/w/c/numeric/fenv/feenv) 还原浮点数状态。
@@ -949,16 +2068,15 @@ int feholdexcept( fenv_t* envp ); // (C99 起)
 
 **参数**
 
-| envp | -    | 指向 fenv_t 类型对象的指针，将存储浮点数环境于其中 |
-| ---- | ---- | -------------------------------------------------- |
+| envp | -    | 指向 `fenv_t` 类型对象的指针，将存储浮点数环境于其中 |
+| ---- | ---- | ---------------------------------------------------- |
+|      |      |                                                      |
 
 **返回值**
 
-​	成功时返回 0，否则返回非零。
+​	成功时返回 `0`，否则返回非零。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -1018,29 +2136,53 @@ x2(DBL_MAX) = inf
 current exceptions raised:  FE_INVALID FE_OVERFLOW
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.4.2 The feholdexcept function （第 213-214 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.4.2 The feholdexcept function （第 194-195 页）
+
+**参阅**
+
+| [feupdateenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv) | 恢复之前保存的浮点数环境，并引发之前已经引发过的异常，使其存在于当前内存环境中 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [fegetenv (C99)<br />fesetenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feenv) | 保存或恢复当前浮点数环境，包括异常的标志和数字的舍弃模式 (函数) |
+| [FE_DFL_ENV (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV) | 默认浮点数环境 (宏常量)                                      |
+| **feholdexcept** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feholdexcept)** |                                                              |
+
+
+
+
 
 ### feraiseexcept
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feraiseexcept](https://zh.cppreference.com/w/c/numeric/fenv/feraiseexcept)
 
+作用：引发指定的浮点数异常  (函数)
+
+备注：
 ```c
-int feraiseexcept( int excepts ); // (C99 起)
+// 在标头 <fenv.h> 定义
+int feraiseexcept( int excepts );// (C99 起)
 ```
 
-​	尝试引发所有列于 `excepts`（[浮点数异常宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)的逐位或）的浮点数异常。若异常之一为 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 或 [FE_UNDERFLOW](http://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，则此函数可以额外引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。异常的引发顺序未指定，除了 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_UNDERFLOW](http://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 一定先于 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 引发。
+​	尝试引发所有列于 `excepts`（[浮点数异常宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)的逐位或）的浮点数异常。若异常之一为 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 或 `[FE_UNDERFLOW](http://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)`，则此函数可以额外引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。异常的引发顺序未指定，除了 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 `[FE_UNDERFLOW](http://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)` 一定先于 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 引发。
 
 **参数**
 
 | excepts | -    | 列出所有要引发的异常标志的位掩码 |
 | ------- | ---- | -------------------------------- |
+|         |      |                                  |
 
 **返回值**
 
-​	若引发了所有列出的异常，则返回 0，否则返回非零值。
+​	若引发了所有列出的异常，则返回 `0`，否则返回非零值。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -1085,6 +2227,24 @@ feraiseexcept() succeeds
 current exceptions raised:  FE_INEXACT FE_OVERFLOW
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.2.3 The feraiseexcept function （第 210 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.2.3 The feraiseexcept function （第 191 页）
+
+**参阅**
+
+| [feclearexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feclearexcept) | 清除指定的浮点数异常状态标志 (函数)     |
+| ------------------------------------------------------------ | --------------------------------------- |
+| [fetestexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/fetestexcept) | 确认设置了哪些浮点数异常状态标志 (函数) |
+| **feraiseexcept** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feraiseexcept)** |                                         |
+
+
 
 
 
@@ -1092,20 +2252,159 @@ current exceptions raised:  FE_INEXACT FE_OVERFLOW
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feenv](https://zh.cppreference.com/w/c/numeric/fenv/feenv)
 
+作用：保存或恢复当前浮点数环境，包括异常的标志和数字的舍弃模式   (函数)
+
+备注：
 ```c
-int fegetenv( fenv_t* envp ); // (1)	(C99 起)
-int fesetenv( const fenv_t* envp ); // (2)	(C99 起)
+// 在标头 <fenv.h> 定义
+int fegetenv( fenv_t* envp );// (1)(C99 起)
+int fesetenv( const fenv_t* envp );// (2)(C99 起)
 ```
 
-参见：[fegetenv](#fegetenv)
+​	1) 试图存储浮点数环境的状态于 `envp` 所指向的对象。
+
+​	2) 试图从 `envp` 所指向的对象建立浮点数环境状态。对象的值必须是以先前调用 [feholdexcept](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) 或 `fegetenv` 获得值或是浮点数宏常量。若 `envp` 中设置了任何浮点数状态标志，则环境中标志变为被设置（然后可用 [fetestexcept](https://zh.cppreference.com/w/c/numeric/fenv/fetestexcept) 测试），但不引发对应的浮点数异常（执行持续而不中断）。
+
+**参数**
+
+| envp | -    | 指向 `fenv_t` 类型对象的指针，该对象保有浮点数环境的状态 |
+| ---- | ---- | -------------------------------------------------------- |
+|      |      |                                                          |
+
+**返回值**
+
+​	成功时返回 `0`，否则返回非零。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+ 
+void show_fe_exceptions(void)
+{
+    printf("current exceptions raised: ");
+    if(fetestexcept(FE_DIVBYZERO))     printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))       printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))       printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))      printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW))     printf(" FE_UNDERFLOW");
+    if(fetestexcept(FE_ALL_EXCEPT)==0) printf(" none");
+    printf("\n");
+}
+ 
+void show_fe_rounding_method(void)
+{
+    printf("current rounding method:    ");
+    switch (fegetround()) {
+           case FE_TONEAREST:  printf ("FE_TONEAREST");  break;
+           case FE_DOWNWARD:   printf ("FE_DOWNWARD");   break;
+           case FE_UPWARD:     printf ("FE_UPWARD");     break;
+           case FE_TOWARDZERO: printf ("FE_TOWARDZERO"); break;
+           default:            printf ("unknown");
+    };
+    printf("\n");
+}
+ 
+void show_fe_environment(void)
+{
+    show_fe_exceptions();
+    show_fe_rounding_method();
+}    
+ 
+int main(void)
+{
+    fenv_t curr_env;
+    int rtn;
+ 
+    /* 显示默认环境。 */
+    show_fe_environment();
+    printf("\n");
+ 
+    /* 在默认环境下做一些计算。 */
+    printf("+11.5 -> %+4.1f\n", rint(+11.5)); /* 两整数的中央值 */
+    printf("+12.5 -> %+4.1f\n", rint(+12.5)); /* 两整数的中央值 */
+    show_fe_environment();
+    printf("\n");
+ 
+    /* 保存当前环境。 */
+    rtn = fegetenv(&curr_env);
+ 
+    /* 以新舍入方法进行一些计算。 */
+    feclearexcept(FE_ALL_EXCEPT);
+    fesetround(FE_DOWNWARD);
+    printf("1.0/0.0 = %f\n", 1.0/0.0);
+    printf("+11.5 -> %+4.1f\n", rint(+11.5));
+    printf("+12.5 -> %+4.1f\n", rint(+12.5));
+    show_fe_environment();
+    printf("\n");
+ 
+    /* 恢复先前环境。 */
+    rtn = fesetenv(&curr_env);
+    show_fe_environment();
+ 
+    return 0;
+}
+```
+
+​	输出：
+
+```txt
+current exceptions raised: none
+current rounding method:   FE_TONEAREST
+ 
++11.5 -> +12.0
++12.5 -> +12.0
+current exceptions raised: FE_INEXACT
+current rounding method:   FE_TONEAREST
+ 
+1.0/0.0 = inf
++11.5 -> +11.0
++12.5 -> +12.0
+current exceptions raised: FE_DIVBYZERO FE_INEXACT
+current rounding method:   FE_DOWNWARD
+ 
+current exceptions raised: FE_INEXACT
+current rounding method:   FE_TONEAREST
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.4.1 The fegetenv function （第 213 页）
+
+  - 7.6.4.3 The fesetenv function （第 214 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.4.1 The fegetenv function （第 194 页）
+
+  - 7.6.4.3 The fesetenv function （第 195 页）
+
+**参阅**
+
+| [feholdexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) | 保存当前环境的异常状态标志，再清除所有异常状态标志，并忽略所有未来错误 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [feupdateenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv) | 恢复之前保存的浮点数环境，并引发之前已经引发过的异常，使其存在于当前内存环境中 (函数) |
+| [FE_DFL_ENV (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV) | 默认浮点数环境 (宏常量)                                      |
+| **fegetenv, fesetenv** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feenv)** |                                                              |
+
+
+
 
 
 ### fesetexcept
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -1114,14 +2413,100 @@ int fesetenv( const fenv_t* envp ); // (2)	(C99 起)
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag](https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag)
 
+作用：将指定的浮点数异常状态标志从指定的浮点数环境获取，再设置到指定浮点数环境的操作。  (函数)
+
+备注：
 ```c
-int fegetexceptflag( fexcept_t* flagp, int excepts ); // (1)	(C99 起)
-int fesetexceptflag( const fexcept_t* flagp, int excepts ); // (2)	(C99 起)
+// 在标头 <fenv.h> 定义
+int fegetexceptflag( fexcept_t* flagp, int excepts );// (1)(C99 起)
+int fesetexceptflag( const fexcept_t* flagp, int excepts );// (2)(C99 起)
 ```
 
-参见：[fegetexceptflag](#fegetexceptflag)
+​	1) 试图获得列于位掩码实参 `excepts` 的浮点数异常标志的完整内容，它是[浮点数异常宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)的逐位或。
 
+​	2) 试图从 `flagp` 复制列于 `excepts` 的浮点数异常标志到浮点数环境。不引发任何异常，只修改标志。
 
+​	浮点数异常标志的完整内容不必是指示是否引发或清除异常的布尔值。例如，它可以是结构体，包含布尔状态和触发了异常的代码地址。这些函数获得所有这种内容，并以实现定义格式于 `flagp` 获得/存储它。
+
+**参数**
+
+| flagp   | -    | 指向将要存储或读取标志位置的 `fexcept_t` 对象的指针 |
+| ------- | ---- | --------------------------------------------------- |
+| excepts | -    | 列出要获取/设置的异常的位掩码                       |
+
+**返回值**
+
+​	成功时返回 `0`，否则返回非零。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+ 
+void show_fe_exceptions(void)
+{
+    printf("current exceptions raised: ");
+    if(fetestexcept(FE_DIVBYZERO))     printf(" FE_DIVBYZERO");
+    if(fetestexcept(FE_INEXACT))       printf(" FE_INEXACT");
+    if(fetestexcept(FE_INVALID))       printf(" FE_INVALID");
+    if(fetestexcept(FE_OVERFLOW))      printf(" FE_OVERFLOW");
+    if(fetestexcept(FE_UNDERFLOW))     printf(" FE_UNDERFLOW");
+    if(fetestexcept(FE_ALL_EXCEPT)==0) printf(" none");
+    printf("\n");
+}
+ 
+int main(void)
+{
+    fexcept_t excepts;
+ 
+    /* 设置“当前”异常标志集合。 */
+    feraiseexcept(FE_INVALID);
+    show_fe_exceptions();
+ 
+    /* 保存当前异常标志。 */
+    fegetexceptflag(&excepts,FE_ALL_EXCEPT);
+ 
+    /* 临时引发两个其他异常。 */
+    feclearexcept(FE_ALL_EXCEPT);
+    feraiseexcept(FE_OVERFLOW | FE_INEXACT);
+    show_fe_exceptions();
+ 
+    /* 恢复先前的异常标志。 */
+    fesetexceptflag(&excepts,FE_ALL_EXCEPT);
+    show_fe_exceptions();
+ 
+    return 0;
+}
+```
+
+​	输出：
+
+```txt
+current exceptions raised: FE_INVALID
+current exceptions raised: FE_INEXACT FE_OVERFLOW
+current exceptions raised: FE_INVALID
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.2.2 The fegetexceptflag function （第 210 页）
+
+  - 7.6.2.4 The fesetexceptflag function （第 211 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.2.2 The fegetexceptflag function （第 191 页）
+
+  - 7.6.2.4 The fesetexceptflag function （第 192 页）
+
+**参阅**
+
+**fegetexceptflag, fesetexceptflag** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feexceptflag)**
 
 
 
@@ -1131,8 +2516,10 @@ int fesetexceptflag( const fexcept_t* flagp, int excepts ); // (2)	(C99 起)
 
 原址：
 
-```c
-```
+作用：
+
+备注：
+
 
 
 
@@ -1141,20 +2528,128 @@ int fesetexceptflag( const fexcept_t* flagp, int excepts ); // (2)	(C99 起)
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feround](https://zh.cppreference.com/w/c/numeric/fenv/feround)
 
+作用：获得或设置数字的舍入方向   (函数)
+
+备注：
 ```c
-int fesetround( int round ); // (1)	(C99 起)
-int fegetround(void); // (2)	(C99 起)
+// 在标头 <fenv.h> 定义
+int fesetround( int round );// (1)(C99 起)
+int fegetround(void);// (2)(C99 起)
 ```
 
-参见：[fegetround](#fegetround)
+1） 试图建立等于实参 `[round](http://zh.cppreference.com/w/c/numeric/math/round)` 的浮点数舍入方向，期待实参为[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)之一。
+
+2） 返回对应当前舍入方向的[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)。
+
+**参数**
+
+| round | -    | 舍入方向，[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)之一 |
+| ----- | ---- | ------------------------------------------------------------ |
+|       |      |                                                              |
+
+**返回值**
+
+​	1) 成功时为 `0`，否则为非零。
+
+​	2) 描述当前舍入方向的[浮点数舍入宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，或若不能确定方向则为负值
+
+**注意**
+
+​	当前舍入方向反映最近的 `fesetround` 的效果，亦能以 [FLT_ROUNDS](https://zh.cppreference.com/w/c/types/limits/FLT_ROUNDS) 查询。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <fenv.h>
+ 
+#pragma STDC FENV_ACCESS ON
+void show_fe_current_rounding_method(void)
+{
+    printf("current rounding method:  ");
+    switch (fegetround())
+    {
+           case FE_TONEAREST:  printf ("FE_TONEAREST");  break;
+           case FE_DOWNWARD:   printf ("FE_DOWNWARD");   break;
+           case FE_UPWARD:     printf ("FE_UPWARD");     break;
+           case FE_TOWARDZERO: printf ("FE_TOWARDZERO"); break;
+           default:            printf ("unknown");
+    };
+    printf("\n");
+}
+ 
+int main(void)
+{
+    /* 默认舍入方法 */
+    show_fe_current_rounding_method();
+    printf("+11.5 -> %+4.1f\n", rint(+11.5)); /* 两整数的中央值 */
+    printf("+12.5 -> %+4.1f\n", rint(+12.5)); /* 两整数的中央值 */
+ 
+    /* 保存舍入方法。 */
+    int curr_method = fegetround();
+ 
+    /* 临时更改当前舍入方法。 */
+    fesetround(FE_DOWNWARD);
+    show_fe_current_rounding_method();
+    printf("+11.5 -> %+4.1f\n", rint(+11.5));
+    printf("+12.5 -> %+4.1f\n", rint(+12.5));
+ 
+    /* 恢复舍入方法。 */
+    fesetround(curr_method);
+    show_fe_current_rounding_method(); 
+ 
+    return 0;
+}
+```
+
+​	可能的输出：
+
+```txt
+current rounding method:  FE_TONEAREST
++11.5 -> +12.0
++12.5 -> +12.0
+current rounding method:  FE_DOWNWARD
++11.5 -> +11.0
++12.5 -> +12.0
+current rounding method:  FE_TONEAREST
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.3.1 The fegetround function （第 212 页）
+
+  - 7.6.3.2 The fesetround function （第 212-213 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.3.1 The fegetround function （第 193 页）
+
+  - 7.6.3.2 The fesetround function （第 193-194 页）
+
+**参阅**
+
+| [nearbyint (C99)<br />nearbyintf (C99)<br />nearbyintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/nearbyint) | 用当前舍入模式取整到整数 (函数)                         |
+| ------------------------------------------------------------ | ------------------------------------------------------- |
+| [rint (C99)<br />rintf (C99)<br />rintl (C99)<br />lrint (C99)<br />lrintf (C99)<br />lrintl (C99)<br />llrint (C99)<br />llrintf (C99)<br />llrintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/rint) | 使用当前舍入模式取整到整数，若结果有误则产生异常 (函数) |
+| **fegetround, fesetround** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feround)** |                                                         |
+
+
+
 
 
 ### fetestexcept
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/fetestexcept](https://zh.cppreference.com/w/c/numeric/fenv/fetestexcept)
 
+作用：确认设置了哪些浮点数异常状态标志  (函数)
+
+备注：
 ```c
-int fetestexcept( int excepts ); // (C99 起)
+// 在标头 <fenv.h> 定义
+int fetestexcept( int excepts );// (C99 起)
 ```
 
 ​	确定当前设置了哪个指定的浮点数异常子集。参数 `excepts` 是[浮点数异常宏](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)的逐位或。
@@ -1163,14 +2658,13 @@ int fetestexcept( int excepts ); // (C99 起)
 
 | excepts | -    | 列出待测试异常标志的位掩码 |
 | ------- | ---- | -------------------------- |
+|         |      |                            |
 
 **返回值**
 
 ​	包含于 `excepts` 而且对应于当前设置的浮点数异常中的浮点数异常宏的逐位或。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -1222,46 +2716,65 @@ nextafter(DBL_MIN/pow(2.0,52),0.0) = 0.0
 current exceptions raised:  FE_DIVBYZERO FE_INEXACT FE_INVALID FE_OVERFLOW FE_UNDERFLOW
 ```
 
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.2.5 The fetestexcept function （第 211-212 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.2.5 The fetestexcept function （第 192-193 页）
+
+**参阅**
+
+| [feclearexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feclearexcept) | 清除指定的浮点数异常状态标志 (函数) |
+| ------------------------------------------------------------ | ----------------------------------- |
+| **fetestexcept** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/fetestexcept)** |                                     |
+
+
 
 
 
 ### fetestexceptflag
 
-原址：[https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag](https://zh.cppreference.com/w/c/numeric/fenv/feexceptflag)
+原址：
 
-```c
-int fegetexceptflag( fexcept_t* flagp, int excepts ); // (1)	(C99 起)
-int fesetexceptflag( const fexcept_t* flagp, int excepts ); // (2)	(C99 起)
-```
+作用：
 
-参见：[fegetexceptflag](#fegetexceptflag)
+备注：
+
+
+
 
 
 ### feupdateenv
 
 原址：[https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv](https://zh.cppreference.com/w/c/numeric/fenv/feupdateenv)
 
-```c
-int feupdateenv( const fenv_t* envp ); // (C99 起)
+作用：恢复之前保存的浮点数环境，并引发之前已经引发过的异常，使其存在于当前内存环境中  (函数)
 
+备注：
+```c
+// 在标头 <fenv.h> 定义
+int feupdateenv( const fenv_t* envp );// (C99 起)
 ```
 
 ​	首先，记住当前引发的浮点数异常，然后从 `envp` 所指向的对象恢复浮点数环境（类似 [fesetenv](https://zh.cppreference.com/w/c/numeric/fenv/feenv)），再引发保存的浮点数异常。
 
-此函数可用于结束先前调用 [feholdexcept](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) 建立的不停止模式。
+​	此函数可用于结束先前调用 [feholdexcept](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) 建立的不停止模式。
 
 **参数**
 
-| envp | -    | 指向 fenv_t 类型对象的指针，对象为之前到 [feholdexcept](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) 或 `fegetenv` 的调用所设，或等于 [FE_DFL_ENV](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV) |
+| envp | -    | 指向 `fenv_t` 类型对象的指针，对象为之前到 [feholdexcept](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) 或 `fegetenv` 的调用所设，或等于 [FE_DFL_ENV](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV) |
 | ---- | ---- | ------------------------------------------------------------ |
+|      |      |                                                              |
 
 **返回值**
 
-​	成功时为 0，否则为非零。
+​	成功时为 `0`，否则为非零。
 
 **示例**
-
-
 
 ```c
 #include <stdio.h>
@@ -1312,7 +2825,7 @@ int main(void)
 }
 ```
 
-输出：
+​	输出：
 
 ```txt
 current exceptions raised:  FE_INVALID
@@ -1321,4 +2834,27 @@ current exceptions raised:  FE_INEXACT FE_OVERFLOW
 x2(DBL_MAX) = inf
 current exceptions raised:  FE_INVALID FE_OVERFLOW
 ```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.6.4.4 The feupdateenv function （第 214-215 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.6.4.4 The feupdateenv function （第 195-196 页）
+
+**参阅**
+
+| [feholdexcept (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feholdexcept) | 保存当前环境的异常状态标志，再清除所有异常状态标志，并忽略所有未来错误 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [fegetenv (C99)<br />fesetenv (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feenv) | 保存或恢复当前浮点数环境，包括异常的标志和数字的舍弃模式 (函数) |
+| [FE_DFL_ENV (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/FE_DFL_ENV) | 默认浮点数环境 (宏常量)                                      |
+| **feupdateenv** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/fenv/feupdateenv)** |                                                              |
+
+
+
+
+
 

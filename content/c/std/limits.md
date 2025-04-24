@@ -1,9 +1,10 @@
+
 +++
 title = "<limits.h>"
-date = 2025-04-16T20:33:03+08:00
-weight = 1
+date = 2025-04-24T18:06:27+08:00
+weight = 80
 type = "docs"
-description = ""
+description = "整数类型的范围"
 isCJKLanguage = true
 draft = false
 
@@ -13,21 +14,23 @@ draft = false
 
 
 
+
+## 枚举
+
+
+
+
 ## 宏
 
 
 
 ### BITINT_MAXWIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：类型说明符 `_BitInt(N)` 中的位精确整数支持的最大宽度 `N`，大于或等于 ULLONG_WIDTH  (宏常量)
 
-```
-
-​	类型说明符 `_BitInt(N)` 中的位精确整数支持的最大宽度 N，大于或等于 `ULLONG_WIDTH`
-
-
+备注：
 
 
 
@@ -35,15 +38,11 @@ draft = false
 
 ### BOOL_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：`_Bool` 的最大值  (宏常量)
 
-```
-
-​	`_Bool` 的最大值
-
-
+备注：
 
 
 
@@ -51,15 +50,11 @@ draft = false
 
 ### BOOL_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：`_Bool` 的位宽  (宏常量)
 
-```
-
-​	`_Bool` 的位宽
-
-
+备注：
 
 
 
@@ -67,15 +62,11 @@ draft = false
 
 ### CHAR_BIT
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：字节的位数  (宏常量)
 
-```
-
-​	字节的位数
-
-
+备注：
 
 
 
@@ -83,15 +74,11 @@ draft = false
 
 ### CHAR_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：`char` 的最大值  (宏常量)
 
-```
-
-​	char 的最大值
-
-
+备注：
 
 
 
@@ -99,15 +86,11 @@ draft = false
 
 ### CHAR_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：`char` 的最小值  (宏常量)
 
-```
-
-​	char 的最小值
-
-
+备注：
 
 
 
@@ -115,15 +98,11 @@ draft = false
 
 ### CHAR_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：`char` 的位宽，同 CHAR_BIT  (宏常量)
 
-```
-
-​	char 的位宽，同 `CHAR_BIT`
-
-
+备注：
 
 
 
@@ -131,15 +110,11 @@ draft = false
 
 ### INT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最大值  (宏常量)
 
-```
-
-​	int的最大值
-
-
+备注：
 
 
 
@@ -147,15 +122,11 @@ draft = false
 
 ### INT_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最小值  (宏常量)
 
-```
-
-​	int的最小值
-
-
+备注：
 
 
 
@@ -163,15 +134,11 @@ draft = false
 
 ### INT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `signed char`、`short`、`int`、`long` 和 `long long` 的位宽  (宏常量)
 
-```
-
-​	int 的位宽
-
-
+备注：
 
 
 
@@ -179,15 +146,11 @@ draft = false
 
 ### LLONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最大值  (宏常量)
 
-```
-
-​	long long 的最大值
-
-
+备注：
 
 
 
@@ -195,15 +158,11 @@ draft = false
 
 ### LLONG_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最小值  (宏常量)
 
-```
-
-​	long long 的最小值
-
-
+备注：
 
 
 
@@ -211,15 +170,11 @@ draft = false
 
 ### LLONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `signed char`、`short`、`int`、`long` 和 `long long` 的位宽  (宏常量)
 
-```
-
-​	long long 的位宽
-
-
+备注：
 
 
 
@@ -227,15 +182,11 @@ draft = false
 
 ### LONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最大值  (宏常量)
 
-```
-
-​	long long 的最大值
-
-
+备注：
 
 
 
@@ -243,15 +194,11 @@ draft = false
 
 ### LONG_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最小值  (宏常量)
 
-```
-
-​	long long 的最小值
-
-
+备注：
 
 
 
@@ -259,15 +206,11 @@ draft = false
 
 ### LONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `signed char`、`short`、`int`、`long` 和 `long long` 的位宽  (宏常量)
 
-```
-
-​	long 的位宽
-
-
+备注：
 
 
 
@@ -275,15 +218,11 @@ draft = false
 
 ### MB_LEN_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：多字节字符的最大字节数  (宏常量)
 
-```
-
-​	多字节字符的最大字节数
-
-
+备注：
 
 
 
@@ -291,15 +230,11 @@ draft = false
 
 ### SCHAR_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最大值  (宏常量)
 
-```
-
-​	signed char的最大值
-
-
+备注：
 
 
 
@@ -307,15 +242,11 @@ draft = false
 
 ### SCHAR_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最小值  (宏常量)
 
-```
-
-​	signed char的最小值
-
-
+备注：
 
 
 
@@ -323,15 +254,11 @@ draft = false
 
 ### SCHAR_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `signed char`、`short`、`int`、`long` 和 `long long` 的位宽  (宏常量)
 
-```
-
-​	signed char的位宽
-
-
+备注：
 
 
 
@@ -339,15 +266,11 @@ draft = false
 
 ### SHRT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最大值  (宏常量)
 
-```
-
-​	short的最大值
-
-
+备注：
 
 
 
@@ -355,15 +278,11 @@ draft = false
 
 ### SHRT_MIN
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `signed char`、`short`、`int`、`long` 和 `long long` 的最小值  (宏常量)
 
-```
-
-​	short的最小值
-
-
+备注：
 
 
 
@@ -371,15 +290,11 @@ draft = false
 
 ### SHRT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `signed char`、`short`、`int`、`long` 和 `long long` 的位宽  (宏常量)
 
-```
-
-​	short的位宽
-
-
+备注：
 
 
 
@@ -387,15 +302,11 @@ draft = false
 
 ### UCHAR_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的最大值  (宏常量)
 
-```
-
-​	unsigned char的最大值
-
-
+备注：
 
 
 
@@ -403,15 +314,11 @@ draft = false
 
 ### UCHAR_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的位宽  (宏常量)
 
-```
-
-​	unsigned char的位宽
-
-
+备注：
 
 
 
@@ -419,15 +326,11 @@ draft = false
 
 ### UINT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的最大值  (宏常量)
 
-```
-
-​	unsigned int的最大值
-
-
+备注：
 
 
 
@@ -435,15 +338,11 @@ draft = false
 
 ### UINT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的位宽  (宏常量)
 
-```
-
-​	unsigned int的位宽
-
-
+备注：
 
 
 
@@ -451,15 +350,11 @@ draft = false
 
 ### ULLONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的最大值  (宏常量)
 
-```
-
-​	unsigned long long的最大值
-
-
+备注：
 
 
 
@@ -467,15 +362,11 @@ draft = false
 
 ### ULLONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的位宽  (宏常量)
 
-```
-
-​	unsigned long long的位宽
-
-
+备注：
 
 
 
@@ -483,15 +374,11 @@ draft = false
 
 ### ULONG_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的最大值  (宏常量)
 
-```
-
-​	unsigned long 的最大值
-
-
+备注：
 
 
 
@@ -499,15 +386,11 @@ draft = false
 
 ### ULONG_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的位宽  (宏常量)
 
-```
-
-​	unsigned long 的位宽
-
-
+备注：
 
 
 
@@ -515,15 +398,11 @@ draft = false
 
 ### USHRT_MAX
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别是 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的最大值  (宏常量)
 
-```
-
-​	unsigned short 的最大值
-
-
+备注：
 
 
 
@@ -531,14 +410,23 @@ draft = false
 
 ### USHRT_WIDTH
 
-原址：[https://zh.cppreference.com/w/c/header/limits]({{< ref "/c/header/limits" >}})
+原址：
 
-```c
+作用：分别为 `unsigned char`、`unsigned short`、`unsigned int`、`unsigned long` 和 `unsigned long long` 的位宽  (宏常量)
 
-```
+备注：
 
-​	unsigned short 的位宽
 
+
+
+
+### __STDC_VERSION_LIMITS_H__
+
+原址：
+
+作用：
+
+备注：
 
 
 
@@ -546,3 +434,7 @@ draft = false
 
 
 ## 函数
+
+
+
+

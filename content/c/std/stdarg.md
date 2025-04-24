@@ -1,9 +1,10 @@
+
 +++
 title = "<stdarg.h>"
-date = 2025-04-14T22:51:57+08:00
-weight = 1
+date = 2025-04-24T18:35:14+08:00
+weight = 140
 type = "docs"
-description = ""
+description = "可变参数"
 isCJKLanguage = true
 draft = false
 
@@ -13,30 +14,68 @@ draft = false
 
 
 
-
-
-
-
-
 ### va_list
 
 原址：[https://zh.cppreference.com/w/c/variadic/va_list](https://zh.cppreference.com/w/c/variadic/va_list)
 
-```c
-/* 未指明 */ va_list;
+作用：保有 va_start、va_arg、va_end 及 va_copy 所需的信息  (typedef)
 
+备注：
+```c
+// 在标头 <stdarg.h> 定义
+/* 未指明 */ va_list;
 ```
 
 ​	`va_list` 是一个完整对象类型，适于保有宏 va_start、va_copy、va_arg 及 va_end 所需的信息。
 
 ​	若创建 `va_list` 的实例并传递给另一个函数，且在该函数中通过 va_arg 使用它，则在调用方函数中的任何后继调用必须前接对 va_end 的调用。
 
-传递指向 `va_list` 对象的指针给另一个函数，并于该函数返回后使用该对象是合法的。
+​	传递指向 `va_list` 对象的指针给另一个函数，并于该函数返回后使用该对象是合法的。
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.16/3 Variable arguments <stdarg.h> （第 269 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.15/3 Variable arguments <stdarg.h> （第 249 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.8 VARIABLE ARGUMENTS <stdarg.h>
+
+**参阅**
+
+| [va_start<br />](https://zh.cppreference.com/w/c/variadic/va_start) | 令函数得以访问可变实参 (宏函数)   |
+| ------------------------------------------------------------ | --------------------------------- |
+| [va_copy (C99)<br />](https://zh.cppreference.com/w/c/variadic/va_copy) | 创造函数可变实参的副本 (宏函数)   |
+| [va_arg<br />](https://zh.cppreference.com/w/c/variadic/va_arg) | 访问下一个可变函数实参 (宏函数)   |
+| [va_end<br />](https://zh.cppreference.com/w/c/variadic/va_end) | 结束对函数可变实参的遍历 (宏函数) |
+| **va_list** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/utility/variadic/va_list)** |                                   |
+
+
+
+
+
+
+## 枚举
+
+
+
 
 ## 宏
 
 
 
+### __STDC_VERSION_STDARG_H__
+
+原址：
+
+作用：
+
+备注：
 
 
 
@@ -46,16 +85,19 @@ draft = false
 
 原址：[https://zh.cppreference.com/w/c/variadic/va_arg](https://zh.cppreference.com/w/c/variadic/va_arg)
 
-```c
-T va_arg( va_list ap, T );
+作用：访问下一个可变函数实参  (宏函数)
 
+备注：
+```c
+// 在标头 <stdarg.h> 定义
+T va_arg( va_list ap, T );
 ```
 
 ​	`va_arg` 宏展开成 `T` 类型的表达式，表达式对应来自 va_list `ap` 的下个实参。
 
-​	调用 `va_arg` 前，必须调用 va_start 或 va_copy 以初始化 `ap`，中间不能有 va_end 调用。每次调用 `va_arg` 宏都会修改 ap，令它指向下一个可变实参。
+​	调用 `va_arg` 前，必须调用 va_start 或 va_copy 以初始化 `ap`，中间不能有 va_end 调用。每次调用 `va_arg` 宏都会修改 `ap`，令它指向下一个可变实参。
 
-​	若 `ap` 中的下个实参（提升后）与 `T` 的类型不[兼容]({{< ref "/c/language/basic_concepts/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B" >}})，则行为未定义，除非：
+​	若 `ap` 中的下个实参（提升后）与 `T` 的类型不[兼容](https://zh.cppreference.com/w/c/language/type#.E5.85.BC.E5.AE.B9.E7.B1.BB.E5.9E.8B)，则行为未定义，除非：
 
 - 一个类型是有符号整数类型，另一类型是对应的无符号整数类型，而且值可以被两类型一同表示；或
 - 一个类型是指向 `void` 的指针，而另一个是指向字符类型的指针。
@@ -64,13 +106,13 @@ T va_arg( va_list ap, T );
 
 **参数**
 
-| ap   | -    | va_list 类型的实例  |
-| ---- | ---- | ------------------- |
-| T    | -    | ap 中下个参数的类型 |
+| ap   | -    | va_list 类型的实例    |
+| ---- | ---- | --------------------- |
+| T    | -    | `ap` 中下个参数的类型 |
 
-展开值
+### 展开值
 
-​	ap 中的下个可变参数。
+​	`ap` 中的下个可变参数。
 
 **示例**
 
@@ -99,25 +141,64 @@ int main(void)
 {
     printf("%f\n", stddev(4, 25.0, 27.3, 26.9, 25.7));
 }
-
 ```
 
-输出：
+​	输出：
 
 ```txt
 0.920258
 ```
 
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.16.2.2 The va_arg macro （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.16.1.1 The va_arg macro （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.16.1.1 The va_arg macro （第 269-270 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.15.1.1 The va_arg macro （第 249-250 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.8.1.2 The va_arg macro
+
+**参阅**
+
+| [va_copy (C99)<br />](https://zh.cppreference.com/w/c/variadic/va_copy) | 创造函数可变实参的副本 (宏函数)                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [va_end<br />](https://zh.cppreference.com/w/c/variadic/va_end) | 结束对函数可变实参的遍历 (宏函数)                            |
+| [va_list<br />](https://zh.cppreference.com/w/c/variadic/va_list) | 保有 va_start、va_arg、va_end 及 va_copy 所需的信息 (typedef) |
+| [va_start<br />](https://zh.cppreference.com/w/c/variadic/va_start) | 令函数得以访问可变实参 (宏函数)                              |
+| **va_arg** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/utility/variadic/va_arg)** |                                                              |
 
 
 
-### va_copy <- 99+
+
+
+
+## 函数
+
+
+
+### va_copy
 
 原址：[https://zh.cppreference.com/w/c/variadic/va_copy](https://zh.cppreference.com/w/c/variadic/va_copy)
 
-```c
-void va_copy( va_list dest, va_list src ); // (C99 起)
+作用：创造函数可变实参的副本   (宏函数)
 
+备注：
+```c
+// 在标头 <stdarg.h> 定义
+void va_copy( va_list dest, va_list src );// (C99 起)
 ```
 
 ​	`va_copy` 宏把 `src` 复制到 `dest`。
@@ -130,7 +211,7 @@ void va_copy( va_list dest, va_list src ); // (C99 起)
 | ---- | ---- | -------------------------------- |
 | src  | -    | 将用以初始化 `dest` 的源 va_list |
 
-**展开值**
+### 展开值
 
 ​	（无）
 
@@ -170,14 +251,33 @@ int main(void)
 {
     printf("%f\n", sample_stddev(4, 25.0, 27.3, 26.9, 25.7));
 }
-
 ```
 
-可能的输出：
+​	可能的输出：
 
 ```txt
 0.920258
 ```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.16.1.2 The va_copy macro （第 270 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.15.1.2 The va_copy macro （第 250 页）
+
+**参阅**
+
+| [va_start<br />](https://zh.cppreference.com/w/c/variadic/va_start) | 令函数得以访问可变实参 (宏函数)                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [va_arg<br />](https://zh.cppreference.com/w/c/variadic/va_arg) | 访问下一个可变函数实参 (宏函数)                              |
+| [va_end<br />](https://zh.cppreference.com/w/c/variadic/va_end) | 结束对函数可变实参的遍历 (宏函数)                            |
+| [va_list<br />](https://zh.cppreference.com/w/c/variadic/va_list) | 保有 va_start、va_arg、va_end 及 va_copy 所需的信息 (typedef) |
+| **va_copy** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/utility/variadic/va_copy)** |                                                              |
+
 
 
 
@@ -186,26 +286,9 @@ int main(void)
 
 原址：[https://zh.cppreference.com/w/c/variadic/va_end](https://zh.cppreference.com/w/c/variadic/va_end)
 
-```c
-void va_end( va_list ap );
+作用：结束对函数可变实参的遍历  (宏函数)
 
-```
-
-​	`va_end` 宏对由 va_start 或 va_copy 的调用所初始化的 `ap` 对象进行清理。`va_end` 可以修改 `ap` 的值，使得它不再能使用。
-
-​	若无对应的对 va_start 或 va_copy 调用，或在调用 va_start 或 va_copy 的函数返回前没有调用 `va_end`，则行为未定义。
-
-**参数**
-
-| ap   | -    | 待清理的 va_list 类型的实例 |
-| ---- | ---- | --------------------------- |
-
-**展开值**
-
-（无）
-
-
-
+备注：
 
 
 
@@ -215,85 +298,12 @@ void va_end( va_list ap );
 
 原址：[https://zh.cppreference.com/w/c/variadic/va_start](https://zh.cppreference.com/w/c/variadic/va_start)
 
-```c
-void va_start( va_list ap, parmN ); // (C23 前)
-void va_start( va_list ap, ... ); // (C23 起)
+作用：令函数得以访问可变实参  (宏函数)
 
-```
-
-`va_start` 宏使函数能访问跟在具名实参 `parmN` 后的(C23 前)可变参数。
-
-应当在任何对 va_arg 的调用前，以合法的 va_list 对象 `ap` 调用 `va_start`。
-
-​	若 `parmN` 声明带有 `register` 存储类说明符、数组类型、函数类型，或与默认参数提升结果类型不兼容的类型，则行为未定义。(C23 前)
-
-​	仅求值首个传递给 `va_start` 的实参。任何其他实参既不被展开亦不被以任何方式使用。(C23 起)
-
-**参数**
-
-| ap    | -    | va_list 类型的实例       |
-| ----- | ---- | ------------------------ |
-| parmN | -    | 首个可变形参前的具名形参 |
-
-**展开值**
-
-​	（无）
-
-**示例**
-
-```c
-#include <stdio.h>
-#include <stdarg.h>
- 
-int add_nums(int count, ...) 
-{
-    int result = 0;
-    va_list args;
-    va_start(args, count); // C23 起能省略 count
- 
-    for (int i = 0; i < count; ++i) {
-        result += va_arg(args, int);
-    }
-    va_end(args);
-    return result;
-}
- 
-#if __STDC_VERSION__ > 201710L
-// 同上，C23 起合法
-int add_nums_c23(...)
-{
-    int result = 0;
-    va_list args;
-    va_start(args);
- 
-    int count = va_arg(args, int);
-    for (int i = 0; i < count; ++i) {
-        result += va_arg(args, int);
-    }
- 
-    va_end(args);
-}
-#endif
- 
-int main(void) 
-{
-    printf("%d\n", add_nums(4, 25, 25, 50, 50));
-#if __STDC_VERSION__ > 201710L
-    printf("%d\n", add_nums_C23(4, 25, 25, 50, 50));
-#endif
-}
-
-```
-
-可能的输出：
-
-```txt
-150
-150
-```
+备注：
 
 
 
 
-## 函数
+
 
