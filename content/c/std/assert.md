@@ -2,7 +2,7 @@
 +++
 title = "<assert.h>"
 date = 2025-04-24T19:11:42+08:00
-weight = 0
+weight = 1
 type = "docs"
 description = "条件编译宏，将参数与零比较"
 isCJKLanguage = true
@@ -143,7 +143,6 @@ sqrt(x) = -nan
 
 
 ## 函数
-
 
 
 

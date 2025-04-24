@@ -1,7 +1,7 @@
 
 +++
 title = "<math.h>"
-date = 2025-04-24T18:07:42+08:00
+date = 2025-04-24T21:19:15+08:00
 weight = 100
 type = "docs"
 description = "常用数学函数"
@@ -100,73 +100,7 @@ sizeof(double_t) = 8
 作用：宽度至少等于 `float` 的最高效浮点数类型  (typedef)
 
 备注：
-```c
-// 在标头 <math.h> 定义
-typedef /* 由实现定义 */ float_t// (C99 起)
-typedef /* 由实现定义 */ double_t// (C99 起)
-```
-
-​	`float_t` 和 `double_t` 类型分别是至少与 `float` 和 `double` 一样宽的浮点数类型，并满足 `double_t` 至少与 `float_t` 一样宽。[FLT_EVAL_METHOD](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD) 的值确定 `float_t` 和 `double_t` 的类型。
-
-| `FLT_EVAL_METHOD` | 解释                                                   |
-| ----------------- | ------------------------------------------------------ |
-| `0`               | `float_t` 和 `double_t` 分别等价于 `float` 和 `double` |
-| `1`               | `float_t` 和 `double_t` 都等价于 `double`              |
-| `2`               | `float_t` 和 `double_t` 都等价于 `long double`         |
-| 其他              | `float_t` 和 `double_t` 均为实现定义                   |
-
-**示例**
-
-```c
-#include <float.h>
-#include <math.h>
-#include <stdio.h>
- 
-#define SHOW(expr) printf("%s = %d\n", #expr, (int)(expr))
- 
-int main(void)
-{
-    SHOW(FLT_EVAL_METHOD);
-    SHOW(sizeof(float));
-    SHOW(sizeof(float_t));
-    SHOW(sizeof(double));
-    SHOW(sizeof(double_t));
-}
-```
-
-​	可能的输出：
-
-```txt
-FLT_EVAL_METHOD = 1
-sizeof(float) = 4
-sizeof(float_t) = 8
-sizeof(double) = 8
-sizeof(double_t) = 8
-```
-
-**引用**
-
-- C23 标准（ISO/IEC 9899:2024）：
-
-  - 7.12 Mathematics <math.h> （第 TBD 页）
-
-- C17 标准（ISO/IEC 9899:2018）：
-
-  - 7.12 Mathematics <math.h> （第 TBD 页）
-
-- C11 标准（ISO/IEC 9899:2011）：
-
-  - 7.12 Mathematics <math.h> （第 231 页）
-
-- C99 标准（ISO/IEC 9899:1999）：
-
-  - 7.12 Mathematics <math.h> （第 212 页）
-
-**参阅**
-
-| [FLT_EVAL_METHOD (C99)<br />](https://zh.cppreference.com/w/c/types/limits/FLT_EVAL_METHOD) | 指定所有算术运算以什么精度执行 (宏常量) |
-| ------------------------------------------------------------ | --------------------------------------- |
-|                                                              |                                         |
+line
 
 
 
@@ -2154,7 +2088,7 @@ NAN:   nan 7ff8000000000000
 
 
 
-### __STDC_VERSION_MATH_H__
+### `__STDC_VERSION_MATH_H__`
 
 原址：
 
@@ -21291,6 +21225,133 @@ nearbyint(-Inf) = -inf
 作用：用当前舍入模式取整到整数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nearbyintf( float arg );// (1)(C99 起)
+double      nearbyint( double arg );// (2)(C99 起)
+long double nearbyintl( long double arg );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nearbyint( arg )// (4)(C99 起)
+```
+
+1-3) 以[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 到浮点数格式的整数。
+
+4） 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `nearbyintl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `nearbyint`。否则调用 `nearbyintf`。
+
+**参数**值
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+|      |      |        |
+
+**返回值**
+
+​	返回 `arg` 按照[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)的最接近整数。
+
+**错误处理**
+
+​	此函数不受制于任何指定于 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 NaN，则返回 NaN
+
+**展开**
+
+​	`nearbyint` 和 [rint](https://zh.cppreference.com/w/c/numeric/math/rint) 之间仅有的区别是 `nearbyint` 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	所有标准浮点数格式中，最大可表示浮点数都是整数，故 `nearbyint` 自身决不溢出；然而存储结果于整数对象时，结果可能溢出任何整数类型（包含 [intmax_t](https://zh.cppreference.com/w/c/types/integer)）。
+
+​	若当前舍入模式为 [FE_TONEAREST](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则此函数在中点情况向偶数舍入（同 [rint](https://zh.cppreference.com/w/c/numeric/math/rint)，但不同于 [round](https://zh.cppreference.com/w/c/numeric/math/round)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+// #pragma STDC FENV_ACCESS ON
+    fesetround(FE_TONEAREST);
+    printf("舍入到临近:\nnearbyint(+2.3) = %+.1f  ", nearbyint(2.3));
+    printf("nearbyint(+2.5) = %+.1f  ", nearbyint(2.5));
+    printf("nearbyint(+3.5) = %+.1f\n", nearbyint(3.5));
+    printf("nearbyint(-2.3) = %+.1f  ", nearbyint(-2.3));
+    printf("nearbyint(-2.5) = %+.1f  ", nearbyint(-2.5));
+    printf("nearbyint(-3.5) = %+.1f\n", nearbyint(-3.5));
+ 
+    fesetround(FE_DOWNWARD);
+    printf("向下舍入:\nnearbyint(+2.3) = %+.1f  ", nearbyint(2.3));
+    printf("nearbyint(+2.5) = %+.1f  ", nearbyint(2.5));
+    printf("nearbyint(+3.5) = %+.1f\n", nearbyint(3.5));
+    printf("nearbyint(-2.3) = %+.1f  ", nearbyint(-2.3));
+    printf("nearbyint(-2.5) = %+.1f  ", nearbyint(-2.5));
+    printf("nearbyint(-3.5) = %+.1f\n", nearbyint(-3.5));
+ 
+    printf("nearbyint(-0.0) = %+.1f\n", nearbyint(-0.0));
+    printf("nearbyint(-Inf) = %+.1f\n", nearbyint(-INFINITY));
+}
+```
+
+​	输出：
+
+```txt
+舍入到临近:
+nearbyint(+2.3) = +2.0  nearbyint(+2.5) = +2.0  nearbyint(+3.5) = +4.0
+nearbyint(-2.3) = -2.0  nearbyint(-2.5) = -2.0  nearbyint(-3.5) = -4.0
+向下舍入:
+nearbyint(+2.3) = +2.0  nearbyint(+2.5) = +2.0  nearbyint(+3.5) = +3.0
+nearbyint(-2.3) = -3.0  nearbyint(-2.5) = -3.0  nearbyint(-3.5) = -4.0
+nearbyint(-0.0) = -0.0
+nearbyint(-Inf) = -inf
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.9.3 The nearbyint functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.6.3 The nearbyint functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.9.3 The nearbyint functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.6.3 The nearbyint functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.9.3 The nearbyint functions （第 251-252 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.6.3 The nearbyint functions （第 526 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.9.3 The nearbyint functions （第 232 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.6.3 The nearbyint functions （第 463 页）
+
+**参阅**
+
+| [rint (C99)<br />rintf (C99)<br />rintl (C99)<br />lrint (C99)<br />lrintf (C99)<br />lrintl (C99)<br />llrint (C99)<br />llrintf (C99)<br />llrintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/rint) | 使用当前舍入模式取整到整数，若结果有误则产生异常 (函数)   |
+| ------------------------------------------------------------ | --------------------------------------------------------- |
+| [round (C99)<br />roundf (C99)<br />roundl (C99)<br />lround (C99)<br />lroundf (C99)<br />lroundl (C99)<br />llround (C99)<br />llroundf (C99)<br />llroundl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/round) | 取整到最接近的整数，在相邻整数正中间时取远离零的数 (函数) |
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数)                           |
+| **nearbyint** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nearbyint)** |                                                           |
 
 
 
@@ -21303,6 +21364,133 @@ nearbyint(-Inf) = -inf
 作用：用当前舍入模式取整到整数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nearbyintf( float arg );// (1)(C99 起)
+double      nearbyint( double arg );// (2)(C99 起)
+long double nearbyintl( long double arg );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nearbyint( arg )// (4)(C99 起)
+```
+
+1-3) 以[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 到浮点数格式的整数。
+
+4） 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `nearbyintl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `nearbyint`。否则调用 `nearbyintf`。
+
+**参数**值
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+|      |      |        |
+
+**返回值**
+
+​	返回 `arg` 按照[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)的最接近整数。
+
+**错误处理**
+
+​	此函数不受制于任何指定于 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 NaN，则返回 NaN
+
+**展开**
+
+​	`nearbyint` 和 [rint](https://zh.cppreference.com/w/c/numeric/math/rint) 之间仅有的区别是 `nearbyint` 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	所有标准浮点数格式中，最大可表示浮点数都是整数，故 `nearbyint` 自身决不溢出；然而存储结果于整数对象时，结果可能溢出任何整数类型（包含 [intmax_t](https://zh.cppreference.com/w/c/types/integer)）。
+
+​	若当前舍入模式为 [FE_TONEAREST](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则此函数在中点情况向偶数舍入（同 [rint](https://zh.cppreference.com/w/c/numeric/math/rint)，但不同于 [round](https://zh.cppreference.com/w/c/numeric/math/round)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+// #pragma STDC FENV_ACCESS ON
+    fesetround(FE_TONEAREST);
+    printf("舍入到临近:\nnearbyint(+2.3) = %+.1f  ", nearbyint(2.3));
+    printf("nearbyint(+2.5) = %+.1f  ", nearbyint(2.5));
+    printf("nearbyint(+3.5) = %+.1f\n", nearbyint(3.5));
+    printf("nearbyint(-2.3) = %+.1f  ", nearbyint(-2.3));
+    printf("nearbyint(-2.5) = %+.1f  ", nearbyint(-2.5));
+    printf("nearbyint(-3.5) = %+.1f\n", nearbyint(-3.5));
+ 
+    fesetround(FE_DOWNWARD);
+    printf("向下舍入:\nnearbyint(+2.3) = %+.1f  ", nearbyint(2.3));
+    printf("nearbyint(+2.5) = %+.1f  ", nearbyint(2.5));
+    printf("nearbyint(+3.5) = %+.1f\n", nearbyint(3.5));
+    printf("nearbyint(-2.3) = %+.1f  ", nearbyint(-2.3));
+    printf("nearbyint(-2.5) = %+.1f  ", nearbyint(-2.5));
+    printf("nearbyint(-3.5) = %+.1f\n", nearbyint(-3.5));
+ 
+    printf("nearbyint(-0.0) = %+.1f\n", nearbyint(-0.0));
+    printf("nearbyint(-Inf) = %+.1f\n", nearbyint(-INFINITY));
+}
+```
+
+​	输出：
+
+```txt
+舍入到临近:
+nearbyint(+2.3) = +2.0  nearbyint(+2.5) = +2.0  nearbyint(+3.5) = +4.0
+nearbyint(-2.3) = -2.0  nearbyint(-2.5) = -2.0  nearbyint(-3.5) = -4.0
+向下舍入:
+nearbyint(+2.3) = +2.0  nearbyint(+2.5) = +2.0  nearbyint(+3.5) = +3.0
+nearbyint(-2.3) = -3.0  nearbyint(-2.5) = -3.0  nearbyint(-3.5) = -4.0
+nearbyint(-0.0) = -0.0
+nearbyint(-Inf) = -inf
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.9.3 The nearbyint functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.6.3 The nearbyint functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.9.3 The nearbyint functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.6.3 The nearbyint functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.9.3 The nearbyint functions （第 251-252 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.6.3 The nearbyint functions （第 526 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.9.3 The nearbyint functions （第 232 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.6.3 The nearbyint functions （第 463 页）
+
+**参阅**
+
+| [rint (C99)<br />rintf (C99)<br />rintl (C99)<br />lrint (C99)<br />lrintf (C99)<br />lrintl (C99)<br />llrint (C99)<br />llrintf (C99)<br />llrintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/rint) | 使用当前舍入模式取整到整数，若结果有误则产生异常 (函数)   |
+| ------------------------------------------------------------ | --------------------------------------------------------- |
+| [round (C99)<br />roundf (C99)<br />roundl (C99)<br />lround (C99)<br />lroundf (C99)<br />lroundl (C99)<br />llround (C99)<br />llroundf (C99)<br />llroundl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/round) | 取整到最接近的整数，在相邻整数正中间时取远离零的数 (函数) |
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数)                           |
+| **nearbyint** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nearbyint)** |                                                           |
 
 
 
@@ -21315,6 +21503,174 @@ nearbyint(-Inf) = -inf
 作用：确定到给定值方向的下一个可表示的浮点数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nextafterf( float from, float to );// (1)(C99 起)
+double      nextafter( double from, double to );// (2)(C99 起)
+long double nextafterl( long double from, long double to );// (3)(C99 起)
+float       nexttowardf( float from, long double to );// (4)(C99 起)
+double      nexttoward( double from, long double to );// (5)(C99 起)
+long double nexttowardl( long double from, long double to );// (6)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nextafter(from, to)// (7)(C99 起)
+#define nexttoward(from, to)// (8)(C99 起)
+```
+
+1-3) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`。
+
+4-6) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回从 `long double` 转换到函数返回类型的 `to`，而不带范围或精度的损失。
+
+7） 泛型宏：若任何实参拥有 `long double` 类型，则调用 `nextafterl`。否则，若任何实参拥有整数类型或 `double` 类型，则调用 `nextafter`。否则调用 `nextafterf`。
+
+8） 泛型宏：若实参 `from` 拥有 `long double` 类型，则调用 `nexttowardl`。否则，若实参 `from` 拥有整数类型或 `double` 类型，则调用 `nexttoward`。否则调用 `nexttowardf`。
+
+**参数**
+
+| from, to | -    | 浮点数 |
+| -------- | ---- | ------ |
+|          |      |        |
+
+**返回值**
+
+​	若不出现错误，则返回 `from` 于 `to` 的方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`，转换到函数的类型。
+
+​	若出现上溢所致的值域错误，则返回 [±HUGE_VAL](https://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)、`±HUGE_VALF` 或 `±HUGE_VALL`（所带符号同 `from`）。
+
+​	若出现下溢所致的值域错误，则返回正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `from` 有限，但期待的结果无限，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 若 `from` 不等于 `to` 且结果为非正规或零，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_UNDERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 任何情况下，返回值独立于当前舍入模式。
+- 若 `from` 或 `to` 为 NaN，则返回 NaN
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/nextafter.html)上溢和下溢条件是值域错误（可以设置 errno）。
+
+​	IEC 60559 推荐凡在 `from == to` 时均返回 `from`。但这些函数替而返回 `to`，这使得围绕零的行为一致：`nextafter(-0.0, +0.0)` 返回 `+0.0` 而 `nextafter(+0.0, -0.0)` 返回 `–0.0`。
+
+​	`nextafter` 常通过操纵 IEEE 表示来实现（[glibc](https://github.com/bminor/glibc/blob/master/math/s_nextafter.c)）（[musl](https://github.com/ifduyue/musl/blob/master/src/math/nextafter.c)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    float from1 = 0, to1 = nextafterf(from1, 1);
+    printf("%.2f 之后的下一个可表示 float 是 %.20g (%a)\n", from1, to1, to1);
+ 
+    float from2 = 1, to2 = nextafterf(from2, 2);
+    printf("%.2f 之后的下一个可表示 float 是 %.20f (%a)\n", from2, to2, to2);
+ 
+    double from3 = nextafter(0.1, 0), to3 = 0.1;
+    printf("数值 0.1 处于两个有效 double 之间:\n"
+           "    %.56f (%a)\n而  %.55f  (%a)\n", from3, from3, to3, to3);
+ 
+    // nextafter 和 nexttoward 间的差异：
+    long double dir = nextafterl(from1, 1); // 第一个非正规 long double
+    float x = nextafterf(from1, dir); // 首先转换 dir 为 float ，给出 0
+    printf("使用 nextafter，%.2f (%a) 之后的下一个 float 是 %.20g (%a)\n",
+           from1, from1, x, x);
+    x = nexttowardf(from1, dir);
+    printf("Using nexttoward, next float after %.2f (%a) is %.20g (%a)\n",
+           from1, from1, x, x);
+ 
+    // 特殊值
+    {
+        #pragma STDC FENV_ACCESS ON
+        feclearexcept(FE_ALL_EXCEPT);
+        double from4 = DBL_MAX, to4 = nextafter(from4, INFINITY);
+        printf("%.2g (%a) 之后的下一个可表示 double 是 %.23f (%a)\n",
+               from4, from4, to4, to4);
+        if(fetestexcept(FE_OVERFLOW)) puts("   raised FE_OVERFLOW");
+        if(fetestexcept(FE_INEXACT)) puts("   raised FE_INEXACT");
+    } // 结束 FENV_ACCESS 块
+ 
+    float from5 = 0.0, to5 = nextafter(from5, -0.0);
+    printf("nextafter(+0.0, -0.0) 得到 %.2g (%a)\n", to5, to5);
+}
+```
+
+​	输出：
+
+```txt
+0.00 之后的下一个可表示 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.00 之后的下一个可表示 float 是 1.00000011920928955078 (0x1.000002p+0)
+数值 0.1 处于两个有效 double 之间:
+    0.09999999999999999167332731531132594682276248931884765625 (0x1.9999999999999p-4)
+而  0.1000000000000000055511151231257827021181583404541015625  (0x1.999999999999ap-4)
+使用 nextafter，0.00 (0x0p+0) 之后的下一个 float 是 0 (0x0p+0)
+使用 nexttoward，0.00 (0x0p+0) 之后的下一个 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.8e+308 (0x1.fffffffffffffp+1023) 之后的下一个可表示 double 是 inf (inf)
+   raised FE_OVERFLOW
+   raised FE_INEXACT
+nextafter(+0.0, -0.0) 得到 -0 (-0x0p+0)
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.11.3 The nextafter functions （第 TBD 页）
+
+  - 7.12.11.4 The nexttoward functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.8.3 The nextafter functions （第 TBD 页）
+
+  - F.10.8.4 The nexttoward functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.11.3 The nextafter functions （第 187 页）
+
+  - 7.12.11.4 The nexttoward functions （第 187 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.8.3 The nextafter functions （第 386 页）
+
+  - F.10.8.4 The nexttoward functions （第 386 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.11.3 The nextafter functions （第 256 页）
+
+  - 7.12.11.4 The nexttoward functions （第 257 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.8.3 The nextafter functions （第 529 页）
+
+  - F.10.8.4 The nexttoward functions （第 529 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.11.3 The nextafter functions （第 237 页）
+
+  - 7.12.11.4 The nexttoward functions （第 238 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.8.3 The nextafter functions （第 466 页）
+
+  - F.9.8.4 The nexttoward functions （第 466 页）
+
+**参阅**
+
+**nextafter** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nextafter)**
 
 
 
@@ -21327,6 +21683,174 @@ nearbyint(-Inf) = -inf
 作用：确定到给定值方向的下一个可表示的浮点数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nextafterf( float from, float to );// (1)(C99 起)
+double      nextafter( double from, double to );// (2)(C99 起)
+long double nextafterl( long double from, long double to );// (3)(C99 起)
+float       nexttowardf( float from, long double to );// (4)(C99 起)
+double      nexttoward( double from, long double to );// (5)(C99 起)
+long double nexttowardl( long double from, long double to );// (6)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nextafter(from, to)// (7)(C99 起)
+#define nexttoward(from, to)// (8)(C99 起)
+```
+
+1-3) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`。
+
+4-6) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回从 `long double` 转换到函数返回类型的 `to`，而不带范围或精度的损失。
+
+7） 泛型宏：若任何实参拥有 `long double` 类型，则调用 `nextafterl`。否则，若任何实参拥有整数类型或 `double` 类型，则调用 `nextafter`。否则调用 `nextafterf`。
+
+8） 泛型宏：若实参 `from` 拥有 `long double` 类型，则调用 `nexttowardl`。否则，若实参 `from` 拥有整数类型或 `double` 类型，则调用 `nexttoward`。否则调用 `nexttowardf`。
+
+**参数**
+
+| from, to | -    | 浮点数 |
+| -------- | ---- | ------ |
+|          |      |        |
+
+**返回值**
+
+​	若不出现错误，则返回 `from` 于 `to` 的方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`，转换到函数的类型。
+
+​	若出现上溢所致的值域错误，则返回 [±HUGE_VAL](https://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)、`±HUGE_VALF` 或 `±HUGE_VALL`（所带符号同 `from`）。
+
+​	若出现下溢所致的值域错误，则返回正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `from` 有限，但期待的结果无限，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 若 `from` 不等于 `to` 且结果为非正规或零，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_UNDERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 任何情况下，返回值独立于当前舍入模式。
+- 若 `from` 或 `to` 为 NaN，则返回 NaN
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/nextafter.html)上溢和下溢条件是值域错误（可以设置 errno）。
+
+​	IEC 60559 推荐凡在 `from == to` 时均返回 `from`。但这些函数替而返回 `to`，这使得围绕零的行为一致：`nextafter(-0.0, +0.0)` 返回 `+0.0` 而 `nextafter(+0.0, -0.0)` 返回 `–0.0`。
+
+​	`nextafter` 常通过操纵 IEEE 表示来实现（[glibc](https://github.com/bminor/glibc/blob/master/math/s_nextafter.c)）（[musl](https://github.com/ifduyue/musl/blob/master/src/math/nextafter.c)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    float from1 = 0, to1 = nextafterf(from1, 1);
+    printf("%.2f 之后的下一个可表示 float 是 %.20g (%a)\n", from1, to1, to1);
+ 
+    float from2 = 1, to2 = nextafterf(from2, 2);
+    printf("%.2f 之后的下一个可表示 float 是 %.20f (%a)\n", from2, to2, to2);
+ 
+    double from3 = nextafter(0.1, 0), to3 = 0.1;
+    printf("数值 0.1 处于两个有效 double 之间:\n"
+           "    %.56f (%a)\n而  %.55f  (%a)\n", from3, from3, to3, to3);
+ 
+    // nextafter 和 nexttoward 间的差异：
+    long double dir = nextafterl(from1, 1); // 第一个非正规 long double
+    float x = nextafterf(from1, dir); // 首先转换 dir 为 float ，给出 0
+    printf("使用 nextafter，%.2f (%a) 之后的下一个 float 是 %.20g (%a)\n",
+           from1, from1, x, x);
+    x = nexttowardf(from1, dir);
+    printf("Using nexttoward, next float after %.2f (%a) is %.20g (%a)\n",
+           from1, from1, x, x);
+ 
+    // 特殊值
+    {
+        #pragma STDC FENV_ACCESS ON
+        feclearexcept(FE_ALL_EXCEPT);
+        double from4 = DBL_MAX, to4 = nextafter(from4, INFINITY);
+        printf("%.2g (%a) 之后的下一个可表示 double 是 %.23f (%a)\n",
+               from4, from4, to4, to4);
+        if(fetestexcept(FE_OVERFLOW)) puts("   raised FE_OVERFLOW");
+        if(fetestexcept(FE_INEXACT)) puts("   raised FE_INEXACT");
+    } // 结束 FENV_ACCESS 块
+ 
+    float from5 = 0.0, to5 = nextafter(from5, -0.0);
+    printf("nextafter(+0.0, -0.0) 得到 %.2g (%a)\n", to5, to5);
+}
+```
+
+​	输出：
+
+```txt
+0.00 之后的下一个可表示 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.00 之后的下一个可表示 float 是 1.00000011920928955078 (0x1.000002p+0)
+数值 0.1 处于两个有效 double 之间:
+    0.09999999999999999167332731531132594682276248931884765625 (0x1.9999999999999p-4)
+而  0.1000000000000000055511151231257827021181583404541015625  (0x1.999999999999ap-4)
+使用 nextafter，0.00 (0x0p+0) 之后的下一个 float 是 0 (0x0p+0)
+使用 nexttoward，0.00 (0x0p+0) 之后的下一个 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.8e+308 (0x1.fffffffffffffp+1023) 之后的下一个可表示 double 是 inf (inf)
+   raised FE_OVERFLOW
+   raised FE_INEXACT
+nextafter(+0.0, -0.0) 得到 -0 (-0x0p+0)
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.11.3 The nextafter functions （第 TBD 页）
+
+  - 7.12.11.4 The nexttoward functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.8.3 The nextafter functions （第 TBD 页）
+
+  - F.10.8.4 The nexttoward functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.11.3 The nextafter functions （第 187 页）
+
+  - 7.12.11.4 The nexttoward functions （第 187 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.8.3 The nextafter functions （第 386 页）
+
+  - F.10.8.4 The nexttoward functions （第 386 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.11.3 The nextafter functions （第 256 页）
+
+  - 7.12.11.4 The nexttoward functions （第 257 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.8.3 The nextafter functions （第 529 页）
+
+  - F.10.8.4 The nexttoward functions （第 529 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.11.3 The nextafter functions （第 237 页）
+
+  - 7.12.11.4 The nexttoward functions （第 238 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.8.3 The nextafter functions （第 466 页）
+
+  - F.9.8.4 The nexttoward functions （第 466 页）
+
+**参阅**
+
+**nextafter** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nextafter)**
 
 
 
@@ -21339,6 +21863,174 @@ nearbyint(-Inf) = -inf
 作用：确定到给定值方向的下一个可表示的浮点数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nextafterf( float from, float to );// (1)(C99 起)
+double      nextafter( double from, double to );// (2)(C99 起)
+long double nextafterl( long double from, long double to );// (3)(C99 起)
+float       nexttowardf( float from, long double to );// (4)(C99 起)
+double      nexttoward( double from, long double to );// (5)(C99 起)
+long double nexttowardl( long double from, long double to );// (6)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nextafter(from, to)// (7)(C99 起)
+#define nexttoward(from, to)// (8)(C99 起)
+```
+
+1-3) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`。
+
+4-6) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回从 `long double` 转换到函数返回类型的 `to`，而不带范围或精度的损失。
+
+7） 泛型宏：若任何实参拥有 `long double` 类型，则调用 `nextafterl`。否则，若任何实参拥有整数类型或 `double` 类型，则调用 `nextafter`。否则调用 `nextafterf`。
+
+8） 泛型宏：若实参 `from` 拥有 `long double` 类型，则调用 `nexttowardl`。否则，若实参 `from` 拥有整数类型或 `double` 类型，则调用 `nexttoward`。否则调用 `nexttowardf`。
+
+**参数**
+
+| from, to | -    | 浮点数 |
+| -------- | ---- | ------ |
+|          |      |        |
+
+**返回值**
+
+​	若不出现错误，则返回 `from` 于 `to` 的方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`，转换到函数的类型。
+
+​	若出现上溢所致的值域错误，则返回 [±HUGE_VAL](https://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)、`±HUGE_VALF` 或 `±HUGE_VALL`（所带符号同 `from`）。
+
+​	若出现下溢所致的值域错误，则返回正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `from` 有限，但期待的结果无限，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 若 `from` 不等于 `to` 且结果为非正规或零，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_UNDERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 任何情况下，返回值独立于当前舍入模式。
+- 若 `from` 或 `to` 为 NaN，则返回 NaN
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/nextafter.html)上溢和下溢条件是值域错误（可以设置 errno）。
+
+​	IEC 60559 推荐凡在 `from == to` 时均返回 `from`。但这些函数替而返回 `to`，这使得围绕零的行为一致：`nextafter(-0.0, +0.0)` 返回 `+0.0` 而 `nextafter(+0.0, -0.0)` 返回 `–0.0`。
+
+​	`nextafter` 常通过操纵 IEEE 表示来实现（[glibc](https://github.com/bminor/glibc/blob/master/math/s_nextafter.c)）（[musl](https://github.com/ifduyue/musl/blob/master/src/math/nextafter.c)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    float from1 = 0, to1 = nextafterf(from1, 1);
+    printf("%.2f 之后的下一个可表示 float 是 %.20g (%a)\n", from1, to1, to1);
+ 
+    float from2 = 1, to2 = nextafterf(from2, 2);
+    printf("%.2f 之后的下一个可表示 float 是 %.20f (%a)\n", from2, to2, to2);
+ 
+    double from3 = nextafter(0.1, 0), to3 = 0.1;
+    printf("数值 0.1 处于两个有效 double 之间:\n"
+           "    %.56f (%a)\n而  %.55f  (%a)\n", from3, from3, to3, to3);
+ 
+    // nextafter 和 nexttoward 间的差异：
+    long double dir = nextafterl(from1, 1); // 第一个非正规 long double
+    float x = nextafterf(from1, dir); // 首先转换 dir 为 float ，给出 0
+    printf("使用 nextafter，%.2f (%a) 之后的下一个 float 是 %.20g (%a)\n",
+           from1, from1, x, x);
+    x = nexttowardf(from1, dir);
+    printf("Using nexttoward, next float after %.2f (%a) is %.20g (%a)\n",
+           from1, from1, x, x);
+ 
+    // 特殊值
+    {
+        #pragma STDC FENV_ACCESS ON
+        feclearexcept(FE_ALL_EXCEPT);
+        double from4 = DBL_MAX, to4 = nextafter(from4, INFINITY);
+        printf("%.2g (%a) 之后的下一个可表示 double 是 %.23f (%a)\n",
+               from4, from4, to4, to4);
+        if(fetestexcept(FE_OVERFLOW)) puts("   raised FE_OVERFLOW");
+        if(fetestexcept(FE_INEXACT)) puts("   raised FE_INEXACT");
+    } // 结束 FENV_ACCESS 块
+ 
+    float from5 = 0.0, to5 = nextafter(from5, -0.0);
+    printf("nextafter(+0.0, -0.0) 得到 %.2g (%a)\n", to5, to5);
+}
+```
+
+​	输出：
+
+```txt
+0.00 之后的下一个可表示 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.00 之后的下一个可表示 float 是 1.00000011920928955078 (0x1.000002p+0)
+数值 0.1 处于两个有效 double 之间:
+    0.09999999999999999167332731531132594682276248931884765625 (0x1.9999999999999p-4)
+而  0.1000000000000000055511151231257827021181583404541015625  (0x1.999999999999ap-4)
+使用 nextafter，0.00 (0x0p+0) 之后的下一个 float 是 0 (0x0p+0)
+使用 nexttoward，0.00 (0x0p+0) 之后的下一个 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.8e+308 (0x1.fffffffffffffp+1023) 之后的下一个可表示 double 是 inf (inf)
+   raised FE_OVERFLOW
+   raised FE_INEXACT
+nextafter(+0.0, -0.0) 得到 -0 (-0x0p+0)
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.11.3 The nextafter functions （第 TBD 页）
+
+  - 7.12.11.4 The nexttoward functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.8.3 The nextafter functions （第 TBD 页）
+
+  - F.10.8.4 The nexttoward functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.11.3 The nextafter functions （第 187 页）
+
+  - 7.12.11.4 The nexttoward functions （第 187 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.8.3 The nextafter functions （第 386 页）
+
+  - F.10.8.4 The nexttoward functions （第 386 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.11.3 The nextafter functions （第 256 页）
+
+  - 7.12.11.4 The nexttoward functions （第 257 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.8.3 The nextafter functions （第 529 页）
+
+  - F.10.8.4 The nexttoward functions （第 529 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.11.3 The nextafter functions （第 237 页）
+
+  - 7.12.11.4 The nexttoward functions （第 238 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.8.3 The nextafter functions （第 466 页）
+
+  - F.9.8.4 The nexttoward functions （第 466 页）
+
+**参阅**
+
+**nextafter** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nextafter)**
 
 
 
@@ -21351,6 +22043,174 @@ nearbyint(-Inf) = -inf
 作用：确定到给定值方向的下一个可表示的浮点数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nextafterf( float from, float to );// (1)(C99 起)
+double      nextafter( double from, double to );// (2)(C99 起)
+long double nextafterl( long double from, long double to );// (3)(C99 起)
+float       nexttowardf( float from, long double to );// (4)(C99 起)
+double      nexttoward( double from, long double to );// (5)(C99 起)
+long double nexttowardl( long double from, long double to );// (6)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nextafter(from, to)// (7)(C99 起)
+#define nexttoward(from, to)// (8)(C99 起)
+```
+
+1-3) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`。
+
+4-6) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回从 `long double` 转换到函数返回类型的 `to`，而不带范围或精度的损失。
+
+7） 泛型宏：若任何实参拥有 `long double` 类型，则调用 `nextafterl`。否则，若任何实参拥有整数类型或 `double` 类型，则调用 `nextafter`。否则调用 `nextafterf`。
+
+8） 泛型宏：若实参 `from` 拥有 `long double` 类型，则调用 `nexttowardl`。否则，若实参 `from` 拥有整数类型或 `double` 类型，则调用 `nexttoward`。否则调用 `nexttowardf`。
+
+**参数**
+
+| from, to | -    | 浮点数 |
+| -------- | ---- | ------ |
+|          |      |        |
+
+**返回值**
+
+​	若不出现错误，则返回 `from` 于 `to` 的方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`，转换到函数的类型。
+
+​	若出现上溢所致的值域错误，则返回 [±HUGE_VAL](https://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)、`±HUGE_VALF` 或 `±HUGE_VALL`（所带符号同 `from`）。
+
+​	若出现下溢所致的值域错误，则返回正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `from` 有限，但期待的结果无限，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 若 `from` 不等于 `to` 且结果为非正规或零，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_UNDERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 任何情况下，返回值独立于当前舍入模式。
+- 若 `from` 或 `to` 为 NaN，则返回 NaN
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/nextafter.html)上溢和下溢条件是值域错误（可以设置 errno）。
+
+​	IEC 60559 推荐凡在 `from == to` 时均返回 `from`。但这些函数替而返回 `to`，这使得围绕零的行为一致：`nextafter(-0.0, +0.0)` 返回 `+0.0` 而 `nextafter(+0.0, -0.0)` 返回 `–0.0`。
+
+​	`nextafter` 常通过操纵 IEEE 表示来实现（[glibc](https://github.com/bminor/glibc/blob/master/math/s_nextafter.c)）（[musl](https://github.com/ifduyue/musl/blob/master/src/math/nextafter.c)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    float from1 = 0, to1 = nextafterf(from1, 1);
+    printf("%.2f 之后的下一个可表示 float 是 %.20g (%a)\n", from1, to1, to1);
+ 
+    float from2 = 1, to2 = nextafterf(from2, 2);
+    printf("%.2f 之后的下一个可表示 float 是 %.20f (%a)\n", from2, to2, to2);
+ 
+    double from3 = nextafter(0.1, 0), to3 = 0.1;
+    printf("数值 0.1 处于两个有效 double 之间:\n"
+           "    %.56f (%a)\n而  %.55f  (%a)\n", from3, from3, to3, to3);
+ 
+    // nextafter 和 nexttoward 间的差异：
+    long double dir = nextafterl(from1, 1); // 第一个非正规 long double
+    float x = nextafterf(from1, dir); // 首先转换 dir 为 float ，给出 0
+    printf("使用 nextafter，%.2f (%a) 之后的下一个 float 是 %.20g (%a)\n",
+           from1, from1, x, x);
+    x = nexttowardf(from1, dir);
+    printf("Using nexttoward, next float after %.2f (%a) is %.20g (%a)\n",
+           from1, from1, x, x);
+ 
+    // 特殊值
+    {
+        #pragma STDC FENV_ACCESS ON
+        feclearexcept(FE_ALL_EXCEPT);
+        double from4 = DBL_MAX, to4 = nextafter(from4, INFINITY);
+        printf("%.2g (%a) 之后的下一个可表示 double 是 %.23f (%a)\n",
+               from4, from4, to4, to4);
+        if(fetestexcept(FE_OVERFLOW)) puts("   raised FE_OVERFLOW");
+        if(fetestexcept(FE_INEXACT)) puts("   raised FE_INEXACT");
+    } // 结束 FENV_ACCESS 块
+ 
+    float from5 = 0.0, to5 = nextafter(from5, -0.0);
+    printf("nextafter(+0.0, -0.0) 得到 %.2g (%a)\n", to5, to5);
+}
+```
+
+​	输出：
+
+```txt
+0.00 之后的下一个可表示 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.00 之后的下一个可表示 float 是 1.00000011920928955078 (0x1.000002p+0)
+数值 0.1 处于两个有效 double 之间:
+    0.09999999999999999167332731531132594682276248931884765625 (0x1.9999999999999p-4)
+而  0.1000000000000000055511151231257827021181583404541015625  (0x1.999999999999ap-4)
+使用 nextafter，0.00 (0x0p+0) 之后的下一个 float 是 0 (0x0p+0)
+使用 nexttoward，0.00 (0x0p+0) 之后的下一个 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.8e+308 (0x1.fffffffffffffp+1023) 之后的下一个可表示 double 是 inf (inf)
+   raised FE_OVERFLOW
+   raised FE_INEXACT
+nextafter(+0.0, -0.0) 得到 -0 (-0x0p+0)
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.11.3 The nextafter functions （第 TBD 页）
+
+  - 7.12.11.4 The nexttoward functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.8.3 The nextafter functions （第 TBD 页）
+
+  - F.10.8.4 The nexttoward functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.11.3 The nextafter functions （第 187 页）
+
+  - 7.12.11.4 The nexttoward functions （第 187 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.8.3 The nextafter functions （第 386 页）
+
+  - F.10.8.4 The nexttoward functions （第 386 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.11.3 The nextafter functions （第 256 页）
+
+  - 7.12.11.4 The nexttoward functions （第 257 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.8.3 The nextafter functions （第 529 页）
+
+  - F.10.8.4 The nexttoward functions （第 529 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.11.3 The nextafter functions （第 237 页）
+
+  - 7.12.11.4 The nexttoward functions （第 238 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.8.3 The nextafter functions （第 466 页）
+
+  - F.9.8.4 The nexttoward functions （第 466 页）
+
+**参阅**
+
+**nextafter** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nextafter)**
 
 
 
@@ -21363,6 +22223,174 @@ nearbyint(-Inf) = -inf
 作用：确定到给定值方向的下一个可表示的浮点数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nextafterf( float from, float to );// (1)(C99 起)
+double      nextafter( double from, double to );// (2)(C99 起)
+long double nextafterl( long double from, long double to );// (3)(C99 起)
+float       nexttowardf( float from, long double to );// (4)(C99 起)
+double      nexttoward( double from, long double to );// (5)(C99 起)
+long double nexttowardl( long double from, long double to );// (6)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nextafter(from, to)// (7)(C99 起)
+#define nexttoward(from, to)// (8)(C99 起)
+```
+
+1-3) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`。
+
+4-6) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回从 `long double` 转换到函数返回类型的 `to`，而不带范围或精度的损失。
+
+7） 泛型宏：若任何实参拥有 `long double` 类型，则调用 `nextafterl`。否则，若任何实参拥有整数类型或 `double` 类型，则调用 `nextafter`。否则调用 `nextafterf`。
+
+8） 泛型宏：若实参 `from` 拥有 `long double` 类型，则调用 `nexttowardl`。否则，若实参 `from` 拥有整数类型或 `double` 类型，则调用 `nexttoward`。否则调用 `nexttowardf`。
+
+**参数**
+
+| from, to | -    | 浮点数 |
+| -------- | ---- | ------ |
+|          |      |        |
+
+**返回值**
+
+​	若不出现错误，则返回 `from` 于 `to` 的方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`，转换到函数的类型。
+
+​	若出现上溢所致的值域错误，则返回 [±HUGE_VAL](https://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)、`±HUGE_VALF` 或 `±HUGE_VALL`（所带符号同 `from`）。
+
+​	若出现下溢所致的值域错误，则返回正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `from` 有限，但期待的结果无限，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 若 `from` 不等于 `to` 且结果为非正规或零，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_UNDERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 任何情况下，返回值独立于当前舍入模式。
+- 若 `from` 或 `to` 为 NaN，则返回 NaN
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/nextafter.html)上溢和下溢条件是值域错误（可以设置 errno）。
+
+​	IEC 60559 推荐凡在 `from == to` 时均返回 `from`。但这些函数替而返回 `to`，这使得围绕零的行为一致：`nextafter(-0.0, +0.0)` 返回 `+0.0` 而 `nextafter(+0.0, -0.0)` 返回 `–0.0`。
+
+​	`nextafter` 常通过操纵 IEEE 表示来实现（[glibc](https://github.com/bminor/glibc/blob/master/math/s_nextafter.c)）（[musl](https://github.com/ifduyue/musl/blob/master/src/math/nextafter.c)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    float from1 = 0, to1 = nextafterf(from1, 1);
+    printf("%.2f 之后的下一个可表示 float 是 %.20g (%a)\n", from1, to1, to1);
+ 
+    float from2 = 1, to2 = nextafterf(from2, 2);
+    printf("%.2f 之后的下一个可表示 float 是 %.20f (%a)\n", from2, to2, to2);
+ 
+    double from3 = nextafter(0.1, 0), to3 = 0.1;
+    printf("数值 0.1 处于两个有效 double 之间:\n"
+           "    %.56f (%a)\n而  %.55f  (%a)\n", from3, from3, to3, to3);
+ 
+    // nextafter 和 nexttoward 间的差异：
+    long double dir = nextafterl(from1, 1); // 第一个非正规 long double
+    float x = nextafterf(from1, dir); // 首先转换 dir 为 float ，给出 0
+    printf("使用 nextafter，%.2f (%a) 之后的下一个 float 是 %.20g (%a)\n",
+           from1, from1, x, x);
+    x = nexttowardf(from1, dir);
+    printf("Using nexttoward, next float after %.2f (%a) is %.20g (%a)\n",
+           from1, from1, x, x);
+ 
+    // 特殊值
+    {
+        #pragma STDC FENV_ACCESS ON
+        feclearexcept(FE_ALL_EXCEPT);
+        double from4 = DBL_MAX, to4 = nextafter(from4, INFINITY);
+        printf("%.2g (%a) 之后的下一个可表示 double 是 %.23f (%a)\n",
+               from4, from4, to4, to4);
+        if(fetestexcept(FE_OVERFLOW)) puts("   raised FE_OVERFLOW");
+        if(fetestexcept(FE_INEXACT)) puts("   raised FE_INEXACT");
+    } // 结束 FENV_ACCESS 块
+ 
+    float from5 = 0.0, to5 = nextafter(from5, -0.0);
+    printf("nextafter(+0.0, -0.0) 得到 %.2g (%a)\n", to5, to5);
+}
+```
+
+​	输出：
+
+```txt
+0.00 之后的下一个可表示 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.00 之后的下一个可表示 float 是 1.00000011920928955078 (0x1.000002p+0)
+数值 0.1 处于两个有效 double 之间:
+    0.09999999999999999167332731531132594682276248931884765625 (0x1.9999999999999p-4)
+而  0.1000000000000000055511151231257827021181583404541015625  (0x1.999999999999ap-4)
+使用 nextafter，0.00 (0x0p+0) 之后的下一个 float 是 0 (0x0p+0)
+使用 nexttoward，0.00 (0x0p+0) 之后的下一个 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.8e+308 (0x1.fffffffffffffp+1023) 之后的下一个可表示 double 是 inf (inf)
+   raised FE_OVERFLOW
+   raised FE_INEXACT
+nextafter(+0.0, -0.0) 得到 -0 (-0x0p+0)
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.11.3 The nextafter functions （第 TBD 页）
+
+  - 7.12.11.4 The nexttoward functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.8.3 The nextafter functions （第 TBD 页）
+
+  - F.10.8.4 The nexttoward functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.11.3 The nextafter functions （第 187 页）
+
+  - 7.12.11.4 The nexttoward functions （第 187 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.8.3 The nextafter functions （第 386 页）
+
+  - F.10.8.4 The nexttoward functions （第 386 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.11.3 The nextafter functions （第 256 页）
+
+  - 7.12.11.4 The nexttoward functions （第 257 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.8.3 The nextafter functions （第 529 页）
+
+  - F.10.8.4 The nexttoward functions （第 529 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.11.3 The nextafter functions （第 237 页）
+
+  - 7.12.11.4 The nexttoward functions （第 238 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.8.3 The nextafter functions （第 466 页）
+
+  - F.9.8.4 The nexttoward functions （第 466 页）
+
+**参阅**
+
+**nextafter** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nextafter)**
 
 
 
@@ -21375,6 +22403,174 @@ nearbyint(-Inf) = -inf
 作用：确定到给定值方向的下一个可表示的浮点数   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       nextafterf( float from, float to );// (1)(C99 起)
+double      nextafter( double from, double to );// (2)(C99 起)
+long double nextafterl( long double from, long double to );// (3)(C99 起)
+float       nexttowardf( float from, long double to );// (4)(C99 起)
+double      nexttoward( double from, long double to );// (5)(C99 起)
+long double nexttowardl( long double from, long double to );// (6)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define nextafter(from, to)// (7)(C99 起)
+#define nexttoward(from, to)// (8)(C99 起)
+```
+
+1-3) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`。
+
+4-6) 首先，转换两个实参为函数的类型，然后返回 `from` 于 `to` 方向的下个可表示值。若 `from` 等于 `to`，则返回从 `long double` 转换到函数返回类型的 `to`，而不带范围或精度的损失。
+
+7） 泛型宏：若任何实参拥有 `long double` 类型，则调用 `nextafterl`。否则，若任何实参拥有整数类型或 `double` 类型，则调用 `nextafter`。否则调用 `nextafterf`。
+
+8） 泛型宏：若实参 `from` 拥有 `long double` 类型，则调用 `nexttowardl`。否则，若实参 `from` 拥有整数类型或 `double` 类型，则调用 `nexttoward`。否则调用 `nexttowardf`。
+
+**参数**
+
+| from, to | -    | 浮点数 |
+| -------- | ---- | ------ |
+|          |      |        |
+
+**返回值**
+
+​	若不出现错误，则返回 `from` 于 `to` 的方向的下个可表示值。若 `from` 等于 `to`，则返回 `to`，转换到函数的类型。
+
+​	若出现上溢所致的值域错误，则返回 [±HUGE_VAL](https://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)、`±HUGE_VALF` 或 `±HUGE_VALL`（所带符号同 `from`）。
+
+​	若出现下溢所致的值域错误，则返回正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `from` 有限，但期待的结果无限，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_OVERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 若 `from` 不等于 `to` 且结果为非正规或零，则引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 和 [FE_UNDERFLOW](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+- 任何情况下，返回值独立于当前舍入模式。
+- 若 `from` 或 `to` 为 NaN，则返回 NaN
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/nextafter.html)上溢和下溢条件是值域错误（可以设置 errno）。
+
+​	IEC 60559 推荐凡在 `from == to` 时均返回 `from`。但这些函数替而返回 `to`，这使得围绕零的行为一致：`nextafter(-0.0, +0.0)` 返回 `+0.0` 而 `nextafter(+0.0, -0.0)` 返回 `–0.0`。
+
+​	`nextafter` 常通过操纵 IEEE 表示来实现（[glibc](https://github.com/bminor/glibc/blob/master/math/s_nextafter.c)）（[musl](https://github.com/ifduyue/musl/blob/master/src/math/nextafter.c)）。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    float from1 = 0, to1 = nextafterf(from1, 1);
+    printf("%.2f 之后的下一个可表示 float 是 %.20g (%a)\n", from1, to1, to1);
+ 
+    float from2 = 1, to2 = nextafterf(from2, 2);
+    printf("%.2f 之后的下一个可表示 float 是 %.20f (%a)\n", from2, to2, to2);
+ 
+    double from3 = nextafter(0.1, 0), to3 = 0.1;
+    printf("数值 0.1 处于两个有效 double 之间:\n"
+           "    %.56f (%a)\n而  %.55f  (%a)\n", from3, from3, to3, to3);
+ 
+    // nextafter 和 nexttoward 间的差异：
+    long double dir = nextafterl(from1, 1); // 第一个非正规 long double
+    float x = nextafterf(from1, dir); // 首先转换 dir 为 float ，给出 0
+    printf("使用 nextafter，%.2f (%a) 之后的下一个 float 是 %.20g (%a)\n",
+           from1, from1, x, x);
+    x = nexttowardf(from1, dir);
+    printf("Using nexttoward, next float after %.2f (%a) is %.20g (%a)\n",
+           from1, from1, x, x);
+ 
+    // 特殊值
+    {
+        #pragma STDC FENV_ACCESS ON
+        feclearexcept(FE_ALL_EXCEPT);
+        double from4 = DBL_MAX, to4 = nextafter(from4, INFINITY);
+        printf("%.2g (%a) 之后的下一个可表示 double 是 %.23f (%a)\n",
+               from4, from4, to4, to4);
+        if(fetestexcept(FE_OVERFLOW)) puts("   raised FE_OVERFLOW");
+        if(fetestexcept(FE_INEXACT)) puts("   raised FE_INEXACT");
+    } // 结束 FENV_ACCESS 块
+ 
+    float from5 = 0.0, to5 = nextafter(from5, -0.0);
+    printf("nextafter(+0.0, -0.0) 得到 %.2g (%a)\n", to5, to5);
+}
+```
+
+​	输出：
+
+```txt
+0.00 之后的下一个可表示 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.00 之后的下一个可表示 float 是 1.00000011920928955078 (0x1.000002p+0)
+数值 0.1 处于两个有效 double 之间:
+    0.09999999999999999167332731531132594682276248931884765625 (0x1.9999999999999p-4)
+而  0.1000000000000000055511151231257827021181583404541015625  (0x1.999999999999ap-4)
+使用 nextafter，0.00 (0x0p+0) 之后的下一个 float 是 0 (0x0p+0)
+使用 nexttoward，0.00 (0x0p+0) 之后的下一个 float 是 1.4012984643248170709e-45 (0x1p-149)
+1.8e+308 (0x1.fffffffffffffp+1023) 之后的下一个可表示 double 是 inf (inf)
+   raised FE_OVERFLOW
+   raised FE_INEXACT
+nextafter(+0.0, -0.0) 得到 -0 (-0x0p+0)
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.11.3 The nextafter functions （第 TBD 页）
+
+  - 7.12.11.4 The nexttoward functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.8.3 The nextafter functions （第 TBD 页）
+
+  - F.10.8.4 The nexttoward functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.11.3 The nextafter functions （第 187 页）
+
+  - 7.12.11.4 The nexttoward functions （第 187 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.8.3 The nextafter functions （第 386 页）
+
+  - F.10.8.4 The nexttoward functions （第 386 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.11.3 The nextafter functions （第 256 页）
+
+  - 7.12.11.4 The nexttoward functions （第 257 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.8.3 The nextafter functions （第 529 页）
+
+  - F.10.8.4 The nexttoward functions （第 529 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.11.3 The nextafter functions （第 237 页）
+
+  - 7.12.11.4 The nexttoward functions （第 238 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.8.3 The nextafter functions （第 466 页）
+
+  - F.9.8.4 The nexttoward functions （第 466 页）
+
+**参阅**
+
+**nextafter** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/nextafter)**
 
 
 
@@ -22872,6 +24068,203 @@ remquo(+Inf, 1) = -nan
 作用：使用当前舍入模式取整到整数，若结果有误则产生异常   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float rintf( float arg );// (1)(C99 起)
+double rint( double arg );// (2)(C99 起)
+long double rintl( long double arg );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define rint( arg )// (4)(C99 起)
+// 在标头 <math.h> 定义
+long lrintf( float arg );// (5)(C99 起)
+long lrint( double arg );// (6)(C99 起)
+long lrintl( long double arg );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define lrint( arg )// (8)(C99 起)
+// 在标头 <math.h> 定义
+long long llrintf( float arg );// (9)(C99 起)
+long long llrint( double arg );// (10)(C99 起)
+long long llrintl( long double arg );// (11)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define llrint( arg )// (12)(C99 起)
+```
+
+1-3) 用[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 为整数（以浮点数格式）。
+
+5-7, 9-11) 用[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 为整数。
+
+4,8,12) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `rintl`、`lrintl`、`llrintl`。否则若 `arg` 拥有整数或 `double` 类型，则调用 `rint`、`lrint`、`llrint`。否则分别调用 `rintf`、`lrintf`、`llrintf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+|      |      |        |
+
+**返回值**
+
+​	若不出现错误，则为 `arg` 按照[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)的最接近整数。
+
+**错误处理**
+
+​	报告 [math_errhandling](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若 `lrint` 或 `llrint` 的结果在返回类型的可表示范围外，则可能出现定义域错误或值域错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `arg` 为 ±∞，则返回未修改的实参
+- 若 `arg` 为 ±0，则返回未修改的实参
+- 若 `arg` 为 NaN，则返回 NaN
+
+- 若 `arg` 为 ±∞，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+- 若舍入结果在返回类型范围外，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+- 若 `arg` 为 NaN，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lrint.html) `lrint` 或 `llrint` 引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 的所有情况都是定义域错误。
+
+​	如 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 所指定，`rint` 在舍入非整数有限值时可以（但不在非 IEEE 浮点数平台上要求）引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	`rint` 和 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint) 间仅有的区别是 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint) 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	所有标准浮点数格式中，最大可表示浮点数都是准确的整数，故 `rint` 自身决不上溢；然而在存储结果于整数对象时，结果可能溢出任何整数类型（包含 [intmax_t](https://zh.cppreference.com/w/c/types/integer)）。
+
+​	若当前舍入模式为……
+
+- [FE_DOWNWARD](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [floor](https://zh.cppreference.com/w/c/numeric/math/floor)。
+- [FE_UPWARD](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [ceil](https://zh.cppreference.com/w/c/numeric/math/ceil)。
+- [FE_TOWARDZERO](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [trunc](https://zh.cppreference.com/w/c/numeric/math/trunc)。
+- [FE_TONEAREST](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 在中点情况和 [round](https://zh.cppreference.com/w/c/numeric/math/round) 的区别是前者始终舍入到偶数，而非远离零。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+#pragma STDC FENV_ACCESS ON
+    fesetround(FE_TONEAREST);
+    printf("向临近舍入（半值舍入为偶数）:\n"
+           "rint(+2.3) = %+.1f  ", rint(2.3));
+    printf("rint(+2.5) = %+.1f  ", rint(2.5));
+    printf("rint(+3.5) = %+.1f\n", rint(3.5));
+    printf("rint(-2.3) = %+.1f  ", rint(-2.3));
+    printf("rint(-2.5) = %+.1f  ", rint(-2.5));
+    printf("rint(-3.5) = %+.1f\n", rint(-3.5));
+ 
+    fesetround(FE_DOWNWARD);
+    printf("向下舍入: \nrint(+2.3) = %+.1f  ", rint(2.3));
+    printf("rint(+2.5) = %+.1f  ", rint(2.5));
+    printf("rint(+3.5) = %+.1f\n", rint(3.5));
+    printf("rint(-2.3) = %+.1f  ", rint(-2.3));
+    printf("rint(-2.5) = %+.1f  ", rint(-2.5));
+    printf("rint(-3.5) = %+.1f\n", rint(-3.5));
+    printf("用 lrint 向下舍入: \nlrint(+2.3) = %ld  ", lrint(2.3));
+    printf("lrint(+2.5) = %ld  ", lrint(2.5));
+    printf("lrint(+3.5) = %ld\n", lrint(3.5));
+    printf("lrint(-2.3) = %ld  ", lrint(-2.3));
+    printf("lrint(-2.5) = %ld  ", lrint(-2.5));
+    printf("lrint(-3.5) = %ld\n", lrint(-3.5));
+ 
+    printf("lrint(-0.0) = %ld\n", lrint(-0.0));
+    printf("lrint(-Inf) = %ld\n", lrint(-INFINITY)); // 引发 FE_INVALID
+ 
+    // 错误处理
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("rint(1.1) = %.1f\n", rint(1.1));
+    if (fetestexcept(FE_INEXACT))
+        puts("    FE_INEXACT was raised");
+ 
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("lrint(LONG_MIN-2048.0) = %ld\n", lrint(LONG_MIN-2048.0));
+    if (fetestexcept(FE_INVALID))
+        puts("    FE_INVALID was raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+向临近舍入（半值舍入为偶数）:
+rint(+2.3) = +2.0  rint(+2.5) = +2.0  rint(+3.5) = +4.0
+rint(-2.3) = -2.0  rint(-2.5) = -2.0  rint(-3.5) = -4.0
+向下舍入: 
+rint(+2.3) = +2.0  rint(+2.5) = +2.0  rint(+3.5) = +3.0
+rint(-2.3) = -3.0  rint(-2.5) = -3.0  rint(-3.5) = -4.0
+用 lrint 向下舍入: 
+lrint(+2.3) = 2  lrint(+2.5) = 2  lrint(+3.5) = 3
+lrint(-2.3) = -3  lrint(-2.5) = -3  lrint(-3.5) = -4
+lrint(-0.0) = 0
+lrint(-Inf) = -9223372036854775808
+rint(1.1) = 1.0
+    FE_INEXACT was raised
+lrint(LONG_MIN-2048.0) = -9223372036854775808
+    FE_INVALID was raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.9.4 The rint functions （第 TBD 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.6.4 The rint functions （第 TBD 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.9.4 The rint functions （第 184 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 184 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.6.4 The rint functions （第 384 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 384 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.9.4 The rint functions （第 252 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 252 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.6.4 The rint functions （第 527 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 527 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.9.4 The rint functions （第 232-233 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 233 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.6.4 The rint functions （第 463 页）
+
+  - F.9.6.5 The lrint and llrint functions （第 463 页）
+
+**参阅**
+
+| [trunc (C99)<br />truncf (C99)<br />truncl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/trunc) | 取整到绝对值不大于给定值的最接近整数 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| [nearbyint (C99)<br />nearbyintf (C99)<br />nearbyintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/nearbyint) | 用当前舍入模式取整到整数 (函数)             |
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数)             |
+| **rint** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/rint)** |                                             |
 
 
 
@@ -22884,6 +24277,203 @@ remquo(+Inf, 1) = -nan
 作用：使用当前舍入模式取整到整数，若结果有误则产生异常   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float rintf( float arg );// (1)(C99 起)
+double rint( double arg );// (2)(C99 起)
+long double rintl( long double arg );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define rint( arg )// (4)(C99 起)
+// 在标头 <math.h> 定义
+long lrintf( float arg );// (5)(C99 起)
+long lrint( double arg );// (6)(C99 起)
+long lrintl( long double arg );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define lrint( arg )// (8)(C99 起)
+// 在标头 <math.h> 定义
+long long llrintf( float arg );// (9)(C99 起)
+long long llrint( double arg );// (10)(C99 起)
+long long llrintl( long double arg );// (11)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define llrint( arg )// (12)(C99 起)
+```
+
+1-3) 用[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 为整数（以浮点数格式）。
+
+5-7, 9-11) 用[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 为整数。
+
+4,8,12) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `rintl`、`lrintl`、`llrintl`。否则若 `arg` 拥有整数或 `double` 类型，则调用 `rint`、`lrint`、`llrint`。否则分别调用 `rintf`、`lrintf`、`llrintf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+|      |      |        |
+
+**返回值**
+
+​	若不出现错误，则为 `arg` 按照[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)的最接近整数。
+
+**错误处理**
+
+​	报告 [math_errhandling](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若 `lrint` 或 `llrint` 的结果在返回类型的可表示范围外，则可能出现定义域错误或值域错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `arg` 为 ±∞，则返回未修改的实参
+- 若 `arg` 为 ±0，则返回未修改的实参
+- 若 `arg` 为 NaN，则返回 NaN
+
+- 若 `arg` 为 ±∞，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+- 若舍入结果在返回类型范围外，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+- 若 `arg` 为 NaN，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lrint.html) `lrint` 或 `llrint` 引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 的所有情况都是定义域错误。
+
+​	如 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 所指定，`rint` 在舍入非整数有限值时可以（但不在非 IEEE 浮点数平台上要求）引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	`rint` 和 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint) 间仅有的区别是 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint) 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	所有标准浮点数格式中，最大可表示浮点数都是准确的整数，故 `rint` 自身决不上溢；然而在存储结果于整数对象时，结果可能溢出任何整数类型（包含 [intmax_t](https://zh.cppreference.com/w/c/types/integer)）。
+
+​	若当前舍入模式为……
+
+- [FE_DOWNWARD](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [floor](https://zh.cppreference.com/w/c/numeric/math/floor)。
+- [FE_UPWARD](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [ceil](https://zh.cppreference.com/w/c/numeric/math/ceil)。
+- [FE_TOWARDZERO](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [trunc](https://zh.cppreference.com/w/c/numeric/math/trunc)。
+- [FE_TONEAREST](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 在中点情况和 [round](https://zh.cppreference.com/w/c/numeric/math/round) 的区别是前者始终舍入到偶数，而非远离零。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+#pragma STDC FENV_ACCESS ON
+    fesetround(FE_TONEAREST);
+    printf("向临近舍入（半值舍入为偶数）:\n"
+           "rint(+2.3) = %+.1f  ", rint(2.3));
+    printf("rint(+2.5) = %+.1f  ", rint(2.5));
+    printf("rint(+3.5) = %+.1f\n", rint(3.5));
+    printf("rint(-2.3) = %+.1f  ", rint(-2.3));
+    printf("rint(-2.5) = %+.1f  ", rint(-2.5));
+    printf("rint(-3.5) = %+.1f\n", rint(-3.5));
+ 
+    fesetround(FE_DOWNWARD);
+    printf("向下舍入: \nrint(+2.3) = %+.1f  ", rint(2.3));
+    printf("rint(+2.5) = %+.1f  ", rint(2.5));
+    printf("rint(+3.5) = %+.1f\n", rint(3.5));
+    printf("rint(-2.3) = %+.1f  ", rint(-2.3));
+    printf("rint(-2.5) = %+.1f  ", rint(-2.5));
+    printf("rint(-3.5) = %+.1f\n", rint(-3.5));
+    printf("用 lrint 向下舍入: \nlrint(+2.3) = %ld  ", lrint(2.3));
+    printf("lrint(+2.5) = %ld  ", lrint(2.5));
+    printf("lrint(+3.5) = %ld\n", lrint(3.5));
+    printf("lrint(-2.3) = %ld  ", lrint(-2.3));
+    printf("lrint(-2.5) = %ld  ", lrint(-2.5));
+    printf("lrint(-3.5) = %ld\n", lrint(-3.5));
+ 
+    printf("lrint(-0.0) = %ld\n", lrint(-0.0));
+    printf("lrint(-Inf) = %ld\n", lrint(-INFINITY)); // 引发 FE_INVALID
+ 
+    // 错误处理
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("rint(1.1) = %.1f\n", rint(1.1));
+    if (fetestexcept(FE_INEXACT))
+        puts("    FE_INEXACT was raised");
+ 
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("lrint(LONG_MIN-2048.0) = %ld\n", lrint(LONG_MIN-2048.0));
+    if (fetestexcept(FE_INVALID))
+        puts("    FE_INVALID was raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+向临近舍入（半值舍入为偶数）:
+rint(+2.3) = +2.0  rint(+2.5) = +2.0  rint(+3.5) = +4.0
+rint(-2.3) = -2.0  rint(-2.5) = -2.0  rint(-3.5) = -4.0
+向下舍入: 
+rint(+2.3) = +2.0  rint(+2.5) = +2.0  rint(+3.5) = +3.0
+rint(-2.3) = -3.0  rint(-2.5) = -3.0  rint(-3.5) = -4.0
+用 lrint 向下舍入: 
+lrint(+2.3) = 2  lrint(+2.5) = 2  lrint(+3.5) = 3
+lrint(-2.3) = -3  lrint(-2.5) = -3  lrint(-3.5) = -4
+lrint(-0.0) = 0
+lrint(-Inf) = -9223372036854775808
+rint(1.1) = 1.0
+    FE_INEXACT was raised
+lrint(LONG_MIN-2048.0) = -9223372036854775808
+    FE_INVALID was raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.9.4 The rint functions （第 TBD 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.6.4 The rint functions （第 TBD 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.9.4 The rint functions （第 184 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 184 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.6.4 The rint functions （第 384 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 384 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.9.4 The rint functions （第 252 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 252 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.6.4 The rint functions （第 527 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 527 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.9.4 The rint functions （第 232-233 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 233 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.6.4 The rint functions （第 463 页）
+
+  - F.9.6.5 The lrint and llrint functions （第 463 页）
+
+**参阅**
+
+| [trunc (C99)<br />truncf (C99)<br />truncl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/trunc) | 取整到绝对值不大于给定值的最接近整数 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| [nearbyint (C99)<br />nearbyintf (C99)<br />nearbyintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/nearbyint) | 用当前舍入模式取整到整数 (函数)             |
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数)             |
+| **rint** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/rint)** |                                             |
 
 
 
@@ -22896,6 +24486,203 @@ remquo(+Inf, 1) = -nan
 作用：使用当前舍入模式取整到整数，若结果有误则产生异常   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float rintf( float arg );// (1)(C99 起)
+double rint( double arg );// (2)(C99 起)
+long double rintl( long double arg );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define rint( arg )// (4)(C99 起)
+// 在标头 <math.h> 定义
+long lrintf( float arg );// (5)(C99 起)
+long lrint( double arg );// (6)(C99 起)
+long lrintl( long double arg );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define lrint( arg )// (8)(C99 起)
+// 在标头 <math.h> 定义
+long long llrintf( float arg );// (9)(C99 起)
+long long llrint( double arg );// (10)(C99 起)
+long long llrintl( long double arg );// (11)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define llrint( arg )// (12)(C99 起)
+```
+
+1-3) 用[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 为整数（以浮点数格式）。
+
+5-7, 9-11) 用[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，舍入浮点数实参 `arg` 为整数。
+
+4,8,12) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `rintl`、`lrintl`、`llrintl`。否则若 `arg` 拥有整数或 `double` 类型，则调用 `rint`、`lrint`、`llrint`。否则分别调用 `rintf`、`lrintf`、`llrintf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+|      |      |        |
+
+**返回值**
+
+​	若不出现错误，则为 `arg` 按照[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)的最接近整数。
+
+**错误处理**
+
+​	报告 [math_errhandling](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若 `lrint` 或 `llrint` 的结果在返回类型的可表示范围外，则可能出现定义域错误或值域错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 若 `arg` 为 ±∞，则返回未修改的实参
+- 若 `arg` 为 ±0，则返回未修改的实参
+- 若 `arg` 为 NaN，则返回 NaN
+
+- 若 `arg` 为 ±∞，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+- 若舍入结果在返回类型范围外，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+- 若 `arg` 为 NaN，则引发 [FE_INVALID](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 并返回实现定义值
+
+**注解**
+
+​	[POSIX 指定](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lrint.html) `lrint` 或 `llrint` 引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions) 的所有情况都是定义域错误。
+
+​	如 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 所指定，`rint` 在舍入非整数有限值时可以（但不在非 IEEE 浮点数平台上要求）引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	`rint` 和 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint) 间仅有的区别是 [nearbyint](https://zh.cppreference.com/w/c/numeric/math/nearbyint) 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)。
+
+​	所有标准浮点数格式中，最大可表示浮点数都是准确的整数，故 `rint` 自身决不上溢；然而在存储结果于整数对象时，结果可能溢出任何整数类型（包含 [intmax_t](https://zh.cppreference.com/w/c/types/integer)）。
+
+​	若当前舍入模式为……
+
+- [FE_DOWNWARD](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [floor](https://zh.cppreference.com/w/c/numeric/math/floor)。
+- [FE_UPWARD](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [ceil](https://zh.cppreference.com/w/c/numeric/math/ceil)。
+- [FE_TOWARDZERO](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 等价于 [trunc](https://zh.cppreference.com/w/c/numeric/math/trunc)。
+- [FE_TONEAREST](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，则 `rint` 在中点情况和 [round](https://zh.cppreference.com/w/c/numeric/math/round) 的区别是前者始终舍入到偶数，而非远离零。
+
+**示例**
+
+```c
+#include <fenv.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+#pragma STDC FENV_ACCESS ON
+    fesetround(FE_TONEAREST);
+    printf("向临近舍入（半值舍入为偶数）:\n"
+           "rint(+2.3) = %+.1f  ", rint(2.3));
+    printf("rint(+2.5) = %+.1f  ", rint(2.5));
+    printf("rint(+3.5) = %+.1f\n", rint(3.5));
+    printf("rint(-2.3) = %+.1f  ", rint(-2.3));
+    printf("rint(-2.5) = %+.1f  ", rint(-2.5));
+    printf("rint(-3.5) = %+.1f\n", rint(-3.5));
+ 
+    fesetround(FE_DOWNWARD);
+    printf("向下舍入: \nrint(+2.3) = %+.1f  ", rint(2.3));
+    printf("rint(+2.5) = %+.1f  ", rint(2.5));
+    printf("rint(+3.5) = %+.1f\n", rint(3.5));
+    printf("rint(-2.3) = %+.1f  ", rint(-2.3));
+    printf("rint(-2.5) = %+.1f  ", rint(-2.5));
+    printf("rint(-3.5) = %+.1f\n", rint(-3.5));
+    printf("用 lrint 向下舍入: \nlrint(+2.3) = %ld  ", lrint(2.3));
+    printf("lrint(+2.5) = %ld  ", lrint(2.5));
+    printf("lrint(+3.5) = %ld\n", lrint(3.5));
+    printf("lrint(-2.3) = %ld  ", lrint(-2.3));
+    printf("lrint(-2.5) = %ld  ", lrint(-2.5));
+    printf("lrint(-3.5) = %ld\n", lrint(-3.5));
+ 
+    printf("lrint(-0.0) = %ld\n", lrint(-0.0));
+    printf("lrint(-Inf) = %ld\n", lrint(-INFINITY)); // 引发 FE_INVALID
+ 
+    // 错误处理
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("rint(1.1) = %.1f\n", rint(1.1));
+    if (fetestexcept(FE_INEXACT))
+        puts("    FE_INEXACT was raised");
+ 
+    feclearexcept(FE_ALL_EXCEPT);
+    printf("lrint(LONG_MIN-2048.0) = %ld\n", lrint(LONG_MIN-2048.0));
+    if (fetestexcept(FE_INVALID))
+        puts("    FE_INVALID was raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+向临近舍入（半值舍入为偶数）:
+rint(+2.3) = +2.0  rint(+2.5) = +2.0  rint(+3.5) = +4.0
+rint(-2.3) = -2.0  rint(-2.5) = -2.0  rint(-3.5) = -4.0
+向下舍入: 
+rint(+2.3) = +2.0  rint(+2.5) = +2.0  rint(+3.5) = +3.0
+rint(-2.3) = -3.0  rint(-2.5) = -3.0  rint(-3.5) = -4.0
+用 lrint 向下舍入: 
+lrint(+2.3) = 2  lrint(+2.5) = 2  lrint(+3.5) = 3
+lrint(-2.3) = -3  lrint(-2.5) = -3  lrint(-3.5) = -4
+lrint(-0.0) = 0
+lrint(-Inf) = -9223372036854775808
+rint(1.1) = 1.0
+    FE_INEXACT was raised
+lrint(LONG_MIN-2048.0) = -9223372036854775808
+    FE_INVALID was raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.9.4 The rint functions （第 TBD 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.6.4 The rint functions （第 TBD 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.9.4 The rint functions （第 184 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 184 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 272-273 页）
+
+  - F.10.6.4 The rint functions （第 384 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 384 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.9.4 The rint functions （第 252 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 252 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.6.4 The rint functions （第 527 页）
+
+  - F.10.6.5 The lrint and llrint functions （第 527 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.9.4 The rint functions （第 232-233 页）
+
+  - 7.12.9.5 The lrint and llrint functions （第 233 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.6.4 The rint functions （第 463 页）
+
+  - F.9.6.5 The lrint and llrint functions （第 463 页）
+
+**参阅**
+
+| [trunc (C99)<br />truncf (C99)<br />truncl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/trunc) | 取整到绝对值不大于给定值的最接近整数 (函数) |
+| ------------------------------------------------------------ | ------------------------------------------- |
+| [nearbyint (C99)<br />nearbyintf (C99)<br />nearbyintl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/nearbyint) | 用当前舍入模式取整到整数 (函数)             |
+| [fegetround (C99)<br />fesetround (C99)<br />](https://zh.cppreference.com/w/c/numeric/fenv/feround) | 获得或设置数字的舍入方向 (函数)             |
+| **rint** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/rint)** |                                             |
 
 
 
@@ -23586,6 +25373,147 @@ lround(LONG_MAX+1.5) = -9223372036854775808
 作用：高效计算一个数乘 FLT_RADIX 的幂   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       scalbnf( float arg, int exp );// (1)(C99 起)
+double      scalbn( double arg, int exp );// (2)(C99 起)
+long double scalbnl( long double arg, int exp );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbn( arg, exp )// (4)(C99 起)
+// 在标头 <math.h> 定义
+float       scalblnf( float arg, long exp );// (5)(C99 起)
+double      scalbln( double arg, long exp );// (6)(C99 起)
+long double scalblnl( long double arg, long exp );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbln( arg, exp )// (8)(C99 起)
+```
+
+1-3,5-7) 将浮点数 `arg` 乘以 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂。
+
+4,8) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `scalbnl` 或 `scalblnl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `scalbn` 或 `scalbln`。否则调用 `scalbnf` 或 `scalblnf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+| exp  | -    | 整数   |
+
+**返回值**
+
+​	若不出现错误，则返回 `arg` 乘 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂（*arg×FLT_RADIXexp
+*）。
+
+​	若出现上溢所致的值域错误，则返回 `±[HUGE_VAL](http://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)`、`±HUGE_VALF` 或 `±HUGE_VALL`。
+
+​	若出现下溢所致的值域错误，则返回（舍入后的）正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，除非出现值域错误（结果准确）
+- 忽略[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，除非出现值域错误
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 为 0，则返回不修改的 `arg`
+- 若 `arg` 为 NaN，则返回 NaN
+
+**注解**
+
+​	二进制系统上（其中 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 为 `2`），**scalbn** 等价于 `ldexp`。
+
+​	尽管指定 `scalbn` 和 `scalbln` 高效进行运算，多数实现上它们的效率仍低于用算术运算符乘或除以二的幂。
+
+​	提供 `scalbln` 函数，因为从最小正浮点数放大到最大正有限值的因子可能大于标准保证的 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 32767。特别是对于 80 位 `long double`，因子是 32828。
+
+**示例**
+
+```c
+#include <errno.h>
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main(void)
+{
+    printf("scalbn(7, -4) = %f\n", scalbn(7, -4));
+    printf("scalbn(1, -1074) = %g (double 的最小非正规正值)\n",
+            scalbn(1, -1074));
+    printf("scalbn(nextafter(1,0), 1024) = %g (double 的最大有限值)\n",
+            scalbn(nextafter(1,0), 1024));
+ 
+    // 特殊值
+    printf("scalbn(-0, 10) = %f\n", scalbn(-0.0, 10));
+    printf("scalbn(-Inf, -1) = %f\n", scalbn(-INFINITY, -1));
+ 
+    // 错误处理
+    errno = 0; feclearexcept(FE_ALL_EXCEPT);
+    printf("scalbn(1, 1024) = %f\n", scalbn(1, 1024));
+    if (errno == ERANGE)
+        perror("    errno == ERANGE");
+    if (fetestexcept(FE_OVERFLOW))
+        puts("    FE_OVERFLOW raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+scalbn(7, -4) = 0.437500
+scalbn(1, -1074) = 4.94066e-324 (double 的最小非正规正值)
+scalbn(nextafter(1,0), 1024) = 1.79769e+308 (double 的最大有限值)
+scalbn(-0, 10) = -0.000000
+scalbn(-Inf, -1) = -inf
+scalbn(1, 1024) = inf
+    errno == ERANGE: Numerical result out of range
+    FE_OVERFLOW raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.6.13 The scalbn functions （第 247 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.3.13 The scalbn functions （第 523 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.6.13 The scalbn functions （第 228 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.3.13 The scalbn functions （第 460 页）
+
+**参阅**
+
+| [frexp <br />frexpf (C99)<br />frexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/frexp) | 将数拆分成有效数字和 *2* 的幂次 (函数) |
+| ------------------------------------------------------------ | -------------------------------------- |
+| [ldexp <br />ldexpf (C99)<br />ldexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ldexp) | 将数乘以 *2* 的幂 (函数)               |
+| **scalbn** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/scalbn)** |                                        |
 
 
 
@@ -23598,6 +25526,147 @@ lround(LONG_MAX+1.5) = -9223372036854775808
 作用：高效计算一个数乘 FLT_RADIX 的幂   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       scalbnf( float arg, int exp );// (1)(C99 起)
+double      scalbn( double arg, int exp );// (2)(C99 起)
+long double scalbnl( long double arg, int exp );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbn( arg, exp )// (4)(C99 起)
+// 在标头 <math.h> 定义
+float       scalblnf( float arg, long exp );// (5)(C99 起)
+double      scalbln( double arg, long exp );// (6)(C99 起)
+long double scalblnl( long double arg, long exp );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbln( arg, exp )// (8)(C99 起)
+```
+
+1-3,5-7) 将浮点数 `arg` 乘以 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂。
+
+4,8) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `scalbnl` 或 `scalblnl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `scalbn` 或 `scalbln`。否则调用 `scalbnf` 或 `scalblnf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+| exp  | -    | 整数   |
+
+**返回值**
+
+​	若不出现错误，则返回 `arg` 乘 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂（*arg×FLT_RADIXexp
+*）。
+
+​	若出现上溢所致的值域错误，则返回 `±[HUGE_VAL](http://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)`、`±HUGE_VALF` 或 `±HUGE_VALL`。
+
+​	若出现下溢所致的值域错误，则返回（舍入后的）正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，除非出现值域错误（结果准确）
+- 忽略[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，除非出现值域错误
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 为 0，则返回不修改的 `arg`
+- 若 `arg` 为 NaN，则返回 NaN
+
+**注解**
+
+​	二进制系统上（其中 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 为 `2`），**scalbn** 等价于 `ldexp`。
+
+​	尽管指定 `scalbn` 和 `scalbln` 高效进行运算，多数实现上它们的效率仍低于用算术运算符乘或除以二的幂。
+
+​	提供 `scalbln` 函数，因为从最小正浮点数放大到最大正有限值的因子可能大于标准保证的 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 32767。特别是对于 80 位 `long double`，因子是 32828。
+
+**示例**
+
+```c
+#include <errno.h>
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main(void)
+{
+    printf("scalbn(7, -4) = %f\n", scalbn(7, -4));
+    printf("scalbn(1, -1074) = %g (double 的最小非正规正值)\n",
+            scalbn(1, -1074));
+    printf("scalbn(nextafter(1,0), 1024) = %g (double 的最大有限值)\n",
+            scalbn(nextafter(1,0), 1024));
+ 
+    // 特殊值
+    printf("scalbn(-0, 10) = %f\n", scalbn(-0.0, 10));
+    printf("scalbn(-Inf, -1) = %f\n", scalbn(-INFINITY, -1));
+ 
+    // 错误处理
+    errno = 0; feclearexcept(FE_ALL_EXCEPT);
+    printf("scalbn(1, 1024) = %f\n", scalbn(1, 1024));
+    if (errno == ERANGE)
+        perror("    errno == ERANGE");
+    if (fetestexcept(FE_OVERFLOW))
+        puts("    FE_OVERFLOW raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+scalbn(7, -4) = 0.437500
+scalbn(1, -1074) = 4.94066e-324 (double 的最小非正规正值)
+scalbn(nextafter(1,0), 1024) = 1.79769e+308 (double 的最大有限值)
+scalbn(-0, 10) = -0.000000
+scalbn(-Inf, -1) = -inf
+scalbn(1, 1024) = inf
+    errno == ERANGE: Numerical result out of range
+    FE_OVERFLOW raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.6.13 The scalbn functions （第 247 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.3.13 The scalbn functions （第 523 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.6.13 The scalbn functions （第 228 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.3.13 The scalbn functions （第 460 页）
+
+**参阅**
+
+| [frexp <br />frexpf (C99)<br />frexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/frexp) | 将数拆分成有效数字和 *2* 的幂次 (函数) |
+| ------------------------------------------------------------ | -------------------------------------- |
+| [ldexp <br />ldexpf (C99)<br />ldexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ldexp) | 将数乘以 *2* 的幂 (函数)               |
+| **scalbn** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/scalbn)** |                                        |
 
 
 
@@ -23610,6 +25679,147 @@ lround(LONG_MAX+1.5) = -9223372036854775808
 作用：高效计算一个数乘 FLT_RADIX 的幂   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       scalbnf( float arg, int exp );// (1)(C99 起)
+double      scalbn( double arg, int exp );// (2)(C99 起)
+long double scalbnl( long double arg, int exp );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbn( arg, exp )// (4)(C99 起)
+// 在标头 <math.h> 定义
+float       scalblnf( float arg, long exp );// (5)(C99 起)
+double      scalbln( double arg, long exp );// (6)(C99 起)
+long double scalblnl( long double arg, long exp );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbln( arg, exp )// (8)(C99 起)
+```
+
+1-3,5-7) 将浮点数 `arg` 乘以 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂。
+
+4,8) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `scalbnl` 或 `scalblnl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `scalbn` 或 `scalbln`。否则调用 `scalbnf` 或 `scalblnf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+| exp  | -    | 整数   |
+
+**返回值**
+
+​	若不出现错误，则返回 `arg` 乘 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂（*arg×FLT_RADIXexp
+*）。
+
+​	若出现上溢所致的值域错误，则返回 `±[HUGE_VAL](http://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)`、`±HUGE_VALF` 或 `±HUGE_VALL`。
+
+​	若出现下溢所致的值域错误，则返回（舍入后的）正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，除非出现值域错误（结果准确）
+- 忽略[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，除非出现值域错误
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 为 0，则返回不修改的 `arg`
+- 若 `arg` 为 NaN，则返回 NaN
+
+**注解**
+
+​	二进制系统上（其中 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 为 `2`），**scalbn** 等价于 `ldexp`。
+
+​	尽管指定 `scalbn` 和 `scalbln` 高效进行运算，多数实现上它们的效率仍低于用算术运算符乘或除以二的幂。
+
+​	提供 `scalbln` 函数，因为从最小正浮点数放大到最大正有限值的因子可能大于标准保证的 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 32767。特别是对于 80 位 `long double`，因子是 32828。
+
+**示例**
+
+```c
+#include <errno.h>
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main(void)
+{
+    printf("scalbn(7, -4) = %f\n", scalbn(7, -4));
+    printf("scalbn(1, -1074) = %g (double 的最小非正规正值)\n",
+            scalbn(1, -1074));
+    printf("scalbn(nextafter(1,0), 1024) = %g (double 的最大有限值)\n",
+            scalbn(nextafter(1,0), 1024));
+ 
+    // 特殊值
+    printf("scalbn(-0, 10) = %f\n", scalbn(-0.0, 10));
+    printf("scalbn(-Inf, -1) = %f\n", scalbn(-INFINITY, -1));
+ 
+    // 错误处理
+    errno = 0; feclearexcept(FE_ALL_EXCEPT);
+    printf("scalbn(1, 1024) = %f\n", scalbn(1, 1024));
+    if (errno == ERANGE)
+        perror("    errno == ERANGE");
+    if (fetestexcept(FE_OVERFLOW))
+        puts("    FE_OVERFLOW raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+scalbn(7, -4) = 0.437500
+scalbn(1, -1074) = 4.94066e-324 (double 的最小非正规正值)
+scalbn(nextafter(1,0), 1024) = 1.79769e+308 (double 的最大有限值)
+scalbn(-0, 10) = -0.000000
+scalbn(-Inf, -1) = -inf
+scalbn(1, 1024) = inf
+    errno == ERANGE: Numerical result out of range
+    FE_OVERFLOW raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.6.13 The scalbn functions （第 247 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.3.13 The scalbn functions （第 523 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.6.13 The scalbn functions （第 228 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.3.13 The scalbn functions （第 460 页）
+
+**参阅**
+
+| [frexp <br />frexpf (C99)<br />frexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/frexp) | 将数拆分成有效数字和 *2* 的幂次 (函数) |
+| ------------------------------------------------------------ | -------------------------------------- |
+| [ldexp <br />ldexpf (C99)<br />ldexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ldexp) | 将数乘以 *2* 的幂 (函数)               |
+| **scalbn** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/scalbn)** |                                        |
 
 
 
@@ -23622,6 +25832,147 @@ lround(LONG_MAX+1.5) = -9223372036854775808
 作用：高效计算一个数乘 FLT_RADIX 的幂   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       scalbnf( float arg, int exp );// (1)(C99 起)
+double      scalbn( double arg, int exp );// (2)(C99 起)
+long double scalbnl( long double arg, int exp );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbn( arg, exp )// (4)(C99 起)
+// 在标头 <math.h> 定义
+float       scalblnf( float arg, long exp );// (5)(C99 起)
+double      scalbln( double arg, long exp );// (6)(C99 起)
+long double scalblnl( long double arg, long exp );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbln( arg, exp )// (8)(C99 起)
+```
+
+1-3,5-7) 将浮点数 `arg` 乘以 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂。
+
+4,8) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `scalbnl` 或 `scalblnl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `scalbn` 或 `scalbln`。否则调用 `scalbnf` 或 `scalblnf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+| exp  | -    | 整数   |
+
+**返回值**
+
+​	若不出现错误，则返回 `arg` 乘 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂（*arg×FLT_RADIXexp
+*）。
+
+​	若出现上溢所致的值域错误，则返回 `±[HUGE_VAL](http://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)`、`±HUGE_VALF` 或 `±HUGE_VALL`。
+
+​	若出现下溢所致的值域错误，则返回（舍入后的）正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，除非出现值域错误（结果准确）
+- 忽略[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，除非出现值域错误
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 为 0，则返回不修改的 `arg`
+- 若 `arg` 为 NaN，则返回 NaN
+
+**注解**
+
+​	二进制系统上（其中 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 为 `2`），**scalbn** 等价于 `ldexp`。
+
+​	尽管指定 `scalbn` 和 `scalbln` 高效进行运算，多数实现上它们的效率仍低于用算术运算符乘或除以二的幂。
+
+​	提供 `scalbln` 函数，因为从最小正浮点数放大到最大正有限值的因子可能大于标准保证的 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 32767。特别是对于 80 位 `long double`，因子是 32828。
+
+**示例**
+
+```c
+#include <errno.h>
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main(void)
+{
+    printf("scalbn(7, -4) = %f\n", scalbn(7, -4));
+    printf("scalbn(1, -1074) = %g (double 的最小非正规正值)\n",
+            scalbn(1, -1074));
+    printf("scalbn(nextafter(1,0), 1024) = %g (double 的最大有限值)\n",
+            scalbn(nextafter(1,0), 1024));
+ 
+    // 特殊值
+    printf("scalbn(-0, 10) = %f\n", scalbn(-0.0, 10));
+    printf("scalbn(-Inf, -1) = %f\n", scalbn(-INFINITY, -1));
+ 
+    // 错误处理
+    errno = 0; feclearexcept(FE_ALL_EXCEPT);
+    printf("scalbn(1, 1024) = %f\n", scalbn(1, 1024));
+    if (errno == ERANGE)
+        perror("    errno == ERANGE");
+    if (fetestexcept(FE_OVERFLOW))
+        puts("    FE_OVERFLOW raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+scalbn(7, -4) = 0.437500
+scalbn(1, -1074) = 4.94066e-324 (double 的最小非正规正值)
+scalbn(nextafter(1,0), 1024) = 1.79769e+308 (double 的最大有限值)
+scalbn(-0, 10) = -0.000000
+scalbn(-Inf, -1) = -inf
+scalbn(1, 1024) = inf
+    errno == ERANGE: Numerical result out of range
+    FE_OVERFLOW raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.6.13 The scalbn functions （第 247 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.3.13 The scalbn functions （第 523 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.6.13 The scalbn functions （第 228 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.3.13 The scalbn functions （第 460 页）
+
+**参阅**
+
+| [frexp <br />frexpf (C99)<br />frexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/frexp) | 将数拆分成有效数字和 *2* 的幂次 (函数) |
+| ------------------------------------------------------------ | -------------------------------------- |
+| [ldexp <br />ldexpf (C99)<br />ldexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ldexp) | 将数乘以 *2* 的幂 (函数)               |
+| **scalbn** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/scalbn)** |                                        |
 
 
 
@@ -23634,6 +25985,147 @@ lround(LONG_MAX+1.5) = -9223372036854775808
 作用：高效计算一个数乘 FLT_RADIX 的幂   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       scalbnf( float arg, int exp );// (1)(C99 起)
+double      scalbn( double arg, int exp );// (2)(C99 起)
+long double scalbnl( long double arg, int exp );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbn( arg, exp )// (4)(C99 起)
+// 在标头 <math.h> 定义
+float       scalblnf( float arg, long exp );// (5)(C99 起)
+double      scalbln( double arg, long exp );// (6)(C99 起)
+long double scalblnl( long double arg, long exp );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbln( arg, exp )// (8)(C99 起)
+```
+
+1-3,5-7) 将浮点数 `arg` 乘以 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂。
+
+4,8) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `scalbnl` 或 `scalblnl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `scalbn` 或 `scalbln`。否则调用 `scalbnf` 或 `scalblnf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+| exp  | -    | 整数   |
+
+**返回值**
+
+​	若不出现错误，则返回 `arg` 乘 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂（*arg×FLT_RADIXexp
+*）。
+
+​	若出现上溢所致的值域错误，则返回 `±[HUGE_VAL](http://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)`、`±HUGE_VALF` 或 `±HUGE_VALL`。
+
+​	若出现下溢所致的值域错误，则返回（舍入后的）正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，除非出现值域错误（结果准确）
+- 忽略[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，除非出现值域错误
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 为 0，则返回不修改的 `arg`
+- 若 `arg` 为 NaN，则返回 NaN
+
+**注解**
+
+​	二进制系统上（其中 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 为 `2`），**scalbn** 等价于 `ldexp`。
+
+​	尽管指定 `scalbn` 和 `scalbln` 高效进行运算，多数实现上它们的效率仍低于用算术运算符乘或除以二的幂。
+
+​	提供 `scalbln` 函数，因为从最小正浮点数放大到最大正有限值的因子可能大于标准保证的 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 32767。特别是对于 80 位 `long double`，因子是 32828。
+
+**示例**
+
+```c
+#include <errno.h>
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main(void)
+{
+    printf("scalbn(7, -4) = %f\n", scalbn(7, -4));
+    printf("scalbn(1, -1074) = %g (double 的最小非正规正值)\n",
+            scalbn(1, -1074));
+    printf("scalbn(nextafter(1,0), 1024) = %g (double 的最大有限值)\n",
+            scalbn(nextafter(1,0), 1024));
+ 
+    // 特殊值
+    printf("scalbn(-0, 10) = %f\n", scalbn(-0.0, 10));
+    printf("scalbn(-Inf, -1) = %f\n", scalbn(-INFINITY, -1));
+ 
+    // 错误处理
+    errno = 0; feclearexcept(FE_ALL_EXCEPT);
+    printf("scalbn(1, 1024) = %f\n", scalbn(1, 1024));
+    if (errno == ERANGE)
+        perror("    errno == ERANGE");
+    if (fetestexcept(FE_OVERFLOW))
+        puts("    FE_OVERFLOW raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+scalbn(7, -4) = 0.437500
+scalbn(1, -1074) = 4.94066e-324 (double 的最小非正规正值)
+scalbn(nextafter(1,0), 1024) = 1.79769e+308 (double 的最大有限值)
+scalbn(-0, 10) = -0.000000
+scalbn(-Inf, -1) = -inf
+scalbn(1, 1024) = inf
+    errno == ERANGE: Numerical result out of range
+    FE_OVERFLOW raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.6.13 The scalbn functions （第 247 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.3.13 The scalbn functions （第 523 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.6.13 The scalbn functions （第 228 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.3.13 The scalbn functions （第 460 页）
+
+**参阅**
+
+| [frexp <br />frexpf (C99)<br />frexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/frexp) | 将数拆分成有效数字和 *2* 的幂次 (函数) |
+| ------------------------------------------------------------ | -------------------------------------- |
+| [ldexp <br />ldexpf (C99)<br />ldexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ldexp) | 将数乘以 *2* 的幂 (函数)               |
+| **scalbn** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/scalbn)** |                                        |
 
 
 
@@ -23646,6 +26138,147 @@ lround(LONG_MAX+1.5) = -9223372036854775808
 作用：高效计算一个数乘 FLT_RADIX 的幂   (函数)
 
 备注：
+```c
+// 在标头 <math.h> 定义
+float       scalbnf( float arg, int exp );// (1)(C99 起)
+double      scalbn( double arg, int exp );// (2)(C99 起)
+long double scalbnl( long double arg, int exp );// (3)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbn( arg, exp )// (4)(C99 起)
+// 在标头 <math.h> 定义
+float       scalblnf( float arg, long exp );// (5)(C99 起)
+double      scalbln( double arg, long exp );// (6)(C99 起)
+long double scalblnl( long double arg, long exp );// (7)(C99 起)
+// 在标头 <tgmath.h> 定义
+#define scalbln( arg, exp )// (8)(C99 起)
+```
+
+1-3,5-7) 将浮点数 `arg` 乘以 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂。
+
+4,8) 泛型宏：若 `arg` 拥有 `long double` 类型，则调用 `scalbnl` 或 `scalblnl`。否则，若 `arg` 拥有整数类型或 `double` 类型，则调用 `scalbn` 或 `scalbln`。否则调用 `scalbnf` 或 `scalblnf`。
+
+**参数**
+
+| arg  | -    | 浮点数 |
+| ---- | ---- | ------ |
+| exp  | -    | 整数   |
+
+**返回值**
+
+​	若不出现错误，则返回 `arg` 乘 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 的 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 次幂（*arg×FLT_RADIXexp
+*）。
+
+​	若出现上溢所致的值域错误，则返回 `±[HUGE_VAL](http://zh.cppreference.com/w/c/numeric/math/HUGE_VAL)`、`±HUGE_VALF` 或 `±HUGE_VALL`。
+
+​	若出现下溢所致的值域错误，则返回（舍入后的）正确结果。
+
+**错误处理**
+
+​	报告 [`math_errhandling`](https://zh.cppreference.com/w/c/numeric/math/math_errhandling) 中指定的错误。
+
+​	若实现支持 IEEE 浮点数算术（IEC 60559），则
+
+- 决不引发 [FE_INEXACT](https://zh.cppreference.com/w/c/numeric/fenv/FE_exceptions)，除非出现值域错误（结果准确）
+- 忽略[当前舍入模式](https://zh.cppreference.com/w/c/numeric/fenv/FE_round)，除非出现值域错误
+- 若 `arg` 为 ±0，则返回不修改的参数
+- 若 `arg` 为 ±∞，则返回不修改的参数
+- 若 `[exp](http://zh.cppreference.com/w/c/numeric/math/exp)` 为 0，则返回不修改的 `arg`
+- 若 `arg` 为 NaN，则返回 NaN
+
+**注解**
+
+​	二进制系统上（其中 [FLT_RADIX](https://zh.cppreference.com/w/c/types/limits) 为 `2`），**scalbn** 等价于 `ldexp`。
+
+​	尽管指定 `scalbn` 和 `scalbln` 高效进行运算，多数实现上它们的效率仍低于用算术运算符乘或除以二的幂。
+
+​	提供 `scalbln` 函数，因为从最小正浮点数放大到最大正有限值的因子可能大于标准保证的 [INT_MAX](https://zh.cppreference.com/w/c/types/limits) 32767。特别是对于 80 位 `long double`，因子是 32828。
+
+**示例**
+
+```c
+#include <errno.h>
+#include <fenv.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main(void)
+{
+    printf("scalbn(7, -4) = %f\n", scalbn(7, -4));
+    printf("scalbn(1, -1074) = %g (double 的最小非正规正值)\n",
+            scalbn(1, -1074));
+    printf("scalbn(nextafter(1,0), 1024) = %g (double 的最大有限值)\n",
+            scalbn(nextafter(1,0), 1024));
+ 
+    // 特殊值
+    printf("scalbn(-0, 10) = %f\n", scalbn(-0.0, 10));
+    printf("scalbn(-Inf, -1) = %f\n", scalbn(-INFINITY, -1));
+ 
+    // 错误处理
+    errno = 0; feclearexcept(FE_ALL_EXCEPT);
+    printf("scalbn(1, 1024) = %f\n", scalbn(1, 1024));
+    if (errno == ERANGE)
+        perror("    errno == ERANGE");
+    if (fetestexcept(FE_OVERFLOW))
+        puts("    FE_OVERFLOW raised");
+}
+```
+
+​	可能的输出：
+
+```txt
+scalbn(7, -4) = 0.437500
+scalbn(1, -1074) = 4.94066e-324 (double 的最小非正规正值)
+scalbn(nextafter(1,0), 1024) = 1.79769e+308 (double 的最大有限值)
+scalbn(-0, 10) = -0.000000
+scalbn(-Inf, -1) = -inf
+scalbn(1, 1024) = inf
+    errno == ERANGE: Numerical result out of range
+    FE_OVERFLOW raised
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.12.6.13 The scalbn functions （第 TBD 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 TBD 页）
+
+  - F.10.3.13 The scalbn functions （第 TBD 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.12.6.13 The scalbn functions （第 247 页）
+
+  - 7.25 Type-generic math <tgmath.h> （第 373-375 页）
+
+  - F.10.3.13 The scalbn functions （第 523 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.12.6.13 The scalbn functions （第 228 页）
+
+  - 7.22 Type-generic math <tgmath.h> （第 335-337 页）
+
+  - F.9.3.13 The scalbn functions （第 460 页）
+
+**参阅**
+
+| [frexp <br />frexpf (C99)<br />frexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/frexp) | 将数拆分成有效数字和 *2* 的幂次 (函数) |
+| ------------------------------------------------------------ | -------------------------------------- |
+| [ldexp <br />ldexpf (C99)<br />ldexpl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ldexp) | 将数乘以 *2* 的幂 (函数)               |
+| **scalbn** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/scalbn)** |                                        |
 
 
 
@@ -26595,6 +29228,7 @@ trunc(-Inf) = -inf
 | [ceil <br />ceilf (C99)<br />ceill (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/ceil) | 计算不小于给定值的最小整数 (函数)                         |
 | [round (C99)<br />roundf (C99)<br />roundl (C99)<br />lround (C99)<br />lroundf (C99)<br />lroundl (C99)<br />llround (C99)<br />llroundf (C99)<br />llroundl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/round) | 取整到最接近的整数，在相邻整数正中间时取远离零的数 (函数) |
 | **trunc** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/trunc)** |                                                           |
+
 
 
 

@@ -1523,7 +1523,7 @@ imaxdiv_t imaxdiv( intmax_t x, intmax_t y );// (4)(C99 起)
 
 ​	若余数和商都能表示成对应类型的对象（分别为 `int`、`long`、`long long`、`[intmax_t](http://zh.cppreference.com/w/c/types/integer)`），则将两者作为返回作为定义如下的 `div_t`、`ldiv_t`、`lldiv_t`、`imaxdiv_t` 类型对象返回：
 
-## div_t
+**div_t**
 
 ```c
 struct div_t { int quot; int rem; };
@@ -1535,7 +1535,7 @@ struct div_t { int quot; int rem; };
 struct div_t { int rem; int quot; };
 ```
 
-## ldiv_t
+**ldiv_t**
 
 ```c
 struct ldiv_t { long quot; long rem; };
@@ -1547,7 +1547,7 @@ struct ldiv_t { long quot; long rem; };
 struct ldiv_t { long rem; long quot; };
 ```
 
-## lldiv_t
+**lldiv_t**
 
 ```c
 struct lldiv_t { long long quot; long long rem; };
@@ -1559,7 +1559,7 @@ struct lldiv_t { long long quot; long long rem; };
 struct lldiv_t { long long rem; long long quot; };
 ```
 
-## imaxdiv_t
+**imaxdiv_t**
 
 ```c
 struct imaxdiv_t { intmax_t quot; intmax_t rem; };
@@ -2058,6 +2058,202 @@ abs(-3) = 3
 
 备注：
 
+```c
+// 在标头 <stdlib.h> 定义
+div_t     div( int x, int y );// (1)
+ldiv_t    ldiv( long x, long y );// (2)
+lldiv_t   lldiv( long long x, long long y );// (3)(C99 起)
+// 在标头 <inttypes.h> 定义
+imaxdiv_t imaxdiv( intmax_t x, intmax_t y );// (4)(C99 起)
+```
+
+​	计算分子 `x` 除以分母 `y` 的商和余数。
+
+​	同时计算商和余数。商为舍弃小数部分（向零取整）的代数商。余数满足 `quot * y + rem == x`。 (C99 前)
+
+​	同时计算商（表达式 `x / y` 的结果）和余数（表达式 `x % y` 的结果）。 (C99 起)
+
+**参数**
+
+| x, y | -    | 整数值 |
+| ---- | ---- | ------ |
+|      |      |        |
+
+**返回值**
+
+​	若余数和商都能表示成对应类型的对象（分别为 `int`、`long`、`long long`、`[intmax_t](http://zh.cppreference.com/w/c/types/integer)`），则将两者作为返回作为定义如下的 `div_t`、`ldiv_t`、`lldiv_t`、`imaxdiv_t` 类型对象返回：
+
+**div_t**
+
+```c
+struct div_t { int quot; int rem; };
+```
+
+​	或
+
+```c
+struct div_t { int rem; int quot; };
+```
+
+**ldiv_t**
+
+```c
+struct ldiv_t { long quot; long rem; };
+```
+
+​	或
+
+```c
+struct ldiv_t { long rem; long quot; };
+```
+
+**lldiv_t**
+
+```c
+struct lldiv_t { long long quot; long long rem; };
+```
+
+​	或
+
+```c
+struct lldiv_t { long long rem; long long quot; };
+```
+
+**imaxdiv_t**
+
+```c
+struct imaxdiv_t { intmax_t quot; intmax_t rem; };
+```
+
+​	或
+
+```c
+struct imaxdiv_t { intmax_t rem; intmax_t quot; };
+```
+
+​	若余数或商无法表示，则行为未定义。
+
+**注意**
+
+​	C99 前，若操作数之一为负，则内建的除法和取余运算符中的商取整方向和余数符号是实现定义的，但它在 `div` 和 `ldiv` 中良好定义。
+
+​	多数平台上，单条 CPU 指令可同时获得商和余数，而此函数可以活用这点，尽管编译器通常能在适合处合并临近的 / 和 %。
+
+**示例**
+
+```c
+#include <assert.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+ 
+void reverse(char* first, char* last)
+{
+    for (--last; first < last; ++first, --last)
+    {
+        char c = *last;
+        *last = *first;
+        *first = c;
+    }
+}
+ 
+// 缓冲区溢出的情况下返回空缓冲区
+char* itoa(int n, int base, char* buf, size_t buf_size)
+{
+    assert(2 <= base && base <= 16 && buf && buf_size);
+    div_t dv = {.quot = n};
+    char* p = buf;
+    do
+    {
+        if (!--buf_size)
+            return (*buf = '\0'), buf;
+        dv = div(dv.quot, base);
+        *p++ = "0123456789abcdef"[abs(dv.rem)];
+    }
+    while(dv.quot);
+    if (n < 0)
+        *p++ = '-';
+    *p = '\0';
+    reverse(buf, p);
+    return buf;
+}
+ 
+int main(void)
+{
+    char buf[16];
+    printf("%s\n", itoa(0, 2, buf, sizeof buf));
+    printf("%s\n", itoa(007, 3, buf, sizeof buf));
+    printf("%s\n", itoa(12346, 10, buf, sizeof buf));
+    printf("%s\n", itoa(-12346, 10, buf, sizeof buf));
+    printf("%s\n", itoa(-42, 2, buf, sizeof buf));
+    printf("%s\n", itoa(INT_MAX, 16, buf, sizeof buf));
+    printf("%s\n", itoa(INT_MIN, 16, buf, sizeof buf));
+}
+```
+
+​	可能的输出：
+
+```txt
+0
+21
+12346
+-12346
+-101010
+7fffffff
+-80000000
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.8.2.2 The imaxdiv function （第 TBD 页）
+
+  - 7.22.6.2 The div, ldiv and lldiv functions （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.8.2.2 The imaxdiv function （第 159 页）
+
+  - 7.22.6.2 The div, ldiv and lldiv functions （第 259 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.8.2.2 The imaxdiv function （第 219 页）
+
+  - 7.22.6.2 The div, ldiv and lldiv functions （第 356 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.8.2.2 The imaxdiv function （第 200 页）
+
+  - 7.20.6.2 The div, ldiv and lldiv functions （第 320 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.10 div_t, ldiv_t
+
+  - 4.10.6.2 The div function
+
+  - 4.10.6.4 The ldiv function
+
+**参阅**
+
+| [fmod <br />fmodf (C99)<br />fmodl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/fmod) | 计算浮点数除法运算的余数 (函数)                 |
+| ------------------------------------------------------------ | ----------------------------------------------- |
+| [remainder (C99)<br />remainderf (C99)<br />remainderl (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/remainder) | 计算浮点数除法运算的带符号余数 (函数)           |
+| [remquo (C99)<br />remquof (C99)<br />remquol (C99)<br />](https://zh.cppreference.com/w/c/numeric/math/remquo) | 计算除法运算的带符号余数，以及商的后三位 (函数) |
+| **div** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/numeric/math/div)** |                                                 |
+
+**外部链接**
+
+| 1.   | [欧几里得除法](https://en.wikipedia.org/wiki/Euclidean_division) — 来自 Wikipedia |
+| ---- | ------------------------------------------------------------ |
+| 2.   | [取模（和截断除法）](https://en.wikipedia.org/wiki/Modulo) — 来自 Wikipedia |
+
+
+
 
 
 
@@ -2274,6 +2470,110 @@ p1[3] == 9
 
 备注：
 
+```c
+// 在标头 <stdlib.h> 定义
+int mblen( const char* s, size_t n );
+```
+
+​	确定 `s` 指向其首字节的多字节字符的字节大小。
+
+​	若 `s` 是空指针，则重置全局转换状态并(C23 前)确定是否使用迁移序列。
+
+​	此函数等价于调用 `[mbtowc](http://zh.cppreference.com/w/c/string/multibyte/mbtowc)((wchar_t*)0, s, n)`，除了 [mbtowc](https://zh.cppreference.com/w/c/string/multibyte/mbtowc) 的转换状态不受影响。
+
+**参数**
+
+| s    | -    | 指向多字节字符的指针       |
+| ---- | ---- | -------------------------- |
+| n    | -    | `s` 中能被检验的字节数限制 |
+
+**返回值**
+
+​	若 `s` 不是空指针，则返回多字节字符所含的字节数，或若 `s` 所指的首字节不组成合法多字节字符则返回 `-1`，或若 `s` 指向空字符 `'\0'` 则返回 `0`。
+
+​	若 `s` 是空指针，则重置内部转换状态为初始迁移状态，(C23 前)若当前多字节编码非状态依赖（不使用迁移序列）则返回 `0`，或者若当前多字节编码为状态依赖（使用迁移序列）则返回非零。
+
+**注解**
+
+​	每次对 `mblen` 的调用更新内部全局转换状态（ [mbstate_t](https://zh.cppreference.com/w/c/string/multibyte/mbstate_t) 类型的静态对象，只为此函数所知）。若多字节编码使用迁移状态，则必须留意以避免回撤或多次扫描。任何情况下，多线程不应无同步地调用 `mblen`：可用 [mbrlen](https://zh.cppreference.com/w/c/string/multibyte/mbrlen) 代替。 (C23 前)
+
+​	不允许 `mblen` 拥有内部状态。 (C23 起)
+
+**示例**
+
+```c
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+ 
+// 多字节字符串的字符数是 mblen() 的和
+// 注意：更简单的手段是 mbstowcs(NULL, str, sz)
+size_t strlen_mb(const char* ptr)
+{
+    size_t result = 0;
+    const char* end = ptr + strlen(ptr);
+    mblen(NULL, 0); // 重置转换状态
+    while(ptr < end) {
+        int next = mblen(ptr, end - ptr);
+        if (next == -1) {
+           perror("strlen_mb");
+           break;
+        }
+        ptr += next;
+        ++result;
+    }
+    return result;
+}
+ 
+void dump_bytes(const char* str)
+{
+    for (const char* end = str + strlen(str); str != end; ++str)
+        printf("%02X ", (unsigned char)str[0]);
+    printf("\n");
+}
+ 
+int main(void)
+{
+    setlocale(LC_ALL, "en_US.utf8");
+    const char* str = "z\u00df\u6c34\U0001f34c";
+    printf("字符串 \"%s\" 包含 %zu 个字符，但为 %zu 字节：",
+            str, strlen_mb(str), strlen(str));
+    dump_bytes(str);
+}
+```
+
+​	可能的输出：
+
+```txt
+字符串 "zß水🍌" 包含 4 个字符，但为 10 字节：7A C3 9F E6 B0 B4 F0 9F 8D 8C
+```
+
+**引用**
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.22.7.1 The mblen function （第 260 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.22.7.1 The mblen function （第 357 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.20.7.1 The mblen function （第 321 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.10.7.1 The mblen function
+
+参阅
+
+| [mbtowc<br />](https://zh.cppreference.com/w/c/string/multibyte/mbtowc) | 转换下一个多字节字符为宽字符 (函数)           |
+| ------------------------------------------------------------ | --------------------------------------------- |
+| [mbrlen (C95)<br />](https://zh.cppreference.com/w/c/string/multibyte/mbrlen) | 给定状态，返回下一个多字节字符的字节数 (函数) |
+| **mblen** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/string/multibyte/mblen)** |                                               |
+
 
 
 
@@ -2286,7 +2586,117 @@ p1[3] == 9
 
 备注：
 
+```c
+// 在标头 <stdlib.h> 定义
+// (1)
+size_t mbstowcs( wchar_t          *dst, const char          *src, size_t len)// (C99 前)
+size_t mbstowcs( wchar_t *restrict dst, const char *restrict src, size_t len)// (C99 起)
+errno_t mbstowcs_s(size_t *restrict retval, wchar_t *restrict dst,
+                  rsize_t dstsz, const char *restrict src, rsize_t len);// (2)(C11 起)
+```
 
+1） 将从首元素为 `src` 所指的数组中的多字节字符串转换为其宽字符表示。被转换的字符存储于 `dst` 所指向数组的相继元素。写入目标数组的宽字符数不多于 `len`。
+
+ 如同以调用 [mbtowc](https://zh.cppreference.com/w/c/string/multibyte/mbtowc) 来转换每个字符，除了 mbtowc 转换状态不受影响。若满足任一条件则转换停止：
+
+ \* 转换并存储了多字节空字符。
+
+ \* 遇到（当前 C 本地环境中的）非法多字节字符。
+
+ \* 将要存储的下个宽字符会超出 `len`。
+
+ 若 `src` 与 `dst` 重叠，则行为未定义
+
+2） 同 (1)，但
+
+ \* 如同以 [mbrtowc](https://zh.cppreference.com/w/c/string/multibyte/mbrtowc)，而非 [mbtowc](https://zh.cppreference.com/w/c/string/multibyte/mbtowc) 进行转换
+
+ \* 函数用输出参数 `retval` 返回结果
+
+ \* 若在写入 `len` 个宽字符后未写入空字符到 `dst`，则存储 `L'\0'` 于 `dst[len]`，这表示总计写入 len+1 个宽字符
+
+ \* 若 `dst` 是空指针，则存储本会产生的宽字符数于 `*retval`
+
+ \* 函数破坏目标数组从空终止到 `dstsz` 为止的内容
+
+ \* 若 `src` 与 `dst` 重叠，则行为未指定。
+
+ \* 在运行时检测下列错误，并调用当前安装的[约束处理函数](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)：
+
+  - `retval` 或 `src` 是空指针
+  - `dstsz` 或 `len` 大于 RSIZE_MAX/sizeof(wchar_t)（除非 `dst` 为空）
+  - `dstsz` 非零（除非 `dst` 为空）
+  - `src` 数组中的前 `dstsz` 个多字节中无空字符且 `len` 大于 `dstsz`（除非 `dst` 为空）
+
+**注意**
+
+​	多数实现中，`mbstowcs` 在处理字符串进程中更新一个 [mbstate_t](https://zh.cppreference.com/w/c/string/multibyte/mbstate_t) 类型的全局静态对象，因而不能由两个线程同时调用，这种情况下应当使用 [mbsrtowcs](https://zh.cppreference.com/w/c/string/multibyte/mbsrtowcs)。
+
+​	POSIX 指定一个常见扩展：若 `dst` 是空指针，则此函数返回假若转换则写入 `dst` 的宽字符数。同样的行为对于 `mbstowcs_s` 和 [mbsrtowcs](https://zh.cppreference.com/w/c/string/multibyte/mbsrtowcs) 是标准。
+
+**参数**
+
+| dst    | -    | 指向要存储宽字符串的宽字符数组的指针         |
+| ------ | ---- | -------------------------------------------- |
+| src    | -    | 指向要转换的空终止多字节字符串的首元素的指针 |
+| len    | -    | dst 所指向的数组中的可用宽字节数             |
+| dstsz  | -    | 将写入的最大宽字节数（`dst` 数组的大小）     |
+| retval | -    | 指向 size_t 对象的指针，将存储结果           |
+
+**返回值**
+
+1） 成功时，返回目标数组的宽字符数，不含终止符 `L'\0'`。转换错误时（若遇到非法多字节字符），返回 `([size_t](http://zh.cppreference.com/w/c/types/size_t))-1`。
+
+2） 成功时为零（该情况下写入或本该写入到 `dst` 的不含终止零的宽字符存储于 `*retval`），错误时为非零，在运行时制约违规的情况，存储 `([size_t](http://zh.cppreference.com/w/c/types/size_t))-1` 于 `*retval`（除非 `retval` 为空）并设置 `dst[0]` 为 `L'\0'`（除非 `dst` 为空或 `dstmax` 为零或大于 RSIZE_MAX）
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <locale.h>
+#include <stdlib.h>
+#include <wchar.h>
+ 
+int main(void)
+{
+    setlocale(LC_ALL, "en_US.utf8");
+    const char* mbstr = u8"z\u00df\u6c34\U0001F34C"; // 即 u8"zß水🍌"
+    wchar_t wstr[5];
+    mbstowcs(wstr, mbstr, 5);
+    wprintf(L"多字节字符串：%s\n", mbstr);
+    wprintf(L"宽字符串：%ls\n", wstr);
+}
+```
+
+​	输出：
+
+```txt
+多字节字符串：zß水🍌
+宽字符串：zß水🍌
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.22.8.1 The mbstowcs function （第 359 页）
+
+  - K.3.6.5.1 The mbstowcs_s function （第 611-612 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.20.8.1 The mbstowcs function （第 323 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.10.8.1 The mbstowcs function
+
+**参阅**
+
+| [mbsrtowcs (C95)<br />mbsrtowcs_s (C95)<br />](https://zh.cppreference.com/w/c/string/multibyte/mbsrtowcs) | 给定状态，转换窄多字节字符串为宽字符串 (函数) |
+| ------------------------------------------------------------ | --------------------------------------------- |
+| [wcstombs <br />wcstombs_s (C11)<br />](https://zh.cppreference.com/w/c/string/multibyte/wcstombs) | 转换宽字符串为窄多字节字符串 (函数)           |
+| **mbstowcs** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/string/multibyte/mbstowcs)** |                                               |
 
 
 
@@ -2310,6 +2720,99 @@ p1[3] == 9
 作用：
 
 备注：
+
+```c
+// 在标头 <stdlib.h> 定义
+int mbtowc( wchar_t*          pwc, const char*          s, size_t n )// (C99 前)
+int mbtowc( wchar_t* restrict pwc, const char* restrict s, size_t n )// (C99 起)
+```
+
+​	将 `s` 指向其首字节的多字节字符转换成宽字符，若 `pwc` 非空则写入 `*pwc`。
+
+​	若 `s` 为空指针，则重置全局转换状态并确定是否使用迁移序列。
+
+**注解**
+
+​	每次对 `mbtowc` 的调用更新内部全局转换状态（[mbstate_t](https://zh.cppreference.com/w/c/string/multibyte/mbstate_t) 类型的静态对象，只为此函数所知）。若多字节编码使用迁移状态，则必须留意以避免回撤或多次扫描。任何情况下，多线程不应调用 `mbtowc` 而不同步：可用 [mbrtowc](https://zh.cppreference.com/w/c/string/multibyte/mbrtowc) 代替。
+
+**参数**
+
+| pwc  | -    | 指向输出用宽字符的指针       |
+| ---- | ---- | ---------------------------- |
+| s    | -    | 指向多字节字符的指针         |
+| n    | -    | `s` 中能被检验的字节数的限制 |
+
+**返回值**
+
+​	若 `s` 不是空指针，则返回多字节字符所含的字节数，或若 `s` 所指的首字节不组成合法多字节字符则返回 `-1`，或若 `s` 指向空字符 `'\0'` 则返回 `0`。
+
+​	若 `s` 是空指针，则重置内部转换状态为初始迁移状态，并若当前多字节编码非状态依赖（不使用迁移序列）则返回 `0`，或若当前多字节编码为状态依赖（使用迁移序列）则返回非零值。
+
+**示例**
+
+```c
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <wchar.h>
+ 
+// 打印多字节字符串到宽面向的 stdout
+// 等价于 wprintf(L"%s\n", ptr);
+void print_mb(const char* ptr)
+{
+    mbtowc(NULL, NULL, 0); // 重置初始转换状态
+    const char* end = ptr + strlen(ptr);
+    int ret = 0;
+    for (wchar_t wc; (ret = mbtowc(&wc, ptr, end - ptr)) > 0; ptr += ret)
+        wprintf(L"%lc", wc);
+    wprintf(L"\n");
+}
+ 
+int main(void)
+{
+    setlocale(LC_ALL, "en_US.utf8");
+    // UTF-8 窄多字节编码
+    print_mb("z\u00df\u6c34\U0001F34C"); // 即 "zß水🍌"
+}
+```
+
+​	输出：
+
+```txt
+zß水🍌
+```
+
+**引用**
+
+- C23 标准（ISO/IEC 9899:2024）：
+
+  - 7.24.7.2 The mbtowc function （第 TBD 页）
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.22.7.2 The mbtowc function （第 260 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.22.7.2 The mbtowc function （第 358 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.20.7.2 The mbtowc function （第 322 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.10.7.2 The mbtowc function
+
+**参阅**
+
+| [mbrtowc (C95)<br />](https://zh.cppreference.com/w/c/string/multibyte/mbrtowc) | 给定状态，转换下一个多字节字符为宽字符 (函数) |
+| ------------------------------------------------------------ | --------------------------------------------- |
+| [mblen<br />](https://zh.cppreference.com/w/c/string/multibyte/mblen) | 返回下一个多字节字符的字节数 (函数)           |
+| **mbtowc** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/string/multibyte/mbtowc)** |                                               |
+
+
 
 
 
@@ -2375,7 +2878,7 @@ errno_t qsort_s( void* ptr, rsize_t count, rsize_t size,
 ​	与其他边界检查函数不同，`qsort_s` 不将零大小数组视作运行时强制违规，而是不修改数组并成功返回（另一个接受零大小数组的函数是 bsearch_s）。
 
 ​	[Windows CRT](https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/qsort-s) 中的 `qsort_s` 实现与 C 标准不兼容。微软的版本被声明为： `void qsort_s(void *base, [size_t](http://zh.cppreference.com/w/c/types/size_t) num, [size_t](http://zh.cppreference.com/w/c/types/size_t) width,
-       int (*compare )(void *, const void *, const void *), void * context);`。 它不返回值，而比较函数具有与标准相反的形参顺序：首先传递的是 `context`。
+​       int (*compare )(void *, const void *, const void *), void * context);`。 它不返回值，而比较函数具有与标准相反的形参顺序：首先传递的是 `context`。
 
 **示例**
 
@@ -4169,7 +4672,143 @@ gcc (GCC) 11.2.0
 
 备注：
 
+```c
+// 在标头 <stdlib.h> 定义
+// (1)
+size_t wcstombs( char          *dst, const wchar_t          *src, size_t len );// (C99 前)
+size_t wcstombs( char *restrict dst, const wchar_t *restrict src, size_t len );// (C99 起)
+errno_t wcstombs_s( size_t *restrict retval, char *restrict dst, rsize_t dstsz,
+                    const wchar_t *restrict src, rsize_t len );// (2)(C11 起)
+```
 
+1） 将来自首元素为 `src` 所指向的数组中的宽字符序列为其窄多字节表示，其始于初始迁移状态。转换出的各字符被存储于 `dst` 所指向的数组的相继元素。写入目标数组的字节数不多于 `len`。
+
+ 如同以调用 [wctomb](https://zh.cppreference.com/w/c/string/multibyte/wctomb) 来转换每个字符，但 wctomb 的转换状态不受影响。若满足下列条件则转换停止：
+
+ \* 转换并存储空字符 `L'\0'`。此情况下存储的各字节为无迁移序列（若需要）后随 `'\0'`，
+
+ \* 找到当前 C 本地环境中不对应合法字符的 `wchar_t`。
+
+ \* 下个要存储的多字节字符会超出 `len`。
+
+ 若 `src` 与 `dst` 重叠，则行为未指定。
+
+2） 同 (1)，但
+
+ \* 转换如同以 [wcrtomb](https://zh.cppreference.com/w/c/string/multibyte/wcrtomb) 而非 [wctomb](https://zh.cppreference.com/w/c/string/multibyte/wctomb) 进行
+
+ \* 函数将其结果作为输出参数 `retval` 返回
+
+ \* 若转换停止而不写入控制符，则函数将在 `dst` 中的下个字符，可以是 `dst[len]` 或 `dst[dstsz]` 的先到来者，存储 `'\0'`（表示可能写入总计至多 len+1/dsz+1 个字符）。该情况下，空终止前不写入无迁移序列。
+
+ \* 若 `dst` 是空指针，则将本会产生的字节数存储于 `*retval`
+
+ \* 函数从空终止起到 `dstsz` 前为止破坏目标数组
+
+ \* 若 `src` 与 `dst` 重叠，则行为未指定。
+
+ \* 在运行时检测下列错误，并调用当前安装的[约束处理函数](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)：
+
+  - `retval` 或 `src` 是空指针
+  - `dstsz` 或 `len` 大于 RSIZE_MAX（除非 `dst` 为空）
+  - `dstsz` 非零（除非 `dst` 为空）
+  - `len` 大于 `dstsz` 且直到抵达 `dstsz` 时，转换未于 `src` 数组遇到空字符或编码错误（除非 `dst` 为空）
+
+**注意**
+
+​	大多数实现中，`wcstombs` 在处理过字符串时更新 [mbstate_t](https://zh.cppreference.com/w/c/string/multibyte/mbstate_t) 类型的全局静态对象，因而不能被两个线程同时调用，这种情况下应使用 [wcsrtombs](https://zh.cppreference.com/w/c/string/multibyte/wcsrtombs) 或 `wcstombs_s`。
+
+​	POSIX 指定一个常见扩展：若 `dst` 是空指针，则此函数返回假设转换则会写入 `dst` 的字节数。类似行为对于 [wcsrtombs](https://zh.cppreference.com/w/c/string/multibyte/wcsrtombs) 和 `wcstombs_s` 是标准。
+
+**参数**
+
+| dst    | -    | 指向窄字符数组的指针，其中将存储多字节字符 |
+| ------ | ---- | ------------------------------------------ |
+| src    | -    | 指向要转换的空终止宽字符串首字符的指针     |
+| len    | -    | dst 所指向数组中的可用字节数               |
+| dstsz  | -    | 将写入的最大字节数（`dst` 数组的大小）     |
+| retval | -    | 指向 size_t 对象的指针，其中将存储结果     |
+
+**返回值**
+
+1） 成功时，返回写入首元素为 `dst` 所指向的字符数组的字节数（包含任何迁移序列，但不含终止的 `'\0'`）。转换错误时（若遇到非法宽字符），返回 `([size_t](http://zh.cppreference.com/w/c/types/size_t))-1`。
+
+2） 成功时返回零（该情况下，将被或本应写入 `dst` 的字节数，排除终止零，存储于 `*retval`），错误时返回非零。运行时制约违规的情况下，存储 `([size_t](http://zh.cppreference.com/w/c/types/size_t))-1` 于 `*retval`（除非 `retval` 为空）并设置 `dst[0]` 为 `'\0'`（除非 `dst` 为空或 `dstmax` 为零或大于 RSIZE_MAX）。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+ 
+int main(void)
+{
+    // 4 个宽字符
+    const wchar_t src[] = L"z\u00df\u6c34\U0001f34c";
+    // 它们于 UTF-8 占用 10 个字节
+    char dst[11];
+ 
+    setlocale(LC_ALL, "en_US.utf8");
+    printf("宽字符字符串：'%ls'\n",src);
+    for (size_t ndx=0; ndx < sizeof src/sizeof src[0]; ++ndx)
+        printf("   src[%2zu] = %#8x\n", ndx, src[ndx]);
+ 
+    int rtn_val = wcstombs(dst, src, sizeof dst);
+    printf("rtn_val = %d\n", rtn_val);
+    if (rtn_val > 0)
+        printf("多字节字符串：'%s'\n", dst);
+    for (size_t ndx=0; ndx<sizeof dst; ++ndx)
+        printf("   dst[%2zu] = %#2x\n", ndx, (unsigned char)dst[ndx]);
+}
+```
+
+​	输出：
+
+```txt
+宽字符字符串：'zß水🍌'
+   src[ 0] =     0x7a
+   src[ 1] =     0xdf
+   src[ 2] =   0x6c34
+   src[ 3] =  0x1f34c
+   src[ 4] =        0
+rtn_val = 10
+多字节字符串：'zß水🍌'
+   dst[ 0] = 0x7a
+   dst[ 1] = 0xc3
+   dst[ 2] = 0x9f
+   dst[ 3] = 0xe6
+   dst[ 4] = 0xb0
+   dst[ 5] = 0xb4
+   dst[ 6] = 0xf0
+   dst[ 7] = 0x9f
+   dst[ 8] = 0x8d
+   dst[ 9] = 0x8c
+   dst[10] =  0
+```
+
+**引用**
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.22.8.2 The wcstombs function （第 360 页）
+
+  - K.3.6.5.2 The wcstombs_s function （第 612-614 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.20.8.2 The wcstombs function （第 324 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.10.8.2 The wcstombs function
+
+**参阅**
+
+| [wcsrtombs (C95)<br />wcsrtombs_s (C95)<br />](https://zh.cppreference.com/w/c/string/multibyte/wcsrtombs) | 给定状态，转换宽字符串为窄多字节字符串 (函数) |
+| ------------------------------------------------------------ | --------------------------------------------- |
+| [mbstowcs <br />mbstowcs_s (C11)<br />](https://zh.cppreference.com/w/c/string/multibyte/mbstowcs) | 转换窄多字节字符串为宽字符串 (函数)           |
+| **wcstombs** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/string/multibyte/wcstombs)** |                                               |
 
 
 
@@ -4194,7 +4833,116 @@ gcc (GCC) 11.2.0
 
 备注：
 
+```c
+// 在标头 <stdlib.h> 定义
+int wctomb( char *s, wchar_t wc );// (1)
+errno_t wctomb_s(int *restrict status, char *restrict s, rsize_t ssz, wchar_t wc);// (2)(C11 起)
+```
 
+1） 转换宽字符 `wc` 为多字节编码，并将之（含迁移状态）存储于 `s` 指向其首元素的字符数组。存储字节数不多于 `MB_CUR_MAX`。转换受到当前安装的本地环境的 LC_CTYPE 类别的影响。
+
+ 若 `wc` 是空字符，则将空字符写入 `s`，之前可以有需要恢复初始迁移状态的任何迁移状态。
+
+ 若 `s` 是空指针，则此函数重设全局转换状态并确定是否使用迁移序列。
+
+2） 同 (1)，除了结果被返回到输出参数 `status`，在运行时检测下列错误，并调用当前安装的[约束处理函数](https://zh.cppreference.com/w/c/error/set_constraint_handler_s)：
+
+  - `ssz` 小于会被写入的字节数（除非 `s` 为空）
+  - `ssz` 大于 RSIZE_MAX（除非 `s` 为空）
+  - `s` 为空指针但 `ssz` 非零
+
+**注意**
+
+​	每次对 `wctomb` 的调用会更新全局转换状态（[mbstate_t](https://zh.cppreference.com/w/c/string/multibyte/mbstate_t) 类型的静态对象，只为此函数所知）。若多字节编码使用迁移状态，则此函数不可重入。任何情况下，多个线程不应调用 `wctomb` 而不同步：可使用 [wcrtomb](https://zh.cppreference.com/w/c/string/multibyte/wcrtomb) 或 `wctomb_s` 代替。
+
+​	不同于大多数边界检查函数，`wctomb_s` 不以空字符终止其输出，因为它被设计以用于逐字节处理的循环。
+
+**参数**
+
+| s      | -    | 指向输出用字符数组的指针                                     |
+| ------ | ---- | ------------------------------------------------------------ |
+| wc     | -    | 要转换的宽字符                                               |
+| ssz    | -    | 要写入 `s` 的最大字节数（数组 `s` 的大小）                   |
+| status | -    | 指向结果（多字节序列长度或迁移序列状态）存储位置的输出参数的指针 |
+
+**返回值**
+
+1） 若 `s` 非空指针，则返回 `wc` 的多字节表示所含的字节数，或者若 `wc` 非合法字符则为 `-1`。
+
+ 若 `s` 是空指针，则重设内部转换状态以表示初始迁移状态，并若当前多字节编码非状态依赖（不使用迁移序列）则返回 `0`，或者若当前多字节编码为状态依赖（使用迁移序列）则返回非零值。
+
+2） 成功时为零，此情况下存储 `wc` 的多字节表示于 `s`，并存储其长度于 `*status`，或若 `s` 为空，则存储迁移序列状态于 `*status`。编码错误或运行时制约错误发生时为非零，此情况下存储 `([size_t](http://zh.cppreference.com/w/c/types/size_t))-1` 于 `*status`。存储于 `*status` 的值决不超过 MB_CUR_MAX。
+
+**示例**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+ 
+void demo(wchar_t wc)
+{
+    const char* dep = wctomb(NULL, wc) ? "是" : "否";
+    printf("状态依赖编码？%s。\n", dep);
+ 
+    char mb[MB_CUR_MAX];
+    int len = wctomb(mb, wc);
+    printf("宽字符 '%lc' -> 多字节字符 [", wc);
+    for (int idx = 0; idx < len; ++idx)
+        printf("%s%#2x", idx ? " " : "", (unsigned char)mb[idx]);
+    printf("]\n");
+}
+ 
+int main(void)
+{
+    setlocale(LC_ALL, "en_US.utf8");
+    printf("MB_CUR_MAX = %zu\n", MB_CUR_MAX);
+    demo(L'A');
+    demo(L'\u00df');
+    demo(L'\U0001d10b');
+}
+```
+
+​	可能的输出：
+
+```txt
+MB_CUR_MAX = 6
+状态依赖编码？否。
+宽字符 'A' -> 多字节字符 [0x41]
+状态依赖编码？否。
+宽字符 'ß' -> 多字节字符 [0xc3 0x9f]
+状态依赖编码？否。
+宽字符 '𝄋' -> 多字节字符 [0xf0 0x9d 0x84 0x8b]
+```
+
+**引用**
+
+- C17 标准（ISO/IEC 9899:2018）：
+
+  - 7.22.7.3 The wctomb function （第 261 页）
+
+  - K.3.6.4.1 The wctomb_s function （第 443 页）
+
+- C11 标准（ISO/IEC 9899:2011）：
+
+  - 7.22.7.3 The wctomb function （第 358-359 页）
+
+  - K.3.6.4.1 The wctomb_s function （第 610-611 页）
+
+- C99 标准（ISO/IEC 9899:1999）：
+
+  - 7.20.7.3 The wctomb function （第 322-323 页）
+
+- C89/C90 标准（ISO/IEC 9899:1990）：
+
+  - 4.10.7.3 The wctomb function
+
+**参阅**
+
+| [mbtowc<br />](https://zh.cppreference.com/w/c/string/multibyte/mbtowc) | 转换下一个多字节字符为宽字符 (函数)       |
+| ------------------------------------------------------------ | ----------------------------------------- |
+| [wcrtomb (C95)<br />wcrtomb_s (C95)<br />](https://zh.cppreference.com/w/c/string/multibyte/wcrtomb) | 给定状态，转换宽字符成其多字节表示 (函数) |
+| **wctomb** 的 **[C++ 文档](https://zh.cppreference.com/w/cpp/string/multibyte/wctomb)** |                                           |
 
 
 
